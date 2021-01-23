@@ -4,7 +4,7 @@ Unit test for the geo module.
 
 from floodsystem.geo import stations_by_distance
 from floodsystem.stationdata import build_station_list
-import functools
+
 
 def test_stations_by_distance():
 
@@ -16,9 +16,9 @@ def test_stations_by_distance():
     assert num_stations > 0
 
     # Ensure each station's distance is geq than the previous one
-    # (in increasing order). The >= is required since sometimes two 
+    # (in increasing order). The >= is required since sometimes two
     # of the same stations are listed, so gives equal distances.
-    assert all([stations_distances[i+1][1] >= 
-                stations_distances[i][1] for i in range(num_stations - 1)])
+    assert all([stations_distances[i + 1][1] >= stations_distances[i][1] for i in range(num_stations - 1)])
+
 
 test_stations_by_distance()
