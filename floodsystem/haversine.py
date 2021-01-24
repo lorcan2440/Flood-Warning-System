@@ -22,16 +22,18 @@ class Unit(Enum):
 
 
 # Unit values taken from http://www.unitconversion.org/unit_converter/length.html
-_CONVERSIONS = {Unit.KILOMETERS:       1.0,
-                Unit.METERS:           1000.0,
-                Unit.MILES:            0.621371192,
-                Unit.NAUTICAL_MILES:   0.539956803,
-                Unit.FEET:             3280.839895013,
-                Unit.INCHES:           39370.078740158}
+_CONVERSIONS = {Unit.KILOMETERS: 1.0,
+                Unit.METERS: 1000.0,
+                Unit.MILES: 0.621371192,
+                Unit.NAUTICAL_MILES: 0.539956803,
+                Unit.FEET: 3280.839895013,
+                Unit.INCHES: 39370.078740158}
+
 
 def get_avg_earth_radius(unit):
     unit = Unit(unit)
     return _AVG_EARTH_RADIUS_KM * _CONVERSIONS[unit]
+
 
 def haversine(point1, point2, unit=Unit.KILOMETERS):
     """ Calculate the great-circle distance between two points on the Earth surface.
@@ -98,7 +100,8 @@ def haversine_vector(array1, array2, unit=Unit.KILOMETERS, comb=False):
     # Asserts that both arrays have same dimensions if not in combination mode
     if not comb:
         if array1.shape != array2.shape:
-            raise IndexError("When not in combination mode, arrays must be of same size. If mode is required, use comb=True as argument.")
+            raise IndexError("""When not in combination mode, arrays must be of same
+                            size. If mode is required, use comb=True as argument.""")
 
     # unpack latitude/longitude
     lat1, lng1 = array1[:, 0], array1[:, 1]
@@ -112,11 +115,11 @@ def haversine_vector(array1, array2, unit=Unit.KILOMETERS, comb=False):
 
     # If in combination mode, turn coordinates of array1 into column vectors for broadcasting
     if comb:
-        lat1 = numpy.expand_dims(lat1,axis=0)
-        lng1 = numpy.expand_dims(lng1,axis=0)
-        lat2 = numpy.expand_dims(lat2,axis=1)
-        lng2 = numpy.expand_dims(lng2,axis=1)
-    
+        lat1 = numpy.expand_dims(lat1, axis=0)
+        lng1 = numpy.expand_dims(lng1, axis=0)
+        lat2 = numpy.expand_dims(lat2, axis=1)
+        lng2 = numpy.expand_dims(lng2, axis=1)
+
     # calculate haversine
     lat = lat2 - lat1
     lng = lng2 - lng1

@@ -9,7 +9,7 @@ geographical data.
 
 from .utils import sorted_by_key
 from .haversine import haversine, Unit
-from .stationdata import build_station_list
+
 
 def stations_by_distance(stations: list, p: tuple):
 
@@ -27,11 +27,11 @@ def stations_by_distance(stations: list, p: tuple):
     for s in stations:
         # Try adding the (station, distance) tuple
         try:
-            my_data.append((s, haversine(s.coord, p, unit = Unit.KILOMETERS)))
-        # If the coord attribute of a station is missing, 
-        # the haversine function will throw ValueError, 
+            my_data.append((s, haversine(s.coord, p, unit=Unit.KILOMETERS)))
+        # If the coord attribute of a station is missing,
+        # the haversine function will throw ValueError,
         # so skip this station
-        except ValueError:  
+        except ValueError:
             pass
 
     sorted_data = sorted_by_key(my_data, 1)
