@@ -58,3 +58,37 @@ def stations_within_radius(stations: list, centre: tuple, r: float):
             stations_in_range.append(station.name)
 
     return sorted(stations_in_range)
+
+
+def rivers_with_station(stations: list):
+
+    '''
+    Returns a set of the names of all rivers which have
+    a MonitoringStation instance associated with them.
+    '''
+
+    assert all([isinstance(i, MonitoringStation) for i in stations])
+
+    rivers = {station.river.strip() for station in stations}
+
+    return rivers
+
+
+def stations_by_river(stations: list):
+
+    '''
+    Returns a dict that maps river names to a list of
+    station objects associated with that river.
+
+    Time complexity: O(n^2) [using binary search]
+    where n is the number of stations.
+    '''
+
+    rivers = rivers_with_station(stations)
+
+    river_dict = {}
+    for river in rivers:
+        pair = {river: [station for station in stations if station.river == river]}
+        river_dict.update(pair)
+
+    return river_dict

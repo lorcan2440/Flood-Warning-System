@@ -2,8 +2,15 @@
 Unit test for the geo module.
 '''
 
-from floodsystem.geo import stations_by_distance, stations_within_radius
+from floodsystem.geo import stations_by_distance
+from floodsystem.geo import stations_within_radius
+from floodsystem.geo import rivers_with_station
+from floodsystem.geo import stations_by_river
+
 from floodsystem.stationdata import build_station_list
+from floodsystem.station import MonitoringStation
+
+from itertools import chain
 
 
 def test_stations_by_distance():
@@ -12,12 +19,10 @@ def test_stations_by_distance():
     stations_distances = stations_by_distance(build_station_list(), CAMBRIDGE_CITY_CENTRE)
     num_stations = len(stations_distances)
 
-    # Ensure the stations list is not empty
+    # Check there are some stations
     assert num_stations > 0
-
-    # Ensure each station's distance is geq than the previous one
-    # (in increasing order). The >= is required since sometimes two
-    # of the same stations are listed, so gives equal distances.
+    # Check all stations >= than the previous
+    # so they are in increasing order
     assert all([stations_distances[i + 1][1] >= stations_distances[i][1] for i in range(num_stations - 1)])
 
 
@@ -28,10 +33,39 @@ def test_stations_within_radius():
 
     nearby_stations = stations_within_radius(build_station_list(), CAMBRIDGE_CITY_CENTRE, TEST_DISTANCE)
 
-    assert len(nearby_stations) > 0  # Check there are some stations
-    assert all([type(i) == str for i in nearby_stations])  # Check all items are strings
-    assert sorted(nearby_stations) == nearby_stations  # Check it's sorted
+    # Check there are some stations
+    assert len(nearby_stations) > 0
+    # Check all items are strings
+    assert all([type(i) == str for i in nearby_stations])
+    # Check it's sorted
+    assert sorted(nearby_stations) == nearby_stations
+
+
+def test_rivers_with_station():
+
+    rivers = rivers_with_station(build_station_list())
+
+    # check there are some rivers
+    assert len(rivers) > 0
+    # Check all rivers are strings
+    assert all([type(i) == str for i in rivers])
+
+
+def test_stations_by_river():
+
+    river_dict = stations_by_river(build_station_list())
+
+    # check there are some rivers
+    assert len(river_dict) > 0
+    # Check all river keys are strings
+    assert all([type(i) == str for i in list(river_dict.keys())])
+    # Check all values are lists
+    assert all([type(i) == list for i in list(river_dict.values())])
+    # Check all values' items are MonitoringStation instances
+    assert all([isinstance(i[0], MonitoringStation) for i in list(chain(river_dict.values()))])
 
 
 test_stations_by_distance()
 test_stations_within_radius()
+test_rivers_with_station()
+test_stations_by_river()
