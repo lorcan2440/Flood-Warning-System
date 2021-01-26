@@ -79,9 +79,6 @@ def stations_by_river(stations: list):
     '''
     Returns a dict that maps river names to a list of
     station objects associated with that river.
-
-    Time complexity: O(n^2) [using binary search]
-    where n is the number of stations.
     '''
 
     rivers = rivers_with_station(stations)
@@ -92,3 +89,31 @@ def stations_by_river(stations: list):
         river_dict.update(pair)
 
     return river_dict
+
+
+def rivers_by_station_number(stations: list, N: int):
+
+    '''
+    Returns a list of (river name, number of stations)
+    tuples. The tuples are sorted by number of stations,
+    and only the top N values are included. Where several
+    rivers have the same number of stations, all such
+    rivers are included in the list.
+    '''
+
+    river_names = rivers_with_station(stations)
+    river_dict = stations_by_river(stations)
+
+    river_num_list = sorted([(r, len(river_dict[r])) for r in river_names],
+                            key=lambda x: x[1], reverse=True)
+
+    end_num = sorted(list({r[1] for r in river_num_list}), reverse=True)[N - 1]
+
+    rivers_list = []
+    for (r, n) in river_num_list:
+        if n >= end_num:
+            rivers_list.append((r, n))
+        else:
+            break
+
+    return rivers_list

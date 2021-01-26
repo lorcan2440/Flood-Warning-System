@@ -6,6 +6,7 @@ from floodsystem.geo import stations_by_distance
 from floodsystem.geo import stations_within_radius
 from floodsystem.geo import rivers_with_station
 from floodsystem.geo import stations_by_river
+from floodsystem.geo import rivers_by_station_number
 
 from floodsystem.stationdata import build_station_list
 from floodsystem.station import MonitoringStation
@@ -65,7 +66,25 @@ def test_stations_by_river():
     assert all([isinstance(i[0], MonitoringStation) for i in list(chain(river_dict.values()))])
 
 
+def test_rivers_by_station_number():
+
+    N = 10
+    stations = build_station_list()
+    rivers_list = rivers_by_station_number(stations, N)
+
+    # Check there are some rivers, and each river has some stations
+    assert len(rivers_list) > 0 and all([river[1] > 0 for river in rivers_list])
+    # Check list is in descending order
+    assert sorted(rivers_list, key=lambda x: x[1], reverse=True) == rivers_list
+    # Check the next lowest river has strictly less rivers than this one
+    # i.e. check the "include duplicate numbers of rivers" works properly
+    lower_rivers_list = rivers_by_station_number(stations, N + 1)
+    assert rivers_list[-1][1] > lower_rivers_list[-1][1] and len(rivers_list) >= N
+    assert len(lower_rivers_list) >= len(rivers_list) + 1
+
+
 test_stations_by_distance()
 test_stations_within_radius()
 test_rivers_with_station()
 test_stations_by_river()
+test_rivers_by_station_number()
