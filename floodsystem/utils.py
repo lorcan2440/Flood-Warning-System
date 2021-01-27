@@ -7,19 +7,14 @@
 
 
 def sorted_by_key(x, i, reverse=False):
-    """For a list of lists/tuples, return list sorted by the ith
-    component of the list/tuple, E.g.
-
-    Sort on first entry of tuple:
-
-      > sorted_by_key([(1, 2), (5, 1]), 0)
-      >>> [(1, 2), (5, 1)]
+    """
+    For a list of lists/tuples, return list sorted by the ith
+    component of the list/tuple, e.g.
 
     Sort on second entry of tuple:
 
       > sorted_by_key([(1, 2), (5, 1]), 1)
       >>> [(5, 1), (1, 2)]
-
     """
 
     # Sort by distance

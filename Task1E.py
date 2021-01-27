@@ -5,6 +5,9 @@ from floodsystem.stationdata import build_station_list
 def run():
     ''' Requirements for Task 1E '''
 
+    # Print the list of (river, number stations) tuples when N = 9,
+    # i.e. the top 9 rivers with the most stations.
+
     stations = build_station_list()
     N = 9
     print('''The top {} list of the rivers with the most

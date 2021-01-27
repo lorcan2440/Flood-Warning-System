@@ -1,9 +1,9 @@
 # Copyright (C) 2018 Garth N. Wells
 #
 # SPDX-License-Identifier: MIT
-"""This module provides a model for a monitoring station, and tools
+"""
+This module provides a model for a monitoring station, and tools
 for manipulating/modifying station data
-
 """
 
 

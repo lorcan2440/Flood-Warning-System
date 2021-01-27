@@ -1,17 +1,17 @@
 # Copyright (C) 2018 Garth N. Wells
 #
 # SPDX-License-Identifier: MIT
-"""This module provides functionality for retrieving real-time and
-latest time history level data
-
 """
+This module provides functionality for retrieving real-time and
+latest time history level data
+"""
+
 
 import datetime
 import json
 import os
-
-import dateutil.parser
 import requests
+import dateutil
 
 
 def fetch(url):
@@ -37,7 +37,8 @@ def load(filename):
 
 
 def fetch_station_data(use_cache=True):
-    """Fetch data from Environment agency for all active river level
+    """
+    Fetch data from Environment agency for all active river level
     monitoring stations via a REST API and return retrieved data as a
     JSON object.
 
@@ -45,7 +46,6 @@ def fetch_station_data(use_cache=True):
     optionally be retrieved from the cache file. This is faster than
     retrieval over the Internet and avoids excessive calls to the
     Environment Agency service.
-
     """
 
     # URL for retrieving data for active stations with river level

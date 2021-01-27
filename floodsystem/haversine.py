@@ -1,3 +1,12 @@
+'''
+Haversine calculator
+Source: https://pypi.org/project/haversine/
+Direct download (.tar.gz): https://files.pythonhosted.org/packages/20/3a/f96adec3c7b50e9483149b906636e08ab01dd54de3da2f70b2d4ab769bfa/haversine-2.3.0.tar.gz  # noqa
+Version 2.3.0,
+Sep 4, 2020
+'''
+
+
 from math import radians, cos, sin, asin, sqrt
 from enum import Enum
 
@@ -22,12 +31,12 @@ class Unit(Enum):
 
 
 # Unit values taken from http://www.unitconversion.org/unit_converter/length.html
-_CONVERSIONS = {Unit.KILOMETERS: 1.0,
-                Unit.METERS: 1000.0,
-                Unit.MILES: 0.621371192,
-                Unit.NAUTICAL_MILES: 0.539956803,
-                Unit.FEET: 3280.839895013,
-                Unit.INCHES: 39370.078740158}
+_CONVERSIONS = {Unit.KILOMETERS:        1.0,                # noqa
+                Unit.METERS:            1000.0,             # noqa
+                Unit.MILES:             0.621371192,        # noqa
+                Unit.NAUTICAL_MILES:    0.539956803,        # noqa
+                Unit.FEET:              3280.839895013,     # noqa
+                Unit.INCHES:            39370.078740158}    # noqa
 
 
 def get_avg_earth_radius(unit):

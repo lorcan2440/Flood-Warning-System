@@ -5,6 +5,10 @@ from floodsystem.stationdata import build_station_list
 def run():
     ''' Requirements for Task 1F '''
 
+    # Obtain a list of all stations with inconsistent typical range data.
+    # Print a list of station names, in alphabetical order, for stations
+    # with inconsistent data.
+
     stations = build_station_list()
     bad_stations = sorted(inconsistent_typical_range_stations(stations), key=lambda s: s.name)
 

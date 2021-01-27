@@ -1,9 +1,9 @@
 # Copyright (C) 2018 Garth N. Wells
 #
 # SPDX-License-Identifier: MIT
-"""This module provides interface for extracting station data from
+"""
+This module provides interface for extracting station data from
 JSON objects fetched from the Internet and
-
 """
 
 from . import datafetcher
@@ -11,13 +11,13 @@ from .station import MonitoringStation
 
 
 def build_station_list(use_cache=True):
-    """Build and return a list of all river level monitoring stations
+    """
+    Build and return a list of all river level monitoring stations
     based on data fetched from the Environment agency. Each station is
     represented as a MonitoringStation object.
 
     The available data for some station is incomplete or not
     available.
-
     """
 
     # Fetch station data
@@ -44,7 +44,7 @@ def build_station_list(use_cache=True):
             typical_range = None
 
         try:
-            # Create mesure station object if all required data is
+            # Create MonitoringStation object if all required data is
             # available, and add to list
             s = MonitoringStation(
                 station_id=e['@id'],
