@@ -93,8 +93,9 @@ def test_rivers_by_station_number():
     lower_rivers_list = rivers_by_station_number(stations, N + 1)
     assert rivers_list[-1][1] > lower_rivers_list[-1][1] and len(rivers_list) >= N
     assert len(lower_rivers_list) >= len(rivers_list) + 1
-    # Check against the expected result
-    assert rivers_list == [('river-C', 3), ('river-A', 2), ('river-B', 2), ('river-D', 2)]
+    # Check against the expected result, ignoring differences due to ordering of rivers
+    # with equal numbers of stations
+    assert set(rivers_list) == {('river-C', 3), ('river-A', 2), ('river-B', 2), ('river-D', 2)}
 
 
 test_stations_by_distance()
