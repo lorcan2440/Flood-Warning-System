@@ -11,7 +11,7 @@ import datetime
 import json
 import os
 import requests
-import dateutil
+import dateutil.parser
 
 
 def fetch(url):
