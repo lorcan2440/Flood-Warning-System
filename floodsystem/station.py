@@ -50,7 +50,7 @@ class MonitoringStation:
         try:
             low_val = self.typical_range[0]
             high_val = self.typical_range[1]
-            if low_val == None or high_val == None or low_val > high_val:
+            if low_val is None or high_val is None or low_val > high_val:
                 # One of the entries was a NoneType,
                 # or it was in the wrong order
                 return False
@@ -71,4 +71,3 @@ def inconsistent_typical_range_stations(stations):
     '''
 
     return [s for s in stations if not s.typical_range_consistent()]
-

@@ -1,4 +1,4 @@
-from floodsystem.station import inconsistent_typical_range_stations, MonitoringStation
+from floodsystem.station import inconsistent_typical_range_stations
 from floodsystem.stationdata import build_station_list
 
 
@@ -16,17 +16,10 @@ def run():
         print('There are no stations with bad range data.')
 
     for b_s in bad_stations:
-        if b_s.typical_range == None:
+        if b_s.typical_range is None:
             print(b_s.name + ' (Data missing)')
         else:
             print(b_s.name + ' (Wrong ordering)')
-
-
-
-
-
-
-    
 
 
 if __name__ == "__main__":
