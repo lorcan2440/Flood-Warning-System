@@ -38,3 +38,37 @@ class MonitoringStation:
         d += "   river:         {}\n".format(self.river)
         d += "   typical range: {}".format(self.typical_range)
         return d
+
+    def typical_range_consistent(self):
+
+        '''
+        Returns a bool, whether or not the instance's typical_range
+        attribute is well-defined and consistent (correctly ordered),
+        returning True if it is and False otherwise.
+        '''
+
+        try:
+            low_val = self.typical_range[0]
+            high_val = self.typical_range[1]
+            if low_val == None or high_val == None or low_val > high_val:
+                # One of the entries was a NoneType,
+                # or it was in the wrong order
+                return False
+            # Nothing triggered --> consistent
+            return True
+
+        except (TypeError, IndexError):
+            # Data was itself a NoneType, or otherwise could not be
+            # indexed --> inconsistent
+            return False
+
+
+def inconsistent_typical_range_stations(stations):
+
+    '''
+    Returns a list of stations that have inconsistent data, based
+    on the  MonitoringStation.typical_range_consistent() method.
+    '''
+
+    return [s for s in stations if not s.typical_range_consistent()]
+

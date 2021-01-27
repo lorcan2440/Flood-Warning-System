@@ -3,7 +3,8 @@
 # SPDX-License-Identifier: MIT
 """Unit test for the station module"""
 
-from floodsystem.station import MonitoringStation
+from floodsystem.station import inconsistent_typical_range_stations, MonitoringStation
+from floodsystem.stationdata import build_station_list
 
 
 def test_create_monitoring_station():
@@ -25,3 +26,29 @@ def test_create_monitoring_station():
     assert s.typical_range == trange
     assert s.river == river
     assert s.town == town
+
+
+def test_typical_range_consistent():
+
+    good_station = MonitoringStation("good-id", None, None, None, (-1, 1), None, None)
+    bad_station_1 = MonitoringStation("bad-id-1", None, None, None, (1, -1), None, None)
+    bad_station_2 = MonitoringStation("bad-id-2", None, None, None, (None, -1), None, None)
+    bad_station_3 = MonitoringStation("bad-id-3", None, None, None, None, None, None)
+
+    assert good_station.typical_range_consistent()
+    assert not bad_station_1.typical_range_consistent()
+    assert not bad_station_2.typical_range_consistent()
+    assert not bad_station_3.typical_range_consistent()
+
+
+def test_inconsistent_typical_range_stations():
+
+    stations = build_station_list()
+    bad_stations = inconsistent_typical_range_stations(stations)
+
+    assert 0 <= len(bad_stations) <= len(stations)
+    assert all([not b_s.typical_range_consistent() for b_s in bad_stations])
+
+
+test_typical_range_consistent()
+test_inconsistent_typical_range_stations()
