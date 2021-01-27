@@ -68,8 +68,20 @@ def test_stations_by_river():
 
 def test_rivers_by_station_number():
 
-    N = 10
-    stations = build_station_list()
+    N = 2
+    stations = [
+        MonitoringStation('station-1', None, None, None, None, 'river-A', None),
+        MonitoringStation('station-2', None, None, None, None, 'river-A', None),
+        MonitoringStation('station-3', None, None, None, None, 'river-B', None),
+        MonitoringStation('station-4', None, None, None, None, 'river-B', None),
+        MonitoringStation('station-5', None, None, None, None, 'river-C', None),
+        MonitoringStation('station-6', None, None, None, None, 'river-C', None),
+        MonitoringStation('station-7', None, None, None, None, 'river-C', None),
+        MonitoringStation('station-8', None, None, None, None, 'river-D', None),
+        MonitoringStation('station-9', None, None, None, None, 'river-D', None),
+        MonitoringStation('station-10', None, None, None, None, 'river-E', None),
+        ]  # noqa
+
     rivers_list = rivers_by_station_number(stations, N)
 
     # Check there are some rivers, and each river has some stations
@@ -81,6 +93,8 @@ def test_rivers_by_station_number():
     lower_rivers_list = rivers_by_station_number(stations, N + 1)
     assert rivers_list[-1][1] > lower_rivers_list[-1][1] and len(rivers_list) >= N
     assert len(lower_rivers_list) >= len(rivers_list) + 1
+    # Check against the expected result
+    assert rivers_list == [('river-C', 3), ('river-A', 2), ('river-B', 2), ('river-D', 2)]
 
 
 test_stations_by_distance()

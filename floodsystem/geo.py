@@ -46,7 +46,7 @@ def stations_within_radius(stations: list, centre: tuple, r):
 
     '''
     Returns a list of all stations (type MonitoringStation)
-    within radius r of a geographic coordinate x.
+    within radius r of a geographic coordinate centre.
     '''
 
     # Standard data type input checks
