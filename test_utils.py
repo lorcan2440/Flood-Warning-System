@@ -55,3 +55,17 @@ def test_reverse_sort():
     assert list1[0] == c
     assert list1[1] == a
     assert list1[2] == b
+
+
+def test_wgs84_to_web_mercator():
+
+    '''
+    Verified with
+    https://epsg.io/transform#s_srs=4326&t_srs=3857&x=0.1020031&y=52.1946039
+    '''
+    CAMBRIDGE_CITY_CENTRE = (52.2053, 0.1218)  # (lat, lon)
+    output_coord = floodsystem.utils.wgs84_to_web_mercator(CAMBRIDGE_CITY_CENTRE)
+    assert tuple([round(i) for i in output_coord]) == (13559, 6837332)
+
+
+test_wgs84_to_web_mercator()

@@ -7,11 +7,10 @@ from floodsystem.geo import stations_within_radius
 from floodsystem.geo import rivers_with_station
 from floodsystem.geo import stations_by_river
 from floodsystem.geo import rivers_by_station_number
+from floodsystem.geo import display_stations_on_map
 
 from floodsystem.stationdata import build_station_list
 from floodsystem.station import MonitoringStation
-
-from itertools import chain
 
 
 def test_stations_by_distance():
@@ -37,7 +36,7 @@ def test_stations_within_radius():
     # Check there are some stations
     assert len(nearby_stations) > 0
     # Check all items are strings
-    assert all([type(i) == str for i in nearby_stations])
+    assert all([isinstance(i, str) for i in nearby_stations])
     # Check it's sorted
     assert sorted(nearby_stations) == nearby_stations
 
@@ -49,21 +48,23 @@ def test_rivers_with_station():
     # check there are some rivers
     assert len(rivers) > 0
     # Check all rivers are strings
-    assert all([type(i) == str for i in rivers])
+    assert all([isinstance(i, str) for i in rivers])
 
 
 def test_stations_by_river():
+
+    import itertools
 
     river_dict = stations_by_river(build_station_list())
 
     # check there are some rivers
     assert len(river_dict) > 0
     # Check all river keys are strings
-    assert all([type(i) == str for i in list(river_dict.keys())])
+    assert all([isinstance(i, str) for i in list(river_dict.keys())])
     # Check all values are lists
-    assert all([type(i) == list for i in list(river_dict.values())])
+    assert all([isinstance(i, list) for i in list(river_dict.values())])
     # Check all values' items are MonitoringStation instances
-    assert all([isinstance(i[0], MonitoringStation) for i in list(chain(river_dict.values()))])
+    assert all([isinstance(i[0], MonitoringStation) for i in list(itertools.chain(river_dict.values()))])
 
 
 def test_rivers_by_station_number():
@@ -98,8 +99,14 @@ def test_rivers_by_station_number():
     assert set(rivers_list) == {('river-C', 3), ('river-A', 2), ('river-B', 2), ('river-D', 2)}
 
 
-test_stations_by_distance()
-test_stations_within_radius()
-test_rivers_with_station()
-test_stations_by_river()
-test_rivers_by_station_number()
+def test_display_stations_on_map():
+
+    stations = [
+        MonitoringStation('Station_in_Leeds', None, None, (53.8, -1.55), None, None, None),
+        MonitoringStation('Station_in_Cambridge', None, None, (52.205, 0.12), None, None, None),
+        ]  # noqa
+
+    test_image = display_stations_on_map(stations, return_image=True)
+
+    # Check that the image generated is identical to what it should be
+    assert hash(test_image) == 117036171677

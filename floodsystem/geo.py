@@ -7,9 +7,13 @@ This module contains a collection of functions related to
 geographical data.
 """
 
-from .utils import sorted_by_key
+from .utils import sorted_by_key, wgs84_to_web_mercator
 from .haversine import haversine, Unit
 from .station import MonitoringStation
+
+from bokeh.plotting import figure, output_file, show
+from bokeh.models import ColumnDataSource
+from bokeh.tile_providers import CARTODBPOSITRON, get_provider
 
 
 def stations_by_distance(stations: list, p: tuple):
@@ -22,8 +26,8 @@ def stations_by_distance(stations: list, p: tuple):
     '''
 
     # Standard data type input checks
-    assert type(stations) == list and all([isinstance(i, MonitoringStation) for i in stations])
-    assert type(p) == tuple
+    assert isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])
+    assert isinstance(p, tuple)
 
     my_data = []
     for s in stations:
@@ -50,9 +54,9 @@ def stations_within_radius(stations: list, centre: tuple, r):
     '''
 
     # Standard data type input checks
-    assert type(stations) == list and all([isinstance(i, MonitoringStation) for i in stations])
-    assert type(centre) == tuple
-    assert type(r) == float or type(r) == int
+    assert isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])
+    assert isinstance(centre, tuple)
+    assert isinstance(r, float) or isinstance(r, int)
 
     # Add a station to the list if its distance is within the given radius r
     stations_in_range = []
@@ -141,3 +145,45 @@ def rivers_by_station_number(stations: list, N: int):
             break
 
     return rivers_list
+
+
+def display_stations_on_map(stations, with_details=True, return_image=False):
+
+    '''
+    Shows a map of the stations across the UK. Uses Bokeh:
+    https://docs.bokeh.org/en/latest/docs/user_guide/geo.html
+    '''
+
+    output_file("tile.html")
+    tile_provider = get_provider(CARTODBPOSITRON)
+    trans_coords = [wgs84_to_web_mercator(station.coord) for station in stations]
+
+    # range bounds supplied in web mercator coordinates
+    p = figure(x_range=(-1000000, 200000), y_range=(6250000, 8180000),
+            x_axis_type="mercator", y_axis_type="mercator")  # noqa
+    p.add_tile(tile_provider)
+
+    source = ColumnDataSource(data=dict(
+        lat             = [station.coord[0] for station in stations],       # noqa
+        long            = [station.coord[1] for station in stations],       # noqa
+        typical_range   = [station.typical_range for station in stations],  # noqa
+        river           = [station.river for station in stations],          # noqa
+        town            = [station.town for station in stations],           # noqa
+        x_coord         = [x[0] for x in trans_coords],                     # noqa
+        y_coord         = [x[1] for x in trans_coords])                     # noqa
+    )                                                                       # noqa
+
+    p.circle(x="x_coord", y="y_coord", size=15, fill_color="blue", fill_alpha=0.8, source=source)
+
+    if with_details:
+        from bokeh.models import HoverTool
+        my_hover = HoverTool()
+        my_hover.tooltips = [('Latitude', '@lat'), ('Longitude', '@long'),
+                            ('Typical range', '@typical_range'), ('River', '@river'),
+                            ('Town', '@town')]
+        p.add_tools(my_hover)
+
+    if return_image:
+        return p
+    else:
+        show(p)
