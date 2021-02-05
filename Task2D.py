@@ -25,8 +25,8 @@ def run():
 
     # Check that station could be found. Return if not found.
     if not station_cam:
-        print("Station {} could not be found".format(station_name))
-        return
+        print(f'Station {station_name} could not be found')
+        return None
 
     # Alternative find station 'Cam' using the Python 'next' function
     # (https://docs.python.org/3/library/functions.html#next). Raises

@@ -10,8 +10,7 @@ def run():
 
     stations = build_station_list()
     N = 9
-    print('''The top {} list of the rivers with the most
-            stations is {}'''.format(N, rivers_by_station_number(stations, N)))
+    print(f'The top {N} list of the rivers with the most stations is \n{rivers_by_station_number(stations, N)}')
 
 
 if __name__ == "__main__":

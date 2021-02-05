@@ -11,6 +11,7 @@ def run():
     CAMBRIDGE_CITY_CENTRE = (52.2053, 0.1218)
     DISTANCE = 10
 
+    print(f'The stations within {DISTANCE} km of Cambridge City Centre are:\n')
     print(stations_within_radius(build_station_list(), CAMBRIDGE_CITY_CENTRE, DISTANCE))
 
 

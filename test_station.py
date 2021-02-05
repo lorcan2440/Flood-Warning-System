@@ -48,7 +48,3 @@ def test_inconsistent_typical_range_stations():
 
     assert 0 <= len(bad_stations) <= len(stations)
     assert all([not b_s.typical_range_consistent() for b_s in bad_stations])
-
-
-test_typical_range_consistent()
-test_inconsistent_typical_range_stations()

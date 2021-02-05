@@ -66,6 +66,3 @@ def test_wgs84_to_web_mercator():
     CAMBRIDGE_CITY_CENTRE = (52.2053, 0.1218)  # (lat, lon)
     output_coord = floodsystem.utils.wgs84_to_web_mercator(CAMBRIDGE_CITY_CENTRE)
     assert tuple([round(i) for i in output_coord]) == (13559, 6837332)
-
-
-test_wgs84_to_web_mercator()

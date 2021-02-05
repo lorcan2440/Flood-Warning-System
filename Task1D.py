@@ -13,13 +13,13 @@ def run():
 
     stations = build_station_list()
     rivers = rivers_with_station(stations)
-    print('Number of rivers with at least one monitoring station: {}'.format(len(rivers)))
-    print('First 10 in alphabetical order: {} \n'.format(sorted(list(rivers))[:10]))
+    print(f'Number of rivers with at least one monitoring station: {len(rivers)}')
+    print(f'First 10 in alphabetical order: {sorted(list(rivers))[:10]} \n')
 
     river_dict = stations_by_river(stations)
     wanted_rivers = ["River Aire", "River Cam", "River Thames"]
     for river in wanted_rivers:
-        print('The stations on {} are: \n\n{}\n'.format(river, sorted([s.name for s in river_dict[river]])))
+        print(f'The stations on {river} are: \n\n{sorted([s.name for s in river_dict[river]])}\n')
 
 
 if __name__ == "__main__":
