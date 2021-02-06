@@ -9,62 +9,100 @@ from floodsystem.geo import stations_by_river
 from floodsystem.geo import rivers_by_station_number
 from floodsystem.geo import display_stations_on_map
 
-from floodsystem.stationdata import build_station_list
 from floodsystem.station import MonitoringStation
 
 
 def test_stations_by_distance():
 
-    CAMBRIDGE_CITY_CENTRE = (52.2053, 0.1218)
-    stations_distances = stations_by_distance(build_station_list(), CAMBRIDGE_CITY_CENTRE)
-    num_stations = len(stations_distances)
+    TEST_COORD = (5, 5)
 
-    # Check there are some stations
-    assert num_stations > 0
-    # Check all stations >= than the previous
-    # so they are in increasing order
-    assert all([stations_distances[i + 1][1] >= stations_distances[i][1] for i in range(num_stations - 1)])
+    # Test 1: valid inputs
+    stations = [
+        MonitoringStation('near-station-1', None, None, (1, 0), None, None, None),
+        MonitoringStation('near-station-2', None, None, (-1, 1.5), None, None, None),
+        MonitoringStation('far-station-1', None, None, (20, 40), None, None, None),
+        MonitoringStation('far-station-2', None, None, (0, 30.1234), None, None, None),
+        MonitoringStation('boundary-station', None, None, (-5, -5), None, None, None),
+    ]
+
+    assert [(s.station_id, round(d)) for (s, d) in stations_by_distance(stations, TEST_COORD)] == [
+        ('near-station-1', 711), ('near-station-2', 772), ('boundary-station', 1572),
+        ('far-station-2', 2845), ('far-station-1', 4135)]
+
+    # Test 2: invalid inputs
+    stations = [
+        MonitoringStation('near-station-1', None, None, (1, 0), None, None, None),
+        MonitoringStation('bad-station', None, None, None, None, None, None),
+    ]
+
+    try:
+        stations_by_distance(stations, TEST_COORD)
+        assert False
+    except TypeError:
+        assert True
 
 
 def test_stations_within_radius():
 
-    CAMBRIDGE_CITY_CENTRE = (52.2053, 0.1218)
-    TEST_DISTANCE = 10
+    TEST_COORD = (5, 5)
+    TEST_DISTANCE = 1571.53666171434
 
-    nearby_stations = stations_within_radius(build_station_list(), CAMBRIDGE_CITY_CENTRE, TEST_DISTANCE)
+    stations = [
+        MonitoringStation('near-station-1', None, None, (1, 0), None, None, None),
+        MonitoringStation('near-station-2', None, None, (-1, 1.5), None, None, None),
+        MonitoringStation('far-station-1', None, None, (20, 40), None, None, None),
+        MonitoringStation('far-station-2', None, None, (0, 30.1234), None, None, None),
+        MonitoringStation('boundary-station', None, None, (-5, -5), None, None, None),
+    ]
 
-    # Check there are some stations
-    assert len(nearby_stations) > 0
-    # Check all items are strings
-    assert all([isinstance(i, str) for i in nearby_stations])
-    # Check it's sorted
-    assert sorted(nearby_stations) == nearby_stations
+    result = stations_within_radius(stations, TEST_COORD, TEST_DISTANCE)
+
+    assert stations[0] in result
+    assert stations[1] in result
+    assert stations[4] in result  # on the boundary: should be included
+    assert not stations[2] in result
+    assert not stations[3] in result
 
 
 def test_rivers_with_station():
 
-    rivers = rivers_with_station(build_station_list())
+    stations = [
+        MonitoringStation('station-1', None, None, None, None, 'river-A', None),
+        MonitoringStation('station-2', None, None, None, None, 'river-B', None),
+        MonitoringStation('station-3', None, None, None, None, 'river-C', None),
+        MonitoringStation('station-4', None, None, None, None, 'river-D', None),
+        MonitoringStation('station-5', None, None, None, None, 'river-D', None),
+        MonitoringStation('station-6', None, None, None, None, 'river-E', None),
+    ]
 
-    # check there are some rivers
-    assert len(rivers) > 0
-    # Check all rivers are strings
-    assert all([isinstance(i, str) for i in rivers])
+    result = rivers_with_station(stations)
+    assert result == {'river-A', 'river-B', 'river-C', 'river-D', 'river-E'}
 
 
 def test_stations_by_river():
 
     import itertools
 
-    river_dict = stations_by_river(build_station_list())
+    stations = [
+        MonitoringStation('station-1', None, None, None, None, 'river-A', None),
+        MonitoringStation('station-2', None, None, None, None, 'river-B', None),
+        MonitoringStation('station-3', None, None, None, None, 'river-C', None),
+        MonitoringStation('station-4', None, None, None, None, 'river-D', None),
+        MonitoringStation('station-5', None, None, None, None, 'river-D', None),
+        MonitoringStation('station-6', None, None, None, None, 'river-E', None),
+    ]
 
-    # check there are some rivers
-    assert len(river_dict) > 0
-    # Check all river keys are strings
+    river_dict = stations_by_river(stations)
+
+    # Check all keys are string, all values are lists, and all items in all lists are MonitoringStation(s)
     assert all([isinstance(i, str) for i in list(river_dict.keys())])
-    # Check all values are lists
     assert all([isinstance(i, list) for i in list(river_dict.values())])
-    # Check all values' items are MonitoringStation instances
     assert all([isinstance(i[0], MonitoringStation) for i in list(itertools.chain(river_dict.values()))])
+    # Compare with correct result
+    assert river_dict == {
+        'river-A': [stations[0]], 'river-B': [stations[1]], 'river-C': [stations[2]],
+        'river-D': [stations[3], stations[4]], 'river-E': [stations[5]]
+    }
 
 
 def test_rivers_by_station_number():
@@ -81,7 +119,7 @@ def test_rivers_by_station_number():
         MonitoringStation('station-8', None, None, None, None, 'river-D', None),
         MonitoringStation('station-9', None, None, None, None, 'river-D', None),
         MonitoringStation('station-10', None, None, None, None, 'river-E', None),
-        ]  # noqa
+    ]
 
     rivers_list = rivers_by_station_number(stations, N)
 
@@ -104,9 +142,10 @@ def test_display_stations_on_map():
     stations = [
         MonitoringStation('Station_in_Leeds', None, None, (53.8, -1.55), None, None, None),
         MonitoringStation('Station_in_Cambridge', None, None, (52.205, 0.12), None, None, None),
-        ]  # noqa
+    ]
 
     test_image = display_stations_on_map(stations, return_image=True)
 
     # Check that the image generated exists (cannot use exact value as data changes)
+    # Not easy to test this rigorously
     assert hash(test_image) > 1

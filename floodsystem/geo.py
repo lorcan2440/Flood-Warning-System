@@ -8,7 +8,7 @@ geographical data.
 """
 
 from .utils import sorted_by_key, wgs84_to_web_mercator
-from .haversine import haversine, Unit
+from .haversine import haversine_vector, Unit
 from .station import MonitoringStation
 
 from bokeh.plotting import figure, output_file, show
@@ -29,21 +29,15 @@ def stations_by_distance(stations: list, p: tuple):
     assert isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])
     assert isinstance(p, tuple)
 
-    my_data = []
-    for s in stations:
-        try:
-            # Try adding the (station, distance) tuple
-            my_data.append((s, haversine(s.coord, p, unit=Unit.KILOMETERS)))
-        except ValueError:
-            # If the coord attribute of a station is missing,
-            # the haversine function will throw ValueError,
-            # so skip this station
-            pass
+    # preserve original order in case of other scripts running at the same time
+    s = stations
+    ref_points, station_points = [p for i in range(len(s))], [s.coord for s in s]
 
-    # Order the data by the distance, increasing
-    sorted_data = sorted_by_key(my_data, 1)
+    # use haversine_vector to efficiently find the distance between multiple points
+    my_data = zip([s for s in s], list(haversine_vector(ref_points, station_points, unit=Unit.KILOMETERS)))
 
-    return sorted_data
+    # sort by distance (second item in each list)
+    return sorted_by_key(my_data, 1)
 
 
 def stations_within_radius(stations: list, centre: tuple, r):
@@ -53,18 +47,14 @@ def stations_within_radius(stations: list, centre: tuple, r):
     within radius r of a geographic coordinate centre.
     '''
 
-    # Standard data type input checks
-    assert isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])
-    assert isinstance(centre, tuple)
+    # standard data type input checks
     assert isinstance(r, float) or isinstance(r, int)
 
-    # Add a station to the list if its distance is within the given radius r
-    stations_in_range = []
-    for station in stations:
-        if haversine(station.coord, centre, unit=Unit.KILOMETERS) <= r:
-            stations_in_range.append(station.name)
+    # get all (station, distance) pairs
+    sorted_stations = stations_by_distance(stations, centre)
 
-    return sorted(stations_in_range)
+    # return station where distance is <= the given radius
+    return [s[0] for s in sorted_stations if s[1] <= r]
 
 
 def rivers_with_station(stations: list):
@@ -96,10 +86,6 @@ def stations_by_river(stations: list):
     rivers = rivers_with_station(stations)
 
     # For each river listed, add all its associated stations.
-    # This is a nested linear search so time complexity is quadratic,
-    # it could probably be improved by better searching algorithms
-    # (e.g. binary search) but for this (somewhat) small dataset,
-    # the speedup would not be worth it.
     river_dict = {}
     for river in rivers:
         pair = {river: [station for station in stations if station.river == river]}

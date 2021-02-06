@@ -4,7 +4,6 @@
 """Unit test for the station module"""
 
 from floodsystem.station import inconsistent_typical_range_stations, MonitoringStation
-from floodsystem.stationdata import build_station_list
 
 
 def test_create_monitoring_station():
@@ -43,8 +42,18 @@ def test_typical_range_consistent():
 
 def test_inconsistent_typical_range_stations():
 
-    stations = build_station_list()
+    stations = [
+        MonitoringStation('good-station-1', None, None, None, (2, 4), None, None),
+        MonitoringStation('boundary-station', None, None, None, (0, 0), None, None),  # Should be allowed
+        MonitoringStation('bad-station-1', None, None, None, (42, 10), None, None),
+        MonitoringStation('bad-station-2', None, None, None, (None, 4), None, None),
+        MonitoringStation('bad-station-3', None, None, None, None, None, None)
+    ]
+
     bad_stations = inconsistent_typical_range_stations(stations)
 
+    # Check there are less bad stations than stations and all fail the original check
     assert 0 <= len(bad_stations) <= len(stations)
     assert all([not b_s.typical_range_consistent() for b_s in bad_stations])
+    # Check with correct result
+    assert set(bad_stations) == {stations[2], stations[3], stations[4]}
