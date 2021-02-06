@@ -38,7 +38,7 @@ def test_stations_by_distance():
     try:
         stations_by_distance(stations, TEST_COORD)
         assert False
-    except TypeError:
+    except (TypeError, IndexError):
         assert True
 
 
