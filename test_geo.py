@@ -113,12 +113,14 @@ def test_rivers_by_station_number():
         MonitoringStation('station-2', None, None, None, None, 'river-A', None),
         MonitoringStation('station-3', None, None, None, None, 'river-B', None),
         MonitoringStation('station-4', None, None, None, None, 'river-B', None),
-        MonitoringStation('station-5', None, None, None, None, 'river-C', None),
+        MonitoringStation('station-5', None, None, None, None, 'river-B', None),
         MonitoringStation('station-6', None, None, None, None, 'river-C', None),
         MonitoringStation('station-7', None, None, None, None, 'river-C', None),
-        MonitoringStation('station-8', None, None, None, None, 'river-D', None),
+        MonitoringStation('station-8', None, None, None, None, 'river-C', None),
         MonitoringStation('station-9', None, None, None, None, 'river-D', None),
-        MonitoringStation('station-10', None, None, None, None, 'river-E', None),
+        MonitoringStation('station-10', None, None, None, None, 'river-D', None),
+        MonitoringStation('station-11', None, None, None, None, 'river-D', None),
+        MonitoringStation('station-12', None, None, None, None, 'river-E', None),
     ]
 
     rivers_list = rivers_by_station_number(stations, N)
@@ -130,11 +132,12 @@ def test_rivers_by_station_number():
     # Check the next lowest river has strictly less rivers than this one
     # i.e. check the "include duplicate numbers of rivers" works properly
     lower_rivers_list = rivers_by_station_number(stations, N + 1)
+
     assert rivers_list[-1][1] > lower_rivers_list[-1][1] and len(rivers_list) >= N
     assert len(lower_rivers_list) >= len(rivers_list) + 1
     # Check against the expected result, ignoring differences due to ordering of rivers
     # with equal numbers of stations
-    assert set(rivers_list) == {('river-C', 3), ('river-A', 2), ('river-B', 2), ('river-D', 2)}
+    assert set(rivers_list) == {('river-C', 3), ('river-A', 2), ('river-B', 3), ('river-D', 3)}
 
 
 def test_display_stations_on_map():

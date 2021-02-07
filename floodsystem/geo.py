@@ -30,11 +30,12 @@ def stations_by_distance(stations: list, p: tuple):
     assert isinstance(p, tuple)
 
     # preserve original order in case of other scripts running at the same time
-    s = stations
-    ref_points, station_points = [p for i in range(len(s))], [s.coord for s in s]
+    _stations = stations
+    ref_points, station_points = [p for i in range(len(_stations))], [s.coord for s in _stations]
 
     # use haversine_vector to efficiently find the distance between multiple points
-    my_data = zip([s for s in s], list(haversine_vector(ref_points, station_points, unit=Unit.KILOMETERS)))
+    my_data = zip(_stations, list(haversine_vector(ref_points, station_points, unit=Unit.KILOMETERS)))
+    del _stations
 
     # sort by distance (second item in each list)
     return sorted_by_key(my_data, 1)
@@ -106,7 +107,7 @@ def rivers_by_station_number(stations: list, N: int):
 
     # Standard data type input and bounds checks
     assert all([isinstance(i, MonitoringStation) for i in stations])
-    assert type(N) == int and N >= 1
+    assert isinstance(N, int) and N >= 1
 
     river_names = rivers_with_station(stations)
     river_dict = stations_by_river(stations)
