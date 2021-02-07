@@ -93,7 +93,7 @@ def stations_by_river(stations: list):
         river_dict.update(pair)
 
     return river_dict
-     
+
 
 def rivers_by_station_number(stations: list, N: int):
 
