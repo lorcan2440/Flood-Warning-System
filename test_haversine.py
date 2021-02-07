@@ -14,7 +14,7 @@ def test_haversine():
     second_point = (10, 8)
     assert round(haversine(first_point, second_point, unit=Unit.KILOMETERS)) == 1054
 
-    # Test 2: invalid input, should raise an IndexError
+    # Test 2: invalid input, should raise a TypeError
     first_point = None
     second_point = (0, 0)
     try:

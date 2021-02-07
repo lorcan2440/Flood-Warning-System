@@ -152,3 +152,6 @@ def test_display_stations_on_map():
     # Check that the image generated exists (cannot use exact value as data changes)
     # Not easy to test this rigorously
     assert hash(test_image) > 1
+
+
+test_rivers_by_station_number()
