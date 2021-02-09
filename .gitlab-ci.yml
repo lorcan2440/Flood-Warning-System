@@ -22,4 +22,5 @@ test:
   - python Task1x_Extension1.py
 
   - python Task2A.py
+  - python Task2B.py
   - python Task2D.py
