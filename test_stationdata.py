@@ -1,7 +1,7 @@
 # Copyright (C) 2018 Garth N. Wells
 #
 # SPDX-License-Identifier: MIT
-"""Unit test for the stationdata module"""
+"""Unit tests for the stationdata module"""
 
 from floodsystem.stationdata import build_station_list, update_water_levels
 

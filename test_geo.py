@@ -1,5 +1,5 @@
 '''
-Unit test for the geo module.
+Unit tests for the geo module.
 '''
 
 from floodsystem.geo import stations_by_distance

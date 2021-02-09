@@ -1,5 +1,5 @@
 '''
-Unit test for the haversine module.
+Unit tests for the haversine module.
 Comparisons made to
 https://www.vcalc.com/wiki/vCalc/Haversine+-+Distance
 '''

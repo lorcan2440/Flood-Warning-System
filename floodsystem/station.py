@@ -8,7 +8,9 @@ for manipulating/modifying station data
 
 
 class MonitoringStation:
-    """This class represents a river level monitoring station"""
+    """
+    This class represents a river level monitoring station
+    """
 
     def __init__(self, station_id, measure_id, label, coord, typical_range,
                  river, town):
@@ -53,6 +55,7 @@ class MonitoringStation:
             if low_val is None or high_val is None or low_val > high_val:
                 # One of the entries was a NoneType,
                 # or it was in the wrong order
+                # or was negative
                 return False
             # Nothing triggered --> consistent
             return True
@@ -61,6 +64,22 @@ class MonitoringStation:
             # Data was itself a NoneType, or otherwise could not be
             # indexed --> inconsistent
             return False
+
+    def relative_water_level(self):
+
+        '''
+        Returns the current water level as a fraction of
+        the typical range, such that low = 0 and high = 1.
+        '''
+
+        try:
+            if self.typical_range_consistent():
+                level_diff = self.typical_range[1] - self.typical_range[0]
+                return (self.latest_level - self.typical_range[0]) / level_diff
+            else:
+                return None
+        except Exception:
+            return None
 
 
 def inconsistent_typical_range_stations(stations):
