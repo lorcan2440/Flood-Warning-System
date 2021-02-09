@@ -2,7 +2,7 @@
 Unit tests for the flood module.
 '''
 
-from floodsystem.flood import stations_level_over_threshold
+from floodsystem.flood import stations_level_over_threshold, stations_highest_rel_level
 from floodsystem.station import MonitoringStation
 
 
@@ -35,6 +35,25 @@ def test_stations_level_over_threshold():
         assert True
         _bad_input = True
     finally:
-        # The additional check is necessary because if the function runs without error,
-        # the program will jump to here and would not trigger any "assert"s.
         assert isinstance(_bad_input, bool) and _bad_input
+
+
+def test_stations_highest_rel_level():
+
+    stations = [
+        MonitoringStation('station-1', None, None, None, (0, 10), None, None),
+        MonitoringStation('station-2', None, None, None, (0, 10), None, None),
+        MonitoringStation('station-3', None, None, None, (0, 10), None, None),
+        MonitoringStation('station-4', None, None, None, (5, 10), None, None),
+        MonitoringStation('station-5', None, None, None, (0, 100), None, None),
+        MonitoringStation('station-6', None, None, None, None, None, None),
+    ]
+
+    setattr(stations[0], 'latest_level', 20)
+    setattr(stations[1], 'latest_level', 13)
+    setattr(stations[2], 'latest_level', None)
+    setattr(stations[3], 'latest_level', 12.5)
+    setattr(stations[4], 'latest_level', '10')
+    setattr(stations[5], 'latest_level', -1)
+
+    assert stations_highest_rel_level(stations, 2) == [stations[0], stations[3]]
