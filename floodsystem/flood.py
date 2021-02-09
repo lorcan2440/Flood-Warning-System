@@ -52,9 +52,16 @@ def stations_highest_rel_level(stations, N):
 
     # Standard data type and bounds input checks
     assert isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])
-    assert 0 <= N <= len(stations)
+    assert isinstance(N, int)
 
     # Get a descending list of stations with a known level (implemented as being above
     # an effective -infinity) and select the first N objects
     _NEG_INF = -1e300
-    return [s[0] for s in stations_level_over_threshold(stations, _NEG_INF)][:N]
+    valid_stations = stations_level_over_threshold(stations, _NEG_INF)
+
+    if not 0 <= N <= len(valid_stations):
+        raise ValueError(f'''N must be an positive integer, and no more
+                        than the length of the list of valid stations
+                        ({len(valid_stations)})''')
+
+    return [s[0] for s in valid_stations][:N]

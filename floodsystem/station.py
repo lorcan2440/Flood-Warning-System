@@ -89,4 +89,7 @@ def inconsistent_typical_range_stations(stations):
     on the  MonitoringStation.typical_range_consistent() method.
     '''
 
+    # Standard data type input checks
+    assert all([isinstance(i, MonitoringStation) for i in stations])
+
     return [s for s in stations if not s.typical_range_consistent()]

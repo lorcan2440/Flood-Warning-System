@@ -49,7 +49,7 @@ def stations_within_radius(stations: list, centre: tuple, r):
     '''
 
     # standard data type input checks
-    assert isinstance(r, float) or isinstance(r, int)
+    assert isinstance(r, (float, int))
 
     # get all (station, distance) pairs
     sorted_stations = stations_by_distance(stations, centre)
@@ -69,7 +69,7 @@ def rivers_with_station(stations: list):
     assert all([isinstance(i, MonitoringStation) for i in stations])
 
     # Set (comprehension) to skip over/remove duplicates
-    rivers = {station.river.strip() for station in stations}
+    rivers = {s.river.strip() for s in stations}
 
     return rivers
 
@@ -89,7 +89,7 @@ def stations_by_river(stations: list):
     # For each river listed, add all its associated stations.
     river_dict = {}
     for river in rivers:
-        pair = {river: [station for station in stations if station.river == river]}
+        pair = {river: [s for s in stations if s.river == river]}
         river_dict.update(pair)
 
     return river_dict
@@ -107,7 +107,9 @@ def rivers_by_station_number(stations: list, N: int):
 
     # Standard data type input and bounds checks
     assert all([isinstance(i, MonitoringStation) for i in stations])
-    assert isinstance(N, int) and N >= 1
+    assert isinstance(N, int)
+    if not N >= 1:
+        raise ValueError(f'N must be a positive non-zero integer, not {N}')
 
     river_names = rivers_with_station(stations)
     river_dict = stations_by_river(stations)
@@ -141,6 +143,7 @@ def display_stations_on_map(stations, with_details=True, return_image=False):
     https://docs.bokeh.org/en/latest/docs/user_guide/geo.html
     '''
 
+    # setup, and convert coordinates to compatible form used by bokeh
     output_file("tile.html")
     tile_provider = get_provider(CARTODBPOSITRON)
     trans_coords = [wgs84_to_web_mercator(station.coord) for station in stations]
@@ -150,6 +153,7 @@ def display_stations_on_map(stations, with_details=True, return_image=False):
             x_axis_type="mercator", y_axis_type="mercator")  # noqa
     p.add_tile(tile_provider)
 
+    # populate a ColumnDataSource (Pandas DataFrame-like object) of the information in each station
     source = ColumnDataSource(data=dict(
         lat             = [station.coord[0] for station in stations],       # noqa
         long            = [station.coord[1] for station in stations],       # noqa
@@ -160,8 +164,11 @@ def display_stations_on_map(stations, with_details=True, return_image=False):
         y_coord         = [x[1] for x in trans_coords])                     # noqa
     )                                                                       # noqa
 
+    # add a circle to the map, referencing the ColumnDataSource
     p.circle(x="x_coord", y="y_coord", size=15, fill_color="blue", fill_alpha=0.8, source=source)
 
+    # if details are wanted, initialise a HoverTool
+    # and add the necessary parameters to display when activated
     if with_details:
         from bokeh.models import HoverTool
         my_hover = HoverTool()
@@ -170,6 +177,8 @@ def display_stations_on_map(stations, with_details=True, return_image=False):
                             ('Town', '@town')]
         p.add_tools(my_hover)
 
+    # return the Figure object if required,
+    # or show the interactive map by running the generated HTML file in a browser
     if return_image:
         return p
     else:

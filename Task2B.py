@@ -11,10 +11,11 @@ def run():
     THRESHOLD = 0.8
     high_stations = stations_level_over_threshold(stations, THRESHOLD)
 
+    print(f'The stations with a relative water level above {THRESHOLD} are: \n')
     for (s, level) in high_stations:
         print(s.name, level)
 
 
 if __name__ == "__main__":
-    print("*** Task 2B: CUED Part IA Flood Warning System ***")
+    print("\n *** Task 2B: CUED Part IA Flood Warning System *** \n")
     run()
