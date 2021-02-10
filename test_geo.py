@@ -2,14 +2,9 @@
 Unit tests for the geo module.
 '''
 
-from floodsystem.geo import stations_by_distance
-from floodsystem.geo import stations_within_radius
-from floodsystem.geo import rivers_with_station
-from floodsystem.geo import stations_by_river
-from floodsystem.geo import rivers_by_station_number
-from floodsystem.geo import display_stations_on_map
-
+from floodsystem.geo import *
 from floodsystem.station import MonitoringStation
+from floodsystem.utils import flatten
 
 
 def test_stations_by_distance():
@@ -97,7 +92,7 @@ def test_stations_by_river():
     # Check all keys are string, all values are lists, and all items in all lists are MonitoringStation(s)
     assert all([isinstance(i, str) for i in list(river_dict.keys())])
     assert all([isinstance(i, list) for i in list(river_dict.values())])
-    assert all([isinstance(i[0], MonitoringStation) for i in list(itertools.chain(river_dict.values()))])
+    assert all([isinstance(i, MonitoringStation) for i in flatten(list(river_dict.values()))])
     # Compare with correct result
     assert river_dict == {
         'river-A': [stations[0]], 'river-B': [stations[1]], 'river-C': [stations[2]],

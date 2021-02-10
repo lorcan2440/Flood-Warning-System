@@ -43,3 +43,13 @@ def wgs84_to_web_mercator(coord: tuple):
     y = 180.0 / math.pi * math.log(math.tan(math.pi / 4.0 + lat * (math.pi / 180.0) / 2.0)) * scale
 
     return (x, y)
+
+
+def flatten(t: list):
+
+    '''
+    Given a list of lists, returns a single list containing all 
+    the elements of each list in the original list. Also works
+    with tuples (but not sets or dicts)
+    '''
+    return [item for sublist in t for item in sublist]

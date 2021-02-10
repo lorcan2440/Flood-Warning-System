@@ -1,6 +1,6 @@
 """
-This module provides functionality for retrieving real-time and
-latest time history level data
+This module provides functions for getting
+stations by their water levels.
 """
 
 from .station import inconsistent_typical_range_stations
