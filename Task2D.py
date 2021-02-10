@@ -17,25 +17,11 @@ def run():
     station_name = "Cam"
 
     # Find station
-    station_cam = None
-    for station in stations:
-        if station.name == station_name:
-            station_cam = station
-            break
-
-    # Check that station could be found. Return if not found.
-    if not station_cam:
-        print(f'Station {station_name} could not be found')
-        return None
-
-    # Alternative find station 'Cam' using the Python 'next' function
-    # (https://docs.python.org/3/library/functions.html#next). Raises
-    # an exception if station is not found.
-    # try:
-    #     station_cam = next(s for s in stations if s.name == station_name)
-    # except StopIteration:
-    #     print("Station {} could not be found".format(station_name))
-    #     return
+    try:
+        station_cam = next(s for s in stations if s.name == station_name)
+    except (UnboundLocalError, StopIteration):
+        print("Station {} could not be found".format(station_name))
+        return
 
     # Fetch data over past 2 days
     dt = 2
