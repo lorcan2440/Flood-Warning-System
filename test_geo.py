@@ -2,7 +2,8 @@
 Unit tests for the geo module.
 '''
 
-from floodsystem.geo import *
+from floodsystem.geo import stations_by_distance, stations_within_radius, rivers_with_station
+from floodsystem.geo import stations_by_river, rivers_by_station_number, display_stations_on_map
 from floodsystem.station import MonitoringStation
 from floodsystem.utils import flatten
 
@@ -75,8 +76,6 @@ def test_rivers_with_station():
 
 
 def test_stations_by_river():
-
-    import itertools
 
     stations = [
         MonitoringStation('station-1', None, None, None, None, 'river-A', None),

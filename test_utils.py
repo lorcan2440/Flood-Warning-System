@@ -1,6 +1,6 @@
 """Unit tests for the utils module"""
 
-from floodsystem.utils import *
+from floodsystem.utils import sorted_by_key, wgs84_to_web_mercator, flatten
 
 
 def test_sort():

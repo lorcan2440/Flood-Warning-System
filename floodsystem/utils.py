@@ -48,7 +48,7 @@ def wgs84_to_web_mercator(coord: tuple):
 def flatten(t: list):
 
     '''
-    Given a list of lists, returns a single list containing all 
+    Given a list of lists, returns a single list containing all
     the elements of each list in the original list. Also works
     with tuples (but not sets or dicts)
     '''

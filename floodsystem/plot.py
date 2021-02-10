@@ -5,7 +5,6 @@ for visualising level data over time.
 
 import datetime
 
-from .datafetcher import fetch_measure_levels
 from .station import MonitoringStation
 from .utils import flatten
 from matplotlib import pyplot as plt
@@ -18,7 +17,7 @@ def plot_water_levels(stations: list, dates: dict, levels: dict):
     a single MonitoringStation object or a list of them).
 
     Inputs:
-    
+
     stations, the stations to analyse
     (a list of MonitoringStation objects);
     dates, the dates at which to plot
@@ -34,7 +33,7 @@ def plot_water_levels(stations: list, dates: dict, levels: dict):
     assert all([isinstance(i, MonitoringStation) for i in stations])
     assert all([isinstance(i, datetime.datetime) for i in flatten(list(dates.values()))])
     assert all([isinstance(i, (float, int)) for i in flatten(list(levels.values()))])
-    
+
     # Discard any stations with bad range, dates or levels data
     stations, dates, levels = stations, dates, levels
 
@@ -49,7 +48,7 @@ def plot_water_levels(stations: list, dates: dict, levels: dict):
 
     for s in stations:
         plt.plot(dates[s.name], levels[s.name], label=s.name)
-            
+
     plt.xlabel('date')
     plt.ylabel('water level / $ m $')
     plt.xticks(rotation=45)

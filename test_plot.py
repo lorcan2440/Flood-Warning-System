@@ -2,11 +2,10 @@
 Unit tests for the plot module.
 '''
 
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from floodsystem.plot import plot_water_levels
 from floodsystem.station import MonitoringStation
-from floodsystem.stationdata import build_station_list
 
 
 def test_plot_water_levels():
@@ -17,21 +16,21 @@ def test_plot_water_levels():
         MonitoringStation('bad-station', None, None, None, None, None, None),
     ]
 
-    dates = {'Station 1' :
+    dates = {'Station 1':
         [datetime(2016, 12, 30), datetime(2017, 1, 1),
         datetime(2017, 1, 2), datetime(2017, 1, 3), datetime(2017, 1, 4), datetime(2017, 1, 5)],
-        'Station 2' :
+        'Station 2':
         [datetime(2016, 12, 30), datetime(2016, 12, 31), datetime(2017, 1, 1),
         datetime(2017, 1, 2), datetime(2017, 1, 3), datetime(2017, 1, 4), datetime(2017, 1, 5)],
-        'Bad Station' :
+        'Bad Station':
         [datetime(2016, 12, 30), datetime(2016, 12, 31), datetime(2017, 1, 1),
         datetime(2017, 1, 2), datetime(2017, 1, 3), datetime(2017, 1, 4), datetime(2017, 1, 5)]
     }
 
     levels = {
-        'Station 1' : [5, 5.5, 6.5, 4, 5, 7],
-        'Station 2' : [3, 5, 4, 7, 5, 5.4, 5],
-        'Bad Station' : [1, 2, 3, 4, 5, 6, 7]
+        'Station 1': [5, 5.5, 6.5, 4, 5, 7],
+        'Station 2': [3, 5, 4, 7, 5, 5.4, 5],
+        'Bad Station': [1, 2, 3, 4, 5, 6, 7]
     }
 
     setattr(stations[0], 'name', 'Station 1')
