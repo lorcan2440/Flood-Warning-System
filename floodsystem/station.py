@@ -1,16 +1,35 @@
-# Copyright (C) 2018 Garth N. Wells
-#
-# SPDX-License-Identifier: MIT
-"""
+'''
 This module provides a model for a monitoring station, and tools
 for manipulating/modifying station data
-"""
+'''
+
+def apply_property(cls):
+
+    def make_getter(name):
+        def getter(self):
+            return getattr(self, name)
+        return getter
+
+    def make_setter(name):
+        def setter(self, val):
+            setattr(self, name, val)
+        return setter
+
+    for f in cls._attrs:
+        getter = make_getter('__' + f)
+        setter = make_setter('__' + f)
+        setattr(cls, f, property(getter, setter))
+    return cls
 
 
+@apply_property
 class MonitoringStation:
-    """
+
+    '''
     This class represents a river level monitoring station
-    """
+    '''
+
+    _attrs = ['station_id', 'measure_id', 'name', 'coord', 'typical_range', 'river', 'town']
 
     def __init__(self, station_id, measure_id, label, coord, typical_range,
                  river, town):
@@ -31,6 +50,16 @@ class MonitoringStation:
 
         self.latest_level = None
 
+    '''
+    @property
+    def station_id(self):
+        return self.__station_id
+
+    @station_id.setter
+    def station_id(self, value):
+        self.__station_id = value
+    '''
+    
     def __repr__(self):
         d = "Station name:     {}\n".format(self.name)
         d += "   id:            {}\n".format(self.station_id)

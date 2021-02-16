@@ -1,11 +1,9 @@
-# Copyright (C) 2018 Garth N. Wells
-#
-# SPDX-License-Identifier: MIT
-"""
+'''
 This module provides functionality for retrieving real-time and
 latest time history level data
-"""
+'''
 
+# pylint: disable=assignment-from-no-return
 
 import datetime
 import json

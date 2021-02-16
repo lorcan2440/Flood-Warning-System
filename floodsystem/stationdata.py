@@ -1,10 +1,9 @@
-# Copyright (C) 2018 Garth N. Wells
-#
-# SPDX-License-Identifier: MIT
-"""
+'''
 This module provides interface for extracting station data from
 JSON objects fetched from the Internet and
-"""
+'''
+
+# pylint: disable=relative-beyond-top-level
 
 from . import datafetcher
 from .station import MonitoringStation

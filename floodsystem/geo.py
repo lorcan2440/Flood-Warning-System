@@ -1,11 +1,9 @@
-# Copyright (C) 2018 Garth N. Wells
-#
-# SPDX-License-Identifier: MIT
-
-"""
+'''
 This module contains a collection of functions related to
 geographical data.
-"""
+'''
+
+# pylint: disable=relative-beyond-top-level, no-name-in-module
 
 from .utils import sorted_by_key, wgs84_to_web_mercator
 from .haversine import haversine_vector, Unit
