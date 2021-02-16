@@ -4,7 +4,7 @@ for manipulating/modifying station data
 '''
 
 
-def apply_property(cls):
+def apply_properties(cls):
 
     def make_getter(name):
         def getter(self):
@@ -23,14 +23,14 @@ def apply_property(cls):
     return cls
 
 
-@apply_property
+@apply_properties
 class MonitoringStation:
 
     '''
     This class represents a river level monitoring station
     '''
 
-    # list of attributes to encapsulate
+    # List of attributes to encapsulate
     _attrs = ['station_id', 'measure_id', 'name', 'coord', 'typical_range', 'river', 'town']
 
     def __init__(self, station_id, measure_id, label, coord, typical_range,

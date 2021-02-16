@@ -19,7 +19,7 @@ test:
   - python Task1D.py
   - python Task1E.py
   - python Task1F.py
-  - python Task1x_Extension.py
+  - python TaskExtensions.py
 
   - python Task2A.py
   - python Task2B.py
