@@ -3,6 +3,7 @@ This module provides a model for a monitoring station, and tools
 for manipulating/modifying station data
 '''
 
+
 def apply_property(cls):
 
     def make_getter(name):
@@ -29,6 +30,7 @@ class MonitoringStation:
     This class represents a river level monitoring station
     '''
 
+    # list of attributes to encapsulate
     _attrs = ['station_id', 'measure_id', 'name', 'coord', 'typical_range', 'river', 'town']
 
     def __init__(self, station_id, measure_id, label, coord, typical_range,
@@ -50,16 +52,6 @@ class MonitoringStation:
 
         self.latest_level = None
 
-    '''
-    @property
-    def station_id(self):
-        return self.__station_id
-
-    @station_id.setter
-    def station_id(self, value):
-        self.__station_id = value
-    '''
-    
     def __repr__(self):
         d = "Station name:     {}\n".format(self.name)
         d += "   id:            {}\n".format(self.station_id)
