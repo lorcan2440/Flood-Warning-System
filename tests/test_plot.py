@@ -2,6 +2,9 @@
 Unit tests for the plot module.
 '''
 
+# pylint: disable=import-error
+
+import import_helper  # noqa
 from datetime import datetime
 
 from floodsystem.plot import plot_water_levels, plot_water_level_with_fit

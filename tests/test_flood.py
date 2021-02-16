@@ -2,6 +2,10 @@
 Unit tests for the flood module.
 '''
 
+# pylint: disable=import-error
+
+import import_helper  # noqa
+
 from floodsystem.flood import stations_level_over_threshold, stations_highest_rel_level
 from floodsystem.station import MonitoringStation
 

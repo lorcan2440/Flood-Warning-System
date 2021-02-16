@@ -3,7 +3,6 @@ from floodsystem.stationdata import build_station_list
 
 
 def run():
-    ''' Requirements for Task 1B '''
 
     # Obtain the 10 closest and furthest stations in (station, distance) format
     # where station is an instance of MonitoringStation

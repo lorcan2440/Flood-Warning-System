@@ -1,7 +1,3 @@
-# Copyright (C) 2018 Garth N. Wells
-#
-# SPDX-License-Identifier: MIT
-
 import datetime
 
 from floodsystem.datafetcher import fetch_measure_levels

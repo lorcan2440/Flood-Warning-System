@@ -3,6 +3,7 @@ from floodsystem.flood import stations_level_over_threshold
 
 
 def run():
+
     # Build list of stations
     stations = build_station_list()
     update_water_levels(stations)

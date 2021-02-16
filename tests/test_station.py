@@ -1,7 +1,10 @@
-# Copyright (C) 2018 Garth N. Wells
-#
-# SPDX-License-Identifier: MIT
-"""Unit tests for the station module"""
+'''
+Unit tests for the station module.
+'''
+
+# pylint: disable=import-error
+
+import import_helper  # noqa
 
 from floodsystem.station import inconsistent_typical_range_stations, MonitoringStation
 

@@ -2,6 +2,9 @@
 Unit tests for the analysis module.
 '''
 
+# pylint: disable=import-error
+
+import import_helper  # noqa
 from datetime import datetime as dt
 from matplotlib.dates import date2num
 import numpy as np

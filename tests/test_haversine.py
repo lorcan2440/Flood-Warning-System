@@ -4,6 +4,10 @@ Comparisons made to
 https://www.vcalc.com/wiki/vCalc/Haversine+-+Distance
 '''
 
+# pylint: disable=import-error
+
+import import_helper  # noqa
+
 from floodsystem.haversine import haversine, haversine_vector, Unit
 
 
