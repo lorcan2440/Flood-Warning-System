@@ -4,26 +4,6 @@ for manipulating/modifying station data
 '''
 
 
-def apply_properties(cls):
-
-    def make_getter(name):
-        def getter(self):
-            return getattr(self, name)
-        return getter
-
-    def make_setter(name):
-        def setter(self, val):
-            setattr(self, name, val)
-        return setter
-
-    for f in cls._attrs:
-        getter = make_getter('__' + f)
-        setter = make_setter('__' + f)
-        setattr(cls, f, property(getter, setter))
-    return cls
-
-
-@apply_properties
 class MonitoringStation:
 
     '''
@@ -36,31 +16,91 @@ class MonitoringStation:
     def __init__(self, station_id, measure_id, label, coord, typical_range,
                  river, town):
 
-        self.station_id = station_id
-        self.measure_id = measure_id
+        self.__station_id = station_id
+        self.__measure_id = measure_id
 
         # Handle case of erroneous data where data system returns
         # '[label, label]' rather than 'label'
-        self.name = label
+        self.__name = label
         if isinstance(label, list):
-            self.name = label[0]
+            self.__name = label[0]
 
-        self.coord = coord
-        self.typical_range = typical_range
-        self.river = river
-        self.town = town
+        self.__coord = coord
+        self.__typical_range = typical_range
+        self.__river = river
+        self.__town = town
 
         self.latest_level = None
 
     def __repr__(self):
-        d = "Station name:     {}\n".format(self.name)
-        d += "   id:            {}\n".format(self.station_id)
-        d += "   measure id:    {}\n".format(self.measure_id)
-        d += "   coordinate:    {}\n".format(self.coord)
-        d += "   town:          {}\n".format(self.town)
-        d += "   river:         {}\n".format(self.river)
-        d += "   typical range: {}".format(self.typical_range)
+        d = "Station name:     {}\n".format(self.__name)
+        d += "   id:            {}\n".format(self.__station_id)
+        d += "   measure id:    {}\n".format(self.__measure_id)
+        d += "   coordinate:    {}\n".format(self.__coord)
+        d += "   town:          {}\n".format(self.__town)
+        d += "   river:         {}\n".format(self.__river)
+        d += "   typical range: {}".format(self.__typical_range)
         return d
+
+    # Class methods - make setters private to this class
+
+    @property
+    def station_id(self):
+        return self.__station_id
+
+    @station_id.setter
+    def station_id(self, value):
+        self.__station_id = value
+
+    @property
+    def measure_id(self):
+        return self.__measure_id
+
+    @measure_id.setter
+    def measure_id(self, value):
+        self.__measure_id = value
+
+    @property
+    def name(self):
+        return self.__name
+
+    @name.setter
+    def name(self, value):
+        self.__name = value
+
+    @property
+    def coord(self):
+        return self.__coord
+
+    @coord.setter
+    def coord(self, value):
+        self.__coord = value
+
+    @property
+    def typical_range(self):
+        return self.__typical_range
+
+    @typical_range.setter
+    def typical_range(self, value):
+        self.__typical_range = value
+
+    @property
+    def river(self):
+        return self.__river
+
+    @river.setter
+    def river(self, value):
+        self.__river = value
+
+    @property
+    def town(self):
+        return self.__town
+
+    @town.setter
+    def town(self, value):
+        self.__town = value
+
+    # Regular methods
 
     def typical_range_consistent(self):
 
@@ -71,8 +111,8 @@ class MonitoringStation:
         '''
 
         try:
-            low_val = self.typical_range[0]
-            high_val = self.typical_range[1]
+            low_val = self.__typical_range[0]
+            high_val = self.__typical_range[1]
             if low_val is None or high_val is None or low_val > high_val:
                 # One of the entries was a NoneType,
                 # or it was in the wrong order
@@ -95,8 +135,8 @@ class MonitoringStation:
 
         try:
             if self.typical_range_consistent():
-                level_diff = self.typical_range[1] - self.typical_range[0]
-                return (self.latest_level - self.typical_range[0]) / level_diff
+                level_diff = self.__typical_range[1] - self.__typical_range[0]
+                return (self.latest_level - self.__typical_range[0]) / level_diff
             else:
                 return None
         except Exception:
