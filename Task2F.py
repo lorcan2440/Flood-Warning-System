@@ -1,9 +1,13 @@
-import datetime
+import datetime, warnings
 
 from floodsystem.datafetcher import fetch_measure_levels
 from floodsystem.stationdata import build_station_list, update_water_levels
 from floodsystem.flood import stations_highest_rel_level
 from floodsystem.plot import plot_water_level_with_fit
+
+
+''' ignore warnings '''
+#warnings.simplefilter()
 
 
 def run():
@@ -36,7 +40,7 @@ def run():
         levels.update({s.name: data[1]})
 
         if s.name in flags:
-            print(f'Warning: the data for {s.name} may be unreliable.')
+            warnings.warn(f'Warning: The data for {s.name} may be unreliable.', RuntimeWarning)
 
         # Plot the graphs
         plot_water_level_with_fit(s, dates[s.name], levels[s.name], p, format_dates=False)

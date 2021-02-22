@@ -1,16 +1,19 @@
-import datetime
+import datetime, warnings
 
 from floodsystem.datafetcher import fetch_measure_levels
 from floodsystem.stationdata import build_station_list, update_water_levels
 from floodsystem.flood import stations_highest_rel_level
 from floodsystem.plot import plot_water_levels
 
+''' ignore warnings '''
+#warnings.simplefilter()
+
 
 def run():
 
     # Set input parameters
     N = 5  # top 5 stations
-    dt = datetime.timedelta(30)  # 10 days
+    dt = datetime.timedelta(10)  # 10 days
 
     # Build list of stations with the highest current relative water levels
     stations = build_station_list()
@@ -35,7 +38,7 @@ def run():
         levels.update({s.name: data[1]})
 
     for s in set(flags):
-        print(f'Warning: the data for {s} may be unreliable.')
+        warnings.warn(f'Warning: The data for {s} may be unreliable.', RuntimeWarning)
 
     # Plot the graphs
     plot_water_levels(high_stations, dates, levels)
