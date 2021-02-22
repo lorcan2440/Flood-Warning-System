@@ -19,11 +19,26 @@ def run():
     high_stations = stations_highest_rel_level(stations, N)
 
     # Fetch the dates and levels from each station and plot each
+    flags = []
     dates, levels = {}, {}
     for s in high_stations:
         data = fetch_measure_levels(s.measure_id, dt)
+        # Sanitise input data
+        for index in range(len(data[1])):
+            if not isinstance(data[1][index], float):
+                data[1][index] = data[1][index][1]
+                flags.append(s.name)
+            if data[1][index] < 0:
+                data[1][index] = data[1][index - 1]
+                flags.append(s.name)
+
         dates.update({s.name: data[0]})
         levels.update({s.name: data[1]})
+
+        if s.name in flags:
+            print(f'Warning: the data for {s.name} may be unreliable.')
+
+        # Plot the graphs
         plot_water_level_with_fit(s, dates[s.name], levels[s.name], p, format_dates=False)
 
 

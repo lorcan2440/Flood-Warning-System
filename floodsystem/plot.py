@@ -3,6 +3,8 @@ This module provides graphing functionality
 for visualising level data over time.
 """
 
+# pylint: disable=relative-beyond-top-level
+
 import datetime
 import numpy as np
 from matplotlib import pyplot as plt

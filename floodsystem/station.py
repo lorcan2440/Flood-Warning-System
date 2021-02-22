@@ -30,7 +30,7 @@ class MonitoringStation:
         self.__river = river
         self.__town = town
 
-        self.latest_level = None
+        self.__latest_level = None
 
     def __repr__(self):
         d = "Station name:     {}\n".format(self.__name)
@@ -100,7 +100,15 @@ class MonitoringStation:
     def town(self, value):
         self.__town = value
 
-    # Regular methods
+    @property
+    def latest_level(self):
+        return self.__latest_level
+
+    @latest_level.setter
+    def latest_level(self, value):
+        self.__latest_level = value
+
+    # Bound (regular) methods
 
     def typical_range_consistent(self):
 
@@ -136,7 +144,7 @@ class MonitoringStation:
         try:
             if self.typical_range_consistent():
                 level_diff = self.__typical_range[1] - self.__typical_range[0]
-                return (self.latest_level - self.__typical_range[0]) / level_diff
+                return (self.__latest_level - self.__typical_range[0]) / level_diff
             else:
                 return None
         except Exception:
