@@ -4,11 +4,11 @@ from floodsystem.flood import stations_highest_rel_level
 
 def run():
 
-    # Build list of stations
+    # Build and update list of stations
     stations = build_station_list()
     update_water_levels(stations)
 
-    # Update latest level data for all stations
+    # Fetch the highest 10 stations by relative level
     N = 10
     high_stations = stations_highest_rel_level(stations, N)
 

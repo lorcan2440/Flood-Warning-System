@@ -15,7 +15,7 @@ from .utils import flatten
 from .analysis import polyfit
 
 
-def plot_water_levels(stations: list, dates: dict, levels: dict):
+def plot_water_levels(stations: list, dates: dict, levels: dict, y_axis_from_zero: bool = True):
 
     '''
     Plots graph(s) of the level data in stations (which may be
@@ -54,16 +54,18 @@ def plot_water_levels(stations: list, dates: dict, levels: dict):
     for s in stations:
         plt.plot(dates[s.name], levels[s.name], label=s.name)
 
+    if y_axis_from_zero:
+        plt.ylim(ymin=0)
     plt.xlabel('date')
     plt.ylabel('water level / $ m $')
     plt.xticks(rotation=45)
-    plt.legend(loc='upper right')
+    plt.legend(loc='upper left')
     plt.tight_layout()
     plt.show()
 
 
 def plot_water_level_with_fit(station: object, dates: list, levels: list, p: int,
-        n_points: int = 30, format_dates: bool = False):
+        n_points: int = 30, format_dates: bool = False, y_axis_from_zero: bool = True):
 
     # Get a polynomial function fitting the data, the offset, and the original dataset.
     poly, d0, date_nums = polyfit(dates, levels, p)
@@ -94,8 +96,10 @@ def plot_water_level_with_fit(station: object, dates: list, levels: list, p: int
         plt.plot(date_nums[-1], levels[-1], label='(typical range' + '\n' + 'unavailable)')
 
     # graphical
+    if y_axis_from_zero:
+        plt.ylim(ymin=0)
     plt.xlabel('date')
     plt.ylabel('water level / $ m $')
-    plt.legend(loc='upper right')
+    plt.legend(loc='upper left')
     plt.tight_layout()
     plt.show()

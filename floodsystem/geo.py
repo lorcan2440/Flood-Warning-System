@@ -11,7 +11,7 @@ from .station import MonitoringStation
 
 from bokeh.plotting import figure, output_file, show
 from bokeh.models import ColumnDataSource
-from bokeh.tile_providers import CARTODBPOSITRON, get_provider
+from bokeh.tile_providers import STAMEN_TERRAIN_RETINA, get_provider
 
 
 def stations_by_distance(stations: list, p: tuple):
@@ -143,7 +143,7 @@ def display_stations_on_map(stations, with_details=True, return_image=False):
 
     # setup, and convert coordinates to compatible form used by bokeh
     output_file("tile.html")
-    tile_provider = get_provider(CARTODBPOSITRON)
+    tile_provider = get_provider(STAMEN_TERRAIN_RETINA)
     trans_coords = [wgs84_to_web_mercator(station.coord) for station in stations]
 
     # range bounds supplied in web mercator coordinates
