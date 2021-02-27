@@ -5,6 +5,7 @@ for visualising level data over time.
 
 # pylint: disable=relative-beyond-top-level
 
+import math
 import datetime
 import numpy as np
 from matplotlib import pyplot as plt
@@ -15,7 +16,7 @@ from .utils import flatten
 from .analysis import polyfit
 
 
-def plot_water_levels(stations: list, dates: dict, levels: dict, y_axis_from_zero: bool = True):
+def plot_water_levels(stations: list, dates: dict, levels: dict, as_subplots: bool = False):
 
     '''
     Plots graph(s) of the level data in stations (which may be
@@ -51,16 +52,43 @@ def plot_water_levels(stations: list, dates: dict, levels: dict, y_axis_from_zer
     # After removals, check sizes of lists are valid
     assert len(list(levels.keys())) == len(stations)
 
-    for s in stations:
-        plt.plot(dates[s.name], levels[s.name], label=s.name)
+    if as_subplots:
 
-    if y_axis_from_zero:
+        y = math.ceil(len(stations) / 2)
+        x = round(len(stations) / y)
+
+        fig, axs = plt.subplots(x, y, figsize=(12, 6))
+
+        for i in range(y):
+            axs[0][i].plot(list(dates.values())[i], list(levels.values())[i])
+            axs[0][i].set_title(stations[i].name)
+            axs[0][i].set_xlabel('dates')
+            axs[0][i].set_ylabel('water level / $ m $')
+            axs[0][i].tick_params(axis='x', rotation=30)
+
+        for i in range(y - (len(stations) % 2)):
+            axs[1][i].plot(list(dates.values())[i + y], list(levels.values())[i + y])
+            axs[1][i].set_title(stations[i + y].name)
+            axs[1][i].set_xlabel('dates')
+            axs[1][i].set_ylabel('water level / $ m $')
+            axs[1][i].tick_params(axis='x', rotation=30)
+
+        plt.setp(axs, ylim=(0, 0.5 + max(flatten(list(levels.values())))))
+        fig.tight_layout()
+        fig.show()
+
+    else:
+
+        for s in stations:
+            plt.plot(dates[s.name], levels[s.name], label=s.name)
+
         plt.ylim(ymin=0)
-    plt.xlabel('date')
-    plt.ylabel('water level / $ m $')
-    plt.xticks(rotation=45)
-    plt.legend(loc='upper left')
-    plt.tight_layout()
+        plt.xlabel('date')
+        plt.ylabel('water level / $ m $')
+        plt.xticks(rotation=45)
+        plt.legend(loc='upper left')
+        plt.tight_layout()
+
     plt.show()
 
 
