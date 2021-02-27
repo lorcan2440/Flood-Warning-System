@@ -67,7 +67,7 @@ def rivers_with_station(stations: list):
     assert all([isinstance(i, MonitoringStation) for i in stations])
 
     # Set (comprehension) to skip over/remove duplicates
-    rivers = {s.river.strip() for s in stations}
+    rivers = {s.river for s in stations}
 
     return rivers
 
@@ -112,26 +112,15 @@ def rivers_by_station_number(stations: list, N: int):
     river_names = rivers_with_station(stations)
     river_dict = stations_by_river(stations)
 
-    # Get a complete list of (river name, number of stations) tuples,
-    # sorted in decreasing order by number of stations
-    river_num_list = sorted([(r, len(river_dict[r])) for r in river_names],
-                            key=lambda x: x[1], reverse=True)
+    # Get a complete list of (river name, number of stations) tuples, sorted descending
+    river_num_list = sorted_by_key([(r, len(river_dict[r])) for r in river_names], 1, reverse=True)
 
-    # Find the number of stations which is N from the highest, accounting
-    # for possible duplicates by removing them with the set constructor.
+    # Find the number of stations which is N from the highest, accounting for possible duplicates
     end_num = sorted(list({r[1] for r in river_num_list}), reverse=True)[N - 1]
 
-    # Starting from the river with the most stations and working down,
-    # add the (river name, number of stations) tuple to the list until
+    # Add the (river name, number of stations) tuple to the list until
     # the number of stations is less than the previously found limit
-    rivers_list = []
-    for (r, n) in river_num_list:
-        if n >= end_num:
-            rivers_list.append((r, n))
-        else:
-            break
-
-    return rivers_list
+    return [(r, n) for (r, n) in river_num_list if n >= end_num]
 
 
 def display_stations_on_map(stations, with_details=True, return_image=False):
@@ -142,7 +131,7 @@ def display_stations_on_map(stations, with_details=True, return_image=False):
     '''
 
     # setup, and convert coordinates to compatible form used by bokeh
-    output_file("tile.html")
+    output_file("tile.html", title='Monitoring Stations across England')
     tile_provider = get_provider(STAMEN_TERRAIN_RETINA)
     trans_coords = [wgs84_to_web_mercator(station.coord) for station in stations]
 
@@ -155,7 +144,10 @@ def display_stations_on_map(stations, with_details=True, return_image=False):
     source = ColumnDataSource(data=dict(
         lat             = [station.coord[0] for station in stations],       # noqa
         long            = [station.coord[1] for station in stations],       # noqa
+        name            = [station.name for station in stations],           # noqa
         typical_range   = [station.typical_range for station in stations],  # noqa
+        current_level   = [station.latest_level for station in stations],   # noqa
+        relative_level  = [station.relative_water_level() for station in stations],     # noqa
         river           = [station.river for station in stations],          # noqa
         town            = [station.town for station in stations],           # noqa
         x_coord         = [x[0] for x in trans_coords],                     # noqa
@@ -170,9 +162,9 @@ def display_stations_on_map(stations, with_details=True, return_image=False):
     if with_details:
         from bokeh.models import HoverTool
         my_hover = HoverTool()
-        my_hover.tooltips = [('Latitude', '@lat'), ('Longitude', '@long'),
-                            ('Typical range', '@typical_range'), ('River', '@river'),
-                            ('Town', '@town')]
+        my_hover.tooltips = [('Name', '@name'), ('Current level', '@current_level'),
+                            ('Typical range', '@typical_range'), ('Relative level', '@relative_level'),
+                            ('River', '@river'), ('Town', '@town')]
         p.add_tools(my_hover)
 
     # return the Figure object if required,

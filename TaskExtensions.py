@@ -15,13 +15,14 @@ https://www.youtube.com/watch?v=dzmYoSzL8ok
 https://stackoverflow.com/questions/32041706/function-to-define-the-property-for-multiple-attributes
 '''
 
-from floodsystem.stationdata import build_station_list
+from floodsystem.stationdata import build_station_list, update_water_levels
 from floodsystem.geo import display_stations_on_map
 
 
 def run():
 
     stations = build_station_list()
+    update_water_levels(stations)
     display_stations_on_map(stations)
 
 
