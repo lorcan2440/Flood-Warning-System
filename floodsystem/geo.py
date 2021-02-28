@@ -173,21 +173,15 @@ def display_stations_on_map(stations, with_details=True, return_image=False):
     p.add_tile(tile_provider)
 
     # populate a ColumnDataSource (Pandas DataFrame-like object) of the information in each station
-    source = ColumnDataSource(data=dict(
-        lat             = [station.coord[0] for station in stations],       # noqa
-        long            = [station.coord[1] for station in stations],       # noqa
-        name            = [station.name for station in stations],           # noqa
-        typical_range   = [station.typical_range for station in stations],  # noqa
-        current_level   = [station.latest_level for station in stations],   # noqa
-        relative_level  = [station.relative_water_level() for station in stations],     # noqa
-        river           = [station.river for station in stations],          # noqa
-        town            = [station.town for station in stations],           # noqa
-        x_coord         = [x[0] for x in trans_coords],                     # noqa
-        y_coord         = [x[1] for x in trans_coords])                     # noqa
-    )                                                                       # noqa
+    info = [(s.coord[0], s.coord[1], s.name, s.typical_range, s.latest_level, s.relative_water_level(),
+        s.river, s.town, x[0], x[1]) for s, x in zip(stations, trans_coords)]
+
+    source = ColumnDataSource(
+        {k: v for k, v in zip(['lat', 'long', 'name', 'typical_range', 'current_level',
+        'relative_level', 'river', 'town', 'x_coord', 'y_coord'], list(zip(*info)))})
 
     # add a circle to the map, referencing the ColumnDataSource
-    p.circle(x="x_coord", y="y_coord", size=15, fill_color="blue", fill_alpha=0.8, source=source)
+    p.circle(x="x_coord", y="y_coord", size=8, fill_color="blue", fill_alpha=0.8, source=source)
 
     # if details are wanted, initialise a HoverTool
     # and add the necessary parameters to display when activated

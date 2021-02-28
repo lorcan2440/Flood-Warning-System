@@ -58,8 +58,7 @@ def fetch_station_data(use_cache=True):
         pass
     cache_file = os.path.join(sub_dir, 'station_data.json')
 
-    # Attempt to load station data from file, otherwise fetch over
-    # Internet
+    # Attempt to load station data from file, otherwise fetch over Internet
     if use_cache:
         try:
             # Attempt to load from file
