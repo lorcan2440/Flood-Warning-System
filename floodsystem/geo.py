@@ -123,6 +123,38 @@ def rivers_by_station_number(stations: list, N: int):
     return [(r, n) for (r, n) in river_num_list if n >= end_num]
 
 
+def stations_by_town(stations):
+
+    '''
+    Returns a dictionary, where the key is the name
+    of a town and the value is a list of all the
+    MonitoringStation objects located in that town.
+    '''
+
+    # Standard data type input checks
+    assert all([isinstance(i, MonitoringStation) for i in stations])
+
+    # Get a set of all the towns from all the stations, removing duplicates
+    towns = {s.town for s in stations}
+
+    # For each town listed, add all its associated stations.
+    town_dict = {}
+    for town in towns:
+        pair = {town: [s for s in stations if s.town == town
+        and s.latest_level is not None and s.typical_range_consistent()]}
+        town_dict.update(pair)
+
+    # Remove the stations which do not have an associated town, and
+    # remove the towns which do not have any associated stations
+    town_dict.pop(None, None)
+    for town, stations in town_dict.copy().items():
+        if town_dict[town] in [None, [], [None]]:
+            del town_dict[town]
+
+    # Sort the dictionary by the number of stations each town contains
+    return {t: s for t, s in sorted(town_dict.items(), key=lambda x: len(x[1]), reverse=True)}
+
+
 def display_stations_on_map(stations, with_details=True, return_image=False):
 
     '''

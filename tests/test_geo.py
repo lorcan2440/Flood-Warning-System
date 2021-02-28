@@ -8,6 +8,7 @@ import import_helper  # noqa
 
 from floodsystem.geo import stations_by_distance, stations_within_radius, rivers_with_station
 from floodsystem.geo import stations_by_river, rivers_by_station_number, display_stations_on_map
+from floodsystem.geo import stations_by_town
 from floodsystem.station import MonitoringStation
 from floodsystem.utils import flatten
 
@@ -136,6 +137,44 @@ def test_rivers_by_station_number():
     # Check against the expected result, ignoring differences due to ordering of rivers
     # with equal numbers of stations
     assert set(rivers_list) == {('river-C', 3), ('river-A', 2), ('river-B', 3), ('river-D', 3)}
+
+
+def test_stations_by_town():
+
+    stations = [
+        MonitoringStation(None, None, 'station-1', None, None, None, 'town-A'),
+        MonitoringStation(None, None, 'station-2', None, None, None, 'town-A'),
+        MonitoringStation(None, None, 'bad-station-1', None, None, None, 'town-A'),
+        MonitoringStation(None, None, 'station-3', None, None, None, 'town-B'),
+        MonitoringStation(None, None, 'bad-station-2', None, None, None, 'town-B'),
+        MonitoringStation(None, None, 'station-4', None, None, None, None),
+        MonitoringStation(None, None, None, None, None, None, None)
+    ]
+
+    setattr(stations[0], 'latest_level', 10)
+    setattr(stations[1], 'latest_level', 10)
+    setattr(stations[2], 'latest_level', None)
+    setattr(stations[3], 'latest_level', 10)
+    setattr(stations[4], 'latest_level', 10)
+    setattr(stations[5], 'latest_level', 10)
+    setattr(stations[6], 'latest_level', 10)
+
+    setattr(stations[0], 'typical_range', (5, 15))
+    setattr(stations[1], 'typical_range', (5, 15))
+    setattr(stations[2], 'typical_range', (5, 15))
+    setattr(stations[3], 'typical_range', (5, 15))
+    setattr(stations[4], 'typical_range', None)
+    setattr(stations[5], 'typical_range', (5, 15))
+    setattr(stations[6], 'typical_range', (5, 15))
+
+    town_dict = stations_by_town(stations)
+
+    # Check town-A has the correct stations, and remove it
+    assert set(town_dict.pop('town-A')) == {stations[0], stations[1]}
+    # Check town-B has the correct stations, and remove it
+    assert set(town_dict.pop('town-B')) == {stations[3]}
+    # Check there is only an empty set left
+    assert town_dict == {} and town_dict is not None
 
 
 def test_display_stations_on_map():

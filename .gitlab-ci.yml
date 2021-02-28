@@ -27,3 +27,4 @@ test:
   - python Task2D.py
   - python Task2E.py
   - python Task2F.py
+  - python Task2G.py
