@@ -14,7 +14,7 @@ def run():
     bad_stations = sorted(inconsistent_typical_range_stations(stations), key=lambda s: s.name)
 
     if len(bad_stations) > 1:
-        print('The stations with bad range data are: \n')
+        print(f'The {len(bad_stations)} stations with bad range data are: \n')
     elif len(bad_stations) == 1:
         print('The station with bad range data is: \n')
     elif len(bad_stations) == 0:

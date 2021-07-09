@@ -156,45 +156,78 @@ def stations_by_town(stations):
 
 
 def display_stations_on_map(stations, with_details=True, return_image=False):
-
+    
     '''
     Shows a map of the stations across the UK. Uses Bokeh:
     https://docs.bokeh.org/en/latest/docs/user_guide/geo.html
     '''
 
-    # setup, and convert coordinates to compatible form used by bokeh
+    # inputs and outputs
+    map_range = ((59, -12), (49, 4))  # (lat, long) coords of the map boundary
     output_file("tile.html", title='Monitoring Stations across England')
-    tile_provider = get_provider(STAMEN_TERRAIN_RETINA)
-    trans_coords = [wgs84_to_web_mercator(station.coord) for station in stations]
 
-    # range bounds supplied in web mercator coordinates
-    p = figure(x_range=(-1000000, 200000), y_range=(6250000, 8180000),
-            x_axis_type="mercator", y_axis_type="mercator")  # noqa
+    station_info = []
+    for i, s in enumerate(stations):
+        l = s.relative_water_level()
+        station_info.append(
+        {"coords" : s.coord, "name": s.name, "current_level": s.latest_level, 
+         "typical_range": s.typical_range, "relative_level": l,
+         "river": s.river, "town": s.town})
+
+        try:
+            station_info[i]["rating"] = (0 if l > 2 else      # red
+                                         1 if l > 1.5 else    # orange
+                                         2 if l > 1.25 else   # yellow
+                                         3 if l > 0.9 else    # light green
+                                         4)                   # green
+        except TypeError:
+            station_info[i]["rating"] = -1  # unknown: data was invalid / nonexistent - grey
+
+    # choose a map design: http://docs.bokeh.org/en/1.3.2/docs/reference/tile_providers.html
+    tile_provider = get_provider(STAMEN_TERRAIN_RETINA)
+    
+    # setup
+    w = wgs84_to_web_mercator
+    letter = lambda lat, long: ('N' if lat >= 0 else 'S', 'E' if long >= 0 else 'W')
+
+    # colours: # https://docs.bokeh.org/en/latest/docs/reference/colors.html
+    colors = ["red", "darkorange", "yellow", "yellowgreen", "mediumseagreen", "darkgray"] 
+    linecolors = ["brown", "chocolate", "darkkhaki", "mediumseagreen", "green", "gainsboro"]
+    trans_coords = [w(place["coords"]) for place in station_info]  # transform the coords of the given places
+    x_range, y_range = (w(map_range[0])[0], w(map_range[1])[0]), (w(map_range[0])[1], w(map_range[1])[1])  # coords of map boundary
+    
+    # define figure
+    p = figure(x_range=x_range, y_range=y_range, x_axis_type="mercator", y_axis_type="mercator")
     p.add_tile(tile_provider)
 
-    # populate a ColumnDataSource (Pandas DataFrame-like object) of the information in each station
-    info = [(s.coord[0], s.coord[1], s.name, s.typical_range, s.latest_level, s.relative_water_level(),
-        s.river, s.town, x[0], x[1]) for s, x in zip(stations, trans_coords)]
+    # populate a ColumnDataSource (Pandas DataFrame-like object) of the information in each place
+    info = [(abs(p["coords"][0]), abs(p["coords"][1]),  # coordinates of a place
+        letter(p["coords"][0], p["coords"][1])[0],      # appropriate letter for each lat/long coord
+        letter(p["coords"][0], p["coords"][1])[1],
+        p["name"], p["current_level"], p["typical_range"], p["relative_level"],  # additional attributes of a place
+        p["river"], p["town"], 
+        colors[p["rating"]], linecolors[p["rating"]], # color based on rating attribute
+        x[0], x[1]) for p, x in zip(station_info, trans_coords)]  # transformed coords
 
     source = ColumnDataSource(
-        {k: v for k, v in zip(['lat', 'long', 'name', 'typical_range', 'current_level',
-        'relative_level', 'river', 'town', 'x_coord', 'y_coord'], list(zip(*info)))})
+        {k: v for k, v in zip(['lat', 'long', 'ns', 'ew',  # coords
+            'name', 'current_level', 'typical_range', 'relative_level', 'river', 'town',  # additional attributes of a place
+            'color', 'linecolor', 'x_coord', 'y_coord'], list(zip(*info)))})  # transformed coords
 
-    # add a circle to the map, referencing the ColumnDataSource
-    p.circle(x="x_coord", y="y_coord", size=8, fill_color="blue", fill_alpha=0.8, source=source)
+    # add a circle to the map, referencing the colours in the ColumnDataSource
+    p.circle(x="x_coord", y="y_coord", size=10,
+             fill_color="color", line_color="linecolor",
+             fill_alpha=0.8, source=source)
 
-    # if details are wanted, initialise a HoverTool
-    # and add the necessary parameters to display when activated
+    # initialise a HoverTool and add the necessary parameters to display when activated
     if with_details:
         from bokeh.models import HoverTool
         my_hover = HoverTool()
         my_hover.tooltips = [('Name', '@name'), ('Current level', '@current_level'),
                             ('Typical range', '@typical_range'), ('Relative level', '@relative_level'),
-                            ('River', '@river'), ('Town', '@town')]
+                            ('River', '@river'), ('Town', '@town'), ('Coords', '(@lat °@ns, @long °@ew)')]
         p.add_tools(my_hover)
 
-    # return the Figure object if required,
-    # or show the interactive map by running the generated HTML file in a browser
     if return_image:
         return p
     else:

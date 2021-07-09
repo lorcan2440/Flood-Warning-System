@@ -31,7 +31,7 @@ def run():
 
     exclude = ['low']
     for tier in towns_by_severity:
-        if tier not in exclude:
+        if tier not in exclude and not towns_by_severity[tier] == []:
             print(f'''Towns with a "{tier.upper()}" level flood warning are:
                 \n{towns_by_severity[tier]} \n''')
 
