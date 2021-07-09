@@ -1,4 +1,5 @@
-''' Info sources:
+''' 
+Info sources:
 
 Extension 1.1, 2.1 and 2.2: Bokeh maps
 
