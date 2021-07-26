@@ -225,7 +225,7 @@ def display_stations_on_map(stations, with_details=True, return_image=False):
         my_hover = HoverTool()
         my_hover.tooltips = [('Name', '@name'), ('Current level', '@current_level'),
                             ('Typical range', '@typical_range'), ('Relative level', '@relative_level'),
-                            ('River', '@river'), ('Town', '@town'), ('Coords', '(@lat °@ns, @long °@ew)')]
+                            ('River', '@river'), ('Town', '@town'), ('Coords', '(@lat° @ns, @long° @ew)')]
         p.add_tools(my_hover)
 
     if return_image:
