@@ -35,20 +35,20 @@ jobs:
 
       - name: Run Deliverable 1 code
         run: |
-          python Task1A.py
-          python Task1B.py
-          python Task1C.py
-          python Task1D.py
-          python Task1E.py
-          python Task1F.py
+          python tasks/Task1A.py
+          python tasks/Task1B.py
+          python tasks/Task1C.py
+          python tasks/Task1D.py
+          python tasks/Task1E.py
+          python tasks/Task1F.py
       - name: Run Deliverable 2 code
         run: |
-          python Task2A.py
-          python Task2B.py
-          python Task2C.py
-          python Task2D.py
-          python Task2E.py
-          python Task2F.py
-          python Task2G.py
+          python tasks/Task2A.py
+          python tasks/Task2B.py
+          python tasks/Task2C.py
+          python tasks/Task2D.py
+          python tasks/Task2E.py
+          python tasks/Task2F.py
+          python tasks/Task2G.py
       - name: Run Map Viewer code
         run: python MapViewer.py
