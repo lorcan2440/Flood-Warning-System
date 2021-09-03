@@ -221,7 +221,7 @@ def display_stations_on_map(stations, return_image=False):
     # add a circle to the map, referencing the colours in the ColumnDataSource
     p.circle(x="x_coord", y="y_coord", size=10,
              fill_color="color", line_color="linecolor",
-             fill_alpha=0.4, hover_alpha=1, source=source)
+             fill_alpha=0.75, hover_alpha=1, source=source)
 
     # clicking on a circle will open the official page for that station
     # NOTE: ensure bokeh version >= 2.3.3, as previous versions contained a bug:
