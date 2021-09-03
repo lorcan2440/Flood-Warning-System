@@ -1,13 +1,9 @@
 cache/
-
+.pytest_cache/
 __pycache__/
 
 *.pyc
-
-bokeh_plot.png
-
 *.bak
 *~
 .DS_Store
-
 .vscode/

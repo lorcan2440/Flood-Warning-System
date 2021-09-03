@@ -10,6 +10,7 @@ from .station import MonitoringStation
 
 
 def build_station_list(use_cache=True):
+
     """
     Build and return a list of all river level monitoring stations
     based on data fetched from the Environment agency. Each station is
@@ -52,18 +53,21 @@ def build_station_list(use_cache=True):
                 coord=(float(e['lat']), float(e['long'])),
                 typical_range=typical_range,
                 river=river,
-                town=town)
+                town=town,
+                url_id=e.get('RLOIid', ''))
             stations.append(s)
         except Exception:
-            # Not all required data on the station was available, so
-            # skip over
+            # Some essential inputs were not available, so skip over
             pass
 
     return stations
 
 
 def update_water_levels(stations):
-    """Attach level data contained in measure_data to stations"""
+
+    """
+    Attach level data contained in measure_data to stations.
+    """
 
     # Fetch level data
     measure_data = datafetcher.fetch_latest_water_level_data()

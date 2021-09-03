@@ -58,7 +58,7 @@ def stations_highest_rel_level(stations, N):
 
     # Get a descending list of stations with a known level (implemented as being above
     # an effective -infinity) and select the first N objects
-    _NEG_INF = -1e300
+    _NEG_INF = float('-inf')
     valid_stations = stations_level_over_threshold(stations, _NEG_INF)
 
     if not 0 <= N <= len(valid_stations):

@@ -1,3 +1,6 @@
+# pylint: disable=import-error
+import import_helper  # noqa
+
 import numpy as np
 
 from floodsystem.stationdata import build_station_list, update_water_levels
@@ -18,9 +21,9 @@ def run():
 
     towns_by_severity = {'severe': [], 'high': [], 'moderate': [], 'low': []}
     for t in town_danger_level:
-        if town_danger_level[t] < 0.9:
+        if town_danger_level[t] < 0.75:
             towns_by_severity['low'].append(t)
-        elif 0.9 <= town_danger_level[t] < 1.5:
+        elif 0.75 <= town_danger_level[t] < 1.5:
             towns_by_severity['moderate'].append(t)
         elif 1.5 <= town_danger_level[t] < 2:
             towns_by_severity['high'].append(t)

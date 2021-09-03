@@ -1,3 +1,6 @@
+# pylint: disable=import-error
+import import_helper  # noqa
+
 import datetime
 
 from floodsystem.datafetcher import fetch_measure_levels
@@ -10,7 +13,7 @@ def run():
     stations = build_station_list()
 
     # Station name to find
-    station_name = "Cam"
+    station_name = "Thing"
 
     # Find station
     try:

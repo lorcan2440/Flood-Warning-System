@@ -10,105 +10,37 @@ class MonitoringStation:
     This class represents a river level monitoring station
     '''
 
-    # List of attributes to encapsulate
-    _attrs = ['station_id', 'measure_id', 'name', 'coord', 'typical_range', 'river', 'town']
+    def __init__(self, station_id: str, measure_id: str, label: str, coord: tuple[float],
+                 typical_range: tuple[float], river: str, town: str, url_id: str = ''):
 
-    def __init__(self, station_id, measure_id, label, coord, typical_range,
-                 river, town):
-
-        self.__station_id = station_id
-        self.__measure_id = measure_id
+        self.station_id = station_id
+        self.measure_id = measure_id
 
         # Handle case of erroneous data where data system returns
         # '[label, label]' rather than 'label'
-        self.__name = label
+        self.name = label
         if isinstance(label, list):
-            self.__name = label[0]
+            self.name = label[0]
 
-        self.__coord = coord
-        self.__typical_range = typical_range
-        self.__river = river
-        self.__town = town
+        self.coord = coord
+        self.typical_range = typical_range
+        self.river = river
+        self.town = town
+        self.url = "https://check-for-flooding.service.gov.uk/station/" + url_id
 
-        self.__latest_level = None
+        self.latest_level = None
 
     def __repr__(self):
-        d = "Station name:     {}\n".format(self.__name)
-        d += "   id:            {}\n".format(self.__station_id)
-        d += "   measure id:    {}\n".format(self.__measure_id)
-        d += "   coordinate:    {}\n".format(self.__coord)
-        d += "   town:          {}\n".format(self.__town)
-        d += "   river:         {}\n".format(self.__river)
-        d += "   typical range: {}".format(self.__typical_range)
+        d = f" Station name: \t \t {self.name} \n"
+        d += f" \t id: \t \t \t \t {self.station_id} \n"
+        d += f" \t measure id: \t \t {self.measure_id} \n"
+        d += f" \t coordinate: \t \t {self.coord} \n"
+        d += f" \t town: \t \t \t \t {self.town} \n"
+        d += f" \t river: \t \t \t {self.river} \n"
+        d += f" \t typical range: \t {self.typical_range} \n"
         return d
 
-    # Class methods - make setters private to this class
-
-    @property
-    def station_id(self):
-        return self.__station_id
-
-    @station_id.setter
-    def station_id(self, value):
-        self.__station_id = value
-
-    @property
-    def measure_id(self):
-        return self.__measure_id
-
-    @measure_id.setter
-    def measure_id(self, value):
-        self.__measure_id = value
-
-    @property
-    def name(self):
-        return self.__name
-
-    @name.setter
-    def name(self, value):
-        self.__name = value
-
-    @property
-    def coord(self):
-        return self.__coord
-
-    @coord.setter
-    def coord(self, value):
-        self.__coord = value
-
-    @property
-    def typical_range(self):
-        return self.__typical_range
-
-    @typical_range.setter
-    def typical_range(self, value):
-        self.__typical_range = value
-
-    @property
-    def river(self):
-        return self.__river
-
-    @river.setter
-    def river(self, value):
-        self.__river = value
-
-    @property
-    def town(self):
-        return self.__town
-
-    @town.setter
-    def town(self, value):
-        self.__town = value
-
-    @property
-    def latest_level(self):
-        return self.__latest_level
-
-    @latest_level.setter
-    def latest_level(self, value):
-        self.__latest_level = value
-
-    # Bound (regular) methods
+    # Bound methods
 
     def typical_range_consistent(self):
 
@@ -119,8 +51,8 @@ class MonitoringStation:
         '''
 
         try:
-            low_val = self.__typical_range[0]
-            high_val = self.__typical_range[1]
+            low_val = self.typical_range[0]
+            high_val = self.typical_range[1]
             if low_val is None or high_val is None or low_val > high_val:
                 # One of the entries was a NoneType,
                 # or it was in the wrong order
@@ -143,11 +75,11 @@ class MonitoringStation:
 
         try:
             if self.typical_range_consistent():
-                level_diff = self.__typical_range[1] - self.__typical_range[0]
-                return (self.__latest_level - self.__typical_range[0]) / level_diff
+                level_diff = self.typical_range[1] - self.typical_range[0]
+                return (self.latest_level - self.typical_range[0]) / level_diff
             else:
                 return None
-        except Exception:
+        except (IndexError, AttributeError, ZeroDivisionError, TypeError):
             return None
 
 
