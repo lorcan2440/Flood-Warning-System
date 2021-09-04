@@ -7,6 +7,7 @@ https://www.vcalc.com/wiki/vCalc/Haversine+-+Distance
 # pylint: disable=import-error
 
 import import_helper  # noqa
+import pytest
 
 from floodsystem.haversine import haversine, haversine_vector, Unit
 
@@ -21,11 +22,9 @@ def test_haversine():
     # Test 2: invalid input, should raise a TypeError
     first_point = None
     second_point = (0, 0)
-    try:
+    with pytest.raises(TypeError) as e_info:
         haversine(first_point, second_point)
-        assert False
-    except TypeError:
-        assert True
+        print(e_info)
 
 
 def test_haversine_vector():
@@ -39,8 +38,6 @@ def test_haversine_vector():
     # Test 2: invalid inputs
     first_points = [(1, -1), None, (186, 'a')]
     second_points = [(1, 1), (0, 0, 0), (first_points[0])]
-    try:
+    with pytest.raises((TypeError, IndexError)) as e_info:
         haversine_vector(first_points, second_points)
-        assert False
-    except (TypeError, IndexError):
-        assert True
+        print(e_info)

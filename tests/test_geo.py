@@ -5,6 +5,7 @@ Unit tests for the geo module.
 # pylint: disable=import-error
 
 import import_helper  # noqa
+import pytest
 
 from floodsystem.geo import stations_by_distance, stations_within_radius, rivers_with_station
 from floodsystem.geo import stations_by_river, rivers_by_station_number, stations_by_town
@@ -36,11 +37,10 @@ def test_stations_by_distance():
         MonitoringStation('bad-station', None, None, None, None, None, None),
     ]
 
-    try:
+    with pytest.raises((TypeError, IndexError)) as e_info:
         stations_by_distance(stations, TEST_COORD)
-        assert False
-    except (TypeError, IndexError):
-        assert True
+        print(e_info)
+
 
 
 def test_stations_within_radius():
@@ -175,17 +175,3 @@ def test_stations_by_town():
     assert set(town_dict.pop('town-B')) == {stations[3]}
     # Check there is only an empty set left
     assert town_dict == {} and town_dict is not None
-
-
-def test_display_stations_on_map():
-
-    stations = [
-        MonitoringStation('Station_in_Leeds', None, None, (53.8, -1.55), None, None, None),
-        MonitoringStation('Station_in_Cambridge', None, None, (52.205, 0.12), None, None, None),
-    ]
-
-    test_image = display_stations_on_map(stations, return_image=True)
-
-    # Check that the image generated exists (cannot use exact value as data changes)
-    # Not easy to test this rigorously
-    assert hash(test_image) > 1
