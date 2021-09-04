@@ -45,7 +45,7 @@ def run():
         warnings.warn(f'Warning: The data for {s} may be unreliable.', RuntimeWarning)
 
     # Plot the graphs
-    plot_water_levels(high_stations, dates, levels, as_subplots=False)
+    plot_water_levels(high_stations, dates, levels, as_subplots=True)
 
 
 if __name__ == "__main__":

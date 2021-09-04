@@ -18,9 +18,7 @@ class MonitoringStation:
 
         # Handle case of erroneous data where data system returns
         # '[label, label]' rather than 'label'
-        self.name = label
-        if isinstance(label, list):
-            self.name = label[0]
+        self.name = label if not isinstance(label, list) else label[0]
 
         self.coord = coord
         self.typical_range = typical_range
@@ -53,17 +51,16 @@ class MonitoringStation:
         try:
             low_val = self.typical_range[0]
             high_val = self.typical_range[1]
-            if low_val is None or high_val is None or low_val > high_val:
-                # One of the entries was a NoneType,
-                # or it was in the wrong order
-                # or was negative
+            if low_val is None or high_val is None or low_val > high_val \
+                or not isinstance(low_val, (float, int)) or not isinstance(high_val, (float, int)) \
+                or low_val == high_val:
+                # One of the entries was a NoneType, or it was in the wrong order, non-number or equal
                 return False
             # Nothing triggered --> consistent
             return True
 
         except (TypeError, IndexError):
-            # Data was itself a NoneType, or otherwise could not be
-            # indexed --> inconsistent
+            # Data was itself a NoneType, or otherwise could not be indexed --> inconsistent
             return False
 
     def relative_water_level(self) -> float:
@@ -73,13 +70,10 @@ class MonitoringStation:
         the typical range, such that low = 0 and high = 1.
         '''
 
-        try:
-            if self.typical_range_consistent():
-                level_diff = self.typical_range[1] - self.typical_range[0]
-                return (self.latest_level - self.typical_range[0]) / level_diff
-            else:
-                return None
-        except (IndexError, AttributeError, ZeroDivisionError, TypeError):
+        if self.typical_range_consistent() and isinstance(self.latest_level, (float, int)):
+            level_diff = self.typical_range[1] - self.typical_range[0]
+            return (self.latest_level - self.typical_range[0]) / level_diff
+        else:
             return None
 
 

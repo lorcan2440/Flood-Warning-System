@@ -16,11 +16,9 @@ def test_build_station_list():
     # Build list of stations
     stations = build_station_list()
 
-    # Find station 'Cam'
-    for station in stations:
-        if station.name == 'Cam':
-            station_cam = station
-            break
+    assert len(stations) > 0
+
+    station_cam = list(filter(lambda s: s.name == 'Cam', stations))[0]
 
     # Assert that station is found
     assert station_cam

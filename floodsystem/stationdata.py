@@ -26,15 +26,9 @@ def build_station_list(use_cache=True) -> list[MonitoringStation]:
     # Build list of MonitoringStation objects
     stations = []
     for e in data["items"]:
-        # Extract town string (not always available)
-        town = None
-        if 'town' in e:
-            town = e['town']
-
-        # Extract river name (not always available)
-        river = None
-        if 'riverName' in e:
-            river = e['riverName']
+        # Extract town and river strings (not always available)
+        town = e.get('town', None)
+        river = e.get('riverName', None)
 
         # Attempt to extract typical range (low, high)
         try:
@@ -82,11 +76,6 @@ def update_water_levels(stations: list[MonitoringStation]) -> None:
 
     # Attach latest reading to station objects
     for station in stations:
-
-        # Reset latestlevel
-        station.latest_level = None
-
-        # Atach new level data (if available)
-        if station.measure_id in measure_id_to_value:
-            if isinstance(measure_id_to_value[station.measure_id], float):
-                station.latest_level = measure_id_to_value[station.measure_id]
+        station.latest_level = measure_id_to_value[station.measure_id] if \
+            station.measure_id in measure_id_to_value and \
+                isinstance(measure_id_to_value[station.measure_id], float) else None

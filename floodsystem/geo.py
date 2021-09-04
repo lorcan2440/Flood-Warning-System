@@ -97,8 +97,7 @@ def rivers_by_station_number(stations: list, n: int) -> list[tuple[str, int]]:
     # Standard data type input and bounds checks
     assert all([isinstance(i, MonitoringStation) for i in stations])
     assert isinstance(n, int)
-    if not n >= 1:
-        raise ValueError(f'N must be a positive non-zero integer, not {n}')
+    assert n >= 1
 
     river_names = rivers_with_station(stations)
     river_dict = stations_by_river(stations)
@@ -133,9 +132,6 @@ def stations_by_town(stations: list) -> dict[str: list[MonitoringStation]]:
 
     # Sanitise lists
     town_dict.pop(None, None)
-    for town, stations in town_dict.copy().items():
-        if town_dict[town] in [None, [], [None]]:
-            del town_dict[town]
 
     # Sort the dictionary by the number of stations each town contains
     return dict(sorted(town_dict.items(), key=lambda x: len(x[1]), reverse=True))

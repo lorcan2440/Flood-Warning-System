@@ -6,7 +6,7 @@ Version 2.3.0,
 Sep 4, 2020
 '''
 
-
+import warnings
 from math import radians, cos, sin, asin, sqrt
 from enum import Enum
 
@@ -93,7 +93,7 @@ def haversine(point1: tuple, point2: tuple, unit: Enum = Unit.KILOMETERS) -> flo
 
 
 def haversine_vector(array1: list[tuple], array2: list[tuple],
-                     unit: Enum = Unit.KILOMETERS, comb: bool = False) -> list[float]:
+                     unit: Enum = Unit.KILOMETERS) -> list[float]:
 
     '''
     The exact same function as "haversine", except that this
@@ -105,28 +105,20 @@ def haversine_vector(array1: list[tuple], array2: list[tuple],
 
     try:
         import numpy as np
-    except ModuleNotFoundError:
-        return 'Error, unable to import Numpy,\
-        consider using haversine instead of haversine_vector, or run \n\
-        $ pip install numpy'
 
-    # ensure arrays are numpy ndarrays
-    if not isinstance(array1, np.ndarray):
-        array1 = np.array(array1)
-    if not isinstance(array2, np.ndarray):
-        array2 = np.array(array2)
+        if len(array1) != len(array2):
+            raise ValueError('Input arrays have different lengths.'
+                             f'Length of `array1` = {len(array1)}, length of `array2` = {len(array2)}')
 
-    # ensure will be able to iterate over rows by adding dimension if needed
-    if array1.ndim == 1:
-        array1 = np.expand_dims(array1, 0)
-    if array2.ndim == 1:
-        array2 = np.expand_dims(array2, 0)
-
-    # Asserts that both arrays have same dimensions if not in combination mode
-    if not comb:
-        if array1.shape != array2.shape:
-            raise IndexError("""When not in combination mode, arrays must be of same
-                            size. If mode is required, use comb=True as argument.""")
+        # ensure arrays are numpy ndarrays and iterable over rows
+        array1 = np.expand_dims(array1, 0) if (array1 := np.array(array1)).ndim == 1 else np.array(array1)
+        array2 = np.expand_dims(array2, 0) if (array2 := np.array(array2)).ndim == 1 else np.array(array2)
+        
+    except (ModuleNotFoundError, AttributeError):
+        warnings.warn('Unable to import Numpy, using `haversine()` in a loop instead. \n'
+                      'The `comb` parameter is not functional without numpy. \n'
+                      'Try installing Numpy using $ pip install numpy.', ImportWarning)
+        return [haversine(p1, p2, unit=unit) for p1, p2 in zip(array1, array2)]
 
     # unpack latitude/longitude
     lat1, lng1 = array1[:, 0], array1[:, 1]
@@ -137,13 +129,6 @@ def haversine_vector(array1: list[tuple], array2: list[tuple],
     lng1 = np.radians(lng1)
     lat2 = np.radians(lat2)
     lng2 = np.radians(lng2)
-
-    # If in combination mode, turn coordinates of array1 into column vectors for broadcasting
-    if comb:
-        lat1 = np.expand_dims(lat1, axis=0)
-        lng1 = np.expand_dims(lng1, axis=0)
-        lat2 = np.expand_dims(lat2, axis=1)
-        lng2 = np.expand_dims(lng2, axis=1)
 
     # calculate haversine
     lat = lat2 - lat1

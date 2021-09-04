@@ -24,13 +24,6 @@ def stations_level_over_threshold(stations: list, tol: float) -> list[tuple[Moni
     # Standard data type input checks.
     assert isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])
     assert isinstance(tol, (int, float))
-    # Check all objects are hashable so they can be used to construct the sets below
-    try:
-        _hashable = all([isinstance(hash(s), int) for s in stations])
-        if _hashable:
-            assert True
-    except TypeError:
-        assert False
 
     # Eliminate stations which are invalid due to having inconsistent range data or undefined values
     data = set(stations) - set(inconsistent_typical_range_stations(stations))
@@ -57,11 +50,6 @@ def stations_highest_rel_level(stations: list, n) -> list[MonitoringStation]:
 
     # Get a descending list of stations with a known level
     # HACK: implemented as being above -inf and select the first `n` objects
-    valid_stations = stations_level_over_threshold(stations, float('-inf'))
+    assert 0 <= n <= len(vs := stations_level_over_threshold(stations, float('-inf')))
 
-    if not 0 <= n <= len(valid_stations):
-        raise ValueError(f'''N must be an positive integer, and no more
-                        than the length of the list of valid stations
-                        ({len(valid_stations)})''')
-
-    return [s[0] for s in valid_stations][:n]
+    return [s[0] for s in vs][:n]

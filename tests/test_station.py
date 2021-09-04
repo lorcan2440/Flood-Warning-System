@@ -47,7 +47,7 @@ def test_inconsistent_typical_range_stations():
 
     stations = [
         MonitoringStation('good-station-1', None, None, None, (2, 4), None, None),
-        MonitoringStation('boundary-station', None, None, None, (0, 0), None, None),  # Should be allowed
+        MonitoringStation('boundary-station', None, None, None, (0, 0), None, None),  # Should not be allowed
         MonitoringStation('bad-station-1', None, None, None, (42, 10), None, None),
         MonitoringStation('bad-station-2', None, None, None, (None, 4), None, None),
         MonitoringStation('bad-station-3', None, None, None, None, None, None)
@@ -59,7 +59,7 @@ def test_inconsistent_typical_range_stations():
     assert 0 <= len(bad_stations) <= len(stations)
     assert all([not b_s.typical_range_consistent() for b_s in bad_stations])
     # Check with correct result
-    assert set(bad_stations) == {stations[2], stations[3], stations[4]}
+    assert set(bad_stations) == {stations[1], stations[2], stations[3], stations[4]}
 
 
 def test_relative_water_level():

@@ -148,7 +148,9 @@ def test_stations_by_town():
         MonitoringStation(None, None, 'station-3', None, None, None, 'town-B'),
         MonitoringStation(None, None, 'bad-station-2', None, None, None, 'town-B'),
         MonitoringStation(None, None, 'station-4', None, None, None, None),
-        MonitoringStation(None, None, None, None, None, None, None)
+        MonitoringStation(None, None, None, None, None, None, 'empty-town'),
+        MonitoringStation(None, None, None, None, None, None, None),
+        MonitoringStation(None, None, None, None, None, None, ())
     ]
 
     setattr(stations[0], 'latest_level', 10)
@@ -158,6 +160,8 @@ def test_stations_by_town():
     setattr(stations[4], 'latest_level', 10)
     setattr(stations[5], 'latest_level', 10)
     setattr(stations[6], 'latest_level', 10)
+    setattr(stations[7], 'latest_level', 10)
+    setattr(stations[8], 'latest_level', 10)
 
     setattr(stations[0], 'typical_range', (5, 15))
     setattr(stations[1], 'typical_range', (5, 15))
@@ -166,12 +170,16 @@ def test_stations_by_town():
     setattr(stations[4], 'typical_range', None)
     setattr(stations[5], 'typical_range', (5, 15))
     setattr(stations[6], 'typical_range', (5, 15))
+    setattr(stations[7], 'typical_range', (5, 15))
+    setattr(stations[8], 'typical_range', (5, 15))
 
     town_dict = stations_by_town(stations)
 
-    # Check town-A has the correct stations, and remove it
-    assert set(town_dict.pop('town-A')) == {stations[0], stations[1]}
-    # Check town-B has the correct stations, and remove it
-    assert set(town_dict.pop('town-B')) == {stations[3]}
-    # Check there is only an empty set left
-    assert town_dict == {} and town_dict is not None
+    # Check correct stations
+    assert set(town_dict['town-A']) == {stations[0], stations[1]}
+    assert set(town_dict['town-B']) == {stations[3]}
+    assert set(town_dict['empty-town']) == {stations[6]}
+    assert None not in town_dict
+
+
+test_stations_by_town()
