@@ -13,7 +13,7 @@ def run():
     stations = build_station_list()
 
     # Station name to find
-    station_name = "Thing"
+    station_name = "Cam"
 
     # Find station
     try:

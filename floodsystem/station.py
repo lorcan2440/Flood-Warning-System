@@ -42,7 +42,7 @@ class MonitoringStation:
 
     # Bound methods
 
-    def typical_range_consistent(self):
+    def typical_range_consistent(self) -> bool:
 
         '''
         Returns a bool, whether or not the instance's typical_range
@@ -66,7 +66,7 @@ class MonitoringStation:
             # indexed --> inconsistent
             return False
 
-    def relative_water_level(self):
+    def relative_water_level(self) -> float:
 
         '''
         Returns the current water level as a fraction of
@@ -83,14 +83,14 @@ class MonitoringStation:
             return None
 
 
-def inconsistent_typical_range_stations(stations):
+def inconsistent_typical_range_stations(stations: list[MonitoringStation]) -> list[MonitoringStation]:
 
     '''
-    Returns a list of stations that have inconsistent data, based
+    Returns the stations that have inconsistent data, based
     on the  MonitoringStation.typical_range_consistent() method.
     '''
 
     # Standard data type input checks
     assert all([isinstance(i, MonitoringStation) for i in stations])
 
-    return [s for s in stations if not s.typical_range_consistent()]
+    return list(filter(lambda s: not s.typical_range_consistent(), stations))

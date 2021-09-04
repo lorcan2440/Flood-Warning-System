@@ -16,7 +16,7 @@ from .utils import flatten
 from .analysis import polyfit
 
 
-def plot_water_levels(stations: list, dates: dict, levels: dict, as_subplots: bool = False):
+def plot_water_levels(stations: list, dates: dict, levels: dict, as_subplots: bool = False) -> None:
 
     '''
     Plots graph(s) of the level data in stations (which may be
@@ -93,7 +93,7 @@ def plot_water_levels(stations: list, dates: dict, levels: dict, as_subplots: bo
 
 
 def plot_water_level_with_fit(station: object, dates: list, levels: list, p: int,
-        n_points: int = 30, format_dates: bool = False, y_axis_from_zero: bool = True):
+        n_points: int = 30, format_dates: bool = False, y_axis_from_zero: bool = True) -> None:
 
     # Get a polynomial function fitting the data, the offset, and the original dataset.
     poly, d0, date_nums = polyfit(dates, levels, p)

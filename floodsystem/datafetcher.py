@@ -12,29 +12,42 @@ import requests
 import dateutil.parser
 
 
-def fetch(url):
-    """Fetch data from url and return fetched JSON object"""
+def fetch(url: str) -> dict:
+
+    """
+    Fetch data from url and return fetched JSON object
+    """
+
     r = requests.get(url)
     data = r.json()
     return data
 
 
-def dump(data, filename):
-    """Save JSON object to file"""
+def dump(data: dict, filename: str) -> None:
+
+    """
+    Save JSON object to file
+    """
+
     f = open(filename, 'w')
     data = json.dump(data, f)
     f.close()
 
 
-def load(filename):
-    """Load JSON object from file"""
+def load(filename: str) -> dict:
+
+    """
+    Load JSON object from file
+    """
+
     f = open(filename, 'r')
     data = json.load(f)
     f.close()
     return data
 
 
-def fetch_station_data(use_cache=True):
+def fetch_station_data(use_cache: bool = True) -> dict:
+
     """
     Fetch data from Environment agency for all active river level
     monitoring stations via a REST API and return retrieved data as a
@@ -46,12 +59,11 @@ def fetch_station_data(use_cache=True):
     Environment Agency service.
     """
 
-    # URL for retrieving data for active stations with river level
-    # monitoring (see
+    # URL for retrieving data for active stations with river level monitoring, see
     # http://environment.data.gov.uk/flood-monitoring/doc/reference)
     url = "http://environment.data.gov.uk/flood-monitoring/id/stations?status=Active&parameter=level&qualifier=Stage&_view=full"  # noqa
-
     sub_dir = 'cache'
+
     try:
         os.makedirs(sub_dir)
     except FileExistsError:
@@ -75,13 +87,16 @@ def fetch_station_data(use_cache=True):
     return data
 
 
-def fetch_latest_water_level_data(use_cache=False):
-    """Fetch latest levels from all 'measures'. Returns JSON object"""
+def fetch_latest_water_level_data(use_cache: bool = False) -> dict:
+
+    """
+    Fetch latest levels from all 'measures'. Returns JSON object
+    """
 
     # URL for retrieving data
     url = "http://environment.data.gov.uk/flood-monitoring/id/measures?parameter=level&qualifier=Stage&qualifier=level"  # noqa
-
     sub_dir = 'cache'
+
     try:
         os.makedirs(sub_dir)
     except FileExistsError:
@@ -104,10 +119,12 @@ def fetch_latest_water_level_data(use_cache=False):
     return data
 
 
-def fetch_measure_levels(measure_id, dt):
-    """Fetch measure levels from latest reading and going back a period
-    dt. Return list of dates and a list of values.
+def fetch_measure_levels(measure_id: str,
+                         dt: datetime.timedelta) -> tuple[list[datetime.datetime], list[float]]:
 
+    """
+    Fetch measure levels from latest reading and going back a period
+    `dt`. Return list of dates and a list of values.
     """
 
     # Current time (UTC)

@@ -9,7 +9,8 @@ import numpy as np
 from matplotlib.dates import date2num
 
 
-def polyfit(dates: list, levels: list, p: int):
+def polyfit(dates: list[datetime.datetime],
+            levels: list[float], p: int) -> tuple[np.poly1d, float, list[float]]:
 
     '''
     Returns a tuple of a p-degree polynomial

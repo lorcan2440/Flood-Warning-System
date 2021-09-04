@@ -9,7 +9,7 @@ from .station import inconsistent_typical_range_stations
 from .station import MonitoringStation
 
 
-def stations_level_over_threshold(stations: list, tol):
+def stations_level_over_threshold(stations: list, tol: float) -> list[tuple[MonitoringStation, float]]:
 
     '''
     Returns a list of tuples. The first element of
@@ -18,7 +18,7 @@ def stations_level_over_threshold(stations: list, tol):
     at that station.
 
     Only stations with consistent range data are considered,
-    and only stations with relative level above tol are added.
+    and only stations with relative level above `tol` are added.
     '''
 
     # Standard data type input checks.
@@ -34,9 +34,8 @@ def stations_level_over_threshold(stations: list, tol):
 
     # Eliminate stations which are invalid due to having inconsistent range data or undefined values
     data = set(stations) - set(inconsistent_typical_range_stations(stations))
-    data -= {s for s in stations if any([s.latest_level is None,
-                                        not hasattr(s, 'latest_level'),
-                                        s.relative_water_level() is None])}
+    data -= set(filter(lambda s: s.latest_level is None or not hasattr(s, 'latest_level')
+        or s.relative_water_level() is None, stations))
 
     # Return the remaining stations and their relative level where it is higher than tol
     # and sort in descending order of level
@@ -44,26 +43,25 @@ def stations_level_over_threshold(stations: list, tol):
                 key=lambda x: x[1], reverse=True)
 
 
-def stations_highest_rel_level(stations, N):
+def stations_highest_rel_level(stations: list, n) -> list[MonitoringStation]:
 
     '''
-    Returns a list of the N stations (objects) at which the water level,
+    Returns a list of the `n` stations (objects) at which the water level,
     relative to the typical range, is highest. The values are assumed
-    to be all unique so the length of the return list is always N.
+    to be all unique so the length of the return list is always `n`.
     '''
 
     # Standard data type and bounds input checks
     assert isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])
-    assert isinstance(N, int)
+    assert isinstance(n, int)
 
-    # Get a descending list of stations with a known level (implemented as being above
-    # an effective -infinity) and select the first N objects
-    _NEG_INF = float('-inf')
-    valid_stations = stations_level_over_threshold(stations, _NEG_INF)
+    # Get a descending list of stations with a known level
+    # HACK: implemented as being above -inf and select the first `n` objects
+    valid_stations = stations_level_over_threshold(stations, float('-inf'))
 
-    if not 0 <= N <= len(valid_stations):
+    if not 0 <= n <= len(valid_stations):
         raise ValueError(f'''N must be an positive integer, and no more
                         than the length of the list of valid stations
                         ({len(valid_stations)})''')
 
-    return [s[0] for s in valid_stations][:N]
+    return [s[0] for s in valid_stations][:n]

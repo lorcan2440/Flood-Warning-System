@@ -16,6 +16,7 @@ _AVG_EARTH_RADIUS_KM = 6371.0088
 
 
 class Unit(Enum):
+
     """
     Enumeration of supported units.
     The full list can be checked by iterating over the class; e.g.
@@ -39,27 +40,38 @@ _CONVERSIONS = {Unit.KILOMETERS:        1.0,                # noqa
                 Unit.INCHES:            39370.078740158}    # noqa
 
 
-def get_avg_earth_radius(unit):
+def get_avg_earth_radius(unit: Enum) -> float:
+
+    """
+    Returns the average radius of the Earth in the chosen units.
+    """
+
     unit = Unit(unit)
     return _AVG_EARTH_RADIUS_KM * _CONVERSIONS[unit]
 
 
-def haversine(point1, point2, unit=Unit.KILOMETERS):
-    """ Calculate the great-circle distance between two points on the Earth surface.
+def haversine(point1: tuple, point2: tuple, unit: Enum = Unit.KILOMETERS) -> float:
+
+    """
+    Calculate the great-circle distance between two points on the Earth surface.
     Takes two 2-tuples, containing the latitude and longitude of each point in decimal degrees,
     and, optionally, a unit of length.
-    :param point1: first point; tuple of (latitude, longitude) in decimal degrees
-    :param point2: second point; tuple of (latitude, longitude) in decimal degrees
-    :param unit: a member of haversine.Unit, or, equivalently, a string containing the
-                 initials of its corresponding unit of measurement (i.e. miles = mi)
-                 default 'km' (kilometers).
+
+    point1: first point; tuple of (latitude, longitude) in decimal degrees
+
+    point2: second point; tuple of (latitude, longitude) in decimal degrees
+
+    unit: a member of haversine.Unit, or, equivalently, a string containing the
+    initials of its corresponding unit of measurement (i.e. miles = mi), default 'km' (kilometers).
+
     Example: ``haversine((45.7597, 4.8422), (48.8567, 2.3508), unit=Unit.METERS)``
     Precondition: ``unit`` is a supported unit (supported units are listed in the `Unit` enum)
-    :return: the distance between the two points in the requested unit, as a float.
-    The default returned unit is kilometers. The default unit can be changed by
-    setting the unit parameter to a member of ``haversine.Unit``
-    (e.g. ``haversine.Unit.INCHES``), or, equivalently, to a string containing the
-    corresponding abbreviation (e.g. 'in'). All available units can be found in the ``Unit`` enum.
+
+    Returns: the distance between the two points in the requested unit, as a float.
+    The default returned unit is kilometers. The default unit can be changed by setting the unit
+    parameter to a member of ``haversine.Unit`` (e.g. ``haversine.Unit.INCHES``), or, equivalently,
+    to a string containing the corresponding abbreviation (e.g. 'in').
+    All available units can be found in the ``Unit`` enum.
     """
 
     # unpack latitude/longitude
@@ -80,31 +92,35 @@ def haversine(point1, point2, unit=Unit.KILOMETERS):
     return 2 * get_avg_earth_radius(unit) * asin(sqrt(d))
 
 
-def haversine_vector(array1, array2, unit=Unit.KILOMETERS, comb=False):
+def haversine_vector(array1: list[tuple], array2: list[tuple],
+                     unit: Enum = Unit.KILOMETERS, comb: bool = False) -> list[float]:
+
     '''
     The exact same function as "haversine", except that this
     version replaces math functions with numpy functions.
     This may make it slightly slower for computing the haversine
     distance between two points, but is much faster for computing
-    the distance between two vectors of points due to vectorization.
+    the distance between two vectors of points due to vectorisation.
     '''
+
     try:
-        import numpy
+        import numpy as np
     except ModuleNotFoundError:
         return 'Error, unable to import Numpy,\
-        consider using haversine instead of haversine_vector.'
+        consider using haversine instead of haversine_vector, or run \n\
+        $ pip install numpy'
 
     # ensure arrays are numpy ndarrays
-    if not isinstance(array1, numpy.ndarray):
-        array1 = numpy.array(array1)
-    if not isinstance(array2, numpy.ndarray):
-        array2 = numpy.array(array2)
+    if not isinstance(array1, np.ndarray):
+        array1 = np.array(array1)
+    if not isinstance(array2, np.ndarray):
+        array2 = np.array(array2)
 
     # ensure will be able to iterate over rows by adding dimension if needed
     if array1.ndim == 1:
-        array1 = numpy.expand_dims(array1, 0)
+        array1 = np.expand_dims(array1, 0)
     if array2.ndim == 1:
-        array2 = numpy.expand_dims(array2, 0)
+        array2 = np.expand_dims(array2, 0)
 
     # Asserts that both arrays have same dimensions if not in combination mode
     if not comb:
@@ -117,22 +133,22 @@ def haversine_vector(array1, array2, unit=Unit.KILOMETERS, comb=False):
     lat2, lng2 = array2[:, 0], array2[:, 1]
 
     # convert all latitudes/longitudes from decimal degrees to radians
-    lat1 = numpy.radians(lat1)
-    lng1 = numpy.radians(lng1)
-    lat2 = numpy.radians(lat2)
-    lng2 = numpy.radians(lng2)
+    lat1 = np.radians(lat1)
+    lng1 = np.radians(lng1)
+    lat2 = np.radians(lat2)
+    lng2 = np.radians(lng2)
 
     # If in combination mode, turn coordinates of array1 into column vectors for broadcasting
     if comb:
-        lat1 = numpy.expand_dims(lat1, axis=0)
-        lng1 = numpy.expand_dims(lng1, axis=0)
-        lat2 = numpy.expand_dims(lat2, axis=1)
-        lng2 = numpy.expand_dims(lng2, axis=1)
+        lat1 = np.expand_dims(lat1, axis=0)
+        lng1 = np.expand_dims(lng1, axis=0)
+        lat2 = np.expand_dims(lat2, axis=1)
+        lng2 = np.expand_dims(lng2, axis=1)
 
     # calculate haversine
     lat = lat2 - lat1
     lng = lng2 - lng1
-    d = (numpy.sin(lat * 0.5) ** 2
-         + numpy.cos(lat1) * numpy.cos(lat2) * numpy.sin(lng * 0.5) ** 2)
+    d = (np.sin(lat * 0.5) ** 2
+         + np.cos(lat1) * np.cos(lat2) * np.sin(lng * 0.5) ** 2)
 
-    return 2 * get_avg_earth_radius(unit) * numpy.arcsin(numpy.sqrt(d))
+    return 2 * get_avg_earth_radius(unit) * np.arcsin(np.sqrt(d))

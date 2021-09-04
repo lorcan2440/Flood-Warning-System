@@ -9,7 +9,7 @@ from . import datafetcher
 from .station import MonitoringStation
 
 
-def build_station_list(use_cache=True):
+def build_station_list(use_cache=True) -> list[MonitoringStation]:
 
     """
     Build and return a list of all river level monitoring stations
@@ -63,7 +63,7 @@ def build_station_list(use_cache=True):
     return stations
 
 
-def update_water_levels(stations):
+def update_water_levels(stations: list[MonitoringStation]) -> None:
 
     """
     Attach level data contained in measure_data to stations.

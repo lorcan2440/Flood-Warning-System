@@ -14,13 +14,11 @@ from bokeh.models import ColumnDataSource, OpenURL, TapTool, HoverTool
 from bokeh.tile_providers import STAMEN_TERRAIN_RETINA, get_provider
 
 
-def stations_by_distance(stations: list, p: tuple):
+def stations_by_distance(stations: list, p: tuple) -> list[tuple[MonitoringStation, float]]:
 
     '''
-    Returns a list of (station, distance) tuples, where
-    station is a MonitoringStation object and distance
-    is the float distance of that station from the given
-    coordinate p.
+    Returns a list of (station, distance) tuples, where station is a `MonitoringStation`
+    and distance is the float distance of that station from the given coordinate p.
     '''
 
     # Standard data type input checks
@@ -39,7 +37,7 @@ def stations_by_distance(stations: list, p: tuple):
     return sorted_by_key(my_data, 1)
 
 
-def stations_within_radius(stations: list, centre: tuple, r):
+def stations_within_radius(stations: list, centre: tuple, r: float) -> list[MonitoringStation]:
 
     '''
     Returns a list of all stations (type MonitoringStation)
@@ -56,7 +54,7 @@ def stations_within_radius(stations: list, centre: tuple, r):
     return [s[0] for s in sorted_stations if s[1] <= r]
 
 
-def rivers_with_station(stations: list):
+def rivers_with_station(stations: list) -> set[str]:
 
     '''
     Returns a set of the names of all rivers which have
@@ -72,7 +70,7 @@ def rivers_with_station(stations: list):
     return rivers
 
 
-def stations_by_river(stations: list):
+def stations_by_river(stations: list) -> dict[str: list[MonitoringStation]]:
 
     '''
     Returns a dict that maps river names to a list of
@@ -85,15 +83,12 @@ def stations_by_river(stations: list):
     rivers = rivers_with_station(stations)
 
     # For each river listed, add all its associated stations.
-    river_dict = {}
-    for river in rivers:
-        pair = {river: [s for s in stations if s.river == river]}
-        river_dict.update(pair)
+    river_dict = {river: list(filter(lambda s: s.river == river, stations)) for river in rivers}
 
     return river_dict
 
 
-def rivers_by_station_number(stations: list, N: int):
+def rivers_by_station_number(stations: list, n: int) -> list[tuple[str, int]]:
 
     '''
     Returns a list of (river name, number of stations)
@@ -105,9 +100,9 @@ def rivers_by_station_number(stations: list, N: int):
 
     # Standard data type input and bounds checks
     assert all([isinstance(i, MonitoringStation) for i in stations])
-    assert isinstance(N, int)
-    if not N >= 1:
-        raise ValueError(f'N must be a positive non-zero integer, not {N}')
+    assert isinstance(n, int)
+    if not n >= 1:
+        raise ValueError(f'N must be a positive non-zero integer, not {n}')
 
     river_names = rivers_with_station(stations)
     river_dict = stations_by_river(stations)
@@ -116,19 +111,17 @@ def rivers_by_station_number(stations: list, N: int):
     river_num_list = sorted_by_key([(r, len(river_dict[r])) for r in river_names], 1, reverse=True)
 
     # Find the number of stations which is N from the highest, accounting for possible duplicates
-    end_num = sorted(list({r[1] for r in river_num_list}), reverse=True)[N - 1]
+    end_num = sorted(list({r[1] for r in river_num_list}), reverse=True)[n - 1]
 
-    # Add the (river name, number of stations) tuple to the list until
-    # the number of stations is less than the previously found limit
-    return [(r, n) for (r, n) in river_num_list if n >= end_num]
+    # Create list of (river name, number of stations) tuples up to the found limit
+    return [(r, n) for r, n in river_num_list if r is not None and n >= end_num]
 
 
-def stations_by_town(stations):
+def stations_by_town(stations: list) -> dict[str: list[MonitoringStation]]:
 
     '''
-    Returns a dictionary, where the key is the name
-    of a town and the value is a list of all the
-    MonitoringStation objects located in that town.
+    Returns a dict that maps town names to a list of
+    station objects associated with that town.
     '''
 
     # Standard data type input checks
@@ -138,14 +131,11 @@ def stations_by_town(stations):
     towns = {s.town for s in stations}
 
     # For each town listed, add all its associated stations.
-    town_dict = {}
-    for town in towns:
-        pair = {town: [s for s in stations if s.town == town
-        and s.latest_level is not None and s.typical_range_consistent()]}
-        town_dict.update(pair)
+    town_dict = {town: list(filter(
+        lambda s: s.town == town and s.latest_level is not None and s.typical_range_consistent(),
+        stations)) for town in towns}
 
-    # Remove the stations which do not have an associated town, and
-    # remove the towns which do not have any associated stations
+    # Sanitise lists
     town_dict.pop(None, None)
     for town, stations in town_dict.copy().items():
         if town_dict[town] in [None, [], [None]]:
@@ -155,7 +145,7 @@ def stations_by_town(stations):
     return dict(sorted(town_dict.items(), key=lambda x: len(x[1]), reverse=True))
 
 
-def display_stations_on_map(stations, return_image=False):
+def display_stations_on_map(stations: list, return_image: bool = False) -> None:
 
     '''
     Shows a map of the stations across England by running a HTML file in a browser.
@@ -204,7 +194,7 @@ def display_stations_on_map(stations, return_image=False):
         tools=["tap", "pan", "wheel_zoom", "box_zoom", "save", "reset"])
     p.add_tile(tile_provider)
 
-    # populate a ColumnDataSource (Pandas DataFrame-like object) of the information in each place
+    # populate a CDS of the information in each place
     info = [(abs(p["coords"][0]), abs(p["coords"][1]),
         letter(p["coords"][0], p["coords"][1])[0],
         letter(p["coords"][0], p["coords"][1])[1],
@@ -224,17 +214,16 @@ def display_stations_on_map(stations, return_image=False):
              fill_alpha=0.75, hover_alpha=1, source=source)
 
     # clicking on a circle will open the official page for that station
-    # NOTE: ensure bokeh version >= 2.3.3, as previous versions contained a bug:
-    # https://github.com/bokeh/bokeh/issues/11182
+    # NOTE: requires bokeh version >= 2.3.3: https://github.com/bokeh/bokeh/issues/11182
     taptool = p.select(type=TapTool)
     taptool.callback = OpenURL(url='@url')
 
     # initialise a HoverTool and add the necessary parameters to display when activated
-    my_hover = HoverTool()
-    my_hover.tooltips = [('Name', '@name'), ('Current level', '@current_level'),
-                        ('Typical range', '@typical_range'), ('Relative level', '@relative_level'),
-                        ('River', '@river'), ('Town', '@town'), ('Coords', '(@lat° @ns, @long° @ew)')]
-    p.add_tools(my_hover)
+    hover = HoverTool()
+    hover.tooltips = [('Name', '@name'), ('Current level', '@current_level'),
+                      ('Typical range', '@typical_range'), ('Relative level', '@relative_level'),
+                      ('River', '@river'), ('Town', '@town'), ('Coords', '(@lat° @ns, @long° @ew)')]
+    p.add_tools(hover)
 
     if return_image:
         return p
