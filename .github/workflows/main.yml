@@ -30,8 +30,8 @@ jobs:
       - name: Lint with flake8
         run: flake8 --statistics *.py
 
-      - name: Run unit tests using pytest
-        run: pytest -v
+      - name: Run unit tests & code coverage using pytest
+        run: pytest -v --cov
 
       - name: Run Deliverable 1 code
         run: |
