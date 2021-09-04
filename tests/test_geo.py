@@ -7,8 +7,8 @@ Unit tests for the geo module.
 import import_helper  # noqa
 
 from floodsystem.geo import stations_by_distance, stations_within_radius, rivers_with_station
-from floodsystem.geo import stations_by_river, rivers_by_station_number, display_stations_on_map
-from floodsystem.geo import stations_by_town
+from floodsystem.geo import stations_by_river, rivers_by_station_number, stations_by_town
+from floodsystem.map_plotting import display_stations_on_map
 from floodsystem.station import MonitoringStation
 from floodsystem.utils import flatten
 

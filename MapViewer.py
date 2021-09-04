@@ -1,5 +1,5 @@
 from floodsystem.stationdata import build_station_list, update_water_levels
-from floodsystem.geo import display_stations_on_map
+from floodsystem.map_plotting import display_stations_on_map
 
 
 def run():
