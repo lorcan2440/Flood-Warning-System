@@ -9,7 +9,6 @@ import pytest
 
 from floodsystem.geo import stations_by_distance, stations_within_radius, rivers_with_station
 from floodsystem.geo import stations_by_river, rivers_by_station_number, stations_by_town
-from floodsystem.map_plotting import display_stations_on_map
 from floodsystem.station import MonitoringStation
 from floodsystem.utils import flatten
 
@@ -40,7 +39,6 @@ def test_stations_by_distance():
     with pytest.raises((TypeError, IndexError)) as e_info:
         stations_by_distance(stations, TEST_COORD)
         print(e_info)
-
 
 
 def test_stations_within_radius():

@@ -51,7 +51,7 @@ def test_haversine_vector():
         haversine_vector(first_points, second_points)
         print(e_info)
 
-    
+
 def test_vector_without_numpy():
 
     # Temporarily remove numpy and try to use haversine vector functions

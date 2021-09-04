@@ -113,7 +113,7 @@ def haversine_vector(array1: list[tuple], array2: list[tuple],
         # ensure arrays are numpy ndarrays and iterable over rows
         array1 = np.expand_dims(array1, 0) if (array1 := np.array(array1)).ndim == 1 else np.array(array1)
         array2 = np.expand_dims(array2, 0) if (array2 := np.array(array2)).ndim == 1 else np.array(array2)
-        
+
     except (ModuleNotFoundError, AttributeError):
         warnings.warn('Unable to import Numpy, using `haversine()` in a loop instead. \n'
                       'The `comb` parameter is not functional without numpy. \n'

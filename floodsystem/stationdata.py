@@ -78,4 +78,4 @@ def update_water_levels(stations: list[MonitoringStation]) -> None:
     for station in stations:
         station.latest_level = measure_id_to_value[station.measure_id] if \
             station.measure_id in measure_id_to_value and \
-                isinstance(measure_id_to_value[station.measure_id], float) else None
+            isinstance(measure_id_to_value[station.measure_id], float) else None

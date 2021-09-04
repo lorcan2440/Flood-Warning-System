@@ -52,8 +52,8 @@ class MonitoringStation:
             low_val = self.typical_range[0]
             high_val = self.typical_range[1]
             if low_val is None or high_val is None or low_val > high_val \
-                or not isinstance(low_val, (float, int)) or not isinstance(high_val, (float, int)) \
-                or low_val == high_val:
+                    or not isinstance(low_val, (float, int)) or not isinstance(high_val, (float, int)) \
+                    or low_val == high_val:
                 # One of the entries was a NoneType, or it was in the wrong order, non-number or equal
                 return False
             # Nothing triggered --> consistent
