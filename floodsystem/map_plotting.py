@@ -28,18 +28,26 @@ def display_stations_on_map(stations: list, return_image: bool = False) -> None:
     for i, s in enumerate(stations):
         lv = s.relative_water_level()
         station_info.append(
-            {"coords": s.coord, "name": s.name, "current_level": s.latest_level,
-            "typical_range": s.typical_range, "relative_level": lv,
-            "river": s.river, "town": s.town,
+            {"coords": s.coord if s.coord is not None else (0, 0),
+            "name": s.name,
+            "current_level": s.latest_level,
+            "typical_range": s.typical_range,
+            "relative_level": lv,
+            "river": s.river,
+            "town": s.town,
             "url": s.url})
 
-        try:
+        if s.latest_level is not None:
+            if s.latest_level <= 0:
+                station_info[i]["current_level"] = "≤ 0"
+
+        if lv is not None:
             station_info[i]["rating"] = (0 if lv > 2.5 else    # red
                                          1 if lv > 1.75 else   # orange
                                          2 if lv > 1 else      # yellow
                                          3 if lv > 0.5 else    # light green
                                          4)                    # green
-        except TypeError:
+        else:
             station_info[i]["rating"] = -1  # unknown: data was invalid / nonexistent - grey
 
     # choose a map design: http://docs.bokeh.org/en/1.3.2/docs/reference/tile_providers.html
@@ -60,18 +68,25 @@ def display_stations_on_map(stations: list, return_image: bool = False) -> None:
         tools=["tap", "pan", "wheel_zoom", "box_zoom", "save", "reset"])
     p.add_tile(tile_provider)
 
-    # populate a CDS of the information in each place
-    info = [(abs(p["coords"][0]), abs(p["coords"][1]),
-        letter(p["coords"][0], p["coords"][1])[0],
-        letter(p["coords"][0], p["coords"][1])[1],
-        p["name"], p["current_level"], p["typical_range"], p["relative_level"],
-        p["river"], p["town"], p['url'],
-        colors[p["rating"]], linecolors[p["rating"]],
-        x[0], x[1]) for p, x in zip(station_info, trans_coords)]
+    # populate a CDS of the information in each place: list[tuple[*args]]
+    info = [
+        (*map(lambda c: abs(c), p["coords"]),                               # lat, long               # noqa
+        *letter(*p["coords"]),                                              # ns, ew                  # noqa
+        p["name"], p["current_level"],                                      # name, latest_level      # noqa
+        p["typical_range"][0] if p["typical_range"] is not None else None,  # typical_range_min       # noqa
+        p["typical_range"][1] if p["typical_range"] is not None else None,  # typical_range_max       # noqa
+        str(round(p["relative_level"] * 100, 1)) + '%'                      # relative_level_percent  # noqa
+            if p["relative_level"] is not None else None,                                             # noqa
+        p["river"], p["town"], p['url'],                                    # river, town, url        # noqa
+        colors[p["rating"]], linecolors[p["rating"]],                       # color, linecolor        # noqa
+        x[0], x[1])                                                         # x_coord, y_coord        # noqa 
+            for p, x in zip(station_info, trans_coords)                                               # noqa
+    ]
 
     source = ColumnDataSource(
         {k: v for k, v in zip(['lat', 'long', 'ns', 'ew',
-            'name', 'current_level', 'typical_range', 'relative_level', 'river', 'town', 'url',
+            'name', 'current_level', 'typical_range_min', 'typical_range_max',
+            'relative_level_percent', 'river', 'town', 'url',
             'color', 'linecolor', 'x_coord', 'y_coord'], list(zip(*info)))})
 
     # add a circle to the map, referencing the colours in the ColumnDataSource
@@ -86,8 +101,9 @@ def display_stations_on_map(stations: list, return_image: bool = False) -> None:
 
     # initialise a HoverTool and add the necessary parameters to display when activated
     hover = HoverTool()
-    hover.tooltips = [('Name', '@name'), ('Current level', '@current_level'),
-                      ('Typical range', '@typical_range'), ('Relative level', '@relative_level'),
+    hover.tooltips = [('Station', '@name'), ('Current level', '@current_level m'),
+                      ('Typical range', 'min: @typical_range_min m, max: @typical_range_max m'),
+                      ('Relative level', '@relative_level_percent'),
                       ('River', '@river'), ('Town', '@town'), ('Coords', '(@lat° @ns, @long° @ew)')]
     p.add_tools(hover)
 

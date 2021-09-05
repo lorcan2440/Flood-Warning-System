@@ -6,6 +6,8 @@ Unit tests for the utils module
 
 import import_helper  # noqa
 
+import pytest
+
 from floodsystem.utils import sorted_by_key, wgs84_to_web_mercator, flatten
 
 
@@ -76,9 +78,32 @@ def test_wgs84_to_web_mercator():
     https://epsg.io/transform#s_srs=4326&t_srs=3857&x=0.1020031&y=52.1946039
     '''
 
-    CAMBRIDGE_CITY_CENTRE = (52.2053, 0.1218)  # (lat, lon)
-    output_coord = wgs84_to_web_mercator(CAMBRIDGE_CITY_CENTRE)
+    # test normal input
+    TEST_COORD = (52.2053, 0.1218)  # (lat, lon)
+    output_coord = wgs84_to_web_mercator(TEST_COORD)
     assert tuple([round(i) for i in output_coord]) == (13559, 6837332)
+
+    # test lat = zero
+    TEST_COORD = (0, 50)
+    output_coord = wgs84_to_web_mercator(TEST_COORD)
+    print(output_coord)
+    assert tuple([round(i) for i in output_coord]) == (5565975, 0)
+
+    # test long = zero
+    TEST_COORD = (50, 0)
+    output_coord = wgs84_to_web_mercator(TEST_COORD)
+    assert tuple([round(i) for i in output_coord]) == (0, 6446276)
+
+    # test lat = long = zero
+    TEST_COORD = (0, 0)
+    output_coord = wgs84_to_web_mercator(TEST_COORD)
+    assert tuple([round(i) for i in output_coord]) == (0, 0)
+
+    # test out of range exception
+    TEST_COORD = (90, 0)
+    with pytest.raises(ValueError) as e_info:
+        output_coord = wgs84_to_web_mercator(TEST_COORD)
+        print(e_info)
 
 
 def test_flatten():
