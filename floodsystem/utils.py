@@ -6,6 +6,8 @@
 This module contains utility functions.
 '''
 
+import numpy as np
+
 
 def sorted_by_key(x: list[tuple], i: int, reverse: bool = False) -> list[tuple]:
 
@@ -44,6 +46,28 @@ def wgs84_to_web_mercator(coord: tuple[float]) -> tuple[float]:
     else:
         y = log(tan(pi / 4 + 0.5 * radians(lat))) * R_MAJOR
     return (x, y)
+
+
+def wgs84_to_web_mercator_vector(coords: np.ndarray) -> np.ndarray:
+
+    '''
+    Returns an array of (x, y) coords corresponding to a given array of (lat, long) coords.
+    '''
+
+    if any(not (-90 < coord[0] < 90 and -180 <= coord[1] <= 180) for coord in coords):
+        raise ValueError('Latitude must be between -90 and 90, and Longitude must be between -180 and 180.')
+
+    if not isinstance(coords, np.ndarray):
+        coords = np.array(coords)
+
+    lats, longs = coords[:, 0], coords[:, 1]
+
+    R_MAJOR = 6378137.000  # (major) radius of earth in m
+    x = R_MAJOR * np.radians(longs)
+    y = np.nan_to_num(np.degrees(np.log(np.tan(np.pi / 4 + 0.5 * np.radians(lats))) * (x / longs)),
+        nan=np.log(np.tan(np.pi / 4 + 0.5 * np.radians(lats))) * R_MAJOR)
+
+    return np.transpose((x, y))
 
 
 def flatten(t: list[list]) -> list:

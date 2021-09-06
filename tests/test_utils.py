@@ -8,7 +8,7 @@ import import_helper  # noqa
 
 import pytest
 
-from floodsystem.utils import sorted_by_key, wgs84_to_web_mercator, flatten
+from floodsystem.utils import sorted_by_key, wgs84_to_web_mercator, wgs84_to_web_mercator_vector, flatten
 
 
 def test_sort():
@@ -104,6 +104,51 @@ def test_wgs84_to_web_mercator():
     with pytest.raises(ValueError) as e_info:
         output_coord = wgs84_to_web_mercator(TEST_COORD)
         print(e_info)
+
+
+def test_wgs84_to_web_mercator_vector():
+
+    import numpy as np
+
+    # test array conversion
+    TEST_COORDS = [(25, 50), (-45, 120), (50, 0), (0, 40)]
+    output_coords = wgs84_to_web_mercator_vector(TEST_COORDS)
+    assert np.allclose(output_coords,
+        [(5565975, 2875745), (13358339, -5621521), (0, 6446275.84), (4452780, 0)], atol=0.51)
+
+    # test exception, raised by out of bounds input
+    TEST_COORDS = np.array([(45, 20), (-10, 60), (520, -700)])
+    with pytest.raises(ValueError) as e_info:
+        output_coords = wgs84_to_web_mercator_vector(TEST_COORDS)
+        print(e_info)
+
+
+def test_speed_vector_vs_scalar():
+
+    import timeit
+    import numpy as np
+
+    # create a large list of coords
+    NUM_COORDS = 10000
+    REPEAT = 10
+    TEST_COORDS = np.transpose((np.random.uniform(-85, 85, size=NUM_COORDS),
+                                np.random.uniform(-180, 180, size=NUM_COORDS)))
+
+    time_scalar = timeit.timeit('''output = [wgs84_to_web_mercator(coord) for coord in TEST_COORDS]''',
+        globals={"TEST_COORDS": TEST_COORDS, "wgs84_to_web_mercator": wgs84_to_web_mercator},
+        number=REPEAT)
+
+    time_vector = timeit.timeit('''output = wgs84_to_web_mercator_vector(TEST_COORDS)''',
+        globals={"TEST_COORDS": TEST_COORDS, "wgs84_to_web_mercator_vector": wgs84_to_web_mercator_vector},
+        number=REPEAT)
+
+    if time_scalar < time_vector:
+        raise RuntimeWarning('Vector function was slower than scalar function. \n'
+        f'Total time for scalar function: {time_scalar} \n'
+        f'Total time for vector function: {time_vector} \n'
+        f'Used {NUM_COORDS} coordinate pairs and repeated {REPEAT} times.')
+
+    assert time_vector < time_scalar
 
 
 def test_flatten():

@@ -4,14 +4,14 @@ This module contains functions to produce maps.
 
 # pylint: disable=relative-beyond-top-level, no-name-in-module
 
-from .utils import wgs84_to_web_mercator
+from .utils import wgs84_to_web_mercator_vector
 
 from bokeh.plotting import figure, output_file, show
 from bokeh.models import ColumnDataSource, OpenURL, TapTool, HoverTool
-from bokeh.tile_providers import STAMEN_TERRAIN_RETINA, get_provider
+from bokeh.tile_providers import Vendors, get_provider
 
 
-def display_stations_on_map(stations: list, return_image: bool = False) -> None:
+def display_stations_on_map(stations: list, map_design: str = "SATELLITE", return_image: bool = False) -> None:
 
     '''
     Shows a map of the stations across England by running a HTML file in a browser.
@@ -50,23 +50,25 @@ def display_stations_on_map(stations: list, return_image: bool = False) -> None:
         else:
             station_info[i]["rating"] = -1  # unknown: data was invalid / nonexistent - grey
 
-    # choose a map design: http://docs.bokeh.org/en/1.3.2/docs/reference/tile_providers.html
-    tile_provider = get_provider(STAMEN_TERRAIN_RETINA)
-
     # setup
-    w = wgs84_to_web_mercator
     letter = lambda lat, long: ('N' if lat >= 0 else 'S', 'E' if long >= 0 else 'W')  # noqa
 
     # colours: # https://docs.bokeh.org/en/latest/docs/reference/colors.html
     colors = ["#fa0101", "#ff891e", "#fff037", "#8ec529", "#32a058", "#a2a2a2"]
     linecolors = ["#9c3838", "#9e7d47", "#acac51", "#32a058", "#297231", "#6a6a6a"]
-    trans_coords = [w(place["coords"]) for place in station_info]
-    x_range, y_range = (w(map_range[0])[0], w(map_range[1])[0]), (w(map_range[0])[1], w(map_range[1])[1])
+    trans_coords = wgs84_to_web_mercator_vector([place["coords"] for place in station_info])
+    trans_range = wgs84_to_web_mercator_vector(map_range)
+    x_range, y_range = trans_range[:, 0], trans_range[:, 1]
 
-    # define figure
+    # choose map design: https://docs.bokeh.org/en/latest/docs/reference/tile_providers.html
     p = figure(x_range=x_range, y_range=y_range, x_axis_type="mercator", y_axis_type="mercator",
         tools=["tap", "pan", "wheel_zoom", "box_zoom", "save", "reset"])
-    p.add_tile(tile_provider)
+
+    if map_design.upper() == "SATELLITE":
+        p.add_tile(get_provider(Vendors.ESRI_IMAGERY))
+        p.add_tile(get_provider(Vendors.STAMEN_TONER_LABELS))
+    else:
+        p.add_tile(get_provider(getattr(Vendors, map_design.upper())))
 
     # populate a CDS of the information in each place: list[tuple[*args]]
     info = [

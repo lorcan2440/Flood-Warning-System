@@ -30,10 +30,12 @@ def test_display_stations_on_map():
     setattr(stations[5], "latest_level", 29)
     setattr(stations[6], "latest_level", 36)
 
+    # test returning
     test_image = display_stations_on_map(stations, return_image=True)
-
-    # Check that the image generated exists (cannot use exact value as data changes)
-    # Not easy to test this rigorously
     assert hash(test_image) > 1
 
-    test_image = display_stations_on_map(stations)
+    # test default design
+    display_stations_on_map(stations)
+
+    # test custom design
+    display_stations_on_map(stations, map_design="CARTODBPOSITRON_RETINA")
