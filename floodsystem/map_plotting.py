@@ -4,7 +4,7 @@ This module contains functions to produce maps.
 
 # pylint: disable=relative-beyond-top-level, no-name-in-module
 
-from .utils import wgs84_to_web_mercator_vector
+from .utils import wgs84_to_web_mercator_vector, coord_letters
 
 from bokeh.plotting import figure, output_file, show
 from bokeh.models import ColumnDataSource, OpenURL, TapTool, HoverTool
@@ -50,9 +50,6 @@ def display_stations_on_map(stations: list, map_design: str = "SATELLITE", retur
         else:
             station_info[i]["rating"] = -1  # unknown: data was invalid / nonexistent - grey
 
-    # setup
-    letter = lambda lat, long: ('N' if lat >= 0 else 'S', 'E' if long >= 0 else 'W')  # noqa
-
     # colours: # https://docs.bokeh.org/en/latest/docs/reference/colors.html
     colors = ["#fa0101", "#ff891e", "#fff037", "#8ec529", "#32a058", "#a2a2a2"]
     linecolors = ["#9c3838", "#9e7d47", "#acac51", "#32a058", "#297231", "#6a6a6a"]
@@ -73,7 +70,7 @@ def display_stations_on_map(stations: list, map_design: str = "SATELLITE", retur
     # populate a CDS of the information in each place: list[tuple[*args]]
     info = [
         (*map(lambda c: abs(c), p["coords"]),                               # lat, long               # noqa
-        *letter(*p["coords"]),                                              # ns, ew                  # noqa
+        *coord_letters(*p["coords"]),                                              # ns, ew                  # noqa
         p["name"], p["current_level"],                                      # name, latest_level      # noqa
         p["typical_range"][0] if p["typical_range"] is not None else None,  # typical_range_min       # noqa
         p["typical_range"][1] if p["typical_range"] is not None else None,  # typical_range_max       # noqa

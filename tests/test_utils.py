@@ -8,7 +8,8 @@ import import_helper  # noqa
 
 import pytest
 
-from floodsystem.utils import sorted_by_key, wgs84_to_web_mercator, wgs84_to_web_mercator_vector, flatten
+from floodsystem.utils import sorted_by_key, wgs84_to_web_mercator, \
+    wgs84_to_web_mercator_vector, flatten, coord_letters
 
 
 def test_sort():
@@ -164,3 +165,19 @@ def test_flatten():
     assert flatten(flatten([[[1, 2], [3, 4]], [[5, 6], [7, 8]], [[9, 10], [11, 12]]])) == [
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
     ]
+
+
+def test_coord_letters():
+
+    '''
+    Simple tests
+    '''
+
+    TEST_COORD = (25, 50)
+    assert coord_letters(*TEST_COORD) == ('N', 'E')
+
+    TEST_COORD = (-60, -150)
+    assert coord_letters(*TEST_COORD) == ('S', 'W')
+
+    TEST_COORD = (0, 0)
+    assert coord_letters(*TEST_COORD) == ('N', 'E')

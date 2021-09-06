@@ -79,3 +79,15 @@ def flatten(t: list[list]) -> list:
     '''
 
     return [item for sublist in t for item in sublist]
+
+
+def coord_letters(lat: float, long: float) -> tuple[str, str]:
+
+    '''
+    Determines whether a coordinate is in the North/South and East/West hemispheres
+    and assigns them a corresponding letter.
+
+    The Equator is considered North and the Prime Meridian is considered East.
+    '''
+
+    return ('N' if lat >= 0 else 'S', 'E' if long >= 0 else 'W')
