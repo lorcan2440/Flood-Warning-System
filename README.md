@@ -22,12 +22,16 @@ Click on a dot to go to the official [gov.uk](https://check-for-flooding.service
 
 <img src="https://user-images.githubusercontent.com/72615977/132128882-a61aa746-bdf4-44dc-884d-14a836fbb2ed.png" height="500">
 
+## Installing
+
+Currently this is not available on PyPI. Instead, you can go [here](https://download-directory.github.io/) and download the `floodsystem` module at https://github.com/lorcan2440/Flood-Warning-System/tree/main/floodsystem. Name the zipped folder `floodsystem.zip`. Extract the floodsystem module to the directory of your program.
+
 ## Usage
 
 Various uses of the API are given in the `tasks` folder. To get started,
 
 ```
-from floodsystem.stationdata import build_station_list, update_water_levels
+from floodsystem.station_data import build_station_list, update_water_levels
 
 stations = build_station_list()
 update_water_levels(stations)
