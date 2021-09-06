@@ -1,12 +1,12 @@
 '''
-Unit tests for the stationdata module.
+Unit tests for the station_data module.
 '''
 
 # pylint: disable=import-error
 
 import import_helper  # noqa
 
-from floodsystem.stationdata import build_station_list, update_water_levels
+from floodsystem.station_data import build_station_list, update_water_levels
 
 
 def test_build_station_list():

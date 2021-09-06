@@ -2,7 +2,7 @@
 import import_helper  # noqa
 
 from floodsystem.geo import rivers_by_station_number
-from floodsystem.stationdata import build_station_list
+from floodsystem.station_data import build_station_list
 
 
 def run():

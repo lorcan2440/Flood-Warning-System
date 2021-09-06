@@ -1,7 +1,7 @@
 # pylint: disable=import-error
 import import_helper  # noqa
 
-from floodsystem.stationdata import build_station_list, update_water_levels
+from floodsystem.station_data import build_station_list, update_water_levels
 from floodsystem.flood import stations_level_over_threshold
 
 

@@ -33,22 +33,11 @@ jobs:
       - name: Run unit tests & code coverage using pytest
         run: pytest -v --cov
 
-      - name: Run Deliverable 1 code
-        run: |
-          python tasks/Task1A.py
-          python tasks/Task1B.py
-          python tasks/Task1C.py
-          python tasks/Task1D.py
-          python tasks/Task1E.py
-          python tasks/Task1F.py
-      - name: Run Deliverable 2 code
-        run: |
-          python tasks/Task2A.py
-          python tasks/Task2B.py
-          python tasks/Task2C.py
-          python tasks/Task2D.py
-          python tasks/Task2E.py
-          python tasks/Task2F.py
-          python tasks/Task2G.py
+      - name: Run deliverables (tasks)
+        run: ./runtasks.sh
+
       - name: Run Map Viewer code
         run: python MapViewer.py
+
+      - name: Clean up directory
+        run: ./cleanup.bat

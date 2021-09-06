@@ -3,7 +3,7 @@ import import_helper  # noqa
 
 import numpy as np
 
-from floodsystem.stationdata import build_station_list, update_water_levels
+from floodsystem.station_data import build_station_list, update_water_levels
 from floodsystem.geo import stations_by_town
 
 
