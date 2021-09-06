@@ -26,14 +26,14 @@ Click on a dot to go to the official [gov.uk](https://check-for-flooding.service
 
 Various uses of the API are given in the `tasks` folder. To get started,
 
-`from floodsystem.stationdata import build_station_list, update_water_levels
+```from floodsystem.stationdata import build_station_list, update_water_levels
 
 stations = build_station_list()
-update_water_levels(stations)`
+update_water_levels(stations)```
 
 Pass in `stations` to the API functions to see the results, e.g.
 
-`from floodsystem.flood import stations_level_over_threshold
+```from floodsystem.flood import stations_level_over_threshold
 
-print(stations_level_over_threshold(stations))`
+print(stations_level_over_threshold(stations))```
 
