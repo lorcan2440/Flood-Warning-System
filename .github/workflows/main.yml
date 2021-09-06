@@ -34,11 +34,7 @@ jobs:
         run: pytest -v --cov
 
       - name: Run deliverables (tasks)
-        run: sh ./runtasks.sh
+        run: sh ./runtasks.
 
       - name: Run Map Viewer code
         run: python MapViewer.py
-
-      - name: Clean up directory
-        run: ./cleanup.bat
-        shell: cmd
