@@ -1,9 +1,8 @@
-# CUED Part IA Flood Warning System
+# Flood Warning System
 
-Built to extend the Part IA Lent Term computing activity at the Department of
-Engineering, University of Cambridge.
+Built to extend the Part IA Lent Term computing activity at CUED.
 
-The activity is documented at https://cued-partia-flood-warning.readthedocs.io/.
+The tasks are documented at https://cued-partia-flood-warning.readthedocs.io/.
 
 View the map by running `MapViewer.py` or run the files in the `tasks` directory to see the standard functionality.
 
