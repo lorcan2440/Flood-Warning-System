@@ -4,7 +4,7 @@ This module contains functions to produce maps.
 
 # pylint: disable=relative-beyond-top-level, no-name-in-module
 
-from .utils import wgs84_to_web_mercator_vector, coord_letters
+from .utils import wgs84_to_web_mercator_vector, coord_letters, get_else_none
 
 from bokeh.plotting import figure, output_file, show
 from bokeh.models import ColumnDataSource, OpenURL, TapTool, HoverTool
@@ -69,17 +69,16 @@ def display_stations_on_map(stations: list, map_design: str = "SATELLITE", retur
 
     # populate a CDS of the information in each place: list[tuple[*args]]
     info = [
-        (*map(lambda c: abs(c), p["coords"]),                               # lat, long               # noqa
-        *coord_letters(*p["coords"]),                                              # ns, ew                  # noqa
-        p["name"], p["current_level"],                                      # name, latest_level      # noqa
-        p["typical_range"][0] if p["typical_range"] is not None else None,  # typical_range_min       # noqa
-        p["typical_range"][1] if p["typical_range"] is not None else None,  # typical_range_max       # noqa
-        str(round(p["relative_level"] * 100, 1)) + '%'                      # relative_level_percent  # noqa
-            if p["relative_level"] is not None else None,                                             # noqa
-        p["river"], p["town"], p['url'],                                    # river, town, url        # noqa
-        colors[p["rating"]], linecolors[p["rating"]],                       # color, linecolor        # noqa
-        x[0], x[1])                                                         # x_coord, y_coord        # noqa 
-            for p, x in zip(station_info, trans_coords)                                               # noqa
+        (*map(lambda c: abs(c), p["coords"]),                               # lat, long
+        *coord_letters(*p["coords"]),                                       # ns, ew
+        p["name"], p["current_level"],                                      # name, latest_level
+        get_else_none(p["typical_range"], 0),                               # typical_range_min
+        get_else_none(p["typical_range"], 1),                               # typical_range_max
+        get_else_none(p["relative_level"], func=lambda x: round(x * 100, 1)),  # relative_level_percent
+        p["river"], p["town"], p['url'],                                    # river, town, url
+        colors[p["rating"]], linecolors[p["rating"]],                       # color, linecolor
+        x[0], x[1])                                                         # x_coord, y_coord
+        for p, x in zip(station_info, trans_coords)
     ]
 
     source = ColumnDataSource(
@@ -102,7 +101,7 @@ def display_stations_on_map(stations: list, map_design: str = "SATELLITE", retur
     hover = HoverTool()
     hover.tooltips = [('Station', '@name'), ('Current level', '@current_level m'),
                       ('Typical range', 'min: @typical_range_min m, max: @typical_range_max m'),
-                      ('Relative level', '@relative_level_percent'),
+                      ('Relative level', '@relative_level_percent %'),
                       ('River', '@river'), ('Town', '@town'), ('Coords', '(@lat° @ns, @long° @ew)')]
     p.add_tools(hover)
 

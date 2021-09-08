@@ -9,19 +9,14 @@ This module contains utility functions.
 import numpy as np
 
 
-def sorted_by_key(x: list[tuple], i: int, reverse: bool = False) -> list[tuple]:
+def sorted_by_key(nested_list: list[tuple], index: int, reverse: bool = False) -> list[tuple]:
 
     '''
     For a list of lists/tuples, return list sorted by the ith
-    component of the list/tuple, e.g.
-
-    Sort on second entry of tuple:
-
-      > sorted_by_key([(1, 2), (5, 1]), 1)
-      >>> [(5, 1), (1, 2)]
+    component of the list/tuple.
     '''
 
-    return sorted(x, key=lambda x: x[i], reverse=reverse)
+    return sorted(nested_list, key=lambda x: x[index], reverse=reverse)
 
 
 def wgs84_to_web_mercator(coord: tuple[float]) -> tuple[float]:
@@ -91,3 +86,25 @@ def coord_letters(lat: float, long: float) -> tuple[str, str]:
     '''
 
     return ('N' if lat >= 0 else 'S', 'E' if long >= 0 else 'W')
+
+
+def get_else_none(var, index=None, func: callable = lambda x: x):
+
+    '''
+    Gets an item from a dict or list, unless the dict itself is None,
+    in which case returns None.
+    '''
+
+    if var is not None:
+        if index is not None:
+            if isinstance(var, dict):
+                tmp = var.get(index, None)
+                return func(tmp) if tmp is not None else None
+            elif isinstance(var, (list, tuple)) and 0 <= index < len(var):
+                return func(var[index])
+            else:
+                return None
+        else:
+            return func(var)
+    else:
+        return None

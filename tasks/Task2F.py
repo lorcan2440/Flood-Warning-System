@@ -47,7 +47,8 @@ def run():
             warnings.warn(f'Warning: The data for {s.name} may be unreliable.', RuntimeWarning)
 
         # Plot the graphs
-        plot_water_level_with_fit(s, dates[s.name], levels[s.name], p, format_dates=True)
+        plot_water_level_with_fit(s, dates[s.name], levels[s.name], p, format_dates=True,
+            use_proplot_style=True)
 
 
 if __name__ == "__main__":

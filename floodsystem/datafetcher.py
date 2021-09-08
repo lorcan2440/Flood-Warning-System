@@ -8,6 +8,7 @@ latest time history level data
 import datetime
 import json
 import os
+import warnings
 import requests
 import dateutil.parser
 
@@ -103,8 +104,7 @@ def fetch_latest_water_level_data(use_cache: bool = False) -> dict:
         pass
     cache_file = os.path.join(sub_dir, 'level_data.json')
 
-    # Attempt to load level data from file, otherwise fetch over
-    # Internet
+    # Attempt to load level data from file, otherwise fetch over internet (slower)
     if use_cache:
         try:
             # Attempt to load from file
@@ -140,6 +140,8 @@ def fetch_measure_levels(measure_id: str,
 
     # Fetch data
     data = fetch(url)
+    station_data = fetch(data['items'][0]['@id'])
+    station_name = station_data['items']['measure']['label'].split(' LVL ')[0].split(' - ')[0]
 
     # Extract dates and levels
     dates, levels = [], []
@@ -150,5 +152,34 @@ def fetch_measure_levels(measure_id: str,
         # Append data
         dates.append(d)
         levels.append(measure['value'])
+
+        # Check for erroneous case: level was a tuple instead of float
+        if not isinstance(levels[-1], (float, int)):
+            warnings.warn(f"Data for {station_name} station on date {d} may be unreliable. \n"
+                f"Found water level value {levels[-1]}; \n assuming the value should be {levels[-1][1]}.",
+                RuntimeWarning)
+            levels[-1] = levels[-1][1]
+
+        # Check for potentially invalid values: negative or impossibly high
+        if levels[-1] < 0:
+            warnings.warn(f"Data for {station_name} station on date {d} may be unreliable. \n"
+                f"Found water level value {levels[-1]}; \n setting level to 0.", RuntimeWarning)
+            levels[-1] = 0
+
+        if len(levels) >= 2:
+            if levels[-1] > 2500:
+                warnings.warn(f"Data for {station_name} station on date {d} may be unreliable. \n"
+                    f"Found water level value {levels[-1]}; \n"
+                    f"setting level to previous day's level, {levels[-2]}.",
+                    RuntimeWarning)
+                levels[-1] = levels[-2]
+
+            # Check for potentially invalid values: sudden change from last value
+            if levels[-1] / levels[-2] > 1.5 or levels[-1] / levels[-2] < 0.5:
+                warnings.warn(f"Data for {station_name} station on date {d} may be unreliable. \n"
+                    f"Found water level value {levels[-1]} which differs from previous value of \n"
+                    f"{levels[-2]} by a large amount (either increased by > 50% or decreased by > 100%). \n"
+                    f"Setting to previous value.", RuntimeWarning)
+                levels[-1] = levels[-2]
 
     return dates, levels

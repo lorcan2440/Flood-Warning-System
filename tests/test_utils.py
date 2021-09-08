@@ -9,7 +9,7 @@ import import_helper  # noqa
 import pytest
 
 from floodsystem.utils import sorted_by_key, wgs84_to_web_mercator, \
-    wgs84_to_web_mercator_vector, flatten, coord_letters
+    wgs84_to_web_mercator_vector, flatten, coord_letters, get_else_none
 
 
 def test_sort():
@@ -181,3 +181,18 @@ def test_coord_letters():
 
     TEST_COORD = (0, 0)
     assert coord_letters(*TEST_COORD) == ('N', 'E')
+
+
+def test_get_else_none():
+
+    '''
+    Simple tests
+    '''
+
+    TEST_DICT = {'a': 300, 'b': None, 'c': [1, 2, 3]}
+
+    assert get_else_none(TEST_DICT, 'a', lambda x: 2 * x) == 600
+    assert get_else_none(TEST_DICT, 'd') is None
+    assert get_else_none(TEST_DICT['c'], 2) == 3
+    assert get_else_none(TEST_DICT['c'], 3) is None
+    assert get_else_none(TEST_DICT['b'], 0) is None

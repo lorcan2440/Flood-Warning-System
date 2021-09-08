@@ -50,6 +50,10 @@ def test_plot_water_levels():
     plot_water_levels(stations, dates, levels, as_subplots=False)
     plot_water_levels(stations, dates, levels, as_subplots=True)
 
+    # try without ProPlot
+    plot_water_levels(stations, dates, levels, as_subplots=False, use_proplot_style=False)
+    plot_water_levels(stations, dates, levels, as_subplots=True, use_proplot_style=False)
+
 
 def test_plot_water_level_with_fit():
 
@@ -88,3 +92,4 @@ def test_plot_water_level_with_fit():
 
     plot_water_level_with_fit(stations[0], dates['Station 1'], levels['Station 1'], 4, format_dates=True)
     plot_water_level_with_fit(stations[0], dates['Station 1'], levels['Station 1'], 4, y_axis_from_zero=False)
+    plot_water_level_with_fit(stations[0], dates['Station 1'], levels['Station 1'], 4, use_proplot_style=False)

@@ -29,15 +29,6 @@ def run():
     dates, levels = {}, {}
     for s in high_stations:
         data = fetch_measure_levels(s.measure_id, dt)
-        # Sanitise input data
-        for index in range(len(data[1])):
-            if not isinstance(data[1][index], float):
-                data[1][index] = data[1][index][1]
-                flags.append(s.name)
-            if data[1][index] < 0:
-                data[1][index] = data[1][index - 1]
-                flags.append(s.name)
-
         dates.update({s.name: data[0]})
         levels.update({s.name: data[1]})
 
@@ -45,7 +36,7 @@ def run():
         warnings.warn(f'Warning: The data for {s} may be unreliable.', RuntimeWarning)
 
     # Plot the graphs
-    plot_water_levels(high_stations, dates, levels, as_subplots=True)
+    plot_water_levels(high_stations, dates, levels, as_subplots=True, use_proplot_style=True)
 
 
 if __name__ == "__main__":

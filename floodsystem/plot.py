@@ -16,7 +16,8 @@ from .utils import flatten
 from .analysis import polyfit
 
 
-def plot_water_levels(stations: list, dates: dict, levels: dict, as_subplots: bool = False) -> None:
+def plot_water_levels(stations: list, dates: dict, levels: dict, as_subplots: bool = False,
+                      use_proplot_style: bool = True) -> None:
 
     '''
     Plots graph(s) of the level data in stations (which may be
@@ -40,17 +41,16 @@ def plot_water_levels(stations: list, dates: dict, levels: dict, as_subplots: bo
     assert all([isinstance(i, datetime.datetime) for i in flatten(list(dates.values()))])
     assert all([isinstance(i, (float, int)) for i in flatten(list(levels.values()))])
 
-    # Discard any stations with bad range, dates or levels data
-    stations, dates, levels = stations, dates, levels
-
     for s in stations:
         if not s.typical_range_consistent():
             levels.pop(s.name, None)
             dates.pop(s.name, None)
             stations.remove(s)
 
-    # After removals, check sizes of lists are valid
     assert len(list(levels.keys())) == len(stations)
+
+    if use_proplot_style:
+        plt.style.use('proplot_style.mplstyle')
 
     if as_subplots:
 
@@ -83,6 +83,7 @@ def plot_water_levels(stations: list, dates: dict, levels: dict, as_subplots: bo
             plt.plot(dates[s.name], levels[s.name], label=s.name)
 
         plt.ylim(ymin=0)
+        plt.title('Recorded water levels')
         plt.xlabel('date')
         plt.ylabel('water level / $ m $')
         plt.xticks(rotation=45)
@@ -93,15 +94,17 @@ def plot_water_levels(stations: list, dates: dict, levels: dict, as_subplots: bo
 
 
 def plot_water_level_with_fit(station: object, dates: list, levels: list, p: int,
-        n_points: int = 30, format_dates: bool = False, y_axis_from_zero: bool = True) -> None:
+        n_points: int = 30, format_dates: bool = False, y_axis_from_zero: bool = True,
+        use_proplot_style: bool = True) -> None:
 
     # Get a polynomial function fitting the data, the offset, and the original dataset.
     poly, d0, date_nums = polyfit(dates, levels, p)
 
-    # If the time axis should be displayed using nice dates,
-    # plot the data as floats initially, which is later
-    # labelled as formatted datetime.datetime strings
-    # or datetime.datetime objects if not
+    if use_proplot_style:
+        plt.style.use('proplot_style.mplstyle')
+
+    # If the time axis should be displayed using nice dates, plot the data as floats initially,
+    # which is later labelled as formatted datetime.datetime strings or datetime.datetime objects if not
     if format_dates:
         plt.plot(date_nums, levels, '.', label=station.name)
         date_nums_sample = np.linspace(date_nums[0], date_nums[-1], 12)
