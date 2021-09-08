@@ -2,7 +2,6 @@
 import import_helper  # noqa
 
 import datetime
-import warnings
 
 from floodsystem.datafetcher import fetch_measure_levels
 from floodsystem.station_data import build_station_list, update_water_levels
@@ -25,15 +24,11 @@ def run():
     high_stations = stations_highest_rel_level(stations, N)
 
     # Fetch the dates and levels from each station
-    flags = []
     dates, levels = {}, {}
     for s in high_stations:
         data = fetch_measure_levels(s.measure_id, dt)
         dates.update({s.name: data[0]})
         levels.update({s.name: data[1]})
-
-    for s in set(flags):
-        warnings.warn(f'Warning: The data for {s} may be unreliable.', RuntimeWarning)
 
     # Plot the graphs
     plot_water_levels(high_stations, dates, levels, as_subplots=True, use_proplot_style=True)

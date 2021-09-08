@@ -119,8 +119,8 @@ def fetch_latest_water_level_data(use_cache: bool = False) -> dict:
     return data
 
 
-def fetch_measure_levels(measure_id: str,
-                         dt: datetime.timedelta) -> tuple[list[datetime.datetime], list[float]]:
+def fetch_measure_levels(measure_id: str, dt: datetime.timedelta,
+        show_data_warnings: bool = True) -> tuple[list[datetime.datetime], list[float]]:
 
     """
     Fetch measure levels from latest reading and going back a period
@@ -142,6 +142,7 @@ def fetch_measure_levels(measure_id: str,
     data = fetch(url)
     station_data = fetch(data['items'][0]['@id'])
     station_name = station_data['items']['measure']['label'].split(' LVL ')[0].split(' - ')[0]
+    flags = {}
 
     # Extract dates and levels
     dates, levels = [], []
@@ -155,31 +156,38 @@ def fetch_measure_levels(measure_id: str,
 
         # Check for erroneous case: level was a tuple instead of float
         if not isinstance(levels[-1], (float, int)):
-            warnings.warn(f"Data for {station_name} station on date {d} may be unreliable. \n"
-                f"Found water level value {levels[-1]}; \n assuming the value should be {levels[-1][1]}.",
-                RuntimeWarning)
+
+            flags[station_name] = f"Data for {station_name} station on date may be unreliable. \n"
+            flags[station_name] += f"Found water level value {levels[-1]}; \n"
+            flags[station_name] += f"assuming the value should be {levels[-1][1]}."
+
             levels[-1] = levels[-1][1]
 
         # Check for potentially invalid values: negative or impossibly high
         if levels[-1] < 0:
-            warnings.warn(f"Data for {station_name} station on date {d} may be unreliable. \n"
-                f"Found water level value {levels[-1]}; \n setting level to 0.", RuntimeWarning)
+
+            flags[station_name] = f"Data for {station_name} station on date {d} may be unreliable. \n"
+            flags[station_name] += "Some water levels were found to be negative: these have been set to 0 m."
+
             levels[-1] = 0
 
         if len(levels) >= 2:
             if levels[-1] > 2500:
-                warnings.warn(f"Data for {station_name} station on date {d} may be unreliable. \n"
-                    f"Found water level value {levels[-1]}; \n"
-                    f"setting level to previous day's level, {levels[-2]}.",
-                    RuntimeWarning)
+
+                flags[station_name] = f"Data for {station_name} station on date {d} may be unreliable. \n"
+                flags[station_name] += "Some water levels were found to be very high, above 2500 m: \n"
+                flags[station_name] += "these have been set to whatever the value before the spike."
+
                 levels[-1] = levels[-2]
 
             # Check for potentially invalid values: sudden change from last value
             if levels[-1] / levels[-2] > 1.5 or levels[-1] / levels[-2] < 0.5:
-                warnings.warn(f"Data for {station_name} station on date {d} may be unreliable. \n"
-                    f"Found water level value {levels[-1]} which differs from previous value of \n"
-                    f"{levels[-2]} by a large amount (either increased by > 50% or decreased by > 100%). \n"
-                    f"Setting to previous value.", RuntimeWarning)
-                levels[-1] = levels[-2]
+
+                flags[station_name] = f"Data for {station_name} station on date {d} may be unreliable, \n"
+                flags[station_name] += "with sudden spikes of increasing by > 50% and/or decreasing by > 100%. \n"
+                flags[station_name] += "These values have not been altered."
+
+    if show_data_warnings and flags.get(station_name) is not None:
+        warnings.warn(flags[station_name], RuntimeWarning)
 
     return dates, levels
