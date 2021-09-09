@@ -30,11 +30,12 @@ jobs:
       - name: Lint with flake8
         run: flake8 --statistics *.py
 
-      - name: Run unit tests & code coverage using pytest
+      - name: Run unit tests with pytest
         run: pytest -v --cov
 
       - name: Run deliverables (tasks)
         run: sh ./runtasks.sh
 
-      - name: Run Map Viewer code
-        run: python MapViewer.py
+      - name: Run applications
+        run: python applications/MapViewer.py
+        run: python applications/LevelPredictions.py

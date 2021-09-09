@@ -15,10 +15,13 @@ def run():
     stations_to_predict = [s for s in stations if s.name in station_names_to_predict]
 
     # train models for each station
+    print(f'Training forecasting model for {station_names_to_predict}')
     train_all(stations_to_predict)
+    print('Training finished.')
 
     # get predictions
     for s in stations_to_predict:
+        print(f'Forecasting for {s.name}')
         plot_predicted_water_levels(s, *predict(s))
 
 
