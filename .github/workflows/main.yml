@@ -37,5 +37,6 @@ jobs:
         run: sh ./runtasks.sh
 
       - name: Run applications
-        run: python applications/MapViewer.py
-        run: python applications/LevelPredictions.py
+        run: |
+          python applications/MapViewer.py
+          python applications/LevelPredictions.py
