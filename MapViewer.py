@@ -1,10 +1,10 @@
-from floodsystem.station_data import build_station_list, update_water_levels
-from floodsystem.map_plotting import display_stations_on_map
+from floodsystem.stationdata import build_station_list, update_water_levels
+from floodsystem.map import display_stations_on_map
 
 
 def run():
 
-    stations = build_station_list(use_cache=False)
+    stations = build_station_list()
     update_water_levels(stations)
     display_stations_on_map(stations, map_design='satellite')
     print(f'Displaying {len(stations)} monitoring stations on the map. \n \n'

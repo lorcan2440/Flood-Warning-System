@@ -1,12 +1,12 @@
 '''
-Unit tests for the map_plotting module.
+Unit tests for the map module.
 '''
 
 # pylint: disable=import-error
 
 import import_helper  # noqa
 
-from floodsystem.map_plotting import display_stations_on_map
+from floodsystem.map import display_stations_on_map
 from floodsystem.station import MonitoringStation
 
 

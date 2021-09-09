@@ -4,7 +4,7 @@ import import_helper  # noqa
 import datetime
 
 from floodsystem.datafetcher import fetch_measure_levels
-from floodsystem.station_data import build_station_list
+from floodsystem.stationdata import build_station_list
 
 
 def run():

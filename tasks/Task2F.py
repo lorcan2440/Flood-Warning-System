@@ -4,9 +4,9 @@ import import_helper  # noqa
 import datetime
 
 from floodsystem.datafetcher import fetch_measure_levels
-from floodsystem.station_data import build_station_list, update_water_levels
+from floodsystem.stationdata import build_station_list, update_water_levels
 from floodsystem.flood import stations_highest_rel_level
-from floodsystem.plot import plot_water_level_with_fit
+from floodsystem.plot import plot_water_level_with_polyfit, plot_water_level_with_moving_average
 
 
 ''' ignore warnings '''
@@ -32,9 +32,12 @@ def run():
         dates.update({s.name: data[0]})
         levels.update({s.name: data[1]})
 
-        # Plot the graphs
-        plot_water_level_with_fit(s, dates[s.name], levels[s.name], p, format_dates=True,
-            use_proplot_style=True)
+        # Plot the graphs with polynomial fits and moving average
+        plot_water_level_with_polyfit(s, dates[s.name], levels[s.name], poly_degree=p,
+            format_dates=True, use_proplot_style=True)
+
+        plot_water_level_with_moving_average(s, dates[s.name], levels[s.name], interval=3,
+            format_dates=True, use_proplot_style=True)
 
 
 if __name__ == "__main__":

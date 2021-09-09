@@ -12,6 +12,8 @@ import warnings
 import requests
 import dateutil.parser
 
+from .analysis import has_rapid_fluctuations
+
 
 def fetch(url: str) -> dict:
 
@@ -47,7 +49,7 @@ def load(filename: str) -> dict:
     return data
 
 
-def fetch_station_data(use_cache: bool = True) -> dict:
+def fetch_stationdata(use_cache: bool = True) -> dict:
 
     """
     Fetch data from Environment agency for all active river level
@@ -69,7 +71,7 @@ def fetch_station_data(use_cache: bool = True) -> dict:
         os.makedirs(sub_dir)
     except FileExistsError:
         pass
-    cache_file = os.path.join(sub_dir, 'station_data.json')
+    cache_file = os.path.join(sub_dir, 'stationdata.json')
 
     # Attempt to load station data from file, otherwise fetch over Internet
     if use_cache:
@@ -120,7 +122,7 @@ def fetch_latest_water_level_data(use_cache: bool = False) -> dict:
 
 
 def fetch_measure_levels(measure_id: str, dt: datetime.timedelta,
-        show_data_warnings: bool = True) -> tuple[list[datetime.datetime], list[float]]:
+        **warnings_kwargs: dict) -> tuple[list[datetime.datetime], list[float]]:
 
     """
     Fetch measure levels from latest reading and going back a period
@@ -140,13 +142,13 @@ def fetch_measure_levels(measure_id: str, dt: datetime.timedelta,
 
     # Fetch data
     data = fetch(url)
-    station_data = fetch(data['items'][0]['@id'])
-    station_name = station_data['items']['measure']['label'].split(' LVL ')[0].split(' - ')[0]
+    stationdata = fetch(data['items'][0]['@id'])
+    station_name = stationdata['items']['measure']['label'].split(' LVL ')[0].split(' - ')[0]
     flags = {}
 
     # Extract dates and levels
     dates, levels = [], []
-    for measure in data['items']:
+    for measure in reversed(data['items']):
         # Convert date-time string to a datetime object
         d = dateutil.parser.parse(measure['dateTime'])
 
@@ -154,40 +156,67 @@ def fetch_measure_levels(measure_id: str, dt: datetime.timedelta,
         dates.append(d)
         levels.append(measure['value'])
 
-        # Check for erroneous case: level was a tuple instead of float
-        if not isinstance(levels[-1], (float, int)):
-
-            flags[station_name] = f"Data for {station_name} station on date may be unreliable. \n"
-            flags[station_name] += f"Found water level value {levels[-1]}; \n"
-            flags[station_name] += f"assuming the value should be {levels[-1][1]}."
-
-            levels[-1] = levels[-1][1]
-
-        # Check for potentially invalid values: negative or impossibly high
-        if levels[-1] < 0:
-
-            flags[station_name] = f"Data for {station_name} station on date {d} may be unreliable. \n"
-            flags[station_name] += "Some water levels were found to be negative: these have been set to 0 m."
-
-            levels[-1] = 0
-
-        if len(levels) >= 2:
-            if levels[-1] > 2500:
-
-                flags[station_name] = f"Data for {station_name} station on date {d} may be unreliable. \n"
-                flags[station_name] += "Some water levels were found to be very high, above 2500 m: \n"
-                flags[station_name] += "these have been set to whatever the value before the spike."
-
-                levels[-1] = levels[-2]
-
-            # Check for potentially invalid values: sudden change from last value
-            if levels[-1] / levels[-2] > 1.5 or levels[-1] / levels[-2] < 0.5:
-
-                flags[station_name] = f"Data for {station_name} station on date {d} may be unreliable, \n"
-                flags[station_name] += "with sudden spikes of increasing by > 50% and/or decreasing by > 100%. \n"
-                flags[station_name] += "These values have not been altered."
-
-    if show_data_warnings and flags.get(station_name) is not None:
-        warnings.warn(flags[station_name], RuntimeWarning)
+    flags = identify_potentially_bad_data(station_name, levels, **warnings_kwargs)
+    for flag in flags:
+        warnings.warn('\n' + flag + '\n', RuntimeWarning)
 
     return dates, levels
+
+
+def identify_potentially_bad_data(station_name: str, levels: list[float], **kwargs: dict) -> set:
+
+    NEGATIVE_LEVEL_TO_ZERO      = kwargs.get('negative_level_to_zero',      True)   # noqa
+    REPLACE_TUPLE_WITH_INDEX    = kwargs.get('replace_tuple_with_index',    1)      # noqa
+    TOO_HIGH_CUTOFF             = kwargs.get('too_high_cutoff',             2500)   # noqa
+    TOO_HIGH_TO_PREVIOUS_LEVEL  = kwargs.get('too_high_to_previous_level',  True)   # noqa
+    TOO_FAST_INCREASE_CUTOFF    = kwargs.get('too_fast_increase_cutoff',    2)      # noqa
+    TOO_FAST_DECREASE_CUTOFF    = kwargs.get('too_fast_decrease_cutoff',    0.3)    # noqa
+
+    flags = set()
+
+    for i in range(len(levels)):
+
+        # Check for erroneous case: level was a tuple instead of float
+        if not isinstance(levels[i], (float, int)):
+
+            warn_str = f"Data for {station_name} station on date may be unreliable. "
+            warn_str += f"Found water level value {levels[i]}. \n"
+            warn_str += f"This has been replaced with {levels[i][REPLACE_TUPLE_WITH_INDEX]}."
+
+            flags.add(warn_str)
+
+            levels[i] = levels[i][REPLACE_TUPLE_WITH_INDEX]
+
+        # Check for potentially invalid values: negative or impossibly high
+        if levels[i] < 0:
+
+            warn_str = f"Data for {station_name} station may be unreliable. "
+            warn_str += "Some water levels were found to be negative. \nThese have been set to 0 m."
+
+            flags.add(warn_str)
+
+            if NEGATIVE_LEVEL_TO_ZERO:
+                levels[i] = 0
+
+        if levels[i] > TOO_HIGH_CUTOFF and len(levels) >= 2:
+
+            warn_str = f"Data for {station_name} station may be unreliable. "
+            warn_str += "Some water levels were found to be very high, above "
+            warn_str += f"{TOO_HIGH_CUTOFF} m. \nThese have been set to whatever "
+            warn_str += "the value before the spike."
+
+            flags.add(warn_str)
+
+            if TOO_HIGH_TO_PREVIOUS_LEVEL:
+                levels[i] = levels[i - 1]
+
+    # Check for potentially invalid values: many sudden changes
+    if has_rapid_fluctuations(levels):
+
+        warn_str = f"Data for {station_name} station may be unreliable. "
+        warn_str += "There are many sudden spikes between consecutive measurements. "
+        warn_str += "These values have not been altered."
+
+        flags.add(warn_str)
+
+    return flags

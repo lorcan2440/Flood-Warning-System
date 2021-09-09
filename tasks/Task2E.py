@@ -4,7 +4,7 @@ import import_helper  # noqa
 import datetime
 
 from floodsystem.datafetcher import fetch_measure_levels
-from floodsystem.station_data import build_station_list, update_water_levels
+from floodsystem.stationdata import build_station_list, update_water_levels
 from floodsystem.flood import stations_highest_rel_level
 from floodsystem.plot import plot_water_levels
 
@@ -31,7 +31,7 @@ def run():
         levels.update({s.name: data[1]})
 
     # Plot the graphs
-    plot_water_levels(high_stations, dates, levels, as_subplots=True, use_proplot_style=True)
+    plot_water_levels(high_stations, dates, levels)
 
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 '''
-Unit tests for the station_data module.
+Unit tests for the stationdata module.
 '''
 
 # pylint: disable=import-error
@@ -11,8 +11,8 @@ import shutil
 import import_helper  # noqa
 
 from floodsystem.datafetcher import fetch, dump, load, \
-    fetch_measure_levels, fetch_latest_water_level_data, fetch_station_data
-from floodsystem.station_data import build_station_list
+    fetch_measure_levels, fetch_latest_water_level_data, fetch_stationdata
+from floodsystem.stationdata import build_station_list
 
 
 # get data from url first and reuse in each test to avoid excessive calls
@@ -49,18 +49,18 @@ def test_load():
     assert json_dict_loaded is not None
 
 
-def test_fetch_station_data():
+def test_fetch_stationdata():
 
     # try using cache when it doesn't exist
     shutil.rmtree('cache')
-    test_fetch = fetch_station_data(use_cache=True)
+    test_fetch = fetch_stationdata(use_cache=True)
     assert test_fetch is not None
 
     # cache exists, use and don't use
-    test_fetch = fetch_station_data(use_cache=True)
+    test_fetch = fetch_stationdata(use_cache=True)
     assert test_fetch is not None
     time.sleep(0.1)
-    test_fetch = fetch_station_data(use_cache=False)
+    test_fetch = fetch_stationdata(use_cache=False)
     assert test_fetch is not None
 
 

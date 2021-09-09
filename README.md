@@ -31,7 +31,7 @@ Currently this is not available on PyPI. Instead, you can go [here](https://down
 Various uses of the API are given in the `tasks` folder. To get started,
 
 ```
-from floodsystem.station_data import build_station_list, update_water_levels
+from floodsystem.stationdata import build_station_list, update_water_levels
 
 stations = build_station_list()
 update_water_levels(stations)

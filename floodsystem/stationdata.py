@@ -21,7 +21,7 @@ def build_station_list(use_cache=True) -> list[MonitoringStation]:
     """
 
     # Fetch station data
-    data = datafetcher.fetch_station_data(use_cache)
+    data = datafetcher.fetch_stationdata(use_cache)
 
     # Build list of MonitoringStation objects
     stations = []
