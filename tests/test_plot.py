@@ -7,7 +7,7 @@ Unit tests for the plot module.
 import import_helper  # noqa
 from datetime import datetime
 
-from floodsystem.plot import plot_water_levels, plot_water_level_with_fit
+from floodsystem.plot import plot_water_levels, plot_water_level_with_polyfit
 from floodsystem.station import MonitoringStation
 
 
@@ -86,10 +86,10 @@ def test_plot_water_level_with_fit():
     setattr(stations[2], 'name', 'Bad Station')
 
     # all should run without exception
-    plot_water_level_with_fit(stations[0], dates['Station 1'], levels['Station 1'], 4)
-    plot_water_level_with_fit(stations[1], dates['Station 2'], levels['Station 2'], 4)
-    plot_water_level_with_fit(stations[2], dates['Bad Station'], levels['Bad Station'], 4)
+    plot_water_level_with_polyfit(stations[0], dates['Station 1'], levels['Station 1'], 4)
+    plot_water_level_with_polyfit(stations[1], dates['Station 2'], levels['Station 2'], 4)
+    plot_water_level_with_polyfit(stations[2], dates['Bad Station'], levels['Bad Station'], 4)
 
-    plot_water_level_with_fit(stations[0], dates['Station 1'], levels['Station 1'], 4, format_dates=True)
-    plot_water_level_with_fit(stations[0], dates['Station 1'], levels['Station 1'], 4, y_axis_from_zero=False)
-    plot_water_level_with_fit(stations[0], dates['Station 1'], levels['Station 1'], 4, use_proplot_style=False)
+    plot_water_level_with_polyfit(stations[0], dates['Station 1'], levels['Station 1'], 4, format_dates=True)
+    plot_water_level_with_polyfit(stations[0], dates['Station 1'], levels['Station 1'], 4, y_axis_from_zero=False)
+    plot_water_level_with_polyfit(stations[0], dates['Station 1'], levels['Station 1'], 4, use_proplot_style=False)

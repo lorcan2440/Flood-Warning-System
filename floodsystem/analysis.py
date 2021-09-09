@@ -90,4 +90,3 @@ def has_rapid_fluctuations(levels: list[float], stdev_tol: float = 0.05) -> bool
     stdev = np.std(diffs)
 
     return stdev / average_val > stdev_tol
-

@@ -108,4 +108,3 @@ def get_else_none(var, index=None, func: callable = lambda x: x):
             return func(var)
     else:
         return None
-

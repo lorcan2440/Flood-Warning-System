@@ -6,12 +6,10 @@ for visualising level data over time.
 # pylint: disable=relative-beyond-top-level
 
 import math
-import datetime
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.dates import DateFormatter
 
-from .station import MonitoringStation
 from .utils import flatten
 from .analysis import polyfit, moving_average
 
