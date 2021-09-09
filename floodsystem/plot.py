@@ -85,7 +85,7 @@ def plot_water_levels(stations: list, dates: dict, levels: dict, as_subplots: bo
 
 
 def plot_water_level_with_polyfit(station: object, dates: list, levels: list, poly_degree: int = 5,
-        n_points: int = 100, format_dates: bool = False, y_axis_from_zero: bool = True,
+        n_points: int = 100, format_dates: bool = True, y_axis_from_zero: bool = True,
         use_proplot_style: bool = True) -> None:
 
     if use_proplot_style:
@@ -127,7 +127,7 @@ def plot_water_level_with_polyfit(station: object, dates: list, levels: list, po
 
 
 def plot_water_level_with_moving_average(station: object, dates: list, levels: list, interval: int = 3,
-        format_dates: bool = False, y_axis_from_zero: bool = True, use_proplot_style: bool = True) -> None:
+        format_dates: bool = True, y_axis_from_zero: bool = True, use_proplot_style: bool = True) -> None:
 
     if use_proplot_style:
         plt.style.use('proplot_style.mplstyle')
