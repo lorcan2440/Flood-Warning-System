@@ -52,7 +52,7 @@ def test_load():
 def test_fetch_stationdata():
 
     # try using cache when it doesn't exist
-    shutil.rmtree('cache')
+    shutil.rmtree('cache/data')
     test_fetch = fetch_stationdata(use_cache=True)
     assert test_fetch is not None
 
@@ -71,7 +71,7 @@ def test_fetch_latest_water_level_data():
     # don't use cache first
     test_data = fetch_latest_water_level_data()
     assert test_data is not None
-    assert os.path.isfile(os.path.join('cache', 'level_data.json'))
+    assert os.path.isfile(os.path.join('cache', 'data', 'level_data.json'))
 
     # use cache
     test_data = fetch_latest_water_level_data(use_cache=True)

@@ -81,9 +81,69 @@ def moving_average(dates: list[datetime.datetime], levels: list[float], interval
         return date_nums, lma
 
 
+def identify_potentially_bad_data(station_name: str, levels: list[float], **kwargs: dict) -> set:
+
+    NEGATIVE_LEVEL_TO_ZERO      = kwargs.get('negative_level_to_zero',      True)   # noqa
+    REPLACE_TUPLE_WITH_INDEX    = kwargs.get('replace_tuple_with_index',    1)      # noqa
+    TOO_HIGH_CUTOFF             = kwargs.get('too_high_cutoff',             2500)   # noqa
+    TOO_HIGH_TO_PREVIOUS_LEVEL  = kwargs.get('too_high_to_previous_level',  True)   # noqa
+    TOO_FAST_INCREASE_CUTOFF    = kwargs.get('too_fast_increase_cutoff',    2)      # noqa
+    TOO_FAST_DECREASE_CUTOFF    = kwargs.get('too_fast_decrease_cutoff',    0.3)    # noqa
+
+    flags = set()
+
+    for i in range(len(levels)):
+
+        # Check for erroneous case: level was a tuple instead of float
+        if not isinstance(levels[i], (float, int)):
+
+            warn_str = f"Data for {station_name} station on date may be unreliable. "
+            warn_str += f"Found water level value {levels[i]}. \n"
+            warn_str += f"This has been replaced with {levels[i][REPLACE_TUPLE_WITH_INDEX]}."
+
+            flags.add(warn_str)
+
+            levels[i] = levels[i][REPLACE_TUPLE_WITH_INDEX]
+
+        # Check for potentially invalid values: negative or impossibly high
+        if levels[i] < 0:
+
+            warn_str = f"Data for {station_name} station may be unreliable. "
+            warn_str += "Some water levels were found to be negative. \nThese have been set to 0 m."
+
+            flags.add(warn_str)
+
+            if NEGATIVE_LEVEL_TO_ZERO:
+                levels[i] = 0
+
+        if levels[i] > TOO_HIGH_CUTOFF and len(levels) >= 2:
+
+            warn_str = f"Data for {station_name} station may be unreliable. "
+            warn_str += "Some water levels were found to be very high, above "
+            warn_str += f"{TOO_HIGH_CUTOFF} m. \nThese have been set to whatever "
+            warn_str += "the value before the spike."
+
+            flags.add(warn_str)
+
+            if TOO_HIGH_TO_PREVIOUS_LEVEL:
+                levels[i] = levels[i - 1]
+
+    # Check for potentially invalid values: many sudden changes
+    if has_rapid_fluctuations(levels):
+
+        warn_str = f"Data for {station_name} station may be unreliable. "
+        warn_str += "There are many sudden spikes between consecutive measurements. "
+        warn_str += "These values have not been altered."
+
+        flags.add(warn_str)
+
+    return flags
+
+
 def has_rapid_fluctuations(levels: list[float], stdev_tol: float = 0.05) -> bool:
 
     # TODO: try an AI based approach? This is not perfect
+    # currently flags if standard deviation in stepwise changes is more than 5% of the average value.
 
     diffs = [levels[i + 1] - levels[i] for i in range(len(levels) - 1)]
     average_val = np.average(levels)

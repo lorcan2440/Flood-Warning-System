@@ -5,6 +5,7 @@ for visualising level data over time.
 
 # pylint: disable=relative-beyond-top-level
 
+from floodsystem.station import MonitoringStation
 import math
 import numpy as np
 from matplotlib import pyplot as plt
@@ -151,6 +152,41 @@ def plot_water_level_with_moving_average(station: object, dates: list, levels: l
     plt.xlabel('date')
     plt.ylabel('water level / $ m $')
     plt.legend(loc='upper left')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    if y_axis_from_zero:
+        plt.ylim(ymin=0)
+
+    # graphical - axes
+    ax = plt.gca()
+    if format_dates:  # string date formats: https://strftime.org/
+        ax.xaxis.set_major_formatter(DateFormatter('%d %b, %I:%M %p'))
+
+    plt.show()
+
+
+def plot_predicted_water_levels(station: MonitoringStation, dates, levels,
+        format_dates: bool = True, y_axis_from_zero: bool = True, use_proplot_style: bool = True):
+
+    if use_proplot_style:
+        plt.style.use('proplot_style.mplstyle')
+
+    plt.plot(dates[0], levels[0], label='Past levels', color='#000000')
+    plt.plot(dates[0], levels[1], label='Demo levels', color='#29a762', linestyle='dashed')
+    plt.plot(dates[1], levels[2], label='Forecast', color='#c12091', linestyle='dashed')
+
+    if station.typical_range_consistent():
+        plt.fill_between([dates[0][0], dates[1][-1]], station.typical_range[0], station.typical_range[1],
+            facecolor='green', alpha=0.2,
+            label=f'Typical range: \n{station.typical_range[0]}-{station.typical_range[1]}')
+    else:
+        plt.plot(dates[0][-1], levels[0][-1], label='(typical range' + '\n' + 'unavailable)')
+
+    # graphical - main figure
+    plt.xlabel('date')
+    plt.ylabel('water level / $ m $')
+    plt.legend(loc='upper left')
+    plt.title(f'Water levels and forecast for {station.name}')
     plt.xticks(rotation=45)
     plt.tight_layout()
     if y_axis_from_zero:
