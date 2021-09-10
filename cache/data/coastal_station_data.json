@@ -1,1 +1,1181 @@
-{"@context": "http://environment.data.gov.uk/flood-monitoring/meta/context.jsonld", "meta": {"publisher": "Environment Agency", "licence": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/", "documentation": "http://environment.data.gov.uk/flood-monitoring/doc/reference", "version": "0.9", "comment": "Status: Beta service", "hasFormat": ["http://environment.data.gov.uk/flood-monitoring/id/stations.csv?status=Active&parameter=level&qualifier=Stage&_view=full&type=Coastal", "http://environment.data.gov.uk/flood-monitoring/id/stations.rdf?status=Active&parameter=level&qualifier=Stage&_view=full&type=Coastal", "http://environment.data.gov.uk/flood-monitoring/id/stations.ttl?status=Active&parameter=level&qualifier=Stage&_view=full&type=Coastal", "http://environment.data.gov.uk/flood-monitoring/id/stations.html?status=Active&parameter=level&qualifier=Stage&_view=full&type=Coastal"]}, "items": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3404", "RLOIid": "8333", "catchmentName": "Hull and East Riding", "dateOpened": "1998-03-17", "easting": 485267, "gridReference": "SE8526731219", "label": "North America", "lat": 53.77033, "long": -0.707786, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3404-level-stage-i-15_min-mAOD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mAOD"}], "northing": 431219, "notation": "L3404", "riverName": "Market Weighton Canal", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3404/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3404/stageScale/maxOnRecord", "dateTime": "2012-11-27T09:00:00", "value": 1.872}, "scaleMax": 2, "typicalRangeHigh": 1.5}, "stationReference": "L3404", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "North America", "wiskiID": "L3404"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/50124", "RLOIid": "3119", "catchmentName": "Taw and North Devon Streams", "dateOpened": "1997-01-01", "easting": 248563, "label": "Braunton", "lat": 51.100527, "long": -4.16425, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/50124-level-stage-i-15_min-m", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "m"}], "northing": 135698, "notation": "50124", "riverName": "River Caen (Tidal)", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/50124/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/50124/stageScale/maxOnRecord", "dateTime": "2006-09-10T20:00:00", "value": 5.478}, "scaleMax": 6}, "stationReference": "50124", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Braunton", "wiskiID": "S50496_FW"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E9740", "RLOIid": "1162", "catchmentName": "Arun and Western Streams", "dateOpened": "1992-03-10", "easting": 502694, "label": "Littlehampton", "lat": 50.806886, "long": -0.543902, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E9740-level-stage-i-15_min-mAOD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mAOD"}], "northing": 101825, "notation": "E9740", "riverName": "River Arun", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E9740/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E9740/stageScale/maxOnRecord", "dateTime": "2013-12-06T01:30:00", "value": 3.756}, "scaleMax": 5}, "stationReference": "E9740", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Littlehampton", "wiskiID": "254110001"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3203", "RLOIid": "8103", "catchmentName": "Hull and East Riding", "dateOpened": "1996-03-30", "easting": 510200, "label": "Hull Barrier Victoria Pier", "lat": 53.739883, "long": -0.330677, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3203-level-stage-i-15_min----", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "---"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3203-level-stage-i-15_min-mAOD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mAOD"}], "northing": 428350, "notation": "L3203", "riverName": "River Hull", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3203/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3203/stageScale/maxOnRecord", "dateTime": "2019-02-21T07:30:00", "value": 4.34}, "scaleMax": 5, "typicalRangeHigh": 4.6}, "stationReference": "L3203", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Kingston Upon Hull", "wiskiID": "L3203"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L1800", "RLOIid": "8003", "catchmentName": "Aire and Calder", "dateOpened": "2003-04-03", "easting": 472100, "label": "Airmyn", "lat": 53.71643, "long": -0.908963, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L1800-level-stage-i-15_min----", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "---"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L1800-level-stage-i-15_min-m", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "m"}], "northing": 425000, "notation": "L1800", "riverName": "River Aire", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L1800/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L1800/stageScale/maxOnRecord", "dateTime": "2013-12-05T20:15:00", "value": 6.096}, "scaleMax": 6}, "stationReference": "L1800", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Airmyn", "wiskiID": "L1800"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/48129", "RLOIid": "3162", "catchmentName": "Fal and St Austell Streams", "dateOpened": "1998-02-01", "easting": 183293, "label": "Truro Harbour", "lat": 50.252215, "long": -5.041246, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/48129-level-stage-i-15_min-m", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "m"}], "northing": 43563, "notation": "48129", "riverName": "South Cornwall Coast", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/48129/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/48129/stageScale/maxOnRecord", "dateTime": "2007-03-22T07:15:00", "value": 3.363}, "scaleMax": 4}, "stationReference": "48129", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Truro", "wiskiID": "T19547_FW"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3311", "RLOIid": "8336", "catchmentName": "Hull and East Riding", "dateOpened": "1996-03-31", "easting": 516844, "gridReference": "TA1684427811", "label": "Salt End", "lat": 53.733596, "long": -0.230199, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3311-level-stage-i-15_min----", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "---"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3311-level-stage-i-15_min-mAOD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mAOD"}], "northing": 427811, "notation": "L3311", "riverName": "Burstwick Drain", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3311/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3311/stageScale/maxOnRecord", "dateTime": "2007-06-28T04:30:00", "value": 2.666}, "scaleMax": 3, "typicalRangeHigh": 2.35}, "stationReference": "L3311", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Hull", "wiskiID": "L3311"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/720763", "RLOIid": "5051", "catchmentName": "Lune and Wyre", "dateOpened": "1995-01-01", "datumOffset": 4.9, "easting": 334120, "label": "Fleetwood", "lat": 53.926518, "long": -3.00474, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/720763-level-stage-i-15_min-mASD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mASD"}], "northing": 448290, "notation": "720763", "riverName": "Lune And Wyre", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/720763/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/720763/stageScale/maxOnRecord", "dateTime": "2002-02-01T13:45:00", "value": 6.26}, "scaleMax": 12}, "stationReference": "720763", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Fleetwood", "wiskiID": "720763"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/3892TH", "RLOIid": "7007", "catchmentName": "Brent", "dateOpened": "2009-08-06", "easting": 517287, "gridReference": "TQ1728777298", "label": "Brentford", "lat": 51.48248, "long": -0.312323, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/3892TH-level-stage-i-15_min-mASD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mASD"}], "northing": 177298, "notation": "3892TH", "riverName": "River Brent", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/3892TH/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/3892TH/stageScale/maxOnRecord", "dateTime": "2012-12-16T16:30:00", "value": 1.981}, "scaleMax": 3}, "stationReference": "3892TH", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Brentford", "wiskiID": "3892TH"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3313", "RLOIid": "8237", "catchmentName": "Hull and East Riding", "dateOpened": "2001-01-12", "easting": 519050, "label": "Hedon Thorn Road Bridge", "lat": 53.735693, "long": -0.196665, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3313-level-stage-i-15_min----", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "---"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3313-level-stage-i-15_min-mAOD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mAOD"}], "northing": 428100, "notation": "L3313", "riverName": "Burstwick Drain", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3313/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3313/stageScale/maxOnRecord", "dateTime": "2007-06-28T04:45:00", "value": 2.64}, "scaleMax": 3, "typicalRangeHigh": 2.35}, "stationReference": "L3313", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Hedon", "wiskiID": "L3313"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3401", "RLOIid": "8334", "catchmentName": "Hull and East Riding", "dateOpened": "1996-03-31", "easting": 487422, "gridReference": "SE8742225623", "label": "Broomfleet Weighton Lock", "lat": 53.71969, "long": -0.67668, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3401-level-stage-i-15_min----", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "---"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3401-level-stage-i-15_min-mAOD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mAOD"}], "northing": 425623, "notation": "L3401", "riverName": "Weighton Lock", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3401/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3401/stageScale/maxOnRecord", "dateTime": "2012-11-27T08:00:00", "value": 1.615}, "scaleMax": 2, "typicalRangeHigh": 1.1}, "stationReference": "L3401", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Broomfleet", "wiskiID": "L3401"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3314", "RLOIid": "8337", "catchmentName": "Hull and East Riding", "dateOpened": "2006-07-13", "easting": 518160, "gridReference": "TA1816028103", "label": "Hedon Westlands Drain", "lat": 53.735923, "long": -0.210149, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3314-level-stage-i-15_min-mAOD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mAOD"}], "northing": 428103, "notation": "L3314", "riverName": "Burstwick Drain", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3314/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3314/stageScale/maxOnRecord", "dateTime": "2007-06-26T16:15:00", "value": 1.986}, "scaleMax": 2, "typicalRangeHigh": 1.5}, "stationReference": "L3314", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Hedon", "wiskiID": "L3314"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L24012", "RLOIid": "8024", "catchmentName": "Hull and East Riding", "dateOpened": "1996-03-31", "easting": 484200, "label": "Blacktoft", "lat": 53.707432, "long": -0.725879, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L24012-level-stage-i-15_min-mAOD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mAOD"}], "northing": 424200, "notation": "L24012", "riverName": "River Ouse", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L24012/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L24012/stageScale/maxOnRecord", "dateTime": "2013-12-05T19:30:00", "value": 6.01}, "scaleMax": 6.5}, "stationReference": "L24012", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Blacktoft", "wiskiID": "L24012"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L24013", "RLOIid": "8084", "catchmentName": "Don and Rother", "dateOpened": "1996-03-30", "easting": 474933, "label": "Goole", "lat": 53.701941, "long": -0.866423, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L24013-level-stage-i-15_min----", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "---"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L24013-level-stage-i-15_min-mAOD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mAOD"}], "northing": 423432, "notation": "L24013", "riverName": "River Ouse", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L24013/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L24013/stageScale/maxOnRecord", "dateTime": "2013-12-05T19:45:00", "value": 6.043}, "scaleMax": 7}, "stationReference": "L24013", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Goole", "wiskiID": "L24013"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46155", "RLOIid": "3406", "catchmentName": "Teign Torbay and South Hams", "dateOpened": "1999-12-15", "easting": 280669, "label": "Totnes", "lat": 50.428979, "long": -3.681414, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/46155-level-stage-i-15_min-mAOD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mAOD"}], "northing": 60143, "notation": "46155", "riverName": "Tide", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46155/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46155/stageScale/maxOnRecord", "dateTime": "2008-03-10T08:30:00", "value": 3.256}, "scaleMax": 4}, "stationReference": "46155", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Totnes", "wiskiID": "SX86F010"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3230", "RLOIid": "8335", "catchmentName": "Hull and East Riding", "dateOpened": "1996-03-31", "easting": 509998, "gridReference": "TA0999829679", "label": "Hull High Flaggs, Lincoln Street", "lat": 53.751865, "long": -0.333266, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3230-level-stage-i-15_min-mAOD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mAOD"}], "northing": 429679, "notation": "L3230", "riverName": "Beverley and Barmston Drain", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3230/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3230/stageScale/maxOnRecord", "dateTime": "2007-06-26T17:30:00", "value": 1.079}, "scaleMax": 5, "typicalRangeHigh": 1.6}, "stationReference": "L3230", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Hull", "wiskiID": "L3206"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3241", "RLOIid": "8382", "catchmentName": "Hull and East Riding", "dateOpened": "1998-01-27", "easting": 513097, "gridReference": "TA1309729300", "label": "East Hull Hedon Road", "lat": 53.747798, "long": -0.286429, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3241-level-stage-i-15_min----", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "---"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3241-level-stage-i-15_min-mAOD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mAOD"}], "northing": 429300, "notation": "L3241", "riverName": "Holderness Drain", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3241/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3241/stageScale/maxOnRecord", "dateTime": "2013-02-14T23:00:00", "value": 1.656}, "scaleMax": 2}, "stationReference": "L3241", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "East Hull Hedon Road", "wiskiID": "L3241"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3207", "RLOIid": "9385", "catchmentName": "Hull and East Riding", "dateOpened": "1996-04-18", "easting": 505692, "gridReference": "TA0569239284", "label": "Beverley Waterside Pumping Station", "lat": 53.83905, "long": -0.39525, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3207-level-stage-i-15_min----", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "---"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3207-level-stage-i-15_min-mAOD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mAOD"}], "northing": 439284, "notation": "L3207", "riverName": "Beverley and Barmston Drain", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3207/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3207/stageScale/maxOnRecord", "dateTime": "2007-06-26T00:00:00", "value": 0.993}, "minOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3207/stageScale/minOnRecord", "dateTime": "2009-06-13T00:00:00", "value": -1.608}, "typicalRangeHigh": 0.5, "typicalRangeLow": -0.671}, "stationReference": "L3207", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Beverley Waterside Pumping Station", "wiskiID": "L3207"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3246", "RLOIid": "8383", "catchmentName": "Hull and East Riding", "dateOpened": "1996-03-30", "easting": 507443, "gridReference": "TA0744342495", "label": "Tickton Pumping Station", "lat": 53.86754, "long": -0.367529, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3246-level-stage-i-15_min-mAOD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mAOD"}], "northing": 442495, "notation": "L3246", "riverName": "Holderness Drain", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3246/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3246/stageScale/maxOnRecord", "dateTime": "2007-07-03T14:45:00", "value": 0.317}, "scaleMax": 1, "typicalRangeHigh": -0.4}, "stationReference": "L3246", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Tickton PS", "wiskiID": "L3246"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3243", "RLOIid": "9389", "catchmentName": "Hull and East Riding", "dateOpened": "1996-03-31", "easting": 511447, "gridReference": "TA1144735594", "label": "Bransholme Great Culvert Pumping Station", "lat": 53.804698, "long": -0.309166, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3243-level-stage-i-15_min-mAOD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mAOD"}], "northing": 435594, "notation": "L3243", "riverName": "Holderness Drain", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3243/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3243/stageScale/maxOnRecord", "dateTime": "2018-09-17T00:00:00", "value": 0.83}, "minOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3243/stageScale/minOnRecord", "dateTime": "2011-11-29T00:00:00", "value": -2.62}, "typicalRangeHigh": -0.6, "typicalRangeLow": -2.527}, "stationReference": "L3243", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Bransholme Great Culvert Pumping Station", "wiskiID": "L3243"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46152", "RLOIid": "9009", "catchmentName": "Teign Torbay and South Hams", "dateOpened": "2011-06-30", "easting": 286532, "gridReference": "SX8653271652", "label": "Templers Road", "lat": 50.533603, "long": -3.6024, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/46152-level-stage-i-15_min-m", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "m"}], "northing": 71652, "notation": "46152", "riverName": "River Lemon", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46152/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46152/stageScale/maxOnRecord", "dateTime": "2016-10-16T18:30:00", "value": 2.522}}, "stationReference": "46152", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Newton Abbot", "wiskiID": "SX87F021"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3320", "RLOIid": "8378", "catchmentName": "Hull and East Riding", "dateOpened": "1997-04-23", "easting": 516516, "gridReference": "TA1651626331", "label": "Paull", "lat": 53.720373, "long": -0.235726, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3320-level-stage-i-15_min----", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "---"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3320-level-stage-i-15_min-mAOD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mAOD"}], "northing": 426331, "notation": "L3320", "riverName": "North Sea", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3320/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3320/stageScale/maxOnRecord", "dateTime": "2013-12-05T19:15:00", "value": 5.696}, "scaleMax": 6}, "stationReference": "L3320", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Paull", "wiskiID": "L3320"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3331", "RLOIid": "8379", "catchmentName": "Hull and East Riding", "dateOpened": "1996-03-30", "easting": 523621, "gridReference": "TA2362118972", "label": "Stone Creek", "lat": 53.652632, "long": -0.131044, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3331-level-stage-i-15_min-mAOD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mAOD"}], "northing": 418972, "notation": "L3331", "riverName": "Keyingham Drain", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3331/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3331/stageScale/maxOnRecord", "dateTime": "2007-06-26T16:00:00", "value": 1.902}, "scaleMax": 2, "typicalRangeHigh": 0.95}, "stationReference": "L3331", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Stone Creek", "wiskiID": "L3331"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3231", "RLOIid": "8380", "catchmentName": "Hull and East Riding", "dateOpened": "1996-03-30", "easting": 506211, "gridReference": "TA0621147044", "label": "Wilfholme Pumping Station", "lat": 53.908662, "long": -0.384682, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3231-level-stage-i-15_min----", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "---"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3231-level-stage-i-15_min-mAOD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mAOD"}], "northing": 447044, "notation": "L3231", "riverName": "Beverley and Barmston Drain", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3231/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3231/stageScale/maxOnRecord", "dateTime": "2007-06-28T05:30:00", "value": 1.356}, "scaleMax": 2, "typicalRangeHigh": 0.5}, "stationReference": "L3231", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Wilfholme PS", "wiskiID": "L3231"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3112", "RLOIid": "8384", "catchmentName": "Hull and East Riding", "dateOpened": "1996-11-16", "easting": 509450, "gridReference": "TA0945049443", "label": "Hempholme Pumping Station Roam Drain", "lat": 53.929542, "long": -0.334541, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3112-level-stage-i-15_min-mAOD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mAOD"}], "northing": 449443, "notation": "L3112", "riverName": "Roam Drain", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3112/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3112/stageScale/maxOnRecord", "dateTime": "2007-07-03T14:15:00", "value": 1.495}, "scaleMax": 2, "typicalRangeHigh": 0.3}, "stationReference": "L3112", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Hempholme Pumping Station Roam Drain", "wiskiID": "L3112"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/45180", "RLOIid": "9010", "catchmentName": "Exe", "dateOpened": "1999-02-16", "easting": 296621, "gridReference": "SX9662187761", "label": "Topsham", "lat": 50.680293, "long": -3.464585, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/45180-level-stage-i-15_min-m", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "m"}], "northing": 87761, "notation": "45180", "riverName": "River Exe", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/45180/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/45180/stageScale/maxOnRecord", "dateTime": "2014-02-04T22:00:00", "value": 3.32}}, "stationReference": "45180", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Topsham", "wiskiID": "SX98F010"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E3810", "RLOIid": "9083", "catchmentName": "Stour", "dateOpened": "2004-05-17", "easting": 633279, "gridReference": "TR3325558236", "label": "Sandwich Quay", "lat": 51.275409, "long": 1.343276, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E3810-level-stage-i-15_min-mAOD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mAOD"}], "northing": 158228, "notation": "E3810", "riverName": "River Stour", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E3810/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E3810/stageScale/maxOnRecord", "dateTime": "2017-01-14T00:45:00", "value": 3.64}}, "stationReference": "E3810", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Sandwich", "wiskiID": "654800002"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/2708SO", "RLOIid": "1025", "catchmentName": "Arun and Western Streams", "dateOpened": "1992-03-10", "easting": 483510, "label": "Medmerry", "lat": 50.740234, "long": -0.817856, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/2708SO-level-stage-i-15_min-mAOD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mAOD"}], "northing": 94069, "notation": "2708SO", "riverName": "Tide", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/2708SO/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/2708SO/stageScale/maxOnRecord", "dateTime": "2018-01-04T12:30:00", "value": 3.147}, "scaleMax": 3}, "stationReference": "2708SO", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Selsey", "wiskiID": "255311001"}, {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/371301002", "RLOIid": "1021", "catchmentName": "Cuckmere and Pevensey Levels", "dateOpened": "1998-01-01", "easting": 564174, "gridReference": "TQ6414901559", "label": "Eastbourne Harbour", "lat": 50.790954, "long": 0.327923, "measures": [{"@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/371301002-level-stage-i-15_min-mAOD", "parameter": "level", "parameterName": "Water Level", "period": 900, "qualifier": "Stage", "unitName": "mAOD"}], "northing": 101626, "notation": "371301002", "riverName": "Tide", "stageScale": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/371301002/stageScale", "maxOnRecord": {"@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/371301002/stageScale/maxOnRecord", "dateTime": "2013-12-06T01:00:00", "value": 5.09}, "scaleMax": 5}, "stationReference": "371301002", "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive", "town": "Eastbourne Harbour", "wiskiID": "371301002"}]}
+{
+    "@context": "http://environment.data.gov.uk/flood-monitoring/meta/context.jsonld",
+    "meta": {
+        "publisher": "Environment Agency",
+        "licence": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+        "documentation": "http://environment.data.gov.uk/flood-monitoring/doc/reference",
+        "version": "0.9",
+        "comment": "Status: Beta service",
+        "hasFormat": [
+            "http://environment.data.gov.uk/flood-monitoring/id/stations.csv?status=Active&parameter=level&qualifier=Stage&_view=full&type=Coastal",
+            "http://environment.data.gov.uk/flood-monitoring/id/stations.rdf?status=Active&parameter=level&qualifier=Stage&_view=full&type=Coastal",
+            "http://environment.data.gov.uk/flood-monitoring/id/stations.ttl?status=Active&parameter=level&qualifier=Stage&_view=full&type=Coastal",
+            "http://environment.data.gov.uk/flood-monitoring/id/stations.html?status=Active&parameter=level&qualifier=Stage&_view=full&type=Coastal"
+        ]
+    },
+    "items": [
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3404",
+            "RLOIid": "8333",
+            "catchmentName": "Hull and East Riding",
+            "dateOpened": "1998-03-17",
+            "easting": 485267,
+            "gridReference": "SE8526731219",
+            "label": "North America",
+            "lat": 53.77033,
+            "long": -0.707786,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3404-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 431219,
+            "notation": "L3404",
+            "riverName": "Market Weighton Canal",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3404/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3404/stageScale/maxOnRecord",
+                    "dateTime": "2012-11-27T09:00:00",
+                    "value": 1.872
+                },
+                "scaleMax": 2,
+                "typicalRangeHigh": 1.5
+            },
+            "stationReference": "L3404",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "North America",
+            "wiskiID": "L3404"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/50124",
+            "RLOIid": "3119",
+            "catchmentName": "Taw and North Devon Streams",
+            "dateOpened": "1997-01-01",
+            "easting": 248563,
+            "label": "Braunton",
+            "lat": 51.100527,
+            "long": -4.16425,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/50124-level-stage-i-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "m"
+                }
+            ],
+            "northing": 135698,
+            "notation": "50124",
+            "riverName": "River Caen (Tidal)",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/50124/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/50124/stageScale/maxOnRecord",
+                    "dateTime": "2006-09-10T20:00:00",
+                    "value": 5.478
+                },
+                "scaleMax": 6
+            },
+            "stationReference": "50124",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Braunton",
+            "wiskiID": "S50496_FW"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E9740",
+            "RLOIid": "1162",
+            "catchmentName": "Arun and Western Streams",
+            "dateOpened": "1992-03-10",
+            "easting": 502694,
+            "label": "Littlehampton",
+            "lat": 50.806886,
+            "long": -0.543902,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E9740-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 101825,
+            "notation": "E9740",
+            "riverName": "River Arun",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E9740/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E9740/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-06T01:30:00",
+                    "value": 3.756
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "E9740",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Littlehampton",
+            "wiskiID": "254110001"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3203",
+            "RLOIid": "8103",
+            "catchmentName": "Hull and East Riding",
+            "dateOpened": "1996-03-30",
+            "easting": 510200,
+            "label": "Hull Barrier Victoria Pier",
+            "lat": 53.739883,
+            "long": -0.330677,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3203-level-stage-i-15_min----",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "---"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3203-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 428350,
+            "notation": "L3203",
+            "riverName": "River Hull",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3203/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3203/stageScale/maxOnRecord",
+                    "dateTime": "2019-02-21T07:30:00",
+                    "value": 4.34
+                },
+                "scaleMax": 5,
+                "typicalRangeHigh": 4.6
+            },
+            "stationReference": "L3203",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Kingston Upon Hull",
+            "wiskiID": "L3203"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L1800",
+            "RLOIid": "8003",
+            "catchmentName": "Aire and Calder",
+            "dateOpened": "2003-04-03",
+            "easting": 472100,
+            "label": "Airmyn",
+            "lat": 53.71643,
+            "long": -0.908963,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L1800-level-stage-i-15_min----",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "---"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L1800-level-stage-i-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "m"
+                }
+            ],
+            "northing": 425000,
+            "notation": "L1800",
+            "riverName": "River Aire",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L1800/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L1800/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-05T20:15:00",
+                    "value": 6.096
+                },
+                "scaleMax": 6
+            },
+            "stationReference": "L1800",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Airmyn",
+            "wiskiID": "L1800"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/48129",
+            "RLOIid": "3162",
+            "catchmentName": "Fal and St Austell Streams",
+            "dateOpened": "1998-02-01",
+            "easting": 183293,
+            "label": "Truro Harbour",
+            "lat": 50.252215,
+            "long": -5.041246,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/48129-level-stage-i-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "m"
+                }
+            ],
+            "northing": 43563,
+            "notation": "48129",
+            "riverName": "South Cornwall Coast",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/48129/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/48129/stageScale/maxOnRecord",
+                    "dateTime": "2007-03-22T07:15:00",
+                    "value": 3.363
+                },
+                "scaleMax": 4
+            },
+            "stationReference": "48129",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Truro",
+            "wiskiID": "T19547_FW"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3311",
+            "RLOIid": "8336",
+            "catchmentName": "Hull and East Riding",
+            "dateOpened": "1996-03-31",
+            "easting": 516844,
+            "gridReference": "TA1684427811",
+            "label": "Salt End",
+            "lat": 53.733596,
+            "long": -0.230199,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3311-level-stage-i-15_min----",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "---"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3311-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 427811,
+            "notation": "L3311",
+            "riverName": "Burstwick Drain",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3311/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3311/stageScale/maxOnRecord",
+                    "dateTime": "2007-06-28T04:30:00",
+                    "value": 2.666
+                },
+                "scaleMax": 3,
+                "typicalRangeHigh": 2.35
+            },
+            "stationReference": "L3311",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Hull",
+            "wiskiID": "L3311"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/720763",
+            "RLOIid": "5051",
+            "catchmentName": "Lune and Wyre",
+            "dateOpened": "1995-01-01",
+            "datumOffset": 4.9,
+            "easting": 334120,
+            "label": "Fleetwood",
+            "lat": 53.926518,
+            "long": -3.00474,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/720763-level-stage-i-15_min-mASD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mASD"
+                }
+            ],
+            "northing": 448290,
+            "notation": "720763",
+            "riverName": "Lune And Wyre",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/720763/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/720763/stageScale/maxOnRecord",
+                    "dateTime": "2002-02-01T13:45:00",
+                    "value": 6.26
+                },
+                "scaleMax": 12
+            },
+            "stationReference": "720763",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Fleetwood",
+            "wiskiID": "720763"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/3892TH",
+            "RLOIid": "7007",
+            "catchmentName": "Brent",
+            "dateOpened": "2009-08-06",
+            "easting": 517287,
+            "gridReference": "TQ1728777298",
+            "label": "Brentford",
+            "lat": 51.48248,
+            "long": -0.312323,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/3892TH-level-stage-i-15_min-mASD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mASD"
+                }
+            ],
+            "northing": 177298,
+            "notation": "3892TH",
+            "riverName": "River Brent",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/3892TH/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/3892TH/stageScale/maxOnRecord",
+                    "dateTime": "2012-12-16T16:30:00",
+                    "value": 1.981
+                },
+                "scaleMax": 3
+            },
+            "stationReference": "3892TH",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Brentford",
+            "wiskiID": "3892TH"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3313",
+            "RLOIid": "8237",
+            "catchmentName": "Hull and East Riding",
+            "dateOpened": "2001-01-12",
+            "easting": 519050,
+            "label": "Hedon Thorn Road Bridge",
+            "lat": 53.735693,
+            "long": -0.196665,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3313-level-stage-i-15_min----",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "---"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3313-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 428100,
+            "notation": "L3313",
+            "riverName": "Burstwick Drain",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3313/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3313/stageScale/maxOnRecord",
+                    "dateTime": "2007-06-28T04:45:00",
+                    "value": 2.64
+                },
+                "scaleMax": 3,
+                "typicalRangeHigh": 2.35
+            },
+            "stationReference": "L3313",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Hedon",
+            "wiskiID": "L3313"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3401",
+            "RLOIid": "8334",
+            "catchmentName": "Hull and East Riding",
+            "dateOpened": "1996-03-31",
+            "easting": 487422,
+            "gridReference": "SE8742225623",
+            "label": "Broomfleet Weighton Lock",
+            "lat": 53.71969,
+            "long": -0.67668,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3401-level-stage-i-15_min----",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "---"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3401-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 425623,
+            "notation": "L3401",
+            "riverName": "Weighton Lock",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3401/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3401/stageScale/maxOnRecord",
+                    "dateTime": "2012-11-27T08:00:00",
+                    "value": 1.615
+                },
+                "scaleMax": 2,
+                "typicalRangeHigh": 1.1
+            },
+            "stationReference": "L3401",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Broomfleet",
+            "wiskiID": "L3401"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3314",
+            "RLOIid": "8337",
+            "catchmentName": "Hull and East Riding",
+            "dateOpened": "2006-07-13",
+            "easting": 518160,
+            "gridReference": "TA1816028103",
+            "label": "Hedon Westlands Drain",
+            "lat": 53.735923,
+            "long": -0.210149,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3314-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 428103,
+            "notation": "L3314",
+            "riverName": "Burstwick Drain",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3314/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3314/stageScale/maxOnRecord",
+                    "dateTime": "2007-06-26T16:15:00",
+                    "value": 1.986
+                },
+                "scaleMax": 2,
+                "typicalRangeHigh": 1.5
+            },
+            "stationReference": "L3314",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Hedon",
+            "wiskiID": "L3314"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L24012",
+            "RLOIid": "8024",
+            "catchmentName": "Hull and East Riding",
+            "dateOpened": "1996-03-31",
+            "easting": 484200,
+            "label": "Blacktoft",
+            "lat": 53.707432,
+            "long": -0.725879,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L24012-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 424200,
+            "notation": "L24012",
+            "riverName": "River Ouse",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L24012/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L24012/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-05T19:30:00",
+                    "value": 6.01
+                },
+                "scaleMax": 6.5
+            },
+            "stationReference": "L24012",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Blacktoft",
+            "wiskiID": "L24012"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L24013",
+            "RLOIid": "8084",
+            "catchmentName": "Don and Rother",
+            "dateOpened": "1996-03-30",
+            "easting": 474933,
+            "label": "Goole",
+            "lat": 53.701941,
+            "long": -0.866423,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L24013-level-stage-i-15_min----",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "---"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L24013-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 423432,
+            "notation": "L24013",
+            "riverName": "River Ouse",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L24013/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L24013/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-05T19:45:00",
+                    "value": 6.043
+                },
+                "scaleMax": 7
+            },
+            "stationReference": "L24013",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Goole",
+            "wiskiID": "L24013"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46155",
+            "RLOIid": "3406",
+            "catchmentName": "Teign Torbay and South Hams",
+            "dateOpened": "1999-12-15",
+            "easting": 280669,
+            "label": "Totnes",
+            "lat": 50.428979,
+            "long": -3.681414,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/46155-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 60143,
+            "notation": "46155",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46155/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46155/stageScale/maxOnRecord",
+                    "dateTime": "2008-03-10T08:30:00",
+                    "value": 3.256
+                },
+                "scaleMax": 4
+            },
+            "stationReference": "46155",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Totnes",
+            "wiskiID": "SX86F010"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3230",
+            "RLOIid": "8335",
+            "catchmentName": "Hull and East Riding",
+            "dateOpened": "1996-03-31",
+            "easting": 509998,
+            "gridReference": "TA0999829679",
+            "label": "Hull High Flaggs, Lincoln Street",
+            "lat": 53.751865,
+            "long": -0.333266,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3230-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 429679,
+            "notation": "L3230",
+            "riverName": "Beverley and Barmston Drain",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3230/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3230/stageScale/maxOnRecord",
+                    "dateTime": "2007-06-26T17:30:00",
+                    "value": 1.079
+                },
+                "scaleMax": 5,
+                "typicalRangeHigh": 1.6
+            },
+            "stationReference": "L3230",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Hull",
+            "wiskiID": "L3206"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3241",
+            "RLOIid": "8382",
+            "catchmentName": "Hull and East Riding",
+            "dateOpened": "1998-01-27",
+            "easting": 513097,
+            "gridReference": "TA1309729300",
+            "label": "East Hull Hedon Road",
+            "lat": 53.747798,
+            "long": -0.286429,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3241-level-stage-i-15_min----",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "---"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3241-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 429300,
+            "notation": "L3241",
+            "riverName": "Holderness Drain",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3241/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3241/stageScale/maxOnRecord",
+                    "dateTime": "2013-02-14T23:00:00",
+                    "value": 1.656
+                },
+                "scaleMax": 2
+            },
+            "stationReference": "L3241",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "East Hull Hedon Road",
+            "wiskiID": "L3241"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3207",
+            "RLOIid": "9385",
+            "catchmentName": "Hull and East Riding",
+            "dateOpened": "1996-04-18",
+            "easting": 505692,
+            "gridReference": "TA0569239284",
+            "label": "Beverley Waterside Pumping Station",
+            "lat": 53.83905,
+            "long": -0.39525,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3207-level-stage-i-15_min----",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "---"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3207-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 439284,
+            "notation": "L3207",
+            "riverName": "Beverley and Barmston Drain",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3207/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3207/stageScale/maxOnRecord",
+                    "dateTime": "2007-06-26T00:00:00",
+                    "value": 0.993
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3207/stageScale/minOnRecord",
+                    "dateTime": "2009-06-13T00:00:00",
+                    "value": -1.608
+                },
+                "typicalRangeHigh": 0.5,
+                "typicalRangeLow": -0.671
+            },
+            "stationReference": "L3207",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Beverley Waterside Pumping Station",
+            "wiskiID": "L3207"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3246",
+            "RLOIid": "8383",
+            "catchmentName": "Hull and East Riding",
+            "dateOpened": "1996-03-30",
+            "easting": 507443,
+            "gridReference": "TA0744342495",
+            "label": "Tickton Pumping Station",
+            "lat": 53.86754,
+            "long": -0.367529,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3246-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 442495,
+            "notation": "L3246",
+            "riverName": "Holderness Drain",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3246/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3246/stageScale/maxOnRecord",
+                    "dateTime": "2007-07-03T14:45:00",
+                    "value": 0.317
+                },
+                "scaleMax": 1,
+                "typicalRangeHigh": -0.4
+            },
+            "stationReference": "L3246",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Tickton PS",
+            "wiskiID": "L3246"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3243",
+            "RLOIid": "9389",
+            "catchmentName": "Hull and East Riding",
+            "dateOpened": "1996-03-31",
+            "easting": 511447,
+            "gridReference": "TA1144735594",
+            "label": "Bransholme Great Culvert Pumping Station",
+            "lat": 53.804698,
+            "long": -0.309166,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3243-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 435594,
+            "notation": "L3243",
+            "riverName": "Holderness Drain",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3243/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3243/stageScale/maxOnRecord",
+                    "dateTime": "2018-09-17T00:00:00",
+                    "value": 0.83
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3243/stageScale/minOnRecord",
+                    "dateTime": "2011-11-29T00:00:00",
+                    "value": -2.62
+                },
+                "typicalRangeHigh": -0.6,
+                "typicalRangeLow": -2.527
+            },
+            "stationReference": "L3243",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Bransholme Great Culvert Pumping Station",
+            "wiskiID": "L3243"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46152",
+            "RLOIid": "9009",
+            "catchmentName": "Teign Torbay and South Hams",
+            "dateOpened": "2011-06-30",
+            "easting": 286532,
+            "gridReference": "SX8653271652",
+            "label": "Templers Road",
+            "lat": 50.533603,
+            "long": -3.6024,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/46152-level-stage-i-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "m"
+                }
+            ],
+            "northing": 71652,
+            "notation": "46152",
+            "riverName": "River Lemon",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46152/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46152/stageScale/maxOnRecord",
+                    "dateTime": "2016-10-16T18:30:00",
+                    "value": 2.522
+                }
+            },
+            "stationReference": "46152",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Newton Abbot",
+            "wiskiID": "SX87F021"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3320",
+            "RLOIid": "8378",
+            "catchmentName": "Hull and East Riding",
+            "dateOpened": "1997-04-23",
+            "easting": 516516,
+            "gridReference": "TA1651626331",
+            "label": "Paull",
+            "lat": 53.720373,
+            "long": -0.235726,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3320-level-stage-i-15_min----",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "---"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3320-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 426331,
+            "notation": "L3320",
+            "riverName": "North Sea",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3320/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3320/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-05T19:15:00",
+                    "value": 5.696
+                },
+                "scaleMax": 6
+            },
+            "stationReference": "L3320",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Paull",
+            "wiskiID": "L3320"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3331",
+            "RLOIid": "8379",
+            "catchmentName": "Hull and East Riding",
+            "dateOpened": "1996-03-30",
+            "easting": 523621,
+            "gridReference": "TA2362118972",
+            "label": "Stone Creek",
+            "lat": 53.652632,
+            "long": -0.131044,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3331-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 418972,
+            "notation": "L3331",
+            "riverName": "Keyingham Drain",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3331/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3331/stageScale/maxOnRecord",
+                    "dateTime": "2007-06-26T16:00:00",
+                    "value": 1.902
+                },
+                "scaleMax": 2,
+                "typicalRangeHigh": 0.95
+            },
+            "stationReference": "L3331",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Stone Creek",
+            "wiskiID": "L3331"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3231",
+            "RLOIid": "8380",
+            "catchmentName": "Hull and East Riding",
+            "dateOpened": "1996-03-30",
+            "easting": 506211,
+            "gridReference": "TA0621147044",
+            "label": "Wilfholme Pumping Station",
+            "lat": 53.908662,
+            "long": -0.384682,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3231-level-stage-i-15_min----",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "---"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3231-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 447044,
+            "notation": "L3231",
+            "riverName": "Beverley and Barmston Drain",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3231/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3231/stageScale/maxOnRecord",
+                    "dateTime": "2007-06-28T05:30:00",
+                    "value": 1.356
+                },
+                "scaleMax": 2,
+                "typicalRangeHigh": 0.5
+            },
+            "stationReference": "L3231",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Wilfholme PS",
+            "wiskiID": "L3231"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3112",
+            "RLOIid": "8384",
+            "catchmentName": "Hull and East Riding",
+            "dateOpened": "1996-11-16",
+            "easting": 509450,
+            "gridReference": "TA0945049443",
+            "label": "Hempholme Pumping Station Roam Drain",
+            "lat": 53.929542,
+            "long": -0.334541,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3112-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 449443,
+            "notation": "L3112",
+            "riverName": "Roam Drain",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3112/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3112/stageScale/maxOnRecord",
+                    "dateTime": "2007-07-03T14:15:00",
+                    "value": 1.495
+                },
+                "scaleMax": 2,
+                "typicalRangeHigh": 0.3
+            },
+            "stationReference": "L3112",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Hempholme Pumping Station Roam Drain",
+            "wiskiID": "L3112"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/45180",
+            "RLOIid": "9010",
+            "catchmentName": "Exe",
+            "dateOpened": "1999-02-16",
+            "easting": 296621,
+            "gridReference": "SX9662187761",
+            "label": "Topsham",
+            "lat": 50.680293,
+            "long": -3.464585,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/45180-level-stage-i-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "m"
+                }
+            ],
+            "northing": 87761,
+            "notation": "45180",
+            "riverName": "River Exe",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/45180/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/45180/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-04T22:00:00",
+                    "value": 3.32
+                }
+            },
+            "stationReference": "45180",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Topsham",
+            "wiskiID": "SX98F010"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E3810",
+            "RLOIid": "9083",
+            "catchmentName": "Stour",
+            "dateOpened": "2004-05-17",
+            "easting": 633279,
+            "gridReference": "TR3325558236",
+            "label": "Sandwich Quay",
+            "lat": 51.275409,
+            "long": 1.343276,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E3810-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 158228,
+            "notation": "E3810",
+            "riverName": "River Stour",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E3810/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E3810/stageScale/maxOnRecord",
+                    "dateTime": "2017-01-14T00:45:00",
+                    "value": 3.64
+                }
+            },
+            "stationReference": "E3810",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Sandwich",
+            "wiskiID": "654800002"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/2708SO",
+            "RLOIid": "1025",
+            "catchmentName": "Arun and Western Streams",
+            "dateOpened": "1992-03-10",
+            "easting": 483510,
+            "label": "Medmerry",
+            "lat": 50.740234,
+            "long": -0.817856,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/2708SO-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 94069,
+            "notation": "2708SO",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/2708SO/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/2708SO/stageScale/maxOnRecord",
+                    "dateTime": "2018-01-04T12:30:00",
+                    "value": 3.147
+                },
+                "scaleMax": 3
+            },
+            "stationReference": "2708SO",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Selsey",
+            "wiskiID": "255311001"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/371301002",
+            "RLOIid": "1021",
+            "catchmentName": "Cuckmere and Pevensey Levels",
+            "dateOpened": "1998-01-01",
+            "easting": 564174,
+            "gridReference": "TQ6414901559",
+            "label": "Eastbourne Harbour",
+            "lat": 50.790954,
+            "long": 0.327923,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/371301002-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 101626,
+            "notation": "371301002",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/371301002/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/371301002/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-06T01:00:00",
+                    "value": 5.09
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "371301002",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Eastbourne Harbour",
+            "wiskiID": "371301002"
+        }
+    ]
+}

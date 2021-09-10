@@ -23,7 +23,7 @@ from .station import MonitoringStation
 def fetch(url: str) -> dict:
 
     """
-    Fetch data from url and return fetched JSON object
+    Fetch data over internet from url and return fetched JSON object
     """
 
     r = requests.get(url)
@@ -34,11 +34,11 @@ def fetch(url: str) -> dict:
 def dump(data: dict, filename: str) -> None:
 
     """
-    Save JSON object to file
+    Save JSON object to file, string-formatted
     """
 
     f = open(filename, 'w')
-    data = json.dump(data, f)
+    data = json.dump(data, f, indent=4)
     f.close()
 
 
