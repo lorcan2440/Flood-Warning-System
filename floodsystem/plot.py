@@ -86,11 +86,14 @@ def plot_water_levels(stations: list, dates: dict, levels: dict, as_subplots: bo
 
 
 def plot_water_level_with_polyfit(station: object, dates: list, levels: list, poly_degree: int = 5,
-        n_points: int = 100, format_dates: bool = True, y_axis_from_zero: bool = True,
+        n_points: int = 100, format_dates: bool = True, y_axis_from_zero: bool = None,
         use_proplot_style: bool = True) -> None:
 
     if use_proplot_style:
         plt.style.use('proplot_style.mplstyle')
+
+    if y_axis_from_zero is None:
+        y_axis_from_zero = not station.is_tidal
 
     # Get a polynomial function fitting the data, the offset, and the original dataset.
     poly, d0, date_nums = polyfit(dates, levels, poly_degree)
@@ -128,10 +131,13 @@ def plot_water_level_with_polyfit(station: object, dates: list, levels: list, po
 
 
 def plot_water_level_with_moving_average(station: object, dates: list, levels: list, interval: int = 3,
-        format_dates: bool = True, y_axis_from_zero: bool = True, use_proplot_style: bool = True) -> None:
+        format_dates: bool = True, y_axis_from_zero: bool = None, use_proplot_style: bool = True) -> None:
 
     if use_proplot_style:
         plt.style.use('proplot_style.mplstyle')
+
+    if y_axis_from_zero is None:
+        y_axis_from_zero = not station.is_tidal
 
     # Get average data
     date_nums, avg_levels = moving_average(dates, levels, interval)
@@ -166,10 +172,13 @@ def plot_water_level_with_moving_average(station: object, dates: list, levels: l
 
 
 def plot_predicted_water_levels(station: MonitoringStation, dates, levels,
-        format_dates: bool = True, y_axis_from_zero: bool = True, use_proplot_style: bool = True):
+        format_dates: bool = True, y_axis_from_zero: bool = None, use_proplot_style: bool = True):
 
     if use_proplot_style:
         plt.style.use('proplot_style.mplstyle')
+
+    if y_axis_from_zero is None:
+        y_axis_from_zero = not station.is_tidal
 
     plt.plot(dates[0], levels[0], label='Past levels', color='#000000')
     plt.plot(dates[0], levels[1], label='Demo levels', color='#29a762', linestyle='dashed')

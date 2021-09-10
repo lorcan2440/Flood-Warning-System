@@ -4,14 +4,38 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
-from tensorflow.keras.models import Sequential, load_model
-from tensorflow.keras.layers import Dense, LSTM
 
 from .datafetcher import fetch_measure_levels
 from .station import MonitoringStation
 
-os.environ["KERAS_BACKEND"] = "plaidml.keras.backend"
-scalar = MinMaxScaler(feature_range=(0, 1))
+global scalar
+
+try:
+    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+    os.environ['KERAS_BACKEND'] = 'plaidml.keras.backend'
+
+    # noinspection PyPackageRequirements
+    import tensorflow as tf
+    from tensorflow.python.util import deprecation
+
+    tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+
+    # Monkey patching deprecation utils to shut it up! Maybe good idea to disable this once after upgrade
+    # noinspection PyUnusedLocal
+    def deprecated(date, instructions, warn_once=True):  # pylint: disable=unused-argument
+        def deprecated_wrapper(func):
+            return func
+        return deprecated_wrapper
+
+    deprecation.deprecated = deprecated
+
+    from tensorflow.keras.models import Sequential, load_model
+    from tensorflow.keras.layers import Dense, LSTM
+
+    scalar = MinMaxScaler(feature_range=(0, 1))
+
+except ImportError:
+    pass
 
 
 def data_prep(data: np.ndarray, lookback: int,
@@ -40,9 +64,7 @@ def data_prep(data: np.ndarray, lookback: int,
     return x, y
 
 
-def build_model(lookback: int, layer_units: tuple[int] = (256, 512, 1),
-        layer_activations: tuple[str] = ('relu', 'relu', 'tanh'),
-        recurrent_dropout: float = 0.1, optimizer: str = 'Adam', loss: str = 'mse') -> Sequential:
+def build_model(lookback: int, **kwargs) -> Sequential:
 
     """
     Builds the RNN, which has 1 LSTM layer and 2 dense layers.
@@ -50,7 +72,7 @@ def build_model(lookback: int, layer_units: tuple[int] = (256, 512, 1),
     ### Input
 
     #### Required
-        
+
     `lookback` (int): The look back value, which determines the input shape.
 
     #### Optional
@@ -60,12 +82,18 @@ def build_model(lookback: int, layer_units: tuple[int] = (256, 512, 1),
     `recurrent_dropout` (float, default = 0.1): fraction of the units to drop for the linear
     transformation of the recurrent state. First layer only.
     `optimizer` (str, default = 'Adam): apply an optimiser when compiling the model.
-    `loss` (str, default = 'mse'): choose a loss function for the model.
+    `loss` (str, default = 'mean_squared_error'): choose a loss function for the model.
 
     #### Returns
-    
+
     `tensorflow.keras.model.Sequential` model: untrained Keras model.
     """
+
+    layer_units = kwargs.get('layer_units', (256, 512, 1))
+    layer_activations = kwargs.get('layer_activations', ('relu', 'relu', 'tanh'))
+    recurrent_dropout = kwargs.get('recurrent_dropout', 0.1)
+    optimizer = kwargs.get('optimizer', 'Adam')
+    loss = kwargs.get('loss', 'mean_squared_error')
 
     model = Sequential()
 
@@ -78,9 +106,7 @@ def build_model(lookback: int, layer_units: tuple[int] = (256, 512, 1),
     return model
 
 
-def train_model(model: Sequential, x: list, y: list, batch_size: int, epoch: int,
-                save_file: str = './cache/models/predictor_model.hdf5',
-                show_loss: bool = False) -> Sequential:
+def train_model(model: Sequential, x: list, y: list, batch_size: int, epoch: int, **kwargs) -> Sequential:
 
     """
     Trains and saves the Keras model.
@@ -99,17 +125,36 @@ def train_model(model: Sequential, x: list, y: list, batch_size: int, epoch: int
 
     `save_file` (str, default = './cache/predictor_model.hdf5'): Path to save the trained model file
     `show_loss` (bool, default = False): whether to display the loss-epoch graph after training.
+    `verbose` (int, default = 0): verbosity of trainer, how much info is showed as training progresses.
 
     ### Returns
-    
+
     `tensorflow.keras.model.Sequential` model: the trained model.
     """
+    if kwargs.get('save_file', None) is not None:
+        model_name = kwargs['save_file'].split("/")[-1].split('.')[0]
+    else:
+        model_name = 'predictor_model'
 
-    history = model.fit(x, y, batch_size=batch_size, epochs=epoch, verbose=1)
+    save_file = kwargs.get('save_file', './cache/models/predictor_model.hdf5')
+    show_loss = kwargs.get('show_loss', False)
+    verbose = kwargs.get('verbose', 0)
+
+    history = model.fit(x, y, batch_size=batch_size, epochs=epoch, verbose=verbose)
+    end_loss = history.history['loss'][-1]
+
+    loss_color = '#1ec888' if end_loss < 0.001 else \
+                 '#e19124' if end_loss < 0.005 else \
+                 '#e8401c'
+
     if show_loss:
         loss_name = model.loss.replace('_', ' ').title()
         plt.style.use('proplot_style.mplstyle')
-        plt.plot(history.history['loss'])
+        plt.title(f'Loss convergence of training for {model_name}')
+        plt.plot(np.arange(1, epoch + 1), history.history['loss'],
+            label='loss', color='#58308f')
+        plt.plot((1, epoch), (end_loss, end_loss),
+            label=f'converged on {end_loss}', color=loss_color, linestyle='dashed')
         plt.xlabel(f'Epoch number (batch size {batch_size}), out of {epoch}')
         plt.ylabel(f'Loss ({loss_name})')
         plt.show()
@@ -124,8 +169,7 @@ def train_model(model: Sequential, x: list, y: list, batch_size: int, epoch: int
 
 
 def train_all(stations: list[MonitoringStation], dataset_size: int = 1000, lookback: int = 2000,
-        batch_size: int = 256, epoch: int = 20, show_loss: bool = False,
-        **kwargs) -> dict[MonitoringStation, Sequential]:
+        batch_size: int = 256, epoch: int = 20, **kwargs) -> dict[MonitoringStation, Sequential]:
 
     """
     Trains and saves models for all stations supplied.
@@ -148,7 +192,7 @@ def train_all(stations: list[MonitoringStation], dataset_size: int = 1000, lookb
     `recurrent_dropout` (float, default = 0.1): fraction of the units to drop for the linear
     transformation of the recurrent state. First layer only.
     `optimizer` (str, default = 'Adam): apply an optimiser when compiling the model.
-    `loss` (str, default = 'mse'): choose a loss function for the model.
+    `loss` (str, default = 'mean_squared_error'): choose a loss function for the model.
 
     ### Returns
 
@@ -160,12 +204,12 @@ def train_all(stations: list[MonitoringStation], dataset_size: int = 1000, lookb
 
     for i, station in enumerate(stations):
         print(f'Training for {station.name} ({i}/{len(stations)})')
-        levels = np.array(fetch_measure_levels(station.measure_id, datetime.timedelta(dataset_size))[1])
+        levels = np.array(fetch_measure_levels(station, datetime.timedelta(dataset_size))[1])
         scalar.fit(levels.reshape(-1, 1))  # fit the scalar on across the entire dataset
         x_train, y_train = data_prep(levels, lookback)
         model = build_model(lookback, **kwargs)
         train_model(model, x_train, y_train, batch_size, epoch,
-                    save_file=f'./cache/models/{station.name}.hdf5', show_loss=show_loss)
+                    save_file=f'./cache/models/{station.name}.hdf5', **kwargs)
         trained_models.append(model)
 
     return dict(zip(stations, trained_models))
@@ -186,10 +230,10 @@ def predict(station: MonitoringStation, dataset_size: int = 1000, lookback: int 
     The prediction can be graphed using `plot_predicted_water_levels(s, *predict(s))`, where `s` is
     a `MonitoringStation` after importing the plot function from `floodsystem.plot`.
 
-    ### Inputs:
+    ### Inputs
 
     #### Required
-        
+
     `station_name` (str): The name of the station.
 
     #### Optional
@@ -202,10 +246,10 @@ def predict(station: MonitoringStation, dataset_size: int = 1000, lookback: int 
     `batch_size` (int, default = 256): number of samples processed before the model parameters are updated.
     `epoch` (int, default = 20): number of times to work through the full dataset.
 
-    ### Returns:
+    ### Returns
 
     #### First item
-    
+
     `(list[datetime.datetime], list[datetime.datetime])`: first list contains all dates up to the present,
     second list contains dates in future which have been predicted.
 
@@ -216,7 +260,7 @@ def predict(station: MonitoringStation, dataset_size: int = 1000, lookback: int 
     """
 
     station_name = station.name
-    date, levels = fetch_measure_levels(station.measure_id, datetime.timedelta(dataset_size))
+    date, levels = fetch_measure_levels(station, datetime.timedelta(dataset_size))
     date, levels = np.array(date), np.array(levels)
     scalar.fit(levels.reshape(-1, 1))  # fit the scalar on across the entire dataset
 

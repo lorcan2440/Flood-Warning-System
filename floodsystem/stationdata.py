@@ -21,7 +21,10 @@ def build_station_list(use_cache=True) -> list[MonitoringStation]:
     """
 
     # Fetch station data
-    data = datafetcher.fetch_stationdata(use_cache)
+    data, coastal_data = datafetcher.fetch_stationdata(use_cache)
+
+    # set of all ids of coastal stations
+    coastal_ids = {s['@id'] for s in coastal_data['items']}
 
     # Build list of MonitoringStation objects
     stations = []
@@ -38,17 +41,17 @@ def build_station_list(use_cache=True) -> list[MonitoringStation]:
             typical_range = None
 
         try:
-            # Create MonitoringStation object if all required data is
-            # available, and add to list
-            s = MonitoringStation(
-                station_id=e['@id'],
-                measure_id=e['measures'][-1]['@id'],
-                label=e['label'],
-                coord=(float(e['lat']), float(e['long'])),
-                typical_range=typical_range,
-                river=river,
-                town=town,
-                url_id=e.get('RLOIid', ''))
+            # Create MonitoringStation object if all required data is available, and add to list
+            if e['@id'] in coastal_ids:
+                s = MonitoringStation(
+                    station_id=e['@id'], measure_id=e['measures'][-1]['@id'], label=e['label'],
+                    coord=(float(e['lat']), float(e['long'])), typical_range=typical_range,
+                    river=river, town=town, url_id=e.get('RLOIid', ''), is_tidal=True)
+            else:
+                s = MonitoringStation(
+                    station_id=e['@id'], measure_id=e['measures'][-1]['@id'], label=e['label'],
+                    coord=(float(e['lat']), float(e['long'])), typical_range=typical_range,
+                    river=river, town=town, url_id=e.get('RLOIid', ''), is_tidal=False)
             stations.append(s)
         except Exception:
             # Some essential inputs were not available, so skip over

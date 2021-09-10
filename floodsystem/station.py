@@ -11,20 +11,18 @@ class MonitoringStation:
     '''
 
     def __init__(self, station_id: str, measure_id: str, label: str, coord: tuple[float],
-                 typical_range: tuple[float], river: str, town: str, url_id: str = ''):
+                 typical_range: tuple[float], river: str, town: str, url_id: str = '',
+                 is_tidal: bool = False):
 
         self.station_id = station_id
         self.measure_id = measure_id
-
-        # Handle case of erroneous data where data system returns
-        # '[label, label]' rather than 'label'
         self.name = label if not isinstance(label, list) else label[0]
-
         self.coord = coord
         self.typical_range = typical_range
         self.river = river
         self.town = town
         self.url = "https://check-for-flooding.service.gov.uk/station/" + url_id
+        self.is_tidal = is_tidal
 
         self.latest_level = None
 

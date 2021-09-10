@@ -87,8 +87,8 @@ def identify_potentially_bad_data(station_name: str, levels: list[float], **kwar
     REPLACE_TUPLE_WITH_INDEX    = kwargs.get('replace_tuple_with_index',    1)      # noqa
     TOO_HIGH_CUTOFF             = kwargs.get('too_high_cutoff',             2500)   # noqa
     TOO_HIGH_TO_PREVIOUS_LEVEL  = kwargs.get('too_high_to_previous_level',  True)   # noqa
-    TOO_FAST_INCREASE_CUTOFF    = kwargs.get('too_fast_increase_cutoff',    2)      # noqa
-    TOO_FAST_DECREASE_CUTOFF    = kwargs.get('too_fast_decrease_cutoff',    0.3)    # noqa
+
+    IS_TIDAL        = getattr(kwargs.get('station_obj', None), 'is_tidal', False)   # noqa
 
     flags = set()
 
@@ -106,10 +106,11 @@ def identify_potentially_bad_data(station_name: str, levels: list[float], **kwar
             levels[i] = levels[i][REPLACE_TUPLE_WITH_INDEX]
 
         # Check for potentially invalid values: negative or impossibly high
-        if levels[i] < 0:
+        if levels[i] < 0 and not IS_TIDAL:
 
             warn_str = f"Data for {station_name} station may be unreliable. "
-            warn_str += "Some water levels were found to be negative. \nThese have been set to 0 m."
+            warn_str += "Some water levels were found to be negative, \nand this station is not tidal. "
+            warn_str += "These have been set to 0 m."
 
             flags.add(warn_str)
 
@@ -129,7 +130,7 @@ def identify_potentially_bad_data(station_name: str, levels: list[float], **kwar
                 levels[i] = levels[i - 1]
 
     # Check for potentially invalid values: many sudden changes
-    if has_rapid_fluctuations(levels):
+    if has_rapid_fluctuations(levels, is_tidal=IS_TIDAL):
 
         warn_str = f"Data for {station_name} station may be unreliable. "
         warn_str += "There are many sudden spikes between consecutive measurements. "
@@ -140,7 +141,7 @@ def identify_potentially_bad_data(station_name: str, levels: list[float], **kwar
     return flags
 
 
-def has_rapid_fluctuations(levels: list[float], stdev_tol: float = 0.05) -> bool:
+def has_rapid_fluctuations(levels: list[float], is_tidal: bool = False, stdev_tol: float = 0.05) -> bool:
 
     # TODO: try an AI based approach? This is not perfect
     # currently flags if standard deviation in stepwise changes is more than 5% of the average value.
@@ -148,5 +149,9 @@ def has_rapid_fluctuations(levels: list[float], stdev_tol: float = 0.05) -> bool
     diffs = [levels[i + 1] - levels[i] for i in range(len(levels) - 1)]
     average_val = np.average(levels)
     stdev = np.std(diffs)
+
+    # allow much more variation if tidal (daily spikes are natural)
+    if is_tidal:
+        stdev_tol *= 10
 
     return stdev / average_val > stdev_tol

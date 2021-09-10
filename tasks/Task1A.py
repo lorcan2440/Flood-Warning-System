@@ -1,7 +1,7 @@
 # pylint: disable=import-error
-#import import_helper  # noqa
+import import_helper  # noqa
 
-from ..floodsystem.stationdata import build_station_list
+from floodsystem.stationdata import build_station_list
 
 
 def run():
