@@ -17,15 +17,15 @@ View the map by running `python applications/MapViewer.py`.
 
 Map of stations across England:
 
-<img src="media/shaded_map.png" height="500", alt="map1"><img src="media/satellite_map.png" height="500" alt="map2">
+<img src="media/shaded_map.png" height="375" alt="map1"><img src="media/satellite_map.png" height="375" alt="map2">
 
 Hover over a dot to view basic info:
 
-<img src="media/hover.png" height="500" alt="hover>
+<img src="media/hover.png" height="500" alt="hover">
 
 Click on a dot to go to the official [gov.uk](https://check-for-flooding.service.gov.uk/) site for the station:
 
-<img src="media/gov_station_page.png" height="500" alt="gov.uk site>
+<img src="media/gov_station_page.png" height="500" alt="gov.uk site">
 
 ## Forecasting
 
