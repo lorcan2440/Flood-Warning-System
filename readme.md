@@ -35,7 +35,13 @@ View some forecasts by running `python applications/LevelPredictions.py`. Foreca
 
 ## Installing
 
-Currently this is not available on PyPI. Instead, you can go [here](https://download-directory.github.io/) and download the `floodsystem` module at https://github.com/lorcan2440/Flood-Warning-System/tree/main/floodsystem. Name the zipped folder `floodsystem.zip`. Extract the floodsystem module to the directory of your program.
+Download the files to your local disk. After navigating to any directory using `cd C:\path\to\download\location`, use
+
+```
+$ git clone https://github.com/lorcan2440/Flood-Warning-System.git
+```
+
+To use the API alone, take the `floodsystem` folder out and delete the rest.
 
 ## Usage
 
