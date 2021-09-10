@@ -3,7 +3,7 @@
 An API and demo frontend for monitoring flood likelihood in England, UK. Built to extend the Part IA Lent Term computing activity at CUED. Run the files in the `tasks` directory to see the standard functionality,
 or by using
 
-``` s
+``` shell
 $ ./runtasks.sh
 ```
 
