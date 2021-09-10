@@ -35,7 +35,7 @@ View some forecasts by running `python applications/LevelPredictions.py`. Foreca
 
 ## Installing
 
-Download the files to your local disk. After navigating to any directory using `cd C:\path\to\download\location`, use
+After (optionally) navigating to any directory using `$ cd C:\path\to\download\location`, use
 
 ```
 $ git clone https://github.com/lorcan2440/Flood-Warning-System.git
