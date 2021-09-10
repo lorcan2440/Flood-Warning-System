@@ -22,7 +22,7 @@ def display_stations_on_map(stations: list, map_design: str = "SATELLITE", retur
 
     # inputs and outputs
     map_range = ((59, -12), (49, 4))  # (lat, long) coords of the map boundary
-    output_file("applications/map/England Stations Map.html",
+    output_file("applications/output/England Stations Map.html",
         title='Flood Monitoring Stations Across England')
 
     station_info = []
