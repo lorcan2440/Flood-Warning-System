@@ -155,6 +155,7 @@ def train_model(model: Sequential, x: list, y: list, batch_size: int, epoch: int
             label='loss', color='#58308f')
         plt.plot((1, epoch), (end_loss, end_loss),
             label=f'converged on {end_loss}', color=loss_color, linestyle='dashed')
+        plt.legend()
         plt.xlabel(f'Epoch number (batch size {batch_size}), out of {epoch}')
         plt.ylabel(f'Loss ({loss_name})')
         plt.show()
