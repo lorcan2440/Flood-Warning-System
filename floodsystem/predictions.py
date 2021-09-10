@@ -14,20 +14,19 @@ os.environ["KERAS_BACKEND"] = "plaidml.keras.backend"
 scalar = MinMaxScaler(feature_range=(0, 1))
 
 
-def data_prep(data: list, lookback: int, exclude_latest: int = 0):
+def data_prep(data: np.ndarray, lookback: int,
+        exclude_latest: int = 0) -> tuple[np.ndarray, np.ndarray]:
 
     """
-    Function that prepares the dataset by constructing x, y pairs.
-    Each y is determined on the previous `lookback` data points (x).
+    Prepares dataset by constructing x, y pairs. Each y is determined on the previous
+    `lookback` data points (x).
 
     Args:
         data (array): The water level data.
         lookback (int): The look back value, i.e. every y is determined how many x.
         exclude (int, optional): The number of latest data points to ignore (default 0).
 
-    Returns:
-        array: x.
-        array: y.
+    Returns arrays (x, y).
     """
 
     if exclude_latest != 0:
@@ -41,51 +40,78 @@ def data_prep(data: list, lookback: int, exclude_latest: int = 0):
     return x, y
 
 
-def build_model(lookback):
+def build_model(lookback: int, layer_units: tuple[int] = (256, 512, 1),
+        layer_activations: tuple[str] = ('relu', 'relu', 'tanh'),
+        recurrent_dropout: float = 0.1, optimizer: str = 'Adam', loss: str = 'mse') -> Sequential:
 
     """
-    Function that builds the recurrent neural network, which has 1 lstm layer and 2 dense layers.
+    Builds the RNN, which has 1 LSTM layer and 2 dense layers.
 
-    Args:
-        lookback (int): The look back value, which determines the input shape.
+    ### Input
 
-    Returns:
-        Keras model: Untrained model.
+    #### Required
+        
+    `lookback` (int): The look back value, which determines the input shape.
+
+    #### Optional
+
+    `layer_units` (tuple[int], default = (256, 512, 1)): number of neurons in each layer
+    `layer_activations` (tuple[str], default = ('relu', 'relu', 'tanh')): activation functions for each layer
+    `recurrent_dropout` (float, default = 0.1): fraction of the units to drop for the linear
+    transformation of the recurrent state. First layer only.
+    `optimizer` (str, default = 'Adam): apply an optimiser when compiling the model.
+    `loss` (str, default = 'mse'): choose a loss function for the model.
+
+    #### Returns
+    
+    `tensorflow.keras.model.Sequential` model: untrained Keras model.
     """
 
     model = Sequential()
-    model.add(LSTM(256, activation='relu', input_shape=(1, lookback), recurrent_dropout=0.1))
-    model.add(Dense(512, activation='relu'))
-    # model.add(Dense(256, activation='relu'))
-    model.add(Dense(1, activation='tanh'))
-    model.compile(optimizer='adam', loss='mse')
+
+    model.add(LSTM(layer_units[0], activation=layer_activations[0],
+        input_shape=(1, lookback), recurrent_dropout=recurrent_dropout))
+    model.add(Dense(layer_units[1], activation=layer_activations[1]))
+    model.add(Dense(layer_units[2], activation=layer_activations[2]))
+    model.compile(optimizer=optimizer, loss=loss)
 
     return model
 
 
-def train_model(model, x, y, batch_size, epoch,
-                save_file='./cache/models/predictor_model.hdf5', show_loss=False):
+def train_model(model: Sequential, x: list, y: list, batch_size: int, epoch: int,
+                save_file: str = './cache/models/predictor_model.hdf5',
+                show_loss: bool = False) -> Sequential:
+
     """
-    Function that trains and saves the Keras model.
+    Trains and saves the Keras model.
 
-    Args:
-        model (Keras model): The built model.
-        x (list): x.
-        y (list): y.
-        batch_size (int): Batch size.
-        epoch (int): Number of epochs.
-        save_file (str, optional): Path to save the trained model file
-            (default: './cache/predictor_model.hdf5')
-        show_loss (bool, optional): Whether to display the loss-epoch graph after training.
+    ### Inputs
 
-    Returns:
-        Keras model: The trained model.
+    #### Required
+
+    `model` (Keras model): the built model to train.
+    `x` (list): x, the known input levels.
+    `y` (list): y, the known levels after the input.
+    `batch_size` (int, default = 256): number of samples processed before the model parameters are updated.
+    `epoch` (int, default = 20): number of times to work through the full dataset.
+
+    #### Optional
+
+    `save_file` (str, default = './cache/predictor_model.hdf5'): Path to save the trained model file
+    `show_loss` (bool, default = False): whether to display the loss-epoch graph after training.
+
+    ### Returns
+    
+    `tensorflow.keras.model.Sequential` model: the trained model.
     """
 
     history = model.fit(x, y, batch_size=batch_size, epochs=epoch, verbose=1)
     if show_loss:
+        loss_name = model.loss.replace('_', ' ').title()
+        plt.style.use('proplot_style.mplstyle')
         plt.plot(history.history['loss'])
-        plt.ylabel('loss')
+        plt.xlabel(f'Epoch number (batch size {batch_size}), out of {epoch}')
+        plt.ylabel(f'Loss ({loss_name})')
         plt.show()
 
     try:
@@ -97,60 +123,96 @@ def train_model(model, x, y, batch_size, epoch,
     return model
 
 
-def train_all(stations: list[MonitoringStation],
-        dataset_size=1000, lookback=2000, batch_size=256, epoch=20):
+def train_all(stations: list[MonitoringStation], dataset_size: int = 1000, lookback: int = 2000,
+        batch_size: int = 256, epoch: int = 20, show_loss: bool = False,
+        **kwargs) -> dict[MonitoringStation, Sequential]:
 
     """
-    Function that trains models for all stations supplied.
+    Trains and saves models for all stations supplied.
 
-    Args:
-        stations (list): List of MonitoringStation objects.
-        dataset_size (int, optional): The number of days in the dataset (default: 1000).
-        lookback (int, optional): Look back value (default: 2000).
-        batch_size (int, optional): (default: 256).
-        epoch (int, optional): (default: 20).
+    ### Inputs
+
+    #### Required
+
+    `stations` (list): list of `MonitoringStation` objects.
+
+    #### Optional
+
+    `dataset_size` (int, default = 1000): the number of days in the dataset.
+    `lookback` (int, default = 2000): look back value.
+    `batch_size` (int, default = 256): number of samples processed before the model parameters are updated.
+    `epoch` (int, default = 20): number of times to work through the full dataset.
+    `show_loss` (bool, default = False): whether to display the loss-epoch graph after training.
+    `layer_units` (tuple[int], default = (256, 512, 1)): number of neurons in each layer
+    `layer_activations` (tuple[str], default = ('relu', 'relu', 'tanh')): activation functions for each layer
+    `recurrent_dropout` (float, default = 0.1): fraction of the units to drop for the linear
+    transformation of the recurrent state. First layer only.
+    `optimizer` (str, default = 'Adam): apply an optimiser when compiling the model.
+    `loss` (str, default = 'mse'): choose a loss function for the model.
+
+    ### Returns
+
+    `dict[MonitoringStation, tensorflow.keras.models.Sequential]`: a mapping from each given station
+    to its trained model.
     """
+
+    trained_models = []
 
     for i, station in enumerate(stations):
         print(f'Training for {station.name} ({i}/{len(stations)})')
         levels = np.array(fetch_measure_levels(station.measure_id, datetime.timedelta(dataset_size))[1])
         scalar.fit(levels.reshape(-1, 1))  # fit the scalar on across the entire dataset
         x_train, y_train = data_prep(levels, lookback)
-        train_model(build_model(lookback), x_train, y_train, batch_size, epoch,
-                    save_file=f'./cache/models/{station.name}.hdf5')
+        model = build_model(lookback, **kwargs)
+        train_model(model, x_train, y_train, batch_size, epoch,
+                    save_file=f'./cache/models/{station.name}.hdf5', show_loss=show_loss)
+        trained_models.append(model)
+
+    return dict(zip(stations, trained_models))
 
 
-def predict(station: MonitoringStation,
-        dataset_size=1000, lookback=2000, iteration=100, display=300, use_pretrained=True,
-        batch_size=256, epoch=20):
+def predict(station: MonitoringStation, dataset_size: int = 1000, lookback: int = 2000,
+        iteration: int = 100, display: int = 300, use_pretrained: bool = True, batch_size: int = 256,
+        epoch: int = 20, del_model_after: bool = False) -> tuple[tuple[list, list, list], tuple[list, list]]:
 
     """
-    Function that predict a specified number of future water levels of a specific station.
+    Predicts a specified number of future water levels of a specific station.
     If the model for that station is not cached, it will be trained according to the parameters specified.
 
-    The returned data includes actual data over the specified interval,
-    demonstration data the model produced based on actual data points prior to the displayed actual data,
-    and the predicted date using all the available actual data.
+    The returned data includes actual data over the specified interval, demonstration data the model
+    produced based on actual data points prior to the displayed actual data, and the predicted date
+    using all the available actual data.
 
-    Args:
-        station_name (str): The name of the station.
-        dataset_size (int, optional): The number of days in the dataset (default: 1000).
-        lookback (int, optional): Look back value (default: 2000).
-        iteration (int, optional): Number of future water levels to be predicted
-            (effectively the number of times data in passed to the nn) (default: 100).
-        display (int, optional): Number of real data points to be returned (default: 300).
-        use_pretrained (bool, optional): Whether to used pretrained model if possible (default: True).
-        batch_size (int, optional): (default: 256).
-        epoch (int, optional): (default: 20).
+    The prediction can be graphed using `plot_predicted_water_levels(s, *predict(s))`, where `s` is
+    a `MonitoringStation` after importing the plot function from `floodsystem.plot`.
 
-    Returns:
-        tuple:
+    ### Inputs:
 
-        * 2-tuple (list, list)
-          List of datetime objects of actual and demo data,
-          list of datatime objects of future predicted data.
-        * 3-tuple (list, list, list)
-          Lists of water levels of actual data, demo data, predicted data.
+    #### Required
+        
+    `station_name` (str): The name of the station.
+
+    #### Optional
+
+    `dataset_size` (int, default = 1000): the number of days in the dataset.
+    `lookback` (int, default = 2000): look back value.
+    `iteration` (int, default = 100): number of future 15-minute-interval water levels to predict.
+    `display` (int, default = 300): number of real data points to be returned.
+    `use_pretrained` (bool, default = True): whether to used pretrained model if possible.
+    `batch_size` (int, default = 256): number of samples processed before the model parameters are updated.
+    `epoch` (int, default = 20): number of times to work through the full dataset.
+
+    ### Returns:
+
+    #### First item
+    
+    `(list[datetime.datetime], list[datetime.datetime])`: first list contains all dates up to the present,
+    second list contains dates in future which have been predicted.
+
+    #### Second item
+
+    `(list[float], list[float], list[float])`: first list is actual level data, second list is the
+    level data predicted using past data and third list is future level data predicted using current data.
     """
 
     station_name = station.name
@@ -161,16 +223,16 @@ def predict(station: MonitoringStation,
     if use_pretrained:
         try:
             model = load_model(f'./cache/models/{station_name}.hdf5')
-        except Exception:
+        except (ImportError, OSError):
             print(f'No pre-trained model for {station_name} found, training a model for it now.')
             x_train, y_train = data_prep(levels, lookback)
             model = train_model(build_model(lookback), x_train, y_train, batch_size, epoch,
-                                save_file=f'./cache/models{station_name}.hdf5')
+                                save_file=f'./cache/models/{station_name}.hdf5')
     else:
         print(f'Training a model for {station_name} now.')
         x_train, y_train = data_prep(levels, lookback)
         model = train_model(build_model(lookback), x_train, y_train, batch_size, epoch,
-                            save_file=f'./cache/models{station_name}.hdf5')
+                            save_file=f'./cache/models/{station_name}.hdf5')
 
     # prediction of future `iteration` readings, based on the last `lookback` values
     predictions = None
@@ -182,7 +244,7 @@ def predict(station: MonitoringStation,
         predictions = np.append(predictions, prediction, axis=0) if predictions is not None else prediction
 
     # demo of prediction of the last `display` data points,
-    # which is based on the `lookback` values before the final 100 points
+    # which is based on the `lookback` values before the final `iteration` points
     demo = None
     demo_levels = scalar.transform(
         levels[-display - lookback:-display].reshape(-1, 1)).reshape(1, 1, lookback)
@@ -191,7 +253,11 @@ def predict(station: MonitoringStation,
         demo_levels = np.append(demo_levels[:, :, -lookback + 1:], prediction.reshape(1, 1, 1), axis=2)
         demo = np.append(demo, prediction, axis=0) if demo is not None else prediction
 
-    # return on last <display> data points, the demo values, and future predictions
+    # option to delete model to save disk/drive space
+    if del_model_after:
+        os.remove(f'./cache/models/{station_name}.hdf5')
+
+    # return on last `display` data points, the demo values, and future predictions
     date = (date[-display:], [date[-1] + datetime.timedelta(minutes=15) * i for i in range(iteration)])
     return date, (levels[-display:], scalar.inverse_transform(
         demo).ravel(), scalar.inverse_transform(predictions).ravel())

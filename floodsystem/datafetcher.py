@@ -1,6 +1,9 @@
 '''
 This module provides functionality for retrieving real-time and
 latest time history level data
+
+Reference:
+https://environment.data.gov.uk/flood-monitoring/doc/reference
 '''
 
 # pylint: disable=assignment-from-no-return

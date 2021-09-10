@@ -39,7 +39,7 @@ def stations_level_over_threshold(stations: list, tol: float) -> list[tuple[Moni
 def stations_highest_rel_level(stations: list, n) -> list[MonitoringStation]:
 
     '''
-    Returns a list of the `n` stations (objects) at which the water level,
+    Returns a list of the `n` stations at which the water level,
     relative to the typical range, is highest. The values are assumed
     to be all unique so the length of the return list is always `n`.
     '''
