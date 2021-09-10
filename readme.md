@@ -9,27 +9,27 @@ $ ./runtasks.sh
 
 The tasks are documented at https://cued-partia-flood-warning.readthedocs.io/.
 
+![CI](https://github.com/lorcan2440/Flood-Warning-System/actions/workflows/main.yml/badge.svg)
+
 ## Map Plotting
 
-View the map by running `MapViewer.py` inside the `applications` directory i.e. `python applications/MapViewer.py`.
-
-![CI](https://github.com/lorcan2440/Flood-Warning-System/actions/workflows/main.yml/badge.svg)
+View the map by running `python applications/MapViewer.py`.
 
 Map of stations across England:
 
-<img src="media/shaded_map.png" height="500", alt="map1"><img src="media/satellite_map.png" height="500", alt="map2">
+<img src="media/shaded_map.png" height="500", alt="map1"><img src="media/satellite_map.png" height="500" alt="map2">
 
 Hover over a dot to view basic info:
 
-<img src="media/hover.png" height="500", alt="hover>
+<img src="media/hover.png" height="500" alt="hover>
 
 Click on a dot to go to the official [gov.uk](https://check-for-flooding.service.gov.uk/) site for the station:
 
-<img src="media/gov_station_page.png" height="500", alt="gov.uk site>
+<img src="media/gov_station_page.png" height="500" alt="gov.uk site>
 
 ## Forecasting
 
-View some forecasts by running `LevelPredictions.py` inside the `applications` directory i.e. `python applications/LevelPredictions.py`. Forecasting can be done at each station by training and predicting from an LSTM (long short-term memory) RNN (recurrent neural network). Training and evaluation is done with `tensorflow` and `scikit-learn`.
+View some forecasts by running `python applications/LevelPredictions.py`. Forecasting can be done at each station by training and predicting from an LSTM (long short-term memory) RNN (recurrent neural network). Training and evaluation is done with `tensorflow` and `scikit-learn`.
 
 <img src="media/forecast.png" height="500" alt="forecast">
 
