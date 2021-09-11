@@ -5,7 +5,7 @@ JSON objects fetched from the Internet and
 
 # pylint: disable=relative-beyond-top-level
 
-from . import datafetcher
+from .datafetcher import fetch_stationdata, fetch_latest_water_level_data
 from .station import MonitoringStation
 
 
@@ -20,7 +20,7 @@ def build_station_list(use_cache=True) -> list[MonitoringStation]:
     available.
     """
 
-    data, coastal_data = datafetcher.fetch_stationdata(use_cache)
+    data, coastal_data = fetch_stationdata(use_cache)
 
     coastal_ids = {s['@id'] for s in coastal_data['items']}
 
@@ -87,7 +87,7 @@ def update_water_levels(stations: list[MonitoringStation]) -> None:
     """
 
     # Fetch level data
-    measure_data = datafetcher.fetch_latest_water_level_data()
+    measure_data = fetch_latest_water_level_data()
 
     # Build map from measure id to latest reading (value)
     m_id_to_value = dict()

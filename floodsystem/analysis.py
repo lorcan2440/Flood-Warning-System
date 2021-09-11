@@ -5,6 +5,7 @@ level data.
 '''
 
 import datetime
+
 import numpy as np
 from matplotlib.dates import date2num
 

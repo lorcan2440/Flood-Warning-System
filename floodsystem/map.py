@@ -6,11 +6,11 @@ This module contains functions to produce maps.
 
 import os
 
-from .utils import wgs84_to_web_mercator, coord_letters
-
 from bokeh.plotting import figure, output_file, show
 from bokeh.models import ColumnDataSource, OpenURL, TapTool, HoverTool
 from bokeh.tile_providers import Vendors, get_provider
+
+from .utils import wgs84_to_web_mercator, coord_letters
 
 
 def display_stations_on_map(stations: list, **kwargs) -> None:

@@ -5,15 +5,16 @@ for visualising level data over time.
 
 # pylint: disable=relative-beyond-top-level
 
-from floodsystem.station import MonitoringStation
 import math
 import os
+
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.dates import DateFormatter
 
 from .utils import flatten
 from .analysis import polyfit, moving_average
+from .station import MonitoringStation
 
 RESOURCES = os.path.join(os.path.dirname(__file__), 'resources')
 PROPLOT_STYLE_SHEET = os.path.join(RESOURCES, 'proplot_style.mplstyle')

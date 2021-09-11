@@ -5,8 +5,7 @@ stations by their water levels.
 
 # pylint: disable=import-error, relative-beyond-top-level
 
-from .station import inconsistent_typical_range_stations
-from .station import MonitoringStation
+from .station import MonitoringStation, inconsistent_typical_range_stations
 
 
 def stations_level_over_threshold(stations: list, tol: float) -> list[tuple[MonitoringStation, float]]:
