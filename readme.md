@@ -38,10 +38,11 @@ View some forecasts by running `python applications/LevelPredictions.py`. Foreca
 After (optionally) navigating to any directory using `$ cd C:\path\to\download\location`, use
 
 ```
-$ git clone https://github.com/lorcan2440/Flood-Warning-System.git
+git clone https://github.com/lorcan2440/Flood-Warning-System.git
+cd Flood-Warning-System
+pip install .
 ```
-
-To use the API alone, take the `floodsystem` folder out and delete the rest.
+The `floodsystem` module will then be available for use.
 
 ## Usage
 
