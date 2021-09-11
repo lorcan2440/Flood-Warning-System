@@ -7,7 +7,7 @@ or by using
 $ ./runtasks.sh
 ```
 
-The tasks are documented at https://cued-partia-flood-warning.readthedocs.io/.
+The tasks are documented [here](https://cued-partia-flood-warning.readthedocs.io/).
 
 ![CI](https://github.com/lorcan2440/Flood-Warning-System/actions/workflows/main.yml/badge.svg)
 
@@ -38,10 +38,12 @@ View some forecasts by running `python applications/LevelPredictions.py`. Foreca
 After (optionally) navigating to any directory using `$ cd C:\path\to\download\location`, use
 
 ```
-$ git clone https://github.com/lorcan2440/Flood-Warning-System.git
+git clone https://github.com/lorcan2440/Flood-Warning-System.git
+cd Flood-Warning-System
+pip install .
 ```
 
-To use the API alone, take the `floodsystem` folder out and delete the rest.
+The `floodsystem` module will then be available for use. Alternatively, if `git` is unavailable, the package can be downloaded manually by using [this](https://download-directory.github.io/) tool. Unzip the folder, go inside and use `pip install .` when in the same folder as `setup.py` and various other files.
 
 ## Usage
 
@@ -58,5 +60,5 @@ Then the functions can be used, e.g.
 
 ``` python
 from floodsystem.flood import stations_level_over_threshold
-print(stations_level_over_threshold(stations))
+print(stations_level_over_threshold(stations, 1.0))
 ```
