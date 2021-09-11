@@ -7,7 +7,7 @@ or by using
 $ ./runtasks.sh
 ```
 
-The tasks are documented at https://cued-partia-flood-warning.readthedocs.io/.
+The tasks are documented [here](https://cued-partia-flood-warning.readthedocs.io/).
 
 ![CI](https://github.com/lorcan2440/Flood-Warning-System/actions/workflows/main.yml/badge.svg)
 
