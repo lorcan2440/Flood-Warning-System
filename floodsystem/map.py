@@ -46,12 +46,13 @@ def display_stations_on_map(stations: list, map_design: str = "SATELLITE", retur
         *(map(lambda c: abs(c), s.coord) if s.coord is not None else (None, None)),
         *(coord_letters(*s.coord) if s.coord is not None else (None, None)),
         s.name,
-        (ll if ll > 0 or s.is_tidal else "≤ 0") if (ll := s.latest_level) is not None else None,
+        (ll if ll > 0 or getattr(s, 'is_tidal', False) else "≤ 0")
+            if (ll := getattr(s, 'latest_level', None)) is not None else None,       # noqa
         *(s.typical_range if s.typical_range is not None else (None, None)),
         round(lv * 100, 1) if (lv := s.relative_water_level()) is not None else None,
-        s.river,
-        s.town,
-        s.url,
+        getattr(s, 'river', None),
+        getattr(s, 'town', None),
+        getattr(s, 'url', None),
         colors[(rating := ((0 if lv > 2.5 else
                             1 if lv > 1.75 else
                             2 if lv > 1 else

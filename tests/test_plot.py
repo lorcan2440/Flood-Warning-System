@@ -15,10 +15,10 @@ from floodsystem.station import MonitoringStation
 def test_plot_water_levels():
 
     stations = [
-        MonitoringStation('station-1', None, None, None, (10, 20), None, None),
-        MonitoringStation('station-2', None, None, None, (5, 15), None, None),
-        MonitoringStation('station-3', None, None, None, (6, 7), None, None),
-        MonitoringStation('bad-station', None, None, None, None, None, None),
+        MonitoringStation(None, 'Station 1', None, (10, 20)),
+        MonitoringStation(None, 'Station 2', None, (5, 15)),
+        MonitoringStation(None, 'Station 3', None, (6, 7)),
+        MonitoringStation(None, 'Bad Station', None, None),
     ]
 
     # a mixture of different amounts of dates, invalid dates and bad formats
@@ -42,11 +42,6 @@ def test_plot_water_levels():
         'Bad Station': [1, 2, 3, 4, 5, 6, 7]
     }
 
-    setattr(stations[0], 'name', 'Station 1')
-    setattr(stations[1], 'name', 'Station 2')
-    setattr(stations[2], 'name', 'Station 3')
-    setattr(stations[3], 'name', 'Bad Station')
-
     # should run without exception
     plot_water_levels(stations, dates, levels, as_subplots=False)
     plot_water_levels(stations, dates, levels, as_subplots=True)
@@ -59,9 +54,9 @@ def test_plot_water_levels():
 def test_plot_water_level_with_fit():
 
     stations = [
-        MonitoringStation('station-1', None, None, None, (10, 20), None, None),
-        MonitoringStation('station-2', None, None, None, (5, 15), None, None),
-        MonitoringStation('bad-station', None, None, None, None, None, None),
+        MonitoringStation(None, 'Station 1', None, (10, 20)),
+        MonitoringStation(None, 'Station 2', None, (5, 15)),
+        MonitoringStation(None, 'Bad Station', None, None),
     ]
 
     # a mixture of different amounts of dates, invalid dates and bad formats
@@ -81,10 +76,6 @@ def test_plot_water_level_with_fit():
         'Station 2': [3, 5, 4, 7, 5, 5.4, 5],
         'Bad Station': [1, 2, 3, 4, 5, 6, 7]
     }
-
-    setattr(stations[0], 'name', 'Station 1')
-    setattr(stations[1], 'name', 'Station 2')
-    setattr(stations[2], 'name', 'Bad Station')
 
     # all should run without exception
     plot_water_level_with_polyfit(stations[0], dates['Station 1'], levels['Station 1'], 4)

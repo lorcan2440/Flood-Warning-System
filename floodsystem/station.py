@@ -10,30 +10,37 @@ class MonitoringStation:
     This class represents a river level monitoring station
     '''
 
-    def __init__(self, station_id: str, measure_id: str, label: str, coord: tuple[float],
-                 typical_range: tuple[float], river: str, town: str, url_id: str = '',
-                 is_tidal: bool = False):
+    def __init__(self, measure_id: str, label: str, coord: tuple[float], typical_range: tuple[float],
+            **kwargs):
 
-        self.station_id = station_id
         self.measure_id = measure_id
         self.name = label if not isinstance(label, list) else label[0]
         self.coord = coord
         self.typical_range = typical_range
-        self.river = river
-        self.town = town
-        self.url = "https://check-for-flooding.service.gov.uk/station/" + url_id
-        self.is_tidal = is_tidal
 
-        self.latest_level = None
+        for attr in kwargs:
+            setattr(self, attr, kwargs[attr])
+
+        if hasattr(self, 'url_id'):
+            self.url = "https://check-for-flooding.service.gov.uk/station/" + self.url_id
+            delattr(self, 'url_id')
+        else:
+            self.url = None
+
+        if not hasattr(self, 'latest_level'):
+            self.latest_level = None
 
     def __repr__(self):
+
+        attrs = set(self.__dict__.keys()) - {'name', 'measure_id', 'coord', 'typical_range', 'latest_level'}
+        additional_info = dict([(k, getattr(self, k, None)) for k in sorted(attrs)])
+
         d = f" Station name: \t \t {self.name} \n"
-        d += f" \t id: \t \t \t \t {self.station_id} \n"
         d += f" \t measure id: \t \t {self.measure_id} \n"
         d += f" \t coordinate: \t \t {self.coord} \n"
-        d += f" \t town: \t \t \t \t {self.town} \n"
-        d += f" \t river: \t \t \t {self.river} \n"
         d += f" \t typical range: \t {self.typical_range} \n"
+        d += f" \t latest level: \t \t {getattr(self, 'latest_level', None)} \n"
+        d += f" \t additional info: \t {additional_info} \n"
         return d
 
     # Bound methods

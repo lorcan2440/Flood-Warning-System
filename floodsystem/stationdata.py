@@ -20,42 +20,62 @@ def build_station_list(use_cache=True) -> list[MonitoringStation]:
     available.
     """
 
-    # Fetch station data
     data, coastal_data = datafetcher.fetch_stationdata(use_cache)
 
-    # set of all ids of coastal stations
     coastal_ids = {s['@id'] for s in coastal_data['items']}
 
-    # Build list of MonitoringStation objects
     stations = []
     for e in data["items"]:
-        # Extract town and river strings (not always available)
+
+        station_id = e.get('@id', None)
+
+        measures = e.get('measures', None)
+        if measures is not None or measures in {[], [{}], [None], {None}}:
+            measure_id = measures[-1]['@id']
+        else:
+            continue  # essential field: no measure means nothing to get data from, so skip
+
+        label = e['label']
+        lat = e.get('lat', None)
+        long = e.get('long', None)
+        if lat is None or long is None:
+            coord = None
+        else:
+            coord = (float(lat), float(long))
+
         town = e.get('town', None)
         river = e.get('riverName', None)
+        url_id = e.get('RLOIid', '')
+        is_tidal = e.get('@id', None) in coastal_ids
 
-        # Attempt to extract typical range (low, high)
-        try:
-            typical_range = (float(e['stageScale']['typicalRangeLow']),
-                             float(e['stageScale']['typicalRangeHigh']))
-        except Exception:
-            typical_range = None
+        stage_scale = e.get('stageScale')
+        if stage_scale is not None:
+            typical_range_low = stage_scale.get('typicalRangeLow', None)
+            typical_range_high = stage_scale.get('typicalRangeHigh', None)
 
-        try:
-            # Create MonitoringStation object if all required data is available, and add to list
-            if e['@id'] in coastal_ids:
-                s = MonitoringStation(
-                    station_id=e['@id'], measure_id=e['measures'][-1]['@id'], label=e['label'],
-                    coord=(float(e['lat']), float(e['long'])), typical_range=typical_range,
-                    river=river, town=town, url_id=e.get('RLOIid', ''), is_tidal=True)
+            if typical_range_low is None or typical_range_high is None:
+                typical_range = None
             else:
-                s = MonitoringStation(
-                    station_id=e['@id'], measure_id=e['measures'][-1]['@id'], label=e['label'],
-                    coord=(float(e['lat']), float(e['long'])), typical_range=typical_range,
-                    river=river, town=town, url_id=e.get('RLOIid', ''), is_tidal=False)
-            stations.append(s)
-        except Exception:
-            # Some essential inputs were not available, so skip over
-            pass
+                typical_range = (float(typical_range_low), float(typical_range_high))
+
+            min_on_record = stage_scale.get('minOnRecord', None)
+            max_on_record = stage_scale.get('maxOnRecord', None)
+            if min_on_record is not None:
+                min_on_record = min_on_record.get('value', None)
+            if max_on_record is not None:
+                max_on_record = max_on_record.get('value', None)
+            if min_on_record is None or max_on_record is None:
+                record_range = None
+            else:
+                record_range = (float(min_on_record), float(max_on_record))
+        else:
+            typical_range = record_range = None
+
+        extra = {'station_id': station_id, 'river': river, 'town': town,
+            'url_id': url_id, 'is_tidal': is_tidal, 'record_range': record_range}
+
+        s = MonitoringStation(measure_id, label, coord, typical_range, **extra)
+        stations.append(s)
 
     return stations
 
@@ -70,15 +90,16 @@ def update_water_levels(stations: list[MonitoringStation]) -> None:
     measure_data = datafetcher.fetch_latest_water_level_data()
 
     # Build map from measure id to latest reading (value)
-    measure_id_to_value = dict()
+    m_id_to_value = dict()
     for measure in measure_data['items']:
         if 'latestReading' in measure:
             latest_reading = measure['latestReading']
             measure_id = latest_reading['measure']
-            measure_id_to_value[measure_id] = latest_reading['value']
+            m_id_to_value[measure_id] = latest_reading['value']
 
     # Attach latest reading to station objects
-    for station in stations:
-        station.latest_level = measure_id_to_value[station.measure_id] if \
-            station.measure_id in measure_id_to_value and \
-            isinstance(measure_id_to_value[station.measure_id], float) else None
+    for s in stations:
+        if s.measure_id in m_id_to_value and isinstance(m_id_to_value[s.measure_id], (int, float)):
+            s.latest_level = m_id_to_value[s.measure_id]
+        else:
+            s.latest_level = None

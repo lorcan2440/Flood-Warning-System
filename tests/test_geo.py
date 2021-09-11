@@ -19,21 +19,21 @@ def test_stations_by_distance():
 
     # Test 1: valid inputs
     stations = [
-        MonitoringStation('near-station-1', None, None, (1, 0), None, None, None),
-        MonitoringStation('near-station-2', None, None, (-1, 1.5), None, None, None),
-        MonitoringStation('far-station-1', None, None, (20, 40), None, None, None),
-        MonitoringStation('far-station-2', None, None, (0, 30.1234), None, None, None),
-        MonitoringStation('boundary-station', None, None, (-5, -5), None, None, None),
+        MonitoringStation(None, 'near-station-1', (1, 0), None),
+        MonitoringStation(None, 'near-station-2', (-1, 1.5), None),
+        MonitoringStation(None, 'far-station-1', (20, 40), None),
+        MonitoringStation(None, 'far-station-2', (0, 30.1234), None),
+        MonitoringStation(None, 'boundary-station', (-5, -5), None),
     ]
 
-    assert [(s.station_id, round(d)) for (s, d) in stations_by_distance(stations, TEST_COORD)] == [
+    assert [(s.name, round(d)) for (s, d) in stations_by_distance(stations, TEST_COORD)] == [
         ('near-station-1', 711), ('near-station-2', 772), ('boundary-station', 1572),
         ('far-station-2', 2845), ('far-station-1', 4135)]
 
     # Test 2: invalid inputs
     stations = [
-        MonitoringStation('near-station-1', None, None, (1, 0), None, None, None),
-        MonitoringStation('bad-station', None, None, None, None, None, None),
+        MonitoringStation(None, 'near-station-1', (1, 0), None),
+        MonitoringStation(None, 'bad-station', None, None),
     ]
 
     with pytest.raises((TypeError, IndexError)) as e_info:
@@ -47,11 +47,11 @@ def test_stations_within_radius():
     TEST_DISTANCE = 1571.53666171434
 
     stations = [
-        MonitoringStation('near-station-1', None, None, (1, 0), None, None, None),
-        MonitoringStation('near-station-2', None, None, (-1, 1.5), None, None, None),
-        MonitoringStation('far-station-1', None, None, (20, 40), None, None, None),
-        MonitoringStation('far-station-2', None, None, (0, 30.1234), None, None, None),
-        MonitoringStation('boundary-station', None, None, (-5, -5), None, None, None),
+        MonitoringStation(None, 'near-station-1', (1, 0), None),
+        MonitoringStation(None, 'near-station-2', (-1, 1.5), None),
+        MonitoringStation(None, 'far-station-1', (20, 40), None),
+        MonitoringStation(None, 'far-station-2', (0, 30.1234), None),
+        MonitoringStation(None, 'boundary-station', (-5, -5), None),
     ]
 
     result = stations_within_radius(stations, TEST_COORD, TEST_DISTANCE)
@@ -66,12 +66,12 @@ def test_stations_within_radius():
 def test_rivers_with_station():
 
     stations = [
-        MonitoringStation('station-1', None, None, None, None, 'river-A', None),
-        MonitoringStation('station-2', None, None, None, None, 'river-B', None),
-        MonitoringStation('station-3', None, None, None, None, 'river-C', None),
-        MonitoringStation('station-4', None, None, None, None, 'river-D', None),
-        MonitoringStation('station-5', None, None, None, None, 'river-D', None),
-        MonitoringStation('station-6', None, None, None, None, 'river-E', None),
+        MonitoringStation('station-1', None, None, None, river='river-A'),
+        MonitoringStation('station-2', None, None, None, river='river-B'),
+        MonitoringStation('station-3', None, None, None, river='river-C'),
+        MonitoringStation('station-4', None, None, None, river='river-D'),
+        MonitoringStation('station-5', None, None, None, river='river-D'),
+        MonitoringStation('station-6', None, None, None, river='river-E'),
     ]
 
     result = rivers_with_station(stations)
@@ -81,12 +81,12 @@ def test_rivers_with_station():
 def test_stations_by_river():
 
     stations = [
-        MonitoringStation('station-1', None, None, None, None, 'river-A', None),
-        MonitoringStation('station-2', None, None, None, None, 'river-B', None),
-        MonitoringStation('station-3', None, None, None, None, 'river-C', None),
-        MonitoringStation('station-4', None, None, None, None, 'river-D', None),
-        MonitoringStation('station-5', None, None, None, None, 'river-D', None),
-        MonitoringStation('station-6', None, None, None, None, 'river-E', None),
+        MonitoringStation('station-1', None, None, None, river='river-A'),
+        MonitoringStation('station-2', None, None, None, river='river-B'),
+        MonitoringStation('station-3', None, None, None, river='river-C'),
+        MonitoringStation('station-4', None, None, None, river='river-D'),
+        MonitoringStation('station-5', None, None, None, river='river-D'),
+        MonitoringStation('station-6', None, None, None, river='river-E'),
     ]
 
     river_dict = stations_by_river(stations)
@@ -106,18 +106,18 @@ def test_rivers_by_station_number():
 
     N = 2
     stations = [
-        MonitoringStation('station-1', None, None, None, None, 'river-A', None),
-        MonitoringStation('station-2', None, None, None, None, 'river-A', None),
-        MonitoringStation('station-3', None, None, None, None, 'river-B', None),
-        MonitoringStation('station-4', None, None, None, None, 'river-B', None),
-        MonitoringStation('station-5', None, None, None, None, 'river-B', None),
-        MonitoringStation('station-6', None, None, None, None, 'river-C', None),
-        MonitoringStation('station-7', None, None, None, None, 'river-C', None),
-        MonitoringStation('station-8', None, None, None, None, 'river-C', None),
-        MonitoringStation('station-9', None, None, None, None, 'river-D', None),
-        MonitoringStation('station-10', None, None, None, None, 'river-D', None),
-        MonitoringStation('station-11', None, None, None, None, 'river-D', None),
-        MonitoringStation('station-12', None, None, None, None, 'river-E', None),
+        MonitoringStation('station-1', None, None, None, river='river-A'),
+        MonitoringStation('station-2', None, None, None, river='river-A'),
+        MonitoringStation('station-3', None, None, None, river='river-B'),
+        MonitoringStation('station-4', None, None, None, river='river-B'),
+        MonitoringStation('station-5', None, None, None, river='river-B'),
+        MonitoringStation('station-6', None, None, None, river='river-C'),
+        MonitoringStation('station-7', None, None, None, river='river-C'),
+        MonitoringStation('station-8', None, None, None, river='river-C'),
+        MonitoringStation('station-9', None, None, None, river='river-D'),
+        MonitoringStation('station-10', None, None, None, river='river-D'),
+        MonitoringStation('station-11', None, None, None, river='river-D'),
+        MonitoringStation('station-12', None, None, None, river='river-E')
     ]
 
     rivers_list = rivers_by_station_number(stations, N)
@@ -140,15 +140,15 @@ def test_rivers_by_station_number():
 def test_stations_by_town():
 
     stations = [
-        MonitoringStation(None, None, 'station-1', None, None, None, 'town-A'),
-        MonitoringStation(None, None, 'station-2', None, None, None, 'town-A'),
-        MonitoringStation(None, None, 'bad-station-1', None, None, None, 'town-A'),
-        MonitoringStation(None, None, 'station-3', None, None, None, 'town-B'),
-        MonitoringStation(None, None, 'bad-station-2', None, None, None, 'town-B'),
-        MonitoringStation(None, None, 'station-4', None, None, None, None),
-        MonitoringStation(None, None, None, None, None, None, 'empty-town'),
-        MonitoringStation(None, None, None, None, None, None, None),
-        MonitoringStation(None, None, None, None, None, None, ())
+        MonitoringStation(None, 'station-1', None, None, town='town-A'),
+        MonitoringStation(None, 'station-2', None, None, town='town-A'),
+        MonitoringStation(None, 'bad-station-1', None, None, town='town-A'),
+        MonitoringStation(None, 'station-3', None, None, town='town-B'),
+        MonitoringStation(None, 'bad-station-2', None, None, town='town-B'),
+        MonitoringStation(None, 'station-4', None, None),
+        MonitoringStation(None, None, None, None, town='empty-town'),
+        MonitoringStation(None, None, None, None),
+        MonitoringStation(None, None, None, None, town=())
     ]
 
     setattr(stations[0], 'latest_level', 10)
@@ -178,6 +178,3 @@ def test_stations_by_town():
     assert set(town_dict['town-B']) == {stations[3]}
     assert set(town_dict['empty-town']) == {stations[6]}
     assert None not in town_dict
-
-
-test_stations_by_town()

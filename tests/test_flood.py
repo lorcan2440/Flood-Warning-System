@@ -13,12 +13,12 @@ from floodsystem.station import MonitoringStation
 def test_stations_level_over_threshold():
 
     stations = [
-        MonitoringStation('station-1', None, None, None, (0, 10), None, None),
-        MonitoringStation('station-2', None, None, None, (0, 10), None, None),
-        MonitoringStation('station-3', None, None, None, (0, 20), None, None),
-        MonitoringStation('station-4', None, None, None, (20, 10), None, None),
-        MonitoringStation('station-5', None, None, None, (None, 10), None, None),
-        MonitoringStation('station-6', None, None, None, None, None, None),
+        MonitoringStation(None, None, None, (0, 10)),
+        MonitoringStation(None, None, None, (0, 10)),
+        MonitoringStation(None, None, None, (0, 20)),
+        MonitoringStation(None, None, None, (20, 10)),
+        MonitoringStation(None, None, None, (None, 10)),
+        MonitoringStation(None, None, None, None),
     ]
 
     setattr(stations[0], 'latest_level', 6)
@@ -45,12 +45,12 @@ def test_stations_level_over_threshold():
 def test_stations_highest_rel_level():
 
     stations = [
-        MonitoringStation('station-1', None, None, None, (0, 10), None, None),
-        MonitoringStation('station-2', None, None, None, (0, 10), None, None),
-        MonitoringStation('station-3', None, None, None, (0, 10), None, None),
-        MonitoringStation('station-4', None, None, None, (5, 10), None, None),
-        MonitoringStation('station-5', None, None, None, (0, 100), None, None),
-        MonitoringStation('station-6', None, None, None, None, None, None),
+        MonitoringStation(None, None, None, (0, 10)),
+        MonitoringStation(None, None, None, (0, 10)),
+        MonitoringStation(None, None, None, (0, 10)),
+        MonitoringStation(None, None, None, (5, 10)),
+        MonitoringStation(None, None, None, (0, 100)),
+        MonitoringStation(None, None, None, None),
     ]
 
     setattr(stations[0], 'latest_level', 20)

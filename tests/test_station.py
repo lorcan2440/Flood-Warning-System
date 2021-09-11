@@ -19,7 +19,11 @@ def test_create_monitoring_station():
     trange = (-2.3, 3.4445)
     river = "River X"
     town = "My Town"
-    s = MonitoringStation(s_id, m_id, label, coord, trange, river, town)
+    url_id = "hello"
+    is_tidal = False
+    record_range = (-5, 5)
+    s = MonitoringStation(m_id, label, coord, trange,
+        river=river, town=town, station_id=s_id, url_id=url_id, record_range=record_range, is_tidal=is_tidal)
 
     assert s.station_id == s_id
     assert s.measure_id == m_id
@@ -28,14 +32,16 @@ def test_create_monitoring_station():
     assert s.typical_range == trange
     assert s.river == river
     assert s.town == town
+    assert url_id in s.url and len(s.url) > len(url_id)
+    assert s.is_tidal == is_tidal
 
 
 def test_typical_range_consistent():
 
-    good_station = MonitoringStation("good-id", None, None, None, (-1, 1), None, None)
-    bad_station_1 = MonitoringStation("bad-id-1", None, None, None, (1, -1), None, None)
-    bad_station_2 = MonitoringStation("bad-id-2", None, None, None, (None, -1), None, None)
-    bad_station_3 = MonitoringStation("bad-id-3", None, None, None, None, None, None)
+    good_station = MonitoringStation(None, "good", None, (-1, 1))
+    bad_station_1 = MonitoringStation(None, "bad-1", None, (1, -1))
+    bad_station_2 = MonitoringStation(None, "bad-2", None, (None, -1))
+    bad_station_3 = MonitoringStation(None, "bad-3", None, None)
 
     assert good_station.typical_range_consistent()
     assert not bad_station_1.typical_range_consistent()
@@ -46,11 +52,11 @@ def test_typical_range_consistent():
 def test_inconsistent_typical_range_stations():
 
     stations = [
-        MonitoringStation('good-station-1', None, None, None, (2, 4), None, None),
-        MonitoringStation('boundary-station', None, None, None, (0, 0), None, None),  # Should not be allowed
-        MonitoringStation('bad-station-1', None, None, None, (42, 10), None, None),
-        MonitoringStation('bad-station-2', None, None, None, (None, 4), None, None),
-        MonitoringStation('bad-station-3', None, None, None, None, None, None)
+        MonitoringStation(None, 'good-station-1', None, (2, 4)),
+        MonitoringStation(None, 'boundary-station', None, (0, 0)),  # should not be allowed
+        MonitoringStation(None, 'bad-station-1', None, (42, 10)),
+        MonitoringStation(None, 'bad-station-2', None, (None, 4)),
+        MonitoringStation(None, 'bad-station-3', None, None)
     ]
 
     bad_stations = inconsistent_typical_range_stations(stations)
@@ -65,27 +71,15 @@ def test_inconsistent_typical_range_stations():
 def test_relative_water_level():
 
     stations = [
-        MonitoringStation('good-station-1', None, None, None, (0, 10), None, None),
-        MonitoringStation('good-station-2', None, None, None, (10, 20), None, None),
-        MonitoringStation('good-station-3', None, None, None, (-10, 0), None, None),
-        MonitoringStation('bad-station-1', None, None, None, (10, 10), None, None),  # ZeroDivisionError
-        MonitoringStation('bad-station-2', None, None, None, (10, 0), None, None),  # wrong ordering
-        MonitoringStation('bad-station-3', None, None, None, (None, '10'), None, None),
-        MonitoringStation('bad-station-4', None, None, None, None, None, None)
+        MonitoringStation(None, 'good-station-1', None, (0, 10), latest_level=4),
+        MonitoringStation(None, 'good-station-2', None, (10, 20), latest_level=22),
+        MonitoringStation(None, 'good-station-3', None, (-10, 0), latest_level=None),
+        MonitoringStation(None, 'bad-station-1', None, (10, 10), latest_level=10),  # ZeroDivisionError
+        MonitoringStation(None, 'bad-station-2', None, (10, 0), latest_level=6),  # wrong ordering
+        MonitoringStation(None, 'bad-station-3', None, (None, '10'), latest_level=2),
+        MonitoringStation(None, 'bad-station-4', None, None, latest_level=2)
     ]
-
-    setattr(stations[0], 'latest_level', 4)
-    setattr(stations[1], 'latest_level', 22)
-    setattr(stations[2], 'latest_level', -12)
-    setattr(stations[3], 'latest_level', 10)
-    setattr(stations[4], 'latest_level', 6)
-    setattr(stations[5], 'latest_level', 2)
-    setattr(stations[6], 'latest_level', 2)
 
     assert stations[0].relative_water_level() == 0.4
     assert stations[1].relative_water_level() == 1.2
-    assert stations[2].relative_water_level() == -0.2
-    assert all([stations[n].relative_water_level() is None for n in range(3, 7)])
-
-    setattr(stations[0], 'latest_level', None)
-    assert stations[0].relative_water_level() is None
+    assert all([stations[n].relative_water_level() is None for n in range(2, 7)])

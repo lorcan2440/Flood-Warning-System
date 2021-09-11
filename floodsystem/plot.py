@@ -93,7 +93,7 @@ def plot_water_level_with_polyfit(station: object, dates: list, levels: list, po
         plt.style.use('proplot_style.mplstyle')
 
     if y_axis_from_zero is None:
-        y_axis_from_zero = not station.is_tidal
+        y_axis_from_zero = not getattr(station, 'is_tidal', False)
 
     # Get a polynomial function fitting the data, the offset, and the original dataset.
     poly, d0, date_nums = polyfit(dates, levels, poly_degree)
@@ -137,7 +137,7 @@ def plot_water_level_with_moving_average(station: object, dates: list, levels: l
         plt.style.use('proplot_style.mplstyle')
 
     if y_axis_from_zero is None:
-        y_axis_from_zero = not station.is_tidal
+        y_axis_from_zero = not getattr(station, 'is_tidal', False)
 
     # Get average data
     date_nums, avg_levels = moving_average(dates, levels, interval)
@@ -178,7 +178,7 @@ def plot_predicted_water_levels(station: MonitoringStation, dates, levels,
         plt.style.use('proplot_style.mplstyle')
 
     if y_axis_from_zero is None:
-        y_axis_from_zero = not station.is_tidal
+        y_axis_from_zero = not getattr(station, 'is_tidal', False)
 
     plt.plot(dates[0], levels[0], label='Past levels', color='#000000')
     plt.plot(dates[0], levels[1], label='Demo levels', color='#29a762', linestyle='dashed')

@@ -13,14 +13,14 @@ from floodsystem.station import MonitoringStation
 def test_display_stations_on_map():
 
     stations = [
-        MonitoringStation(None, None, 'Green_Station_Leeds', (53.8, -1.55), (10, 20), None, "Leeds"),
-        MonitoringStation(None, None, 'Grey_Station_Cambridge', (52.205, 0.12), None, None, "Cambridge"),
-        MonitoringStation(None, None, 'Negative_Station', (54, 0.6), (1, 3), None, None),
-        MonitoringStation(None, None, 'Unset_latest', (57, 2), (10, 20), None, None),
-        MonitoringStation(None, None, 'Yellow_station', (54, -7), (10, 20), None, None),
-        MonitoringStation(None, None, 'Orange_station', (54, -7.3), (10, 20), None, None),
-        MonitoringStation(None, None, 'Red_station', (54, -7.6), (10, 20), None, None),
-        MonitoringStation(None, None, 'Unset_coords', None, (10, 20), None, None),
+        MonitoringStation(None, 'Green_Station_Leeds', (53.8, -1.55), (10, 20), town="Leeds"),
+        MonitoringStation(None, 'Grey_Station_Cambridge', (52.205, 0.12), None, town="Cambridge", river="Cam"),
+        MonitoringStation(None, 'Negative_Station', (54, 0.6), (1, 3)),
+        MonitoringStation(None, 'Unset_latest', (57, 2), (10, 20)),
+        MonitoringStation(None, 'Yellow_station', (54, -7), (10, 20)),
+        MonitoringStation(None, 'Orange_station', (54, -7.3), (10, 20)),
+        MonitoringStation(None, 'Red_station', (54, -7.6), (10, 20)),
+        MonitoringStation(None, 'Unset_coords', None, (10, 20)),
     ]
 
     setattr(stations[0], "latest_level", 12)
