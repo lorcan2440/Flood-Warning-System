@@ -8,7 +8,10 @@ from sklearn.preprocessing import MinMaxScaler
 from .datafetcher import fetch_measure_levels
 from .station import MonitoringStation
 
-global scalar
+RESOURCES = os.path.join(os.path.dirname(__file__), 'resources')
+PROPLOT_STYLE_SHEET = os.path.join(RESOURCES, 'proplot_style.mplstyle')
+
+scalar = MinMaxScaler(feature_range=(0, 1))
 
 try:
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
@@ -29,8 +32,6 @@ try:
 
     from tensorflow.keras.models import Sequential, load_model
     from tensorflow.keras.layers import Dense, LSTM
-
-    scalar = MinMaxScaler(feature_range=(0, 1))
 
 except ImportError:
     pass
@@ -147,7 +148,7 @@ def train_model(model: Sequential, x: list, y: list, batch_size: int, epoch: int
 
     if show_loss:
         loss_name = model.loss.replace('_', ' ').title()
-        plt.style.use('proplot_style.mplstyle')
+        plt.style.use(PROPLOT_STYLE_SHEET)
         plt.title(f'Loss convergence of training for {model_name}')
         plt.plot(np.arange(1, epoch + 1), history.history['loss'],
             label='loss', color='#58308f')
