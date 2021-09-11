@@ -59,5 +59,5 @@ Then the functions can be used, e.g.
 
 ``` python
 from floodsystem.flood import stations_level_over_threshold
-print(stations_level_over_threshold(stations))
+print(stations_level_over_threshold(stations, 1.0))
 ```
