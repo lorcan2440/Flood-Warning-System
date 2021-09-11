@@ -5,8 +5,7 @@ geographical data.
 
 # pylint: disable=relative-beyond-top-level, no-name-in-module
 
-from .utils import sorted_by_key
-from .haversine import haversine_vector, Unit
+from .utils import sorted_by_key, haversine_vector, Unit
 from .station import MonitoringStation
 
 

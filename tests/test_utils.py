@@ -7,9 +7,10 @@ Unit tests for the utils module
 import import_helper  # noqa
 
 import pytest
+import os
 
-from floodsystem.utils import sorted_by_key, wgs84_to_web_mercator, \
-    wgs84_to_web_mercator_vector, flatten, coord_letters, get_else_none
+from floodsystem.utils import sorted_by_key, wgs84_to_web_mercator, flatten, coord_letters, \
+    haversine, haversine_vector, Unit
 
 
 def test_sort():
@@ -107,51 +108,6 @@ def test_wgs84_to_web_mercator():
         print(e_info)
 
 
-def test_wgs84_to_web_mercator_vector():
-
-    import numpy as np
-
-    # test array conversion
-    TEST_COORDS = [(25, 50), (-45, 120), (50, 0), (0, 40)]
-    output_coords = wgs84_to_web_mercator_vector(TEST_COORDS)
-    assert np.allclose(output_coords,
-        [(5565975, 2875745), (13358339, -5621521), (0, 6446275.84), (4452780, 0)], atol=0.51)
-
-    # test exception, raised by out of bounds input
-    TEST_COORDS = np.array([(45, 20), (-10, 60), (520, -700)])
-    with pytest.raises(ValueError) as e_info:
-        output_coords = wgs84_to_web_mercator_vector(TEST_COORDS)
-        print(e_info)
-
-
-def test_speed_vector_vs_scalar():
-
-    import timeit
-    import numpy as np
-
-    # create a large list of coords
-    NUM_COORDS = 10000
-    REPEAT = 10
-    TEST_COORDS = np.transpose((np.random.uniform(-85, 85, size=NUM_COORDS),
-                                np.random.uniform(-180, 180, size=NUM_COORDS)))
-
-    time_scalar = timeit.timeit('''output = [wgs84_to_web_mercator(coord) for coord in TEST_COORDS]''',
-        globals={"TEST_COORDS": TEST_COORDS, "wgs84_to_web_mercator": wgs84_to_web_mercator},
-        number=REPEAT)
-
-    time_vector = timeit.timeit('''output = wgs84_to_web_mercator_vector(TEST_COORDS)''',
-        globals={"TEST_COORDS": TEST_COORDS, "wgs84_to_web_mercator_vector": wgs84_to_web_mercator_vector},
-        number=REPEAT)
-
-    if time_scalar < time_vector:
-        raise RuntimeWarning('Vector function was slower than scalar function. \n'
-        f'Total time for scalar function: {time_scalar} \n'
-        f'Total time for vector function: {time_vector} \n'
-        f'Used {NUM_COORDS} coordinate pairs and repeated {REPEAT} times.')
-
-    assert time_vector < time_scalar
-
-
 def test_flatten():
 
     '''
@@ -183,16 +139,51 @@ def test_coord_letters():
     assert coord_letters(*TEST_COORD) == ('N', 'E')
 
 
-def test_get_else_none():
+def test_haversine():
 
-    '''
-    Simple tests
-    '''
+    # Test 1: valid inputs
+    first_point = (1, 5)
+    second_point = (10, 8)
+    assert round(haversine(first_point, second_point, unit=Unit.KILOMETERS)) == 1054
 
-    TEST_DICT = {'a': 300, 'b': None, 'c': [1, 2, 3]}
+    # Test 2: invalid input, should raise a TypeError
+    first_point = None
+    second_point = (0, 0)
+    with pytest.raises(TypeError) as e_info:
+        haversine(first_point, second_point)
+        print(e_info)
 
-    assert get_else_none(TEST_DICT, 'a', lambda x: 2 * x) == 600
-    assert get_else_none(TEST_DICT, 'd') is None
-    assert get_else_none(TEST_DICT['c'], 2) == 3
-    assert get_else_none(TEST_DICT['c'], 3) is None
-    assert get_else_none(TEST_DICT['b'], 0) is None
+
+def test_haversine_vector():
+
+    # Test 1: valid inputs
+    first_points = [(1, 2), (3, 4), (6, -1)]
+    second_points = [(10, -9), (8, -7), (4, 12)]
+    assert [round(d) for d in list(haversine_vector(first_points, second_points,
+        unit=Unit.KILOMETERS))] == [1575, 1338, 1457]
+
+    # Test 2: different length inputs, using combination mode
+    first_points = [(1, 2), (3, 4), (6, -1)]
+    second_points = [(10, -9), (8, -7)]
+
+    with pytest.raises(ValueError) as e_info:
+        assert haversine_vector(first_points, second_points, unit=Unit.KILOMETERS) is not None
+        print(e_info)
+
+    # Test 3: invalid inputs
+    first_points = [(1, -1), None, (186, 'a')]
+    second_points = [(1, 1), (0, 0, 0), (first_points[0])]
+    with pytest.raises((TypeError, IndexError)) as e_info:
+        haversine_vector(first_points, second_points)
+        print(e_info)
+
+
+def test_vector_without_numpy():
+
+    # Temporarily remove numpy and try to use haversine vector functions
+    os.system('pip uninstall -y numpy')
+    first_points = [(1, 2), (3, 4), (6, -1)]
+    second_points = [(10, -9), (8, -7), (4, 12)]
+    dists = list(haversine_vector(first_points, second_points))
+    assert [round(d) for d in dists] == [1575, 1338, 1457]
+    os.system('pip install numpy')

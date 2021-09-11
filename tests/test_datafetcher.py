@@ -47,6 +47,7 @@ def test_load():
     json_dict_loaded = load('test_load.json')
     assert response == json_dict_loaded
     assert json_dict_loaded is not None
+    os.remove('test_load.json')
 
 
 def test_fetch_stationdata():
