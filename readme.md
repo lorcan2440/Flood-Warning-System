@@ -31,7 +31,7 @@ Click on a dot to go to the official [gov.uk](https://check-for-flooding.service
 
 View some forecasts by running `python applications/LevelPredictions.py`. Forecasting can be done at each station by training and predicting from an LSTM (long short-term memory) RNN (recurrent neural network). Training and evaluation is done with `tensorflow` and `scikit-learn`.
 
-<img src="media/forecast.png" height="500" alt="forecast">
+<img src="media/forecast.png" height="375" alt="forecast">
 
 ## Installing
 
