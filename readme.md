@@ -54,7 +54,7 @@ stations = build_station_list()
 update_water_levels(stations)
 ```
 
-Pass in `stations` to the API functions to see the results, e.g.
+Then the functions can be used, e.g.
 
 ``` python
 from floodsystem.flood import stations_level_over_threshold
