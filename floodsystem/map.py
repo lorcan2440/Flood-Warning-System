@@ -4,6 +4,8 @@ This module contains functions to produce maps.
 
 # pylint: disable=relative-beyond-top-level, no-name-in-module
 
+import os
+
 from .utils import wgs84_to_web_mercator, coord_letters
 
 from bokeh.plotting import figure, output_file, show
@@ -11,7 +13,7 @@ from bokeh.models import ColumnDataSource, OpenURL, TapTool, HoverTool
 from bokeh.tile_providers import Vendors, get_provider
 
 
-def display_stations_on_map(stations: list, map_design: str = "SATELLITE", return_image: bool = False) -> None:
+def display_stations_on_map(stations: list, **kwargs) -> None:
 
     '''
     Shows a map of the stations across England by running a HTML file in a browser.
@@ -20,12 +22,16 @@ def display_stations_on_map(stations: list, map_design: str = "SATELLITE", retur
     https://docs.bokeh.org/en/latest/docs/user_guide/geo.html
     '''
 
+    # kwargs
+    map_design = kwargs.get('map_design', 'SATELLITE')
+    return_image = kwargs.get('return_image', False)
+    filename = kwargs.get('output_file', 'England Stations Map.html')
+    filedir = kwargs.get('filedir', '')
+    title = kwargs.get('map_title', 'Flood Monitoring Stations Across England')
+
     # inputs and outputs
     map_range = ((59, -12), (49, 4))  # (lat, long) coords of the map boundary
-    output_file("applications/output/England Stations Map.html",
-        title='Flood Monitoring Stations Across England')
-
-    # colours: # https://docs.bokeh.org/en/latest/docs/reference/colors.html
+    output_file(os.path.join(filedir, filename), title=title)
     colors = ["#fa0101", "#ff891e", "#fff037", "#8ec529", "#32a058", "#a2a2a2"]
     linecolors = ["#9c3838", "#9e7d47", "#acac51", "#32a058", "#297231", "#6a6a6a"]
     trans_range = [wgs84_to_web_mercator(coord) for coord in map_range]
@@ -53,11 +59,11 @@ def display_stations_on_map(stations: list, map_design: str = "SATELLITE", retur
         s.river,
         s.town,
         s.url,
-        colors[(rating := ((0 if lv > 2.5 else
-                            1 if lv > 1.75 else
-                            2 if lv > 1 else
-                            3 if lv > 0.5 else
-                            4) if lv is not None else -1))],
+        colors[(rating := ((4 if lv < 0.5 else
+                            3 if lv < 1 else
+                            2 if lv < 1.75 else
+                            1 if lv < 2.5 else
+                            0) if lv is not None else -1))],
         linecolors[rating],
         *wgs84_to_web_mercator(s.coord)) for s in stations]
 
@@ -70,7 +76,7 @@ def display_stations_on_map(stations: list, map_design: str = "SATELLITE", retur
     # add a circle to the map, referencing the colours in the ColumnDataSource
     p.circle(x="x_coord", y="y_coord", size=10,
              fill_color="color", line_color="linecolor",
-             fill_alpha=0.75, hover_alpha=1, source=source)
+             fill_alpha=0.75, hover_alpha=1.0, source=source)
 
     # clicking on a circle will open the official page for that station
     # NOTE: requires bokeh version >= 2.3.3: https://github.com/bokeh/bokeh/issues/11182

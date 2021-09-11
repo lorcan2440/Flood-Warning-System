@@ -10,7 +10,7 @@ def run():
 
     stations = build_station_list()
     update_water_levels(stations)
-    display_stations_on_map(stations, map_design='satellite')
+    display_stations_on_map(stations, map_design='satellite', filedir='applications/output')
     print(f'Displaying {len(stations)} monitoring stations on the map. \n \n'
     '>>> \t Use the toolbar on the right to interact with the map e.g. zoom, pan, save. \n'
     '>>> \t Hover over a dot to view basic info about the station. \n'

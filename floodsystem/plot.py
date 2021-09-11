@@ -7,12 +7,16 @@ for visualising level data over time.
 
 from floodsystem.station import MonitoringStation
 import math
+import os
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.dates import DateFormatter
 
 from .utils import flatten
 from .analysis import polyfit, moving_average
+
+RESOURCES = os.path.join(os.path.dirname(__file__), 'resources')
+PROPLOT_STYLE_SHEET = os.path.join(RESOURCES, 'proplot_style.mplstyle')
 
 
 def plot_water_levels(stations: list, dates: dict, levels: dict, as_subplots: bool = True,
@@ -42,7 +46,7 @@ def plot_water_levels(stations: list, dates: dict, levels: dict, as_subplots: bo
     assert len(list(levels.keys())) == len(stations)
 
     if use_proplot_style:
-        plt.style.use('proplot_style.mplstyle')
+        plt.style.use(PROPLOT_STYLE_SHEET)
 
     if as_subplots:
 
@@ -90,7 +94,7 @@ def plot_water_level_with_polyfit(station: object, dates: list, levels: list, po
         use_proplot_style: bool = True) -> None:
 
     if use_proplot_style:
-        plt.style.use('proplot_style.mplstyle')
+        plt.style.use(PROPLOT_STYLE_SHEET)
 
     if y_axis_from_zero is None:
         y_axis_from_zero = not station.is_tidal
@@ -134,7 +138,7 @@ def plot_water_level_with_moving_average(station: object, dates: list, levels: l
         format_dates: bool = True, y_axis_from_zero: bool = None, use_proplot_style: bool = True) -> None:
 
     if use_proplot_style:
-        plt.style.use('proplot_style.mplstyle')
+        plt.style.use(PROPLOT_STYLE_SHEET)
 
     if y_axis_from_zero is None:
         y_axis_from_zero = not station.is_tidal
@@ -175,7 +179,7 @@ def plot_predicted_water_levels(station: MonitoringStation, dates, levels,
         format_dates: bool = True, y_axis_from_zero: bool = None, use_proplot_style: bool = True):
 
     if use_proplot_style:
-        plt.style.use('proplot_style.mplstyle')
+        plt.style.use(PROPLOT_STYLE_SHEET)
 
     if y_axis_from_zero is None:
         y_axis_from_zero = not station.is_tidal
