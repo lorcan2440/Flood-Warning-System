@@ -13,10 +13,20 @@ class MonitoringStation:
     def __init__(self, measure_id: str, label: str, coord: tuple[float], typical_range: tuple[float],
             **kwargs):
 
+        # required args
         self.measure_id = measure_id
         self.name = label if not isinstance(label, list) else label[0]
         self.coord = coord
         self.typical_range = typical_range
+
+        # default values (if not set in kwargs)
+        self.town = None
+        self.river = None
+        self.is_tidal = False
+        self.latest_level = None
+        self.station_id = None
+        self.url = ''
+        self.record_range = None
 
         for attr in kwargs:
             setattr(self, attr, kwargs[attr])
@@ -24,11 +34,6 @@ class MonitoringStation:
         if hasattr(self, 'url_id'):
             self.url = "https://check-for-flooding.service.gov.uk/station/" + self.url_id
             delattr(self, 'url_id')
-        else:
-            self.url = None
-
-        if not hasattr(self, 'latest_level'):
-            self.latest_level = None
 
     def __repr__(self):
 
@@ -39,7 +44,7 @@ class MonitoringStation:
         d += f" \t measure id: \t \t {self.measure_id} \n"
         d += f" \t coordinate: \t \t {self.coord} \n"
         d += f" \t typical range: \t {self.typical_range} \n"
-        d += f" \t latest level: \t \t {getattr(self, 'latest_level', None)} \n"
+        d += f" \t latest level: \t \t {self.latest_level} \n"
         d += f" \t additional info: \t {additional_info} \n"
         return d
 

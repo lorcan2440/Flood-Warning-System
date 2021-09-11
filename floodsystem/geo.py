@@ -60,7 +60,7 @@ def rivers_with_station(stations: list) -> set[str]:
     assert all([isinstance(i, MonitoringStation) for i in stations])
 
     # Set (comprehension) to skip over/remove duplicates
-    rivers = {getattr(s, 'river', None) for s in stations} - {None}
+    rivers = {s.river for s in stations} - {None}
 
     return rivers
 
@@ -78,7 +78,7 @@ def stations_by_river(stations: list) -> dict[str: list[MonitoringStation]]:
     rivers = rivers_with_station(stations)
 
     # For each river listed, add all its associated stations.
-    river_dict = {river: list(filter(lambda s: getattr(s, 'river', None) == river, stations))
+    river_dict = {river: list(filter(lambda s: s.river == river, stations))
         for river in rivers}
 
     return river_dict
@@ -123,11 +123,11 @@ def stations_by_town(stations: list) -> dict[str: list[MonitoringStation]]:
     assert all([isinstance(i, MonitoringStation) for i in stations])
 
     # Get a set of all the towns from all the stations, removing duplicates
-    towns = {getattr(s, 'town', None) for s in stations}
+    towns = {s.town for s in stations}
 
     # For each town listed, add all its associated stations.
-    town_dict = {town: list(filter(lambda s: getattr(s, 'town', None) == town and       # noqa
-        getattr(s, 'latest_level', None) is not None and s.typical_range_consistent(),
+    town_dict = {town: list(filter(lambda s: s.town == town and       # noqa
+        s.latest_level is not None and s.typical_range_consistent(),
         stations)) for town in towns}
 
     # Sanitise lists
