@@ -7,7 +7,54 @@ for manipulating/modifying station data
 class MonitoringStation:
 
     '''
-    This class represents a river level monitoring station
+    This class represents a water-level monitoring station. There are over 2000 such stations across
+    England, which record the water level at fixed locations on various rivers and coastal sites.
+
+    Information on the data collected is available at
+    https://environment.data.gov.uk/flood-monitoring/doc/reference#stations.
+
+    ### Inputs
+
+    #### Required arguments
+
+    `measure_id` (str): a unique URL string giving access to the station's latest measurement.
+
+    `label` (str): the name of the station, usually named after the surrounding village or district.
+    Not guaranteed to be unique.
+
+    `coord` (tuple): a coordinate pair giving the (latitude, longitude) position in degrees of the
+    station. Available to 6 decimal places, or a resolution of < 10 cm in England.
+
+    `typical_range` (tuple): a pair of (smaller value, larger value) giving the interval within which
+    the middle 90% of flood level data (in metres) since recording lies, or ≈1.64 standard deviations
+    below and above the mean. Available to 3 decimal places, or a resolution of 1 mm. Can be reliably
+    assumed to be constant over time, although not strictly guaranteed.
+
+    #### Optional arguments
+
+    `latest_level` (str, default = None): the most recent water level recorded at this station.
+    Recorded in metres and available to 3 decimal places, or a resolution of 1 mm.
+
+    `town` (str, default = None): the name of the nearest town (or named place) to the station.
+
+    `river` (str, default = None): the name of river associated with this monitoring station.
+
+    `is_tidal` (bool, default = False): whether or not this station measures coastal water levels. If true,
+    the water level tends to fluctuate periodically by day and night due to the natural effect of tides.
+
+    `station_id` (str, default = None): a unique URL string giving access to its data.
+
+    `url_id` (str, default = None): the RLOI (River Levels On the Internet) ID, used to access the webpage
+    associated with the station.
+
+    `record_range` (tuple, default = None): a pair of (min, max) giving the lowest ever and highest ever
+    water levels (in metres) since recording for the station began. Recorded to 3 decimal places,
+    or a resolution of 1 mm.
+
+    ### Returns
+
+    A `MonitoringStation` instance, which can be passed (either individually or a list of such objects)
+    into a variety of API functions available in the separate modules.
     '''
 
     def __init__(self, measure_id: str, label: str, coord: tuple[float], typical_range: tuple[float],
@@ -26,12 +73,13 @@ class MonitoringStation:
         self.latest_level = None
         self.station_id = None
         self.url = ''
+        self.url_id = None
         self.record_range = None
 
         for attr in kwargs:
             setattr(self, attr, kwargs[attr])
 
-        if hasattr(self, 'url_id'):
+        if self.url_id is not None:
             self.url = "https://check-for-flooding.service.gov.uk/station/" + self.url_id
             delattr(self, 'url_id')
 
