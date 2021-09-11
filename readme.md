@@ -42,7 +42,8 @@ git clone https://github.com/lorcan2440/Flood-Warning-System.git
 cd Flood-Warning-System
 pip install .
 ```
-The `floodsystem` module will then be available for use.
+
+The `floodsystem` module will then be available for use. Alternatively, if `git` is unavailable, the package can be downloaded manually by using ![this](https://download-directory.github.io/) tool. Unzip the folder, go inside and use `pip install .` when in the same folder as `setup.py` and various other files.
 
 ## Usage
 
