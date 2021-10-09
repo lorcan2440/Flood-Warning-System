@@ -48,6 +48,8 @@ def plot_water_levels(stations: list, dates: dict, levels: dict, as_subplots: bo
 
     if use_proplot_style:
         plt.style.use(PROPLOT_STYLE_SHEET)
+    else:
+        plt.style.use('default')
 
     if as_subplots:
 
@@ -96,6 +98,8 @@ def plot_water_level_with_polyfit(station: object, dates: list, levels: list, po
 
     if use_proplot_style:
         plt.style.use(PROPLOT_STYLE_SHEET)
+    else:
+        plt.style.use('default')
 
     if y_axis_from_zero is None:
         y_axis_from_zero = not station.is_tidal
@@ -140,6 +144,8 @@ def plot_water_level_with_moving_average(station: object, dates: list, levels: l
 
     if use_proplot_style:
         plt.style.use(PROPLOT_STYLE_SHEET)
+    else:
+        plt.style.use('default')
 
     if y_axis_from_zero is None:
         y_axis_from_zero = not station.is_tidal
@@ -181,6 +187,8 @@ def plot_predicted_water_levels(station: MonitoringStation, dates, levels,
 
     if use_proplot_style:
         plt.style.use(PROPLOT_STYLE_SHEET)
+    else:
+        plt.style.use('default')
 
     if y_axis_from_zero is None:
         y_axis_from_zero = not station.is_tidal

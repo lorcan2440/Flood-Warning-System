@@ -3,7 +3,7 @@
 import import_helper  # noqa
 
 from floodsystem.stationdata import build_station_list
-from floodsystem.predictions import train_all, predict
+from floodsystem.forecasts import train_all, predict
 from floodsystem.plot import plot_predicted_water_levels
 
 
@@ -12,7 +12,7 @@ def run():
     # get list of stations to predict
     print('Building station list...')
     stations = build_station_list()
-    station_names_to_predict = ['Goole', 'Cam']
+    station_names_to_predict = ['India Road']
     stations_to_predict = [s for s in stations if s.name in station_names_to_predict]
 
     print(f'Training forecasting model for {station_names_to_predict}...')

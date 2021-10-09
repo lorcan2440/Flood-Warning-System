@@ -18,21 +18,20 @@ def polyfit(dates: list[datetime.datetime],
     (numpy.poly1d object), an x-axis offset,
     and the original data as a list of floats.
 
-    Inputs:
+    ### Inputs:
 
-    dates, a list of the dates at which to plot
-    (a list of datetime.datetime objects);
-    levels, a list of the water levels at each corresponding date
-    (a list of floats);
-    p, the degree of the polynomial to approximate with
-    (an int)
+    `dates`, a list of the dates at which to plot (a list of `datetime.datetime` objects)
 
-    Output:
+    `levels`, a list of the water levels at each corresponding date (a list of floats)
 
-    (poly, time_shift, date_nums); where
-    poly is a callable np.poly1d function representing the polynomial;
-    time_shift is a float, a fixed offset;
-    date_nums is a list of floats, representing the original dates as floats.
+    `p`, the degree of the polynomial to approximate with (an int)
+
+    ### Output:
+
+    `(poly, time_shift, date_nums)`; where
+    `poly` is a callable `np.poly1d` function representing the polynomial;
+    `time_shift` is a float, a fixed offset;
+    `date_nums` is a list of floats, representing the original dates as floats.
     '''
 
     # standard data type and bounds input checks
@@ -58,6 +57,23 @@ def polyfit(dates: list[datetime.datetime],
 
 def moving_average(dates: list[datetime.datetime], levels: list[float], interval: int = 3):
 
+    '''
+    Returns an array of `dates` and their associated values, where the values are an `interval`-point
+    moving average. This function acounts for the end-points. If the `interval` is even, the `dates`
+    returned will be in between each of the `dates` given.
+
+    ### Inputs:
+
+    `dates`, a list of `datetime.datetime`s
+    `levels`, a list of the water level values
+    `interval`, the window size to use for computing the moving average
+
+    ### Outputs:
+
+    `(date_nums, lma)`: a list of the dates in number form (using `matplotlib.dates.date2num`)
+    and a list of the moving average-based values corresponding to each date.
+    '''
+
     date_nums = date2num(dates)
 
     # find the moving average, ignoring the ends
@@ -82,7 +98,35 @@ def moving_average(dates: list[datetime.datetime], levels: list[float], interval
         return date_nums, lma
 
 
-def identify_potentially_bad_data(station_name: str, levels: list[float], **kwargs: dict) -> set:
+def identify_potentially_bad_data(station_name: str, levels: list[float], **kwargs: dict) -> set[str]:
+
+    '''
+    Check for dubious values within a station's water level records. Tests for 
+
+    1. If a level is given as a tuple instead of a float
+    2. If negative (when not a tidal station) or extremely large values
+    3. If the level fluctuates significantly between readings
+
+    and returns a set of warning messages.
+
+    ### Inputs
+
+    #### Required
+
+    `station_name`: string name of a station to check
+    `levels`: the level data to check
+
+    #### Optional
+
+    `negative_level_to_zero`: bool, whether to set negative water levels to zero
+    `replace_tuple_with_index`: int, the index of any tuples to extract when encountering a tuple level
+    `too_high_cutoff`: float, the maximum allowable value for a water level
+    `too_high_to_previous_level`: bool, whether to set the value to the previous value when above max
+    
+    ### Returns
+
+    `flags`: set, containing all warning string messages found in analysing the level data.
+    '''
 
     NEGATIVE_LEVEL_TO_ZERO      = kwargs.get('negative_level_to_zero',      True)   # noqa
     REPLACE_TUPLE_WITH_INDEX    = kwargs.get('replace_tuple_with_index',    1)      # noqa
@@ -111,30 +155,27 @@ def identify_potentially_bad_data(station_name: str, levels: list[float], **kwar
 
             warn_str = f"Data for {station_name} station may be unreliable. "
             warn_str += "Some water levels were found to be negative, \nand this station is not tidal. "
-            warn_str += "These have been set to 0 m."
+            if NEGATIVE_LEVEL_TO_ZERO:
+                warn_str += "These have been set to 0 m."
+                levels[i] = 0
 
             flags.add(warn_str)
-
-            if NEGATIVE_LEVEL_TO_ZERO:
-                levels[i] = 0
 
         if levels[i] > TOO_HIGH_CUTOFF and len(levels) >= 2:
 
             warn_str = f"Data for {station_name} station may be unreliable. "
-            warn_str += "Some water levels were found to be very high, above "
-            warn_str += f"{TOO_HIGH_CUTOFF} m. \nThese have been set to whatever "
-            warn_str += "the value before the spike."
+            warn_str += f"Some water levels were found to be very high, above {TOO_HIGH_CUTOFF} m.\n"
+            if TOO_HIGH_TO_PREVIOUS_LEVEL:
+                warn_str += "These have been set to whatever the value before the spike."
+                levels[i] = levels[i - 1]
 
             flags.add(warn_str)
 
-            if TOO_HIGH_TO_PREVIOUS_LEVEL:
-                levels[i] = levels[i - 1]
-
     # Check for potentially invalid values: many sudden changes
-    if has_rapid_fluctuations(levels, is_tidal=IS_TIDAL):
+    if has_rapid_fluctuations(levels):
 
         warn_str = f"Data for {station_name} station may be unreliable. "
-        warn_str += "There are many sudden spikes between consecutive measurements. "
+        warn_str += "There are many sudden spikes between consecutive measurements. \n"
         warn_str += "These values have not been altered."
 
         flags.add(warn_str)
@@ -142,17 +183,21 @@ def identify_potentially_bad_data(station_name: str, levels: list[float], **kwar
     return flags
 
 
-def has_rapid_fluctuations(levels: list[float], is_tidal: bool = False, stdev_tol: float = 0.05) -> bool:
+def has_rapid_fluctuations(levels: list[float], interval: int = 3, tol: float = 5e-3) -> bool:
 
-    # TODO: try an AI based approach? This is not perfect
-    # currently flags if standard deviation in stepwise changes is more than 5% of the average value.
+    '''
+    Checks if the mean squared error between the `interval`-point moving
+    average of the `levels` and the `levels` is more than `tol` as a
+    fraction of the squared mean level.
 
-    diffs = [levels[i + 1] - levels[i] for i in range(len(levels) - 1)]
-    average_val = np.average(levels)
-    stdev = np.std(diffs)
+    Aims to determine whether the station level fluctuates rapidly between consecutive measurements,
+    while allowing daily cycles which are normal for tidal stations.
+    '''
 
-    # allow much more variation if tidal (daily spikes are natural)
-    if is_tidal:
-        stdev_tol *= 10
+    import numpy as np
+    
+    lv = np.array(levels)
+    _, avg = moving_average(*zip(*enumerate(levels)), interval)
+    mse = ((lv - avg) ** 2).mean()
 
-    return stdev / average_val > stdev_tol
+    return mse / (lv.mean() ** 2) >= tol

@@ -65,7 +65,7 @@ def rivers_with_station(stations: list) -> set[str]:
     return rivers
 
 
-def stations_by_river(stations: list) -> dict[str: list[MonitoringStation]]:
+def stations_by_river(stations: list) -> dict[str, list[MonitoringStation]]:
 
     '''
     Returns a dict that maps river names to a list of
@@ -112,7 +112,7 @@ def rivers_by_station_number(stations: list, n: int) -> list[tuple[str, int]]:
     return [(r, n) for r, n in river_num_list if r is not None and n >= end_num]
 
 
-def stations_by_town(stations: list) -> dict[str: list[MonitoringStation]]:
+def stations_by_town(stations: list) -> dict[str, list[MonitoringStation]]:
 
     '''
     Returns a dict that maps town names to a list of

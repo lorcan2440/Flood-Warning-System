@@ -6,6 +6,8 @@ Unit tests for the station module.
 
 import import_helper  # noqa
 
+import pytest
+
 from floodsystem.station import inconsistent_typical_range_stations, MonitoringStation
 
 
@@ -36,17 +38,11 @@ def test_create_monitoring_station():
     assert s.is_tidal == is_tidal
 
 
-def test_typical_range_consistent():
+@pytest.mark.parametrize("test_range, expected",
+    [((-1, 1), True), ((1, -1), False), ((None, -1), False), (None, False)])
+def test_typical_range_consistent(test_range: tuple, expected: bool):
 
-    good_station = MonitoringStation(None, "good", None, (-1, 1))
-    bad_station_1 = MonitoringStation(None, "bad-1", None, (1, -1))
-    bad_station_2 = MonitoringStation(None, "bad-2", None, (None, -1))
-    bad_station_3 = MonitoringStation(None, "bad-3", None, None)
-
-    assert good_station.typical_range_consistent()
-    assert not bad_station_1.typical_range_consistent()
-    assert not bad_station_2.typical_range_consistent()
-    assert not bad_station_3.typical_range_consistent()
+    assert MonitoringStation(None, None, None, test_range).typical_range_consistent() is expected
 
 
 def test_inconsistent_typical_range_stations():
@@ -68,18 +64,10 @@ def test_inconsistent_typical_range_stations():
     assert set(bad_stations) == {stations[1], stations[2], stations[3], stations[4]}
 
 
-def test_relative_water_level():
+@pytest.mark.parametrize("test_range, test_level, expected",
+    [((0, 10), 4, 0.4), ((10, 20), 22, 1.2), ((-10, 0), None, None), ((10, 10), 10, None), ((10, 0), 6, None),
+    ((None, '10'), 2, None), (None, 2, None)])
+def test_relative_water_level(test_range: tuple, test_level: float, expected: bool):
 
-    stations = [
-        MonitoringStation(None, 'good-station-1', None, (0, 10), latest_level=4),
-        MonitoringStation(None, 'good-station-2', None, (10, 20), latest_level=22),
-        MonitoringStation(None, 'good-station-3', None, (-10, 0), latest_level=None),
-        MonitoringStation(None, 'bad-station-1', None, (10, 10), latest_level=10),  # ZeroDivisionError
-        MonitoringStation(None, 'bad-station-2', None, (10, 0), latest_level=6),  # wrong ordering
-        MonitoringStation(None, 'bad-station-3', None, (None, '10'), latest_level=2),
-        MonitoringStation(None, 'bad-station-4', None, None, latest_level=2)
-    ]
-
-    assert stations[0].relative_water_level() == 0.4
-    assert stations[1].relative_water_level() == 1.2
-    assert all([stations[n].relative_water_level() is None for n in range(2, 7)])
+    assert MonitoringStation(
+        None, None, None, test_range, latest_level=test_level).relative_water_level() == expected
