@@ -14,7 +14,7 @@ def create_dates_and_levels():
         MonitoringStation(None, 'Station 1', None, (10, 20)),
         MonitoringStation(None, 'Station 2', None, (5, 15)),
         MonitoringStation(None, 'Station 3', None, (6, 7)),
-        MonitoringStation(None, 'Bad Station', None, None),
+        MonitoringStation(None, 'Bad Station', None, None)
     ]
 
     # a mixture of different amounts of dates, invalid dates and bad formats
