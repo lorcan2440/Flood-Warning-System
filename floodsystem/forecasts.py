@@ -14,27 +14,28 @@ PROPLOT_STYLE_SHEET = os.path.join(RESOURCES, 'proplot_style.mplstyle')
 scalar = MinMaxScaler(feature_range=(0, 1))
 
 try:
+    # Disables initialisation warnings from tensorflow
+    # https://stackoverflow.com/questions/35911252/disable-tensorflow-debugging-information
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
     os.environ['KERAS_BACKEND'] = 'plaidml.keras.backend'
 
-    # noinspection PyPackageRequirements
     from tensorflow.python.platform.tf_logging import set_verbosity, ERROR
     from tensorflow.python.util import deprecation
 
     set_verbosity(ERROR)
 
-    def deprecated(date, instructions, warn_once=True):  # pylint: disable=unused-argument
+    def deprecated(date, instructions, warn_once=True):
         def deprecated_wrapper(func):
             return func
         return deprecated_wrapper
 
     deprecation.deprecated = deprecated
 
-    from tensorflow.keras.models import Sequential, load_model
-    from tensorflow.keras.layers import Dense, LSTM
-
 except ImportError:
     pass
+
+from tensorflow.keras.models import Sequential, load_model
+from tensorflow.keras.layers import Dense, LSTM
 
 
 def data_prep(data: np.ndarray, lookback: int,
