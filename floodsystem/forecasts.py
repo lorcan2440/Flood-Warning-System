@@ -18,10 +18,10 @@ try:
     os.environ['KERAS_BACKEND'] = 'plaidml.keras.backend'
 
     # noinspection PyPackageRequirements
-    import tensorflow as tf
+    from tensorflow.python.platform.tf_logging import set_verbosity, ERROR
     from tensorflow.python.util import deprecation
 
-    tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+    set_verbosity(ERROR)
 
     def deprecated(date, instructions, warn_once=True):  # pylint: disable=unused-argument
         def deprecated_wrapper(func):
