@@ -7,7 +7,7 @@ import pytest
 
 from floodsystem.station import MonitoringStation
 
-@pytest.fixture(scope="session")
+@pytest.fixture()
 def create_dates_and_levels():
 
     stations = [
