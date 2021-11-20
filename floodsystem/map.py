@@ -13,13 +13,24 @@ from bokeh.tile_providers import Vendors, get_provider
 from .utils import wgs84_to_web_mercator, coord_letters
 
 
-def display_stations_on_map(stations: list, **kwargs) -> None:
-
+def display_stations_on_map(stations: list, **kwargs):
     '''
     Shows a map of the stations across England by running a HTML file in a browser.
 
     Uses Bokeh:
     https://docs.bokeh.org/en/latest/docs/user_guide/geo.html
+
+    #### Arguments
+
+    `stations` (list): [description]
+
+    #### Optional Kwargs
+
+    `map_design` (str, default = 'SATELLITE'): tile provider for Bokeh map. Passed to Vendors enum.
+    `return_image` (bool, default = False): return the Figure as the output from this function
+    `output_file` (str, default = 'England Stations Map.html'): filename of HTML output file
+    `filedir` (str, default = ''): directory to put HTML file in, relative or absolute
+    `map_title` (str, default = 'Flood Monitoring Stations Across England'): title of tab opened
     '''
 
     # kwargs
@@ -30,11 +41,11 @@ def display_stations_on_map(stations: list, **kwargs) -> None:
     title = kwargs.get('map_title', 'Flood Monitoring Stations Across England')
 
     # inputs and outputs
-    map_range = ((59, -12), (49, 4))  # (lat, long) coords of the map boundary
+    MAP_RANGE = ((59, -12), (49, 4))
     output_file(os.path.join(filedir, filename), title=title)
     colors = ["#fa0101", "#ff891e", "#fff037", "#8ec529", "#32a058", "#a2a2a2"]
     linecolors = ["#9c3838", "#9e7d47", "#acac51", "#32a058", "#297231", "#6a6a6a"]
-    trans_range = [wgs84_to_web_mercator(coord) for coord in map_range]
+    trans_range = [wgs84_to_web_mercator(coord) for coord in MAP_RANGE]
     x_range, y_range = zip(*trans_range)
 
     # choose map design: https://docs.bokeh.org/en/latest/docs/reference/tile_providers.html

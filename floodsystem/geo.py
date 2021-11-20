@@ -9,22 +9,33 @@ from .utils import sorted_by_key, haversine_vector, Unit
 from .station import MonitoringStation
 
 
-def stations_by_distance(stations: list, p: tuple) -> list[tuple[MonitoringStation, float]]:
-
+def stations_by_distance(stations: list[MonitoringStation],
+        p: tuple[float]) -> list[tuple[MonitoringStation, float]]:
     '''
-    Returns a list of (station, distance) tuples, where station is a `MonitoringStation`
-    and distance is the float distance of that station from the given coordinate p.
+    Returns a list of stations, sorted by their distance from a given geographical point.
+
+    #### Arguments
+
+    `stations` (list): list of input stations
+    `p` (tuple): (latitude, longitude) in degrees of a point to compare distances to
+
+    #### Returns
+
+    list[tuple[MonitoringStation, float]]: list of (station, distance in kilometres)
+
+    #### Raises
+
+    `TypeError`: if inputs are not the specified type(s)
     '''
 
-    # Standard data type input checks
-    assert isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])
-    assert isinstance(p, tuple)
+    if not (isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])):
+        raise TypeError('Input must be a list of MonitoringStation objects')
+    if not isinstance(p, (tuple, list)):
+        raise TypeError('Coordinate must be a tuple or list.')
 
     # preserve original order in case of other scripts running at the same time
     _stations = stations
     ref_points, station_points = [p for i in range(len(_stations))], [s.coord for s in _stations]
-
-    # use haversine_vector to efficiently find the distance between multiple points
     my_data = zip(_stations, list(haversine_vector(ref_points, station_points, unit=Unit.KILOMETERS)))
     del _stations
 
@@ -32,52 +43,85 @@ def stations_by_distance(stations: list, p: tuple) -> list[tuple[MonitoringStati
     return sorted_by_key(my_data, 1)
 
 
-def stations_within_radius(stations: list, centre: tuple, r: float) -> list[MonitoringStation]:
-
+def stations_within_radius(stations: list[MonitoringStation],
+        centre: tuple[float], r: float) -> list[MonitoringStation]:
     '''
-    Returns a list of all stations (type MonitoringStation)
-    within radius r of a geographic coordinate centre.
+    Finds the list of stations within a given distance of a geographical point.
+
+    #### Arguments
+
+    `stations` (list[MonitoringStation]): list of input stations
+    `centre` (tuple[float]): (latitude, longitude) in degrees of centre point
+    `r` (float): radial distance in kilometres to get stations within
+
+    #### Returns
+
+    list[MonitoringStation]: list of output stations within range
+
+    #### Raises
+
+    `TypeError`: if inputs are not the specified type(s)
     '''
 
-    # standard data type input checks
-    assert isinstance(r, (float, int))
+    if not (isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])):
+        raise TypeError('Input must be a list of MonitoringStation objects')
+    if not isinstance(centre, (tuple, list)):
+        raise TypeError('Coordinate must be a tuple or list')
+    if not isinstance(r, (float, int)):
+        raise TypeError('Radius must be numeric')
 
-    # get all (station, distance) pairs
     sorted_stations = stations_by_distance(stations, centre)
 
-    # return station where distance is <= the given radius
     return [s[0] for s in sorted_stations if s[1] <= r]
 
 
 def rivers_with_station(stations: list) -> set[str]:
-
     '''
-    Returns a set of the names of all rivers which have
-    a MonitoringStation instance associated with them.
+    Finds all rivers associated with the given stations.
+
+    #### Arguments
+
+    `stations` (list): list of input stations
+
+    #### Returns
+
+    set[str]: unique river names of each station
+
+    #### Raises
+    
+    `TypeError`: if inputs are not the specified type(s)
     '''
 
-    # Standard data type input checks
-    assert all([isinstance(i, MonitoringStation) for i in stations])
+    if not (isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])):
+        raise TypeError('Input must be a list of MonitoringStation objects')
 
-    # Set (comprehension) to skip over/remove duplicates
     rivers = {s.river for s in stations} - {None}
 
     return rivers
 
 
 def stations_by_river(stations: list) -> dict[str, list[MonitoringStation]]:
-
     '''
-    Returns a dict that maps river names to a list of
-    station objects associated with that river.
+    Maps river names to stations on each river.
+
+    #### Arguments
+
+    `stations` (list): list of input stations
+
+    #### Returns
+
+    dict[str, list[MonitoringStation]]: mapping of river name to a list of all stations on that river
+
+    #### Raises
+
+    `TypeError`: if inputs are not the specified type(s)
     '''
 
-    # Standard data type input checks
-    assert all([isinstance(i, MonitoringStation) for i in stations])
+    if not (isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])):
+        raise TypeError('Input must be a list of MonitoringStation objects')
 
     rivers = rivers_with_station(stations)
 
-    # For each river listed, add all its associated stations.
     river_dict = {river: list(filter(lambda s: s.river == river, stations))
         for river in rivers}
 
@@ -85,42 +129,59 @@ def stations_by_river(stations: list) -> dict[str, list[MonitoringStation]]:
 
 
 def rivers_by_station_number(stations: list, n: int) -> list[tuple[str, int]]:
-
     '''
-    Returns a list of (river name, number of stations)
-    tuples. The tuples are sorted by number of stations,
-    and only the top N values are included. Where several
-    rivers have the same number of stations, all such
-    rivers are included in the list.
+    Finds a list of the most populated rivers in terms of the number of stations on the river.
+    
+    #### Arguments
+    
+    `stations` (list): list of input stations
+    `n` (int): maximum number of rivers to include
+    
+    #### Returns
+    
+    list[tuple[str, int]]: list of (river name, number of stations), sorted descending
+
+    #### Raises
+
+    `TypeError`: if inputs are not the specified type(s)
+    `ValueError`: if number of rivers is not a positive integer
     '''
 
-    # Standard data type input and bounds checks
-    assert all([isinstance(i, MonitoringStation) for i in stations])
-    assert isinstance(n, int)
-    assert n >= 1
+    if not (isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])):
+        raise TypeError('Input must be a list of MonitoringStation objects')
+    if not isinstance(n, int):
+        raise TypeError('Number of rivers must be an integer')
+    if not n >= 1:
+        raise ValueError('Number of stations must be positive')
 
     river_names = rivers_with_station(stations)
     river_dict = stations_by_river(stations)
 
-    # Get a complete list of (river name, number of stations) tuples, sorted descending
     river_num_list = sorted_by_key([(r, len(river_dict[r])) for r in river_names], 1, reverse=True)
-
-    # Find the number of stations which is N from the highest, accounting for possible duplicates
     end_num = sorted(list({r[1] for r in river_num_list}), reverse=True)[n - 1]
 
-    # Create list of (river name, number of stations) tuples up to the found limit
     return [(r, n) for r, n in river_num_list if r is not None and n >= end_num]
 
 
 def stations_by_town(stations: list) -> dict[str, list[MonitoringStation]]:
-
     '''
-    Returns a dict that maps town names to a list of
-    station objects associated with that town.
+    Maps town names to the stations in each town.
+
+    #### Arguments
+
+    `stations` (list): list of input stations
+
+    #### Returns
+
+    dict[str, list[MonitoringStation]]: mapping of town name to a list of all stations in that town
+
+    #### Raises
+
+    `TypeError`: if inputs are not the specified type(s)
     '''
 
-    # Standard data type input checks
-    assert all([isinstance(i, MonitoringStation) for i in stations])
+    if not (isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])):
+        raise TypeError('Input must be a list of MonitoringStation objects')
 
     # Get a set of all the towns from all the stations, removing duplicates
     towns = {s.town for s in stations}

@@ -10,41 +10,42 @@ import numpy as np
 from matplotlib.dates import date2num
 
 
-def polyfit(dates: list[datetime.datetime],
-            levels: list[float], p: int) -> tuple[np.poly1d, float, list[float]]:
-
+def polyfit(dates: list[datetime.datetime], levels: list[float],
+        p: int = 3) -> tuple[np.poly1d, float, list[float]]:
     '''
-    Returns a tuple of a p-degree polynomial
-    (numpy.poly1d object), an x-axis offset,
-    and the original data as a list of floats.
+    Finds a polynomial best-fit (least squares) curve to a given dataset.
 
-    ### Inputs:
+    #### Arguments
 
-    `dates`, a list of the dates at which to plot (a list of `datetime.datetime` objects)
+    `dates` (list[datetime.datetime]): a list of dates where there is level data
+    `levels` (list[float]): a list of level data points to fit
+    `p` (int, default = 3): the degree of the polynomial curve to use
 
-    `levels`, a list of the water levels at each corresponding date (a list of floats)
+    #### Returns
 
-    `p`, the degree of the polynomial to approximate with (an int)
+    tuple[np.poly1d, float, list[float]]: the callable polynomial function, the constant
+    offset used to shift the dates from their mean, and the original dates as numbers, respectively
 
-    ### Output:
+    #### Raises
 
-    `(poly, time_shift, date_nums)`; where
-    `poly` is a callable `np.poly1d` function representing the polynomial;
-    `time_shift` is a float, a fixed offset;
-    `date_nums` is a list of floats, representing the original dates as floats.
+    `TypeError`: if inputs are not the specified type(s)
+    `ValueError`: if degree is not integer
     '''
 
     # standard data type and bounds input checks
-    assert len(dates) == len(levels)
-    assert all([isinstance(d, datetime.datetime) for d in dates])
-    assert all([isinstance(lev, (float, int)) for lev in levels])
-    assert isinstance(p, int) and 0 <= p <= len(dates) - 1
+    if len(dates) != len(levels):
+        raise ValueError(f'Inputs must be same length; sizes are {len(dates)} and {len(levels)}')
+    if not all([isinstance(d, datetime.datetime) for d in dates]):
+        raise TypeError('All dates must be datetime.datetime instances.')
+    if not all([isinstance(lev, (float, int)) for lev in levels]):
+        raise TypeError('All levels must be numbers.')
+    if not (isinstance(p, int) and 0 <= p <= len(dates) - 1):
+        raise ValueError('Polynomial degree must be integer, positive and less than the input length.')
 
     # convert datetime objects to floats
     date_nums = date2num(dates)
 
-    # to minimise the size of the numbers inputted to np.polyfit,
-    # offset it by the mean of the dataset
+    # to minimise the size of the numbers inputted to np.polyfit, offset it by the mean of the dataset
     time_shift = np.mean(date_nums)
     p_coeff = np.polyfit(date_nums - time_shift * np.ones(len(date_nums)), levels, p)
 
@@ -55,77 +56,83 @@ def polyfit(dates: list[datetime.datetime],
     return (poly, time_shift, date_nums)
 
 
-def moving_average(dates: list[datetime.datetime], levels: list[float], interval: int = 3):
-
+def moving_average(dates: list[datetime.datetime], levels: list[float],
+        interval: int = 3) -> tuple[list[float], np.ndarray]:
     '''
-    Returns an array of `dates` and their associated values, where the values are an `interval`-point
-    moving average. This function acounts for the end-points. If the `interval` is even, the `dates`
-    returned will be in between each of the `dates` given.
+    Calculates a moving average of the given data, extending the domain to use
+    smaller intervals at the endpoints. If the interval is odd, the output domain
+    will be the same; if the interval is even, the output domain will be at the
+    midpoints of the original.
 
-    ### Inputs:
+    #### Arguments
 
-    `dates`, a list of `datetime.datetime`s
-    `levels`, a list of the water level values
-    `interval`, the window size to use for computing the moving average
+    `dates` (list[datetime.datetime]): list of dates where there is level data
+    `levels` (list[float]): list of levels to be averaged
+    `interval` (int, default = 3): symmetric window size over which to average
 
-    ### Outputs:
+    #### Returns
 
-    `(date_nums, lma)`: a list of the dates in number form (using `matplotlib.dates.date2num`)
-    and a list of the moving average-based values corresponding to each date.
+    tuple[list[float], np.ndarray]: the new domain and averaged values at these points, respectively
+
+    #### Raises
+
+    `TypeError`: if inputs are not the specified type(s)
+    `ValueError`: if interval is not between 1 and the input length
     '''
+
+    # standard data type and bounds input checks
+    if len(dates) != len(levels):
+        raise ValueError(f'Inputs must be same length; sizes are {len(dates)} and {len(levels)}')
+    if not all([isinstance(d, datetime.datetime) for d in dates]):
+        raise TypeError('All dates must be datetime.datetime instances.')
+    if not all([isinstance(lev, (float, int)) for lev in levels]):
+        raise TypeError('All levels must be numbers.')
+    if not (isinstance(interval, int) and 1 <= interval <= len(dates)):
+        raise ValueError('Interval size must between 1 and the input length')
 
     date_nums = date2num(dates)
 
     # find the moving average, ignoring the ends
-    lma = np.convolve(levels, np.ones(interval), mode='valid') / interval
+    averages = np.convolve(levels, np.ones(interval), mode='valid') / interval
 
     if interval % 2 == 1:
         # odd number of points: append original values to either end
         half_end = interval // 2
-        lma = np.insert(lma, 0, levels[:half_end])
-        lma = np.insert(lma, len(lma), levels[-1 * half_end:])
-        return date_nums, lma
+        averages = np.insert(averages, 0, levels[:half_end])
+        averages = np.insert(averages, len(averages), levels[-1 * half_end:])
+        return date_nums, averages
 
     else:
         # even number of points: append moving averages of the missing intervals to either end,
         # and move date values over by half an interval to account for this
         half_end = round((interval / 2) - 1)
-        lma = np.insert(lma, 0, np.convolve(levels[:half_end + 1], (0.5, 0.5), mode='valid'))
-        lma = np.insert(lma, len(lma), np.convolve(levels[-1 * half_end - 1:], (0.5, 0.5), mode='valid'))
+        averages = np.insert(averages, 0, np.convolve(levels[:half_end + 1], (0.5, 0.5), mode='valid'))
+        averages = np.insert(averages, len(averages),
+            np.convolve(levels[-1 * half_end - 1:], (0.5, 0.5), mode='valid'))
         date_interval = date_nums[1] - date_nums[0]
         date_nums = [dn + date_interval / 2 for dn in date_nums]
         date_nums.pop()
-        return date_nums, lma
+        return date_nums, averages
 
 
 def identify_potentially_bad_data(station_name: str, levels: list[float], **kwargs: dict) -> set[str]:
-
     '''
-    Check for dubious values within a station's water level records. Tests for 
+    Check for suspicious values within a station's water level records. Tests for:
 
     1. If a level is given as a tuple instead of a float
     2. If negative (when not a tidal station) or extremely large values
     3. If the level fluctuates significantly between readings
 
-    and returns a set of warning messages.
+    and returns appropriate warning messages or an empty set if there are none.
 
-    ### Inputs
+    #### Arguments
 
-    #### Required
+    `station_name` (str): string name of a station to be displayed. Does not have to be the official name.
+    `levels` (list[float]): list of level data to be checked
 
-    `station_name`: string name of a station to check
-    `levels`: the level data to check
+    #### Returns
 
-    #### Optional
-
-    `negative_level_to_zero`: bool, whether to set negative water levels to zero
-    `replace_tuple_with_index`: int, the index of any tuples to extract when encountering a tuple level
-    `too_high_cutoff`: float, the maximum allowable value for a water level
-    `too_high_to_previous_level`: bool, whether to set the value to the previous value when above max
-    
-    ### Returns
-
-    `flags`: set, containing all warning string messages found in analysing the level data.
+    set[str]: a set of string messages detailing the potential errors in the data.
     '''
 
     NEGATIVE_LEVEL_TO_ZERO      = kwargs.get('negative_level_to_zero',      True)   # noqa
@@ -142,13 +149,17 @@ def identify_potentially_bad_data(station_name: str, levels: list[float], **kwar
         # Check for erroneous case: level was a tuple instead of float
         if not isinstance(levels[i], (float, int)):
 
-            warn_str = f"Data for {station_name} station on date may be unreliable. "
-            warn_str += f"Found water level value {levels[i]}. \n"
-            warn_str += f"This has been replaced with {levels[i][REPLACE_TUPLE_WITH_INDEX]}."
-
-            flags.add(warn_str)
-
-            levels[i] = levels[i][REPLACE_TUPLE_WITH_INDEX]
+            if isinstance(correct_level := levels[i][REPLACE_TUPLE_WITH_INDEX], (float, int)):
+                warn_str = f"Data for {station_name} station on date may be unreliable. "
+                warn_str += f"Found water level value {levels[i]}. \n"
+                warn_str += f"This has been replaced with {correct_level}."
+                flags.add(warn_str)
+                levels[i] = correct_level
+            else:
+                warn_str = f"Data for {station_name} station on date may be unreliable. "
+                warn_str += f"Found water level value {levels[i]}. This item was \n"
+                warn_str += f"unable to be resolved into a numerical value, and has not been altered."
+                flags.add(warn_str)
 
         # Check for potentially invalid values: negative or impossibly high
         if levels[i] < 0 and not IS_TIDAL:
@@ -184,14 +195,24 @@ def identify_potentially_bad_data(station_name: str, levels: list[float], **kwar
 
 
 def has_rapid_fluctuations(levels: list[float], interval: int = 3, tol: float = 5e-3) -> bool:
-
     '''
-    Checks if the mean squared error between the `interval`-point moving
-    average of the `levels` and the `levels` is more than `tol` as a
-    fraction of the squared mean level.
+    Applies a simple statistical estimate to check whether a
+    dataset has rapid changes between values. Aims to allow daily
+    cycles which are natural for tidal stations.
 
-    Aims to determine whether the station level fluctuates rapidly between consecutive measurements,
-    while allowing daily cycles which are normal for tidal stations.
+    The test applied is: mean squared error of the levels relative
+    to the moving (interval-specified) average must be less than a
+    (tol-specified) fraction of the squared mean level.
+
+    #### Arguments
+
+    `levels` (list[float]): list of level data to analyse
+    `interval` (int, default = 3): the interval of the moving average used in the computation
+    `tol` (float, default = 5e-3): the relative tolerance when compared to the mean square level
+
+    #### Returns
+
+    bool: True if there are rapid fluctuations detected; False otherwise
     '''
 
     import numpy as np

@@ -21,10 +21,17 @@ from .station import MonitoringStation
 
 
 def fetch(url: str) -> dict:
+    '''
+    Retrieve JSON data from a given API url.
 
-    """
-    Fetch data over internet from url and return fetched JSON object
-    """
+    #### Arguments
+
+    `url` (str): API url from which to fetch data
+
+    #### Returns
+
+    dict: JSON response
+    '''
 
     r = requests.get(url)
     data = r.json()
@@ -32,10 +39,14 @@ def fetch(url: str) -> dict:
 
 
 def dump(data: dict, filename: str) -> None:
+    '''
+    Save JSON response to a file, nicely formatted.
 
-    """
-    Save JSON object to file, string-formatted
-    """
+    #### Arguments
+
+    `data` (dict): JSON dict
+    `filename` (str): save file location
+    '''
 
     f = open(filename, 'w')
     data = json.dump(data, f, indent=4)
@@ -43,10 +54,17 @@ def dump(data: dict, filename: str) -> None:
 
 
 def load(filename: str) -> dict:
+    '''
+    Loads JSON object from file.
 
-    """
-    Load JSON object from file
-    """
+    #### Arguments
+
+    `filename` (str): JSON file to load from
+
+    #### Returns
+
+    dict: JSON dict
+    '''    
 
     f = open(filename, 'r')
     data = json.load(f)
@@ -55,8 +73,7 @@ def load(filename: str) -> dict:
 
 
 def fetch_stationdata(use_cache: bool = True) -> tuple[dict, dict]:
-
-    """
+    '''
     Fetch data from Environment Agency for all active river level
     monitoring stations at once via a REST API and return retrieved data as a
     JSON object. Include tidal (coastal) stations separately.
@@ -65,7 +82,15 @@ def fetch_stationdata(use_cache: bool = True) -> tuple[dict, dict]:
     optionally be retrieved from the cache file. This is faster than
     retrieval over the internet and avoids excessive calls to the
     Environment Agency service.
-    """
+
+    #### Arguments
+
+    `use_cache` (bool, default = True): whether to try fetching station data from a local cache
+
+    #### Returns
+
+    tuple[dict, dict]: full JSON-formatted datasets for all river-level and tidal stations, respectively
+    '''
 
     # URL for retrieving data for active stations with river level monitoring
     root = "http://environment.data.gov.uk/flood-monitoring/id/stations"
@@ -118,10 +143,18 @@ def fetch_stationdata(use_cache: bool = True) -> tuple[dict, dict]:
 
 
 def fetch_latest_water_level_data(use_cache: bool = False) -> dict:
+    '''
+    Fetch latest levels from all measures.
 
-    """
-    Fetch latest levels from all 'measures'. Returns JSON object
-    """
+    #### Arguments
+
+    `use_cache` (bool, default = False): whether to use the most recently stored data
+    instead of fetching new data
+
+    #### Returns
+
+    dict: JSON-formatted datasets of latest data at each station
+    '''    
 
     # URL for retrieving data
     root = "http://environment.data.gov.uk/flood-monitoring/id/measures"
@@ -152,16 +185,30 @@ def fetch_latest_water_level_data(use_cache: bool = False) -> dict:
 
 def fetch_measure_levels(station: Union[MonitoringStation, str], dt: datetime.timedelta,
         **warnings_kwargs: dict) -> tuple[list[datetime.datetime], list[float]]:
+    '''
+    Fetch measure levels from latest reading and going back a period dt.
 
-    """
-    Fetch measure levels from latest reading and going back a period
-    `dt`. Return list of dates and a list of values.
+    #### Arguments
 
-    `station` can be either a `MonitoringStation` instance, or a `measure_id` string.
-    """
+    `station` (Union[MonitoringStation, str]): either an input station instance or its measure_id string
+    `dt` (datetime.timedelta): time period for which to look back in history for data
+
+    #### Additional Kwargs and Flags
+
+    `warnings_kwargs`: passed to `floodsystem.analysis.identify_potentially_bad_data()`
+
+    #### Returns
+
+    tuple[list[datetime.datetime], list[float]]: list of dates and their recorded levels, respectively
+
+    #### Raises
+
+    `TypeError`: if the input station was not a MonitoringStation or a str
+    `RuntimeWarning`: if potentially bad data is detected from the station
+    '''
 
     if not isinstance(station, (MonitoringStation, str)):
-        raise ValueError('The first argument must be either a `MonitoringStation` or a '
+        raise TypeError('The first argument must be either a `MonitoringStation` or a '
         f'measure_id string.\nGot value {station} of type {type(station)}')
 
     # Current time (UTC)

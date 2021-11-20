@@ -9,46 +9,62 @@ from .station import MonitoringStation, inconsistent_typical_range_stations
 
 
 def stations_level_over_threshold(stations: list, tol: float) -> list[tuple[MonitoringStation, float]]:
-
     '''
-    Returns a list of tuples. The first element of
-    each tuple is a MonitoringStation object and the
-    second element is the current relative water level
-    at that station.
+    Filters stations to those which have a relative water level (latest level
+    as a fraction of the typical range) above a given threshold.
 
-    Only stations with consistent range data are considered,
-    and only stations with relative level above `tol` are added.
+    #### Arguments
+
+    `stations` (list): list of stations to be filtered
+    `tol` (float): cutoff value for relative water level
+
+    #### Returns
+
+    list[tuple[MonitoringStation, float]]: list of (station, relative water level) tuples
+
+    #### Raises
+
+    `TypeError`: if inputs are not the specified type(s)
     '''
 
-    # Standard data type input checks.
-    assert isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])
-    assert isinstance(tol, (int, float))
+    if not isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations]):
+        raise TypeError('Input must be a list of MonitoringStation instances.')
+    if not isinstance(tol, (int, float)):
+        raise TypeError('Threshold must be a number.')
 
     # Eliminate stations which are invalid due to having inconsistent range data or undefined values
     data = set(stations) - set(inconsistent_typical_range_stations(stations))
     data -= set(filter(lambda s: s.latest_level is None or not hasattr(s, 'latest_level')
         or s.relative_water_level() is None, stations))
 
-    # Return the remaining stations and their relative level where it is higher than tol
-    # and sort in descending order of level
-    return sorted([(s, s.relative_water_level()) for s in data if s.relative_water_level() > tol],
-                key=lambda x: x[1], reverse=True)
+    high_stations = [(s, s.relative_water_level()) for s in data if s.relative_water_level() > tol]
+    return sorted(high_stations, key=lambda x: x[1], reverse=True)
 
 
-def stations_highest_rel_level(stations: list, n) -> list[MonitoringStation]:
-
+def stations_highest_rel_level(stations: list, num: int) -> list[MonitoringStation]:
     '''
-    Returns a list of the `n` stations at which the water level,
-    relative to the typical range, is highest. The values are assumed
-    to be all unique so the length of the return list is always `n`.
+    Finds the stations with the highest relative water level.
+
+    #### Arguments
+
+    `stations` (list): list of stations to be searched
+    `num` (int): number of stations to include in the list
+
+    #### Returns
+
+    list[MonitoringStation]: list of stations with highest relative water levels
+
+    #### Raises
+
+    `TypeError`: if inputs are not the specified type(s)
+    `ValueError`: if num is not between 1 and the input length
     '''
 
-    # Standard data type and bounds input checks
-    assert isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])
-    assert isinstance(n, int)
+    if not (isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])):
+        raise TypeError('Input must be a list of MonitoringStation instances.')
+    if not isinstance(num, int):
+        raise TypeError('Output length must be an integer.')
+    if not 0 <= num <= len(vs := stations_level_over_threshold(stations, float('-inf'))):
+        raise ValueError('Output length must be non-negative and not more than the input length.')
 
-    # Get a descending list of stations with a known level
-    # HACK: implemented as being above -inf and select the first `n` objects
-    assert 0 <= n <= len(vs := stations_level_over_threshold(stations, float('-inf')))
-
-    return [s[0] for s in vs][:n]
+    return [s[0] for s in vs][:num]

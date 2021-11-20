@@ -11,8 +11,6 @@ from .station import MonitoringStation
 RESOURCES = os.path.join(os.path.dirname(__file__), 'resources')
 PROPLOT_STYLE_SHEET = os.path.join(RESOURCES, 'proplot_style.mplstyle')
 
-scalar = MinMaxScaler(feature_range=(0, 1))
-
 try:
     # Disables initialisation warnings from tensorflow
     # https://stackoverflow.com/questions/35911252/disable-tensorflow-debugging-information
@@ -40,22 +38,24 @@ from tensorflow.keras.layers import Dense, LSTM
 
 def data_prep(data: np.ndarray, lookback: int,
         exclude_latest: int = 0) -> tuple[np.ndarray, np.ndarray]:
+    '''
+    Prepares dataset by constructing x, y pairs. Each y is determined on the previous data points (x).
 
-    """
-    Prepares dataset by constructing x, y pairs. Each y is determined on the previous
-    `lookback` data points (x).
+    #### Arguments
 
-    Args:
-        data (array): The water level data.
-        lookback (int): The look back value, i.e. every y is determined how many x.
-        exclude (int, optional): The number of latest data points to ignore (default 0).
+    `data` (np.ndarray): the water level data
+    `lookback` (int): how long to look back for data
+    `exclude_latest` (int, default = 0): the number of latest data points to ignore
 
-    Returns arrays (x, y).
-    """
+    #### Returns
+
+    tuple[np.ndarray, np.ndarray]: arrays x and y, respectively
+    '''    
 
     if exclude_latest != 0:
         data = data[:-1 * exclude_latest]
 
+    scalar = MinMaxScaler(feature_range=(0, 1))
     scaled_levels = scalar.transform(data.reshape(-1, 1))
     x = np.array([scaled_levels[i - lookback:i, 0] for i in range(lookback, len(scaled_levels))])
     x = np.reshape(x, (x.shape[0], 1, x.shape[1]))  # samples, time steps, features
@@ -65,29 +65,26 @@ def data_prep(data: np.ndarray, lookback: int,
 
 
 def build_model(lookback: int, **kwargs) -> Sequential:
-
-    """
+    '''
     Builds the RNN, which has 1 LSTM layer and 2 dense layers.
 
-    ### Input
+    #### Arguments
 
-    #### Required
+    `lookback` (int): determines the input shape
 
-    `lookback` (int): The look back value, which determines the input shape.
-
-    #### Optional
+    #### Optional Args and Flags
 
     `layer_units` (tuple[int], default = (256, 512, 1)): number of neurons in each layer
     `layer_activations` (tuple[str], default = ('relu', 'relu', 'tanh')): activation functions for each layer
-    `recurrent_dropout` (float, default = 0.1): fraction of the units to drop for the linear
-    transformation of the recurrent state. First layer only.
-    `optimizer` (str, default = 'Adam): apply an optimiser when compiling the model.
-    `loss` (str, default = 'mean_squared_error'): choose a loss function for the model.
+    `recurrent_dropout` (float, default = 0.1): fraction of the units to drop for the
+    linear transformation of the recurrent state. First layer only
+    `optimizer` (str, default = 'Adam'): apply an optimiser when compiling the model
+    `loss` (str, default = 'mean_squared_error'): choose a loss function for the model
 
     #### Returns
 
-    `tensorflow.keras.model.Sequential` model: untrained Keras model.
-    """
+    Sequential: untrained Keras model
+    '''
 
     layer_units = kwargs.get('layer_units', (256, 512, 1))
     layer_activations = kwargs.get('layer_activations', ('relu', 'relu', 'tanh'))
@@ -107,31 +104,29 @@ def build_model(lookback: int, **kwargs) -> Sequential:
 
 
 def train_model(model: Sequential, x: list, y: list, batch_size: int, epoch: int, **kwargs) -> Sequential:
-
-    """
+    '''
     Trains and saves the Keras model.
 
-    ### Inputs
+    #### Arguments
 
-    #### Required
-
-    `model` (Keras model): the built model to train.
-    `x` (list): x, the known input levels.
-    `y` (list): y, the known levels after the input.
-    `batch_size` (int, default = 256): number of samples processed before the model parameters are updated.
-    `epoch` (int, default = 20): number of times to work through the full dataset.
+    `model` (Sequential): the built model to train
+    `x` (list): the known input levels
+    `y` (list): the known levels after the input
+    `batch_size` (int, default = 256): number of samples processed before the model parameters are updated
+    `epoch` (int, default = 20): number of times to work through the full dataset
 
     #### Optional
 
-    `save_file` (str, default = './cache/predictor_model.hdf5'): Path to save the trained model file
-    `show_loss` (bool, default = False): whether to display the loss-epoch graph after training.
-    `use_proplot_style` (bool, default = True): whether to use the ProPlot style sheet if `show_loss`.
-    `verbose` (int, default = 0): verbosity of trainer, how much info is showed as training progresses.
+    `save_file` (str, default = './cache/predictor_model.hdf5'): path to save the trained model file
+    `show_loss` (bool, default = False): whether to display the loss-epoch graph after training
+    `use_proplot_style` (bool, default = True): whether to use the ProPlot style sheet if show_loss
+    `verbose` (int, default = 0): verbosity of trainer, how much info is showed as training progresses
 
-    ### Returns
+    #### Returns
 
-    `tensorflow.keras.model.Sequential` model: the trained model.
-    """
+    Sequential: the trained model
+    '''
+
     if kwargs.get('save_file', None) is not None:
         model_name = kwargs['save_file'].split("/")[-1].split('.')[0]
     else:
@@ -156,8 +151,7 @@ def train_model(model: Sequential, x: list, y: list, batch_size: int, epoch: int
         else:
             plt.style.use('default')
         plt.title(f'Loss convergence of training for {model_name}')
-        plt.plot(np.arange(1, epoch + 1), history.history['loss'],
-            label='loss', color='#58308f')
+        plt.plot(np.arange(1, epoch + 1), history.history['loss'], label='loss', color='#58308f')
         plt.plot((1, epoch), (end_loss, end_loss),
             label=f'converged on {round(end_loss, 6)}', color=loss_color, linestyle='dashed')
         plt.legend()
@@ -176,22 +170,19 @@ def train_model(model: Sequential, x: list, y: list, batch_size: int, epoch: int
 
 def train_all(stations: list[MonitoringStation], dataset_size: int = 1000, lookback: int = 2000,
         batch_size: int = 256, epoch: int = 20, **kwargs) -> dict[MonitoringStation, Sequential]:
-
-    """
+    '''
     Trains and saves models for all stations supplied.
 
-    ### Inputs
+    #### Arguments
 
-    #### Required
+    `stations` (list[MonitoringStation]): list of stations to generate models for
+    `dataset_size` (int, default = 1000): the number of days in the dataset
+    `lookback` (int, default = 2000): look back value
+    `batch_size` (int, default = 256): number of samples processed before the model parameters are updated
+    `epoch` (int, default = 20): number of times to work through the full dataset
 
-    `stations` (list): list of `MonitoringStation` objects.
+    #### Optional Kwargs
 
-    #### Optional
-
-    `dataset_size` (int, default = 1000): the number of days in the dataset.
-    `lookback` (int, default = 2000): look back value.
-    `batch_size` (int, default = 256): number of samples processed before the model parameters are updated.
-    `epoch` (int, default = 20): number of times to work through the full dataset.
     `show_loss` (bool, default = False): whether to display the loss-epoch graph after training.
     `layer_units` (tuple[int], default = (256, 512, 1)): number of neurons in each layer
     `layer_activations` (tuple[str], default = ('relu', 'relu', 'tanh')): activation functions for each layer
@@ -200,18 +191,18 @@ def train_all(stations: list[MonitoringStation], dataset_size: int = 1000, lookb
     `optimizer` (str, default = 'Adam): apply an optimiser when compiling the model.
     `loss` (str, default = 'mean_squared_error'): choose a loss function for the model.
 
-    ### Returns
+    #### Returns
 
-    `dict[MonitoringStation, tensorflow.keras.models.Sequential]`: a mapping from each given station
-    to its trained model.
-    """
+    dict[MonitoringStation, Sequential]: a mapping from each given station to its trained model
+    '''
 
     trained_models = []
+    scalar = MinMaxScaler(feature_range=(0, 1))
 
     for i, station in enumerate(stations):
         print(f'Training for {station.name} ({i}/{len(stations)})')
         levels = np.array(fetch_measure_levels(station, datetime.timedelta(dataset_size))[1])
-        scalar.fit(levels.reshape(-1, 1))  # fit the scalar on across the entire dataset
+        scalar.fit(levels.reshape(-1, 1))
         x_train, y_train = data_prep(levels, lookback)
         model = build_model(lookback, **kwargs)
         train_model(model, x_train, y_train, batch_size, epoch,
@@ -223,9 +214,8 @@ def train_all(stations: list[MonitoringStation], dataset_size: int = 1000, lookb
 
 def predict(station: MonitoringStation, dataset_size: int = 1000, lookback: int = 2000,
         iteration: int = 100, display: int = 300, use_pretrained: bool = True, batch_size: int = 256,
-        epoch: int = 20, del_model_after: bool = False) -> tuple[tuple[list, list, list], tuple[list, list]]:
-
-    """
+        epoch: int = 20, del_model_after: bool = False) -> tuple[tuple[list, list], tuple[list, list, list]]:
+    '''
     Predicts a specified number of future water levels of a specific station.
     If the model for that station is not cached, it will be trained according to the parameters specified.
 
@@ -236,39 +226,31 @@ def predict(station: MonitoringStation, dataset_size: int = 1000, lookback: int 
     The prediction can be graphed using `plot_predicted_water_levels(s, *predict(s))`, where `s` is
     a `MonitoringStation` after importing the plot function from `floodsystem.plot`.
 
-    ### Inputs
+    #### Arguments
 
-    #### Required
+    `station` (MonitoringStation): the station to predict the future levels for
+    `dataset_size` (int, default = 1000): the number of days in the dataset
+    `lookback` (int, default = 2000): look back value
+    `iteration` (int, default = 100): number of future 15-minute-interval water levels to predict
+    `display` (int, default = 300): number of real data points to be returned
+    `use_pretrained` (bool, default = True): whether to used pretrained model if possible
+    `batch_size` (int, default = 256): number of samples processed before the model parameters are updated
+    `epoch` (int, default = 20): number of times to work through the full dataset
+    `del_model_after` (bool, default = False): whether to delete the ~30 MB model file after predicting
 
-    `station_name` (str): The name of the station.
+    #### Returns
 
-    #### Optional
-
-    `dataset_size` (int, default = 1000): the number of days in the dataset.
-    `lookback` (int, default = 2000): look back value.
-    `iteration` (int, default = 100): number of future 15-minute-interval water levels to predict.
-    `display` (int, default = 300): number of real data points to be returned.
-    `use_pretrained` (bool, default = True): whether to used pretrained model if possible.
-    `batch_size` (int, default = 256): number of samples processed before the model parameters are updated.
-    `epoch` (int, default = 20): number of times to work through the full dataset.
-
-    ### Returns
-
-    #### First item
-
-    `(list[datetime.datetime], list[datetime.datetime])`: first list contains all dates up to the present,
-    second list contains dates in future which have been predicted.
-
-    #### Second item
-
-    `(list[float], list[float], list[float])`: first list is actual level data, second list is the
-    level data predicted using past data and third list is future level data predicted using current data.
-    """
+    tuple[tuple[list, list], tuple[list, list, list]]: first tuple contains all dates up to the present,
+    all dates in the future, respectively; second tuple contains the actual, past predicted and future
+    predicted levels, respectively
+    '''
 
     station_name = station.name
     date, levels = fetch_measure_levels(station, datetime.timedelta(dataset_size))
     date, levels = np.array(date), np.array(levels)
-    scalar.fit(levels.reshape(-1, 1))  # fit the scalar on across the entire dataset
+
+    scalar = MinMaxScaler(feature_range=(0, 1))
+    scalar.fit(levels.reshape(-1, 1))
 
     if use_pretrained:
         try:
@@ -308,6 +290,10 @@ def predict(station: MonitoringStation, dataset_size: int = 1000, lookback: int 
         os.remove(f'./cache/models/{station_name}.hdf5')
 
     # return on last `display` data points, the demo values, and future predictions
-    date = (date[-display:], [date[-1] + datetime.timedelta(minutes=15) * i for i in range(iteration)])
-    return date, (levels[-display:], scalar.inverse_transform(
-        demo).ravel(), scalar.inverse_transform(predictions).ravel())
+    dates_upto_present = date[-display:]
+    dates_into_future = [date[-1] + datetime.timedelta(minutes=15) * i for i in range(iteration)]
+    levels_upto_present = levels[-display:]
+    levels_past_predicted = scalar.inverse_transform(demo).ravel()
+    levels_future_predicted = scalar.inverse_transform(predictions).ravel()
+    return (dates_upto_present, dates_into_future), (levels_upto_present, levels_past_predicted,
+        levels_future_predicted)

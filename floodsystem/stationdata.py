@@ -9,16 +9,23 @@ from .datafetcher import fetch_stationdata, fetch_latest_water_level_data
 from .station import MonitoringStation
 
 
-def build_station_list(use_cache=True) -> list[MonitoringStation]:
-
-    """
+def build_station_list(use_cache: bool = True) -> list[MonitoringStation]:
+    '''
     Build and return a list of all river level monitoring stations
     based on data fetched from the Environment agency. Each station is
     represented as a MonitoringStation object.
 
     The available data for some station is incomplete or not
     available.
-    """
+
+    #### Arguments
+
+    `use_cache` (bool, default = True): whether to try fetching station data from a local cache
+
+    #### Returns
+
+    list[MonitoringStation]: station objects built from obtained data
+    '''
 
     data, coastal_data = fetch_stationdata(use_cache)
 
@@ -80,11 +87,14 @@ def build_station_list(use_cache=True) -> list[MonitoringStation]:
     return stations
 
 
-def update_water_levels(stations: list[MonitoringStation]) -> None:
-
-    """
-    Attach level data contained in measure_data to stations.
-    """
+def update_water_levels(stations: list[MonitoringStation]):
+    '''
+    Attach level data contained in `measure_data` to stations. Fetches over internet.
+    
+    #### Arguments
+    
+    `stations` (list[MonitoringStation]): list of input stations
+    '''    
 
     # Fetch level data
     measure_data = fetch_latest_water_level_data()

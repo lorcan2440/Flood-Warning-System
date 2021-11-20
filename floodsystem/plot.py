@@ -21,20 +21,18 @@ PROPLOT_STYLE_SHEET = os.path.join(RESOURCES, 'proplot_style.mplstyle')
 
 
 def plot_water_levels(stations: list, dates: dict, levels: dict, as_subplots: bool = True,
-                      use_proplot_style: bool = True) -> None:
-
+                      use_proplot_style: bool = True):
     '''
-    Plots graph(s) of the level data in stations (which may be
-    a single MonitoringStation object or a list of them).
-
-    Inputs:
-
-    stations, the stations to analyse
-    (a list of MonitoringStation objects);
-    dates, the dates at which to plot
-    (a dict, mapping the MonitoringStation.name to a list of datetime.datetime objects);
-    levels, the data corresponding to each date
-    (a dict, mapping the MonitoringStation.name to a list of floats).
+    Plots graph(s) of the level data in stations (which may be a single
+    MonitoringStation object or a list of them).
+    
+    #### Arguments
+    
+    `stations` (list): list of input stations
+    `dates` (dict): dates where data is available
+    `levels` (dict): level data corresponding to the given dates
+    `as_subplots` (bool, default = True): whether to use multiple plots on the same figure
+    `use_proplot_style` (bool, default = True): use ProPlot stylesheet
     '''
 
     # remove all stations with inconsistent typical range
@@ -92,9 +90,23 @@ def plot_water_levels(stations: list, dates: dict, levels: dict, as_subplots: bo
     plt.show()
 
 
-def plot_water_level_with_polyfit(station: object, dates: list, levels: list, poly_degree: int = 5,
-        n_points: int = 100, format_dates: bool = True, y_axis_from_zero: bool = None,
-        use_proplot_style: bool = True) -> None:
+def plot_water_level_with_polyfit(station: MonitoringStation, dates: list, levels: list,
+        poly_degree: int = 5, n_points: int = 100, format_dates: bool = True,
+        y_axis_from_zero: bool = None, use_proplot_style: bool = True):
+    '''
+    Plot water level data with a polynomial least-squares best-fit curve.
+    
+    #### Arguments
+    
+    `station` (MonitoringStation): list of input stations
+    `dates` (list): dates where data is available
+    `levels` (list): level data corresponding to the given dates
+    `poly_degree` (int, default = 5): degree of polynomial fit
+    `n_points` (int, default = 100): number of points to sample the polynomial curve
+    `format_dates` (bool, default = True): format dates neater
+    `y_axis_from_zero` (bool, default = None): whether to start the y-axis from the zero level
+    `use_proplot_style` (bool, default = True): use ProPlot stylesheet
+    '''
 
     if use_proplot_style:
         plt.style.use(PROPLOT_STYLE_SHEET)
@@ -140,7 +152,20 @@ def plot_water_level_with_polyfit(station: object, dates: list, levels: list, po
 
 
 def plot_water_level_with_moving_average(station: object, dates: list, levels: list, interval: int = 3,
-        format_dates: bool = True, y_axis_from_zero: bool = None, use_proplot_style: bool = True) -> None:
+        format_dates: bool = True, y_axis_from_zero: bool = None, use_proplot_style: bool = True):
+    '''
+    Plot water level data with a symmetric moving average curve.
+    
+    #### Arguments
+    
+    `station` (MonitoringStation): list of input stations
+    `dates` (list): dates where data is available
+    `levels` (list): level data corresponding to the given dates
+    `interval` (int, default = 3): window size for moving average
+    `format_dates` (bool, default = True): format dates neater
+    `y_axis_from_zero` (bool, default = None): whether to start the y-axis from the zero level
+    `use_proplot_style` (bool, default = True): use ProPlot stylesheet
+    '''
 
     if use_proplot_style:
         plt.style.use(PROPLOT_STYLE_SHEET)
@@ -182,8 +207,20 @@ def plot_water_level_with_moving_average(station: object, dates: list, levels: l
     plt.show()
 
 
-def plot_predicted_water_levels(station: MonitoringStation, dates, levels,
+def plot_predicted_water_levels(station: MonitoringStation, dates: tuple[list], levels: tuple[list],
         format_dates: bool = True, y_axis_from_zero: bool = None, use_proplot_style: bool = True):
+    '''
+    Plots the forecast of a station, including past predictions.
+
+    #### Arguments
+
+    `station` (MonitoringStation): list of input stations
+    `dates` (tuple[list]): dates upto present and into future, respectively
+    `levels` (tuple[list]): past levels, past predicted levels and future predicted levels, respectively
+    `format_dates` (bool, default = True): format dates neater
+    `y_axis_from_zero` (bool, default = None): whether to start the y-axis from the zero level
+    `use_proplot_style` (bool, default = True): use ProPlot stylesheet
+    '''
 
     if use_proplot_style:
         plt.style.use(PROPLOT_STYLE_SHEET)
