@@ -35,6 +35,8 @@ except ImportError:
 from tensorflow.keras.models import Sequential, load_model  # noqa
 from tensorflow.keras.layers import Dense, LSTM             # noqa
 
+scalar = MinMaxScaler(feature_range=(0, 1))
+
 
 def data_prep(data: np.ndarray, lookback: int,
         exclude_latest: int = 0) -> tuple[np.ndarray, np.ndarray]:
@@ -55,7 +57,6 @@ def data_prep(data: np.ndarray, lookback: int,
     if exclude_latest != 0:
         data = data[:-1 * exclude_latest]
 
-    scalar = MinMaxScaler(feature_range=(0, 1))
     scaled_levels = scalar.transform(data.reshape(-1, 1))
     x = np.array([scaled_levels[i - lookback:i, 0] for i in range(lookback, len(scaled_levels))])
     x = np.reshape(x, (x.shape[0], 1, x.shape[1]))  # samples, time steps, features
@@ -197,7 +198,6 @@ def train_all(stations: list[MonitoringStation], dataset_size: int = 1000, lookb
     '''
 
     trained_models = []
-    scalar = MinMaxScaler(feature_range=(0, 1))
 
     for i, station in enumerate(stations):
         print(f'Training for {station.name} ({i}/{len(stations)})')
@@ -249,7 +249,6 @@ def predict(station: MonitoringStation, dataset_size: int = 1000, lookback: int 
     date, levels = fetch_measure_levels(station, datetime.timedelta(dataset_size))
     date, levels = np.array(date), np.array(levels)
 
-    scalar = MinMaxScaler(feature_range=(0, 1))
     scalar.fit(levels.reshape(-1, 1))
 
     if use_pretrained:
