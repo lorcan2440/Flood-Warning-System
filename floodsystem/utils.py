@@ -191,24 +191,3 @@ def haversine_vector(array1: list[tuple], array2: list[tuple],
          + np.cos(lat1) * np.cos(lat2) * np.sin(lng * 0.5) ** 2)
 
     return 2 * get_avg_earth_radius(unit) * np.arcsin(np.sqrt(d))
-
-
-def fast_fourier_transform(x: list):
-
-    '''
-    A recursive implementation of the Cooley-Tukey algorithm for the Fast Fourier Transform.
-    The input must have a length of 2**n where n is an integer.
-    '''
-
-    import numpy as np
-
-    N = len(x)
-    
-    if N == 1:
-        return x
-    else:
-        x_even = fast_fourier_transform(x[::2])
-        x_odd = fast_fourier_transform(x[1::2])
-        factor = np.exp(-2j * np.pi * np.arange(N) / N)
-        x_trans = np.concatenate([x_even + factor[:int(N/2)] * x_odd, x_even + factor[int(N/2):] * x_odd])
-        return {i: abs(val) for i, val in enumerate(x_trans[:len(x_trans)//2])}

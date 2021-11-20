@@ -25,9 +25,9 @@ def plot_water_levels(stations: list, dates: dict, levels: dict, as_subplots: bo
     '''
     Plots graph(s) of the level data in stations (which may be a single
     MonitoringStation object or a list of them).
-    
+
     #### Arguments
-    
+
     `stations` (list): list of input stations
     `dates` (dict): dates where data is available
     `levels` (dict): level data corresponding to the given dates
@@ -95,9 +95,9 @@ def plot_water_level_with_polyfit(station: MonitoringStation, dates: list, level
         y_axis_from_zero: bool = None, use_proplot_style: bool = True):
     '''
     Plot water level data with a polynomial least-squares best-fit curve.
-    
+
     #### Arguments
-    
+
     `station` (MonitoringStation): list of input stations
     `dates` (list): dates where data is available
     `levels` (list): level data corresponding to the given dates
@@ -155,9 +155,9 @@ def plot_water_level_with_moving_average(station: object, dates: list, levels: l
         format_dates: bool = True, y_axis_from_zero: bool = None, use_proplot_style: bool = True):
     '''
     Plot water level data with a symmetric moving average curve.
-    
+
     #### Arguments
-    
+
     `station` (MonitoringStation): list of input stations
     `dates` (list): dates where data is available
     `levels` (list): level data corresponding to the given dates

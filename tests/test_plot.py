@@ -6,7 +6,6 @@ Unit tests for the plot module.
 
 import import_helper  # noqa
 import pytest
-from datetime import datetime
 
 from floodsystem.plot import plot_water_level_with_moving_average, plot_water_levels, \
     plot_water_level_with_polyfit

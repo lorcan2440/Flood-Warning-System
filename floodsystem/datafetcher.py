@@ -64,7 +64,7 @@ def load(filename: str) -> dict:
     #### Returns
 
     dict: JSON dict
-    '''    
+    '''
 
     f = open(filename, 'r')
     data = json.load(f)
@@ -154,7 +154,7 @@ def fetch_latest_water_level_data(use_cache: bool = False) -> dict:
     #### Returns
 
     dict: JSON-formatted datasets of latest data at each station
-    '''    
+    '''
 
     # URL for retrieving data
     root = "http://environment.data.gov.uk/flood-monitoring/id/measures"

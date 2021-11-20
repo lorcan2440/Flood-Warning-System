@@ -76,17 +76,9 @@ def moving_average(dates: list[datetime.datetime], levels: list[float],
 
     #### Raises
 
-    `TypeError`: if inputs are not the specified type(s)
     `ValueError`: if interval is not between 1 and the input length
     '''
 
-    # standard data type and bounds input checks
-    if len(dates) != len(levels):
-        raise ValueError(f'Inputs must be same length; sizes are {len(dates)} and {len(levels)}')
-    if not all([isinstance(d, datetime.datetime) for d in dates]):
-        raise TypeError('All dates must be datetime.datetime instances.')
-    if not all([isinstance(lev, (float, int)) for lev in levels]):
-        raise TypeError('All levels must be numbers.')
     if not (isinstance(interval, int) and 1 <= interval <= len(dates)):
         raise ValueError('Interval size must between 1 and the input length')
 
@@ -158,7 +150,7 @@ def identify_potentially_bad_data(station_name: str, levels: list[float], **kwar
             else:
                 warn_str = f"Data for {station_name} station on date may be unreliable. "
                 warn_str += f"Found water level value {levels[i]}. This item was \n"
-                warn_str += f"unable to be resolved into a numerical value, and has not been altered."
+                warn_str += "unable to be resolved into a numerical value, and has not been altered."
                 flags.add(warn_str)
 
         # Check for potentially invalid values: negative or impossibly high
@@ -216,7 +208,7 @@ def has_rapid_fluctuations(levels: list[float], interval: int = 3, tol: float = 
     '''
 
     import numpy as np
-    
+
     lv = np.array(levels)
     _, avg = moving_average(*zip(*enumerate(levels)), interval)
     mse = ((lv - avg) ** 2).mean()

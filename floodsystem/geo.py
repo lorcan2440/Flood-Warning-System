@@ -22,16 +22,7 @@ def stations_by_distance(stations: list[MonitoringStation],
     #### Returns
 
     list[tuple[MonitoringStation, float]]: list of (station, distance in kilometres)
-
-    #### Raises
-
-    `TypeError`: if inputs are not the specified type(s)
     '''
-
-    if not (isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])):
-        raise TypeError('Input must be a list of MonitoringStation objects')
-    if not isinstance(p, (tuple, list)):
-        raise TypeError('Coordinate must be a tuple or list.')
 
     # preserve original order in case of other scripts running at the same time
     _stations = stations
@@ -57,18 +48,7 @@ def stations_within_radius(stations: list[MonitoringStation],
     #### Returns
 
     list[MonitoringStation]: list of output stations within range
-
-    #### Raises
-
-    `TypeError`: if inputs are not the specified type(s)
     '''
-
-    if not (isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])):
-        raise TypeError('Input must be a list of MonitoringStation objects')
-    if not isinstance(centre, (tuple, list)):
-        raise TypeError('Coordinate must be a tuple or list')
-    if not isinstance(r, (float, int)):
-        raise TypeError('Radius must be numeric')
 
     sorted_stations = stations_by_distance(stations, centre)
 
@@ -86,14 +66,7 @@ def rivers_with_station(stations: list) -> set[str]:
     #### Returns
 
     set[str]: unique river names of each station
-
-    #### Raises
-    
-    `TypeError`: if inputs are not the specified type(s)
     '''
-
-    if not (isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])):
-        raise TypeError('Input must be a list of MonitoringStation objects')
 
     rivers = {s.river for s in stations} - {None}
 
@@ -111,14 +84,7 @@ def stations_by_river(stations: list) -> dict[str, list[MonitoringStation]]:
     #### Returns
 
     dict[str, list[MonitoringStation]]: mapping of river name to a list of all stations on that river
-
-    #### Raises
-
-    `TypeError`: if inputs are not the specified type(s)
     '''
-
-    if not (isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])):
-        raise TypeError('Input must be a list of MonitoringStation objects')
 
     rivers = rivers_with_station(stations)
 
@@ -131,26 +97,21 @@ def stations_by_river(stations: list) -> dict[str, list[MonitoringStation]]:
 def rivers_by_station_number(stations: list, n: int) -> list[tuple[str, int]]:
     '''
     Finds a list of the most populated rivers in terms of the number of stations on the river.
-    
+
     #### Arguments
-    
+
     `stations` (list): list of input stations
     `n` (int): maximum number of rivers to include
-    
+
     #### Returns
-    
+
     list[tuple[str, int]]: list of (river name, number of stations), sorted descending
 
     #### Raises
 
-    `TypeError`: if inputs are not the specified type(s)
     `ValueError`: if number of rivers is not a positive integer
     '''
 
-    if not (isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])):
-        raise TypeError('Input must be a list of MonitoringStation objects')
-    if not isinstance(n, int):
-        raise TypeError('Number of rivers must be an integer')
     if not n >= 1:
         raise ValueError('Number of stations must be positive')
 
@@ -174,14 +135,7 @@ def stations_by_town(stations: list) -> dict[str, list[MonitoringStation]]:
     #### Returns
 
     dict[str, list[MonitoringStation]]: mapping of town name to a list of all stations in that town
-
-    #### Raises
-
-    `TypeError`: if inputs are not the specified type(s)
     '''
-
-    if not (isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])):
-        raise TypeError('Input must be a list of MonitoringStation objects')
 
     # Get a set of all the towns from all the stations, removing duplicates
     towns = {s.town for s in stations}

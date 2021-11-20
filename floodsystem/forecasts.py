@@ -32,8 +32,8 @@ try:
 except ImportError:
     pass
 
-from tensorflow.keras.models import Sequential, load_model
-from tensorflow.keras.layers import Dense, LSTM
+from tensorflow.keras.models import Sequential, load_model  # noqa
+from tensorflow.keras.layers import Dense, LSTM             # noqa
 
 
 def data_prep(data: np.ndarray, lookback: int,
@@ -50,7 +50,7 @@ def data_prep(data: np.ndarray, lookback: int,
     #### Returns
 
     tuple[np.ndarray, np.ndarray]: arrays x and y, respectively
-    '''    
+    '''
 
     if exclude_latest != 0:
         data = data[:-1 * exclude_latest]

@@ -90,11 +90,11 @@ def build_station_list(use_cache: bool = True) -> list[MonitoringStation]:
 def update_water_levels(stations: list[MonitoringStation]):
     '''
     Attach level data contained in `measure_data` to stations. Fetches over internet.
-    
+
     #### Arguments
-    
+
     `stations` (list[MonitoringStation]): list of input stations
-    '''    
+    '''
 
     # Fetch level data
     measure_data = fetch_latest_water_level_data()

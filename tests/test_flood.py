@@ -35,7 +35,7 @@ def test_stations_level_over_threshold():
     _bad_input = False
     try:
         _bad_input = stations_level_over_threshold(stations, TEST_TOL)
-    except AssertionError:
+    except TypeError:
         assert True
         _bad_input = True
     finally:

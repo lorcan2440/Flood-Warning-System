@@ -21,16 +21,7 @@ def stations_level_over_threshold(stations: list, tol: float) -> list[tuple[Moni
     #### Returns
 
     list[tuple[MonitoringStation, float]]: list of (station, relative water level) tuples
-
-    #### Raises
-
-    `TypeError`: if inputs are not the specified type(s)
     '''
-
-    if not isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations]):
-        raise TypeError('Input must be a list of MonitoringStation instances.')
-    if not isinstance(tol, (int, float)):
-        raise TypeError('Threshold must be a number.')
 
     # Eliminate stations which are invalid due to having inconsistent range data or undefined values
     data = set(stations) - set(inconsistent_typical_range_stations(stations))
@@ -56,14 +47,9 @@ def stations_highest_rel_level(stations: list, num: int) -> list[MonitoringStati
 
     #### Raises
 
-    `TypeError`: if inputs are not the specified type(s)
     `ValueError`: if num is not between 1 and the input length
     '''
 
-    if not (isinstance(stations, list) and all([isinstance(i, MonitoringStation) for i in stations])):
-        raise TypeError('Input must be a list of MonitoringStation instances.')
-    if not isinstance(num, int):
-        raise TypeError('Output length must be an integer.')
     if not 0 <= num <= len(vs := stations_level_over_threshold(stations, float('-inf'))):
         raise ValueError('Output length must be non-negative and not more than the input length.')
 

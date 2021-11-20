@@ -7,6 +7,7 @@ import pytest
 
 from floodsystem.station import MonitoringStation
 
+
 @pytest.fixture()
 def create_dates_and_levels():
 
