@@ -34,11 +34,10 @@ except ImportError:
 
 from tensorflow.keras.models import Sequential, load_model  # noqa
 from tensorflow.keras.layers import Dense, LSTM             # noqa
+from tensorflow.python.keras.callbacks import History
 
-scalar = MinMaxScaler(feature_range=(0, 1))
 
-
-def data_prep(data: np.ndarray, lookback: int,
+def data_prep(data: np.ndarray, lookback: int, scaler: MinMaxScaler,
         exclude_latest: int = 0) -> tuple[np.ndarray, np.ndarray]:
     '''
     Prepares dataset by constructing x, y pairs. Each y is determined on the previous data points (x).
@@ -57,7 +56,7 @@ def data_prep(data: np.ndarray, lookback: int,
     if exclude_latest != 0:
         data = data[:-1 * exclude_latest]
 
-    scaled_levels = scalar.transform(data.reshape(-1, 1))
+    scaled_levels = scaler.transform(data.reshape(-1, 1))
     x = np.array([scaled_levels[i - lookback:i, 0] for i in range(lookback, len(scaled_levels))])
     x = np.reshape(x, (x.shape[0], 1, x.shape[1]))  # samples, time steps, features
     y = np.array([scaled_levels[i, 0] for i in range(lookback, len(scaled_levels))])
@@ -104,6 +103,47 @@ def build_model(lookback: int, **kwargs) -> Sequential:
     return model
 
 
+def plot_model_loss(model: Sequential, model_name: str, history: History, use_logscale: bool = True,
+        use_proplot_style: bool = True, batch_size: int = 'unspecified'):
+    '''
+    Shows a graph of the convergence of the loss for each epoch for a trained model.
+
+    #### Arguments
+
+    `model` (Sequential): model to test
+    `model_name` (str): name of model
+    `history` (History): loss values
+    `use_logscale` (bool, default = True): whether to show loss on a log axis
+    `use_proplot_style` (bool, default = True): use ProPlot stylesheet
+    `batch_size` (int, default = 'unspecified'): batch size for displaying on graph
+    '''
+
+    epoch = len(history.history['loss'])
+    end_loss = history.history['loss'][-1]
+    loss_color = '#1ec888' if end_loss < 0.001 else \
+                 '#e19124' if end_loss < 0.005 else \
+                 '#e8401c'
+    loss_name = model.loss.replace('_', ' ').title()
+
+    if use_proplot_style:
+        plt.style.use(PROPLOT_STYLE_SHEET)
+    else:
+        plt.style.use('default')
+
+    plt.title(f'Loss convergence of training for {model_name}')
+    plt.plot(np.arange(1, epoch + 1), history.history['loss'], label='loss', color='#58308f')
+    plt.plot((1, epoch), (end_loss, end_loss),
+        label=f'converged on {round(end_loss, 6)}', color=loss_color, linestyle='dashed')
+
+    plt.legend()
+    plt.xlabel(f'Epoch number (batch size {batch_size}), out of {epoch}')
+    plt.ylabel(f'Loss ({loss_name})')
+    if use_logscale:
+        plt.yscale('log')
+
+    plt.show()
+
+
 def train_model(model: Sequential, x: list, y: list, batch_size: int, epoch: int, **kwargs) -> Sequential:
     '''
     Trains and saves the Keras model.
@@ -146,19 +186,7 @@ def train_model(model: Sequential, x: list, y: list, batch_size: int, epoch: int
                  '#e8401c'
 
     if show_loss:
-        loss_name = model.loss.replace('_', ' ').title()
-        if use_proplot_style:
-            plt.style.use(PROPLOT_STYLE_SHEET)
-        else:
-            plt.style.use('default')
-        plt.title(f'Loss convergence of training for {model_name}')
-        plt.plot(np.arange(1, epoch + 1), history.history['loss'], label='loss', color='#58308f')
-        plt.plot((1, epoch), (end_loss, end_loss),
-            label=f'converged on {round(end_loss, 6)}', color=loss_color, linestyle='dashed')
-        plt.legend()
-        plt.xlabel(f'Epoch number (batch size {batch_size}), out of {epoch}')
-        plt.ylabel(f'Loss ({loss_name})')
-        plt.show()
+        plot_model_loss(model, model_name, history, use_proplot_style=use_proplot_style)
 
     try:
         model.save(save_file)
@@ -198,12 +226,13 @@ def train_all(stations: list[MonitoringStation], dataset_size: int = 1000, lookb
     '''
 
     trained_models = []
+    scaler = MinMaxScaler(feature_range=(0, 1))
 
     for i, station in enumerate(stations):
         print(f'Training for {station.name} ({i}/{len(stations)})')
         levels = np.array(fetch_measure_levels(station, datetime.timedelta(dataset_size))[1])
-        scalar.fit(levels.reshape(-1, 1))
-        x_train, y_train = data_prep(levels, lookback)
+        scaler.fit(levels.reshape(-1, 1))
+        x_train, y_train = data_prep(levels, lookback, scaler)
         model = build_model(lookback, **kwargs)
         train_model(model, x_train, y_train, batch_size, epoch,
                     save_file=f'./cache/models/{station.name}.hdf5', **kwargs)
@@ -249,7 +278,8 @@ def predict(station: MonitoringStation, dataset_size: int = 1000, lookback: int 
     date, levels = fetch_measure_levels(station, datetime.timedelta(dataset_size))
     date, levels = np.array(date), np.array(levels)
 
-    scalar.fit(levels.reshape(-1, 1))
+    scaler = MinMaxScaler(feature_range=(0, 1))
+    scaler.fit(levels.reshape(-1, 1))
 
     if use_pretrained:
         try:
@@ -267,7 +297,7 @@ def predict(station: MonitoringStation, dataset_size: int = 1000, lookback: int 
 
     # prediction of future `iteration` readings, based on the last `lookback` values
     predictions = None
-    pred_levels = scalar.transform(levels[-lookback:].reshape(-1, 1))
+    pred_levels = scaler.transform(levels[-lookback:].reshape(-1, 1))
     pred_levels = pred_levels.reshape(1, 1, lookback)
     for _ in range(iteration):
         prediction = model.predict(pred_levels)
@@ -277,7 +307,7 @@ def predict(station: MonitoringStation, dataset_size: int = 1000, lookback: int 
     # demo of prediction of the last `display` data points,
     # which is based on the `lookback` values before the final `iteration` points
     demo = None
-    demo_levels = scalar.transform(
+    demo_levels = scaler.transform(
         levels[-display - lookback:-display].reshape(-1, 1)).reshape(1, 1, lookback)
     for _ in range(display):
         prediction = model.predict(demo_levels)
@@ -289,10 +319,9 @@ def predict(station: MonitoringStation, dataset_size: int = 1000, lookback: int 
         os.remove(f'./cache/models/{station_name}.hdf5')
 
     # return on last `display` data points, the demo values, and future predictions
-    dates_upto_present = date[-display:]
-    dates_into_future = [date[-1] + datetime.timedelta(minutes=15) * i for i in range(iteration)]
-    levels_upto_present = levels[-display:]
-    levels_past_predicted = scalar.inverse_transform(demo).ravel()
-    levels_future_predicted = scalar.inverse_transform(predictions).ravel()
-    return (dates_upto_present, dates_into_future), (levels_upto_present, levels_past_predicted,
-        levels_future_predicted)
+    dates_to_now = date[-display:]
+    dates_future = [date[-1] + datetime.timedelta(minutes=15) * i for i in range(iteration)]
+    levels_to_now = levels[-display:]
+    levels_past_predicted = scaler.inverse_transform(demo).ravel()
+    levels_future_predicted = scaler.inverse_transform(predictions).ravel()
+    return (dates_to_now, dates_future), (levels_to_now, levels_past_predicted, levels_future_predicted)

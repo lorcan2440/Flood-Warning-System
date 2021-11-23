@@ -32,6 +32,9 @@ def run():
         dates.update({s.name: data[0]})
         levels.update({s.name: data[1]})
 
+        if dates[s.name][0] is None:
+            continue
+
         # Plot the graphs with polynomial fits and moving average
         plot_water_level_with_polyfit(s, dates[s.name], levels[s.name], poly_degree=p,
             format_dates=True, use_proplot_style=True)

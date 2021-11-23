@@ -1,5 +1,11 @@
 # pylint: disable=import-error
 
+'''
+NOTE: if switching to Dash/Plotly, consider using
+https://plotly.com/python/mapbox-density-heatmaps/
+to display the map as a transparent layer on the map
+'''
+
 import import_helper  # noqa
 
 from floodsystem.stationdata import build_station_list, update_water_levels

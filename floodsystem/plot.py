@@ -21,7 +21,7 @@ PROPLOT_STYLE_SHEET = os.path.join(RESOURCES, 'proplot_style.mplstyle')
 
 
 def plot_water_levels(stations: list, dates: dict, levels: dict, as_subplots: bool = True,
-                      use_proplot_style: bool = True):
+                      use_proplot_style: bool = True, subplots_share_y_axis: bool = False):
     '''
     Plots graph(s) of the level data in stations (which may be a single
     MonitoringStation object or a list of them).
@@ -33,6 +33,7 @@ def plot_water_levels(stations: list, dates: dict, levels: dict, as_subplots: bo
     `levels` (dict): level data corresponding to the given dates
     `as_subplots` (bool, default = True): whether to use multiple plots on the same figure
     `use_proplot_style` (bool, default = True): use ProPlot stylesheet
+    `subplots_share_y_axis` (bool, default = False): if using subplots, all y-axes share same limits
     '''
 
     # remove all stations with inconsistent typical range
@@ -62,6 +63,7 @@ def plot_water_levels(stations: list, dates: dict, levels: dict, as_subplots: bo
             axs[0][i].set_xlabel('dates')
             axs[0][i].set_ylabel('water level / $ m $')
             axs[0][i].tick_params(axis='x', rotation=30)
+            axs[0][i].set_ylim(0, 1.3 * max(list(levels.values())[i]))
 
         for i in range(y - (len(stations) % 2)):
             axs[1][i].plot(list(dates.values())[i + y], list(levels.values())[i + y])
@@ -69,8 +71,11 @@ def plot_water_levels(stations: list, dates: dict, levels: dict, as_subplots: bo
             axs[1][i].set_xlabel('dates')
             axs[1][i].set_ylabel('water level / $ m $')
             axs[1][i].tick_params(axis='x', rotation=30)
+            axs[1][i].set_ylim(0, 1.3 * max(list(levels.values())[i + y]))
 
-        plt.setp(axs, ylim=(0, 0.5 + max(flatten(list(levels.values())))))
+        if subplots_share_y_axis:
+            plt.setp(axs, ylim=(0, 0.5 + max(flatten(list(levels.values())))))
+
         fig.tight_layout()
         fig.show()
 

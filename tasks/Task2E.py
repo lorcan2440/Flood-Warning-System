@@ -31,7 +31,7 @@ def run():
         levels.update({s.name: data[1]})
 
     # Plot the graphs
-    plot_water_levels(high_stations, dates, levels)
+    plot_water_levels(high_stations, dates, levels, as_subplots=False)
 
 
 if __name__ == "__main__":

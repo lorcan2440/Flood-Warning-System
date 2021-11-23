@@ -187,6 +187,7 @@ def fetch_measure_levels(station: Union[MonitoringStation, str], dt: datetime.ti
         **warnings_kwargs: dict) -> tuple[list[datetime.datetime], list[float]]:
     '''
     Fetch measure levels from latest reading and going back a period dt.
+    If there are no measurements available within the specified period, returns ([None], [None]).
 
     #### Arguments
 
@@ -205,6 +206,7 @@ def fetch_measure_levels(station: Union[MonitoringStation, str], dt: datetime.ti
 
     `TypeError`: if the input station was not a MonitoringStation or a str
     `RuntimeWarning`: if potentially bad data is detected from the station
+    `RuntimeWarning`: if the station has not recorded any data within the given period dt
     '''
 
     if not isinstance(station, (MonitoringStation, str)):
@@ -224,8 +226,13 @@ def fetch_measure_levels(station: Union[MonitoringStation, str], dt: datetime.ti
 
     # Fetch data
     data = fetch(url)
-    stationdata = fetch(data['items'][0]['@id'])
-    station_name = stationdata['items']['measure']['label'].split(' LVL ')[0].split(' - ')[0]
+    if data['items'] != []:
+        stationdata = fetch(data['items'][0]['@id'])
+        station_name = stationdata['items']['measure']['label'].split(' LVL ')[0].split(' - ')[0]
+    else:
+        warnings.warn(f'The API call to {url} returned an empty list of items (level data).'
+            'The station may have been down during this time period; try a larger dt. ', RuntimeWarning)
+        return [None], [None]
     flags = {}
 
     # Extract dates and levels
