@@ -17,7 +17,7 @@ View the map by running `python applications/MapViewer.py`.
 
 Map of stations across England:
 
-<img src="media/shaded_map.png" height="375" alt="map1"><img src="media/satellite_map.png" height="375" alt="map2">
+<img src="media/map_uk_stations.png" height="375" alt="map1"><img src="media/satellite_uk_stations.png" height="375" alt="map2">
 
 Hover over a dot to view basic info:
 
