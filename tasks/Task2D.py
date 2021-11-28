@@ -13,7 +13,7 @@ def run():
     stations = build_station_list()
 
     # Station name to find
-    station_name = "Cam"
+    station_name = "Hartlepool Valley Drive"
 
     # Find station
     try:
@@ -23,7 +23,7 @@ def run():
         return
 
     # Fetch data over past 2 days
-    dt = 2
+    dt = 10
     dates, levels = fetch_measure_levels(station_cam.measure_id, dt=datetime.timedelta(days=dt))
 
     if dates[0] is None:

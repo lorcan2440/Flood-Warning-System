@@ -3,7 +3,7 @@
 An API and demo frontend for monitoring flood likelihood in England, UK. Built to extend the Part IA Lent Term computing activity at CUED. Run the files in the `tasks` directory to see the standard functionality,
 or by using
 
-``` shell
+```shell
 $ ./runtasks.sh
 ```
 
@@ -21,17 +21,23 @@ Map of stations across England:
 
 Hover over a dot to view basic info:
 
-<img src="media/hover.png" height="500" alt="hover">
+<img src="media/satellite_hover.png" height="500" alt="hover">
 
 Click on a dot to go to the official [gov.uk](https://check-for-flooding.service.gov.uk/) site for the station:
 
-<img src="media/gov_station_page.png" height="500" alt="gov.uk site">
+<img src="media/station_gov_page.png" height="500" alt="gov.uk site">
 
 ## Forecasting
 
 View some forecasts by running `python applications/LevelPredictions.py`. Forecasting can be done at each station by training and predicting from an LSTM (long short-term memory) RNN (recurrent neural network). Training and evaluation is done with `tensorflow` and `scikit-learn`.
 
-<img src="media/forecast.png" height="375" alt="forecast">
+Example 1: forecast of a tidal stations:
+
+<img src="media/tidal_forecast.png" height="375" alt="forecast">
+
+Example 2: forecast of a river level shortly after a storm event (predicted the rise, but likely overestimates the future fall)
+
+<img src="media/river_forecast.png" height="375" alt="forecast">
 
 ## Installing
 
@@ -49,7 +55,7 @@ The `floodsystem` module will then be available for use. Alternatively, if `git`
 
 Various uses of the API are given in the `tasks` folder. To get started,
 
-``` python
+```python
 from floodsystem.stationdata import build_station_list, update_water_levels
 
 stations = build_station_list()
@@ -58,7 +64,7 @@ update_water_levels(stations)
 
 Then the functions can be used, e.g.
 
-``` python
+```python
 from floodsystem.flood import stations_level_over_threshold
 print(stations_level_over_threshold(stations, 1.0))
 ```

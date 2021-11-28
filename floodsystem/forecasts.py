@@ -243,7 +243,7 @@ def train_all(stations: list[MonitoringStation], dataset_size: int = 1000, lookb
 
 def predict(station: MonitoringStation, dataset_size: int = 1000, lookback: int = 2000,
         iteration: int = 100, display: int = 300, use_pretrained: bool = True, batch_size: int = 256,
-        epoch: int = 20, del_model_after: bool = False) -> tuple[tuple[list, list], tuple[list, list, list]]:
+        epoch: int = 20, del_model_after: bool = True) -> tuple[tuple[list, list], tuple[list, list, list]]:
     '''
     Predicts a specified number of future water levels of a specific station.
     If the model for that station is not cached, it will be trained according to the parameters specified.
@@ -265,7 +265,7 @@ def predict(station: MonitoringStation, dataset_size: int = 1000, lookback: int 
     `use_pretrained` (bool, default = True): whether to used pretrained model if possible
     `batch_size` (int, default = 256): number of samples processed before the model parameters are updated
     `epoch` (int, default = 20): number of times to work through the full dataset
-    `del_model_after` (bool, default = False): whether to delete the ~30 MB model file after predicting
+    `del_model_after` (bool, default = True): whether to delete the ~30 MB model file after predicting
 
     #### Returns
 
