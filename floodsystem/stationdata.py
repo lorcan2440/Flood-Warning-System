@@ -173,6 +173,7 @@ def update_rainfall_levels(gauges: list[RainfallGauge]):
 
     # Fetch level data
     measure_data = fetch_latest_rainfall_data()
+    print(measure_data)
 
     # Build map from measure id to latest reading (value)
     m_id_to_value = dict()
@@ -180,7 +181,7 @@ def update_rainfall_levels(gauges: list[RainfallGauge]):
         if 'latestReading' in measure:
             latest_reading = measure['latestReading']
             measure_id = latest_reading['measure']
-            m_id_to_value[measure_id] = latest_reading['value']
+            m_id_to_value[measure_id] = (latest_reading['value'], latest_reading['dateTime'])
 
     # Attach latest reading to station objects
     for g in gauges:

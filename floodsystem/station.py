@@ -163,7 +163,8 @@ class RainfallGauge:
     Recorded in millimeters and available to 1 decimal places, or a resolution of 0.1 mm.
 
     `latest_recorded_datetime` (datetime.datetime, default = None): the date and time when the most
-    recent rainfall level was recorded at this station. Usually rounds to the nearest 15 minutes.
+    recent rainfall level was recorded at this station. Typically updates once or twice a day, rounded to
+    the nearest 15 minutes.
 
     `period` (float, default = None): the time between successive readings, in seconds.
 

@@ -233,7 +233,7 @@ def fetch_latest_rainfall_data(use_cache: bool = False) -> dict:
     '''
 
     # URL for retrieving data
-    ROOT_URL = "https://environment.data.gov.uk/flood-monitoring/id/measures?parameter=rainfall"
+    ROOT_URL = "https://environment.data.gov.uk/flood-monitoring/id/measures"
     API_STR = "?parameter=rainfall"
     url = ROOT_URL + API_STR
     CACHE_DIR = 'cache/data'
