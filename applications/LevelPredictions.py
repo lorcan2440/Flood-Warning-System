@@ -24,7 +24,7 @@ def run():
     # get predictions
     for s in stations_to_predict:
         print(f'Getting predictions for {s.name}...')
-        predictions[s.name] = predict(s)
+        predictions[s.name] = predict(s, del_model_after=False)
 
     # plot graphs
     for s in stations_to_predict:

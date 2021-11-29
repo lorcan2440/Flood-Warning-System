@@ -72,7 +72,7 @@ def test_fetch_latest_water_level_data():
     # don't use cache first
     test_data = fetch_latest_water_level_data()
     assert test_data is not None
-    assert os.path.isfile(os.path.join('cache', 'data', 'level_data.json'))
+    assert os.path.isfile(os.path.join('cache', 'data', 'station_water_level_data.json'))
 
     # use cache
     test_data = fetch_latest_water_level_data(use_cache=True)
