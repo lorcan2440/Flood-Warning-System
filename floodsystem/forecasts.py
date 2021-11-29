@@ -34,7 +34,7 @@ except ImportError:
 
 from tensorflow.keras.models import Sequential, load_model  # noqa
 from tensorflow.keras.layers import Dense, LSTM             # noqa
-from tensorflow.python.keras.callbacks import History
+from tensorflow.python.keras.callbacks import History       # noqa
 
 
 def data_prep(data: np.ndarray, lookback: int, scaler: MinMaxScaler,
@@ -179,11 +179,6 @@ def train_model(model: Sequential, x: list, y: list, batch_size: int, epoch: int
     use_proplot_style = kwargs.get('use_proplot_style', True)
 
     history = model.fit(x, y, batch_size=batch_size, epochs=epoch, verbose=verbose)
-    end_loss = history.history['loss'][-1]
-
-    loss_color = '#1ec888' if end_loss < 0.001 else \
-                 '#e19124' if end_loss < 0.005 else \
-                 '#e8401c'
 
     if show_loss:
         plot_model_loss(model, model_name, history, use_proplot_style=use_proplot_style)

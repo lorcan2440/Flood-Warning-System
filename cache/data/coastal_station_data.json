@@ -7,13 +7,86 @@
         "version": "0.9",
         "comment": "Status: Beta service",
         "hasFormat": [
-            "http://environment.data.gov.uk/flood-monitoring/id/stations.csv?status=Active&parameter=level&qualifier=Stage&_view=full&type=Coastal",
-            "http://environment.data.gov.uk/flood-monitoring/id/stations.rdf?status=Active&parameter=level&qualifier=Stage&_view=full&type=Coastal",
-            "http://environment.data.gov.uk/flood-monitoring/id/stations.ttl?status=Active&parameter=level&qualifier=Stage&_view=full&type=Coastal",
-            "http://environment.data.gov.uk/flood-monitoring/id/stations.html?status=Active&parameter=level&qualifier=Stage&_view=full&type=Coastal"
+            "http://environment.data.gov.uk/flood-monitoring/id/stations.csv?status=Active&parameter=level&_view=full&type=Coastal",
+            "http://environment.data.gov.uk/flood-monitoring/id/stations.rdf?status=Active&parameter=level&_view=full&type=Coastal",
+            "http://environment.data.gov.uk/flood-monitoring/id/stations.ttl?status=Active&parameter=level&_view=full&type=Coastal",
+            "http://environment.data.gov.uk/flood-monitoring/id/stations.html?status=Active&parameter=level&_view=full&type=Coastal"
         ]
     },
     "items": [
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E70039",
+            "RLOIid": "6282",
+            "catchmentName": "England - East Coast",
+            "dateOpened": "2012-01-19",
+            "easting": 654780,
+            "gridReference": "TM 5478 9274",
+            "label": "Lowestoft",
+            "lat": 52.473075,
+            "long": 1.750085,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E70039-level-tidal_level-Mean-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 292741,
+            "notation": "E70039",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E70039/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E70039/stageScale/maxOnRecord",
+                    "dateTime": "1953-01-31T21:00:00",
+                    "value": 3.35
+                },
+                "scaleMax": 3
+            },
+            "stationReference": "E70039",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Lowestoft"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E72639",
+            "RLOIid": "3014",
+            "catchmentName": "England - South Coast",
+            "dateOpened": "2012-02-24",
+            "easting": 349530,
+            "gridReference": "ST 4953 7815",
+            "label": "Avonmouth Portbury",
+            "lat": 51.49999,
+            "long": -2.728468,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E72639-level-tidal_level-Mean-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 178147,
+            "notation": "E72639",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E72639/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E72639/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-03T08:15:00",
+                    "value": 8.626
+                },
+                "scaleMax": 10
+            },
+            "stationReference": "E72639",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Avonmouth",
+            "wiskiID": "530102_FW"
+        },
         {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3404",
             "RLOIid": "8333",
@@ -53,6 +126,447 @@
             "wiskiID": "L3404"
         },
         {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E2900-southern",
+            "RLOIid": "1029",
+            "catchmentName": "Swale",
+            "dateOpened": "1992-03-10",
+            "easting": 590800,
+            "label": "Queenborough",
+            "lat": 51.415798,
+            "long": 0.742491,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E2900-southern-level-tidal_level-i-15_min----",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "---"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E2900-southern-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 172100,
+            "notation": "E2900-southern",
+            "riverName": "River Medway",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E2900-southern/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E2900-southern/stageScale/maxOnRecord",
+                    "dateTime": "1993-11-15T00:30:00",
+                    "value": 3.959
+                },
+                "scaleMax": 10
+            },
+            "stationReference": "E2900",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Queenborough",
+            "wiskiID": "452318003"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71539",
+            "RLOIid": "1157",
+            "catchmentName": "England - East Coast",
+            "dateOpened": "2012-01-27",
+            "easting": 590740,
+            "gridReference": "TQ 9074 7542",
+            "label": "Sheerness",
+            "lat": 51.445627,
+            "long": 0.743415,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E71539-level-tidal_level-Mean-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 175419,
+            "notation": "E71539",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71539/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71539/stageScale/maxOnRecord",
+                    "dateTime": "2016-11-21T04:15:00",
+                    "value": 4.29
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "E71539",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Sheerness"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0006",
+            "RLOIid": "7389",
+            "catchmentName": "London",
+            "dateOpened": "1988-01-01",
+            "easting": 530320,
+            "label": "Westminster",
+            "lat": 51.501216,
+            "long": -0.12385,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/0006-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 179700,
+            "notation": "0006",
+            "riverName": "Thames Tideway",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0006/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0006/stageScale/maxOnRecord",
+                    "dateTime": "1999-02-18T15:30:00",
+                    "value": 4.83
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "0006",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Westminster",
+            "wiskiID": "4250TH"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3901",
+            "RLOIid": "8372",
+            "catchmentName": "Tees",
+            "dateOpened": "1992-01-01",
+            "easting": 454311,
+            "gridReference": "NZ5431123508",
+            "label": "Tees Dock",
+            "lat": 54.603816,
+            "long": -1.16076,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3901-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 523508,
+            "notation": "L3901",
+            "riverName": "River Tees",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3901/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3901/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-05T16:45:00",
+                    "value": 4.09
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "L3901",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Middlesborough",
+            "wiskiID": "L3901"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46110",
+            "RLOIid": "3226",
+            "catchmentName": "Teign Torbay and South Hams",
+            "dateOpened": "2000-01-01",
+            "easting": 290203,
+            "label": "Coombe Cellars",
+            "lat": 50.541046,
+            "long": -3.550843,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/46110-level-tidal_level-i-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "m"
+                }
+            ],
+            "northing": 72402,
+            "notation": "46110",
+            "riverName": "River Teign",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46110/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46110/stageScale/maxOnRecord",
+                    "dateTime": "2004-10-27T17:45:00",
+                    "value": 3.113
+                },
+                "scaleMax": 4
+            },
+            "stationReference": "46110",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Combeinteignhead",
+            "wiskiID": "S46504_FW"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E1538",
+            "RLOIid": "6002",
+            "catchmentName": "England - East Coast",
+            "dateOpened": "1970-01-01",
+            "easting": 553200,
+            "label": "Boygrift",
+            "lat": 53.293005,
+            "long": 0.297051,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E1538-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 379800,
+            "notation": "E1538",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E1538/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E1538/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-05T19:00:00",
+                    "value": 5.119
+                },
+                "scaleMax": 6
+            },
+            "stationReference": "E1538",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Sandilands",
+            "wiskiID": "E5717"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71939",
+            "RLOIid": "3352",
+            "catchmentName": "England - South Coast",
+            "dateOpened": "2011-10-01",
+            "easting": 408930,
+            "gridReference": "SZ 0893 9053",
+            "label": "Bournemouth",
+            "lat": 50.714331,
+            "long": -1.874873,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E71939-level-tidal_level-Mean-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 90530,
+            "notation": "E71939",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71939/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71939/stageScale/maxOnRecord",
+                    "dateTime": "2018-01-04T11:00:00",
+                    "value": 1.24
+                },
+                "scaleMax": 3
+            },
+            "stationReference": "E71939",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Bournemouth"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44202",
+            "RLOIid": "3280",
+            "catchmentName": "Frome, Piddle, Poole Harbour and Purbeck",
+            "dateOpened": "1992-01-01",
+            "easting": 392400,
+            "label": "Wareham",
+            "lat": 50.683502,
+            "long": -2.108932,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/44202-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 87100,
+            "notation": "44202",
+            "riverName": "Dorset Coast",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44202/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44202/stageScale/maxOnRecord",
+                    "dateTime": "2001-10-17T22:00:00",
+                    "value": 1.436
+                },
+                "scaleMax": 2
+            },
+            "stationReference": "44202",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Wareham",
+            "wiskiID": "FWWA01_FW"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0007",
+            "RLOIid": "7391",
+            "catchmentName": "London",
+            "dateOpened": "1988-01-01",
+            "easting": 533437,
+            "label": "Tower Pier",
+            "lat": 51.506753,
+            "long": -0.078706,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/0007-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 180397,
+            "notation": "0007",
+            "riverName": "Thames Tideway",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0007/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0007/stageScale/maxOnRecord",
+                    "dateTime": "1990-03-01T04:00:00",
+                    "value": 4.81
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "0007",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Tower Pier",
+            "wiskiID": "4270TH"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E14993",
+            "RLOIid": "1018",
+            "catchmentName": "Isle of Wight",
+            "dateOpened": "2000-01-01",
+            "easting": 463100,
+            "label": "Bembridge",
+            "lat": 50.693632,
+            "long": -1.107996,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E14993-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 88600,
+            "notation": "E14993",
+            "riverName": "Eastern Yar",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E14993/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E14993/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-06T01:15:00",
+                    "value": 2.866
+                },
+                "scaleMax": 7
+            },
+            "stationReference": "E14993",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "St Helens",
+            "wiskiID": "50101021"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71239",
+            "RLOIid": "6005",
+            "catchmentName": "England - East Coast",
+            "dateOpened": "2012-01-20",
+            "easting": 621979,
+            "gridReference": "TG 2198 4254",
+            "label": "Cromer",
+            "lat": 52.934316,
+            "long": 1.301623,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E71239-level-tidal_level-Mean-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 342539,
+            "notation": "E71239",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71239/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71239/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-05T20:00:00",
+                    "value": 3.76
+                },
+                "scaleMax": 4
+            },
+            "stationReference": "E71239",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Overstrand"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44105",
+            "RLOIid": "3294",
+            "catchmentName": "West Dorset Streams",
+            "dateOpened": "2003-02-17",
+            "easting": 346235,
+            "label": "West Bay",
+            "lat": 50.711622,
+            "long": -2.762844,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/44105-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 90499,
+            "notation": "44105",
+            "riverName": "Dorset Coast",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44105/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44105/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-14T19:15:00",
+                    "value": 2.965
+                },
+                "scaleMax": 4
+            },
+            "stationReference": "44105",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "West Bay",
+            "wiskiID": "FWWE02_FW"
+        },
+        {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/50124",
             "RLOIid": "3119",
             "catchmentName": "Taw and North Devon Streams",
@@ -87,6 +601,150 @@
             "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
             "town": "Braunton",
             "wiskiID": "S50496_FW"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/45127",
+            "RLOIid": "3252",
+            "catchmentName": "Exe",
+            "dateOpened": "1973-10-12",
+            "easting": 299335,
+            "label": "Exmouth",
+            "lat": 50.616779,
+            "long": -3.424247,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/45127-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 80643,
+            "notation": "45127",
+            "riverName": "South Devon Coast",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/45127/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/45127/stageScale/maxOnRecord",
+                    "dateTime": "2004-10-27T18:00:00",
+                    "value": 3.112
+                },
+                "scaleMax": 4
+            },
+            "stationReference": "45127",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Exmouth Tide",
+            "wiskiID": "SX98F020"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/50180",
+            "RLOIid": "3094",
+            "catchmentName": "Exe",
+            "dateOpened": "2005-01-01",
+            "easting": 298860,
+            "label": "Lympstone",
+            "lat": 50.648044,
+            "long": -3.431911,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/50180-level-tidal_level-i-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "m"
+                }
+            ],
+            "northing": 84130,
+            "notation": "50180",
+            "riverName": "Exe Estuary",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/50180/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/50180/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-04T22:00:00",
+                    "value": 3.238
+                },
+                "scaleMax": 4
+            },
+            "stationReference": "50180",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Lympstone",
+            "wiskiID": "SX98F015"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46121",
+            "RLOIid": "3361",
+            "catchmentName": "Teign Torbay and South Hams",
+            "dateOpened": "2005-09-15",
+            "easting": 293880,
+            "label": "Teignmouth",
+            "lat": 50.544315,
+            "long": -3.499054,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/46121-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 72690,
+            "notation": "46121",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46121/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46121/stageScale/maxOnRecord",
+                    "dateTime": "2008-03-10T08:30:00",
+                    "value": 2.97
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "46121",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Teignmouth",
+            "wiskiID": "SX97F010"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0008",
+            "RLOIid": "7392",
+            "catchmentName": "London",
+            "dateOpened": "1988-01-01",
+            "easting": 528578,
+            "label": "Chelsea",
+            "lat": 51.484369,
+            "long": -0.149631,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/0008-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 177781,
+            "notation": "0008",
+            "riverName": "Thames Tideway",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0008/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0008/stageScale/maxOnRecord",
+                    "dateTime": "2005-12-16T14:00:00",
+                    "value": 4.95
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "0008",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Chelsea",
+            "wiskiID": "4230TH"
         },
         {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E9740",
@@ -125,6 +783,260 @@
             "wiskiID": "254110001"
         },
         {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44106",
+            "RLOIid": "3282",
+            "catchmentName": "West Dorset Streams",
+            "dateOpened": "1992-01-01",
+            "easting": 368863,
+            "label": "Portland",
+            "lat": 50.569876,
+            "long": -2.441027,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/44106-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 74552,
+            "notation": "44106",
+            "riverName": "Dorset Coast",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44106/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44106/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-14T19:30:00",
+                    "value": 2.019
+                },
+                "scaleMax": 2
+            },
+            "stationReference": "44106",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Portland",
+            "wiskiID": "F440300_FW"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E72039",
+            "RLOIid": "3353",
+            "catchmentName": "England - South Coast",
+            "dateOpened": "2011-09-30",
+            "easting": 368399,
+            "gridReference": "SY 6840 7885",
+            "label": "Weymouth",
+            "lat": 50.608501,
+            "long": -2.447945,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E72039-level-tidal_level-Mean-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 78850,
+            "notation": "E72039",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E72039/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E72039/stageScale/maxOnRecord",
+                    "dateTime": "2018-01-04T09:00:00",
+                    "value": 1.82
+                },
+                "scaleMax": 3
+            },
+            "stationReference": "E72039",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Weymouth"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E1442",
+            "RLOIid": "6012",
+            "catchmentName": "Grimsby and Ancholme",
+            "dateOpened": "1995-01-01",
+            "easting": 497500,
+            "label": "South Ferriby",
+            "lat": 53.677267,
+            "long": -0.525433,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E1442-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 421100,
+            "notation": "E1442",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E1442/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E1442/stageScale/maxOnRecord",
+                    "dateTime": "2001-08-22T08:15:00",
+                    "value": 5.142
+                },
+                "scaleMax": 6
+            },
+            "stationReference": "E1442",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Ferriby Sluice",
+            "wiskiID": "T29006"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E41137",
+            "RLOIid": "6015",
+            "catchmentName": "Broadland Rivers",
+            "dateOpened": "1992-12-01",
+            "easting": 653419,
+            "gridReference": "TG 53420 03690",
+            "label": "Great Yarmouth",
+            "lat": 52.571947,
+            "long": 1.738433,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E41137-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 303692,
+            "notation": "E41137",
+            "riverName": "Norfolk Coast",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E41137/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E41137/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-05T22:30:00",
+                    "value": 3.318
+                },
+                "scaleMax": 4
+            },
+            "stationReference": "E41137",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Great Yarmouth",
+            "wiskiID": "T341504"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71639",
+            "RLOIid": "1158",
+            "catchmentName": "England - South Coast",
+            "dateOpened": "2012-01-26",
+            "easting": 632650,
+            "gridReference": "TR 3265 4026",
+            "label": "Dover",
+            "lat": 51.114372,
+            "long": 1.322641,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E71639-level-tidal_level-Mean-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 140260,
+            "notation": "E71639",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71639/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71639/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-06T00:45:00",
+                    "value": 4.762
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "E71639",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Dover"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E42196",
+            "RLOIid": "6292",
+            "catchmentName": "England - East Coast",
+            "dateOpened": "1992-03-01",
+            "easting": 650235,
+            "gridReference": "TM5024174974",
+            "label": "Southwold",
+            "lat": 52.315823,
+            "long": 1.670054,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E42196-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 274979,
+            "notation": "E42196",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E42196/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E42196/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-05T22:45:00",
+                    "value": 2.805
+                },
+                "scaleMax": 3
+            },
+            "stationReference": "E42196",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Southwold",
+            "wiskiID": "T350201"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E73439-anglian",
+            "RLOIid": "5067",
+            "catchmentName": "England - West Coast",
+            "dateOpened": "2011-12-02",
+            "easting": 339820,
+            "gridReference": "SD 3982 5993",
+            "label": "Heysham",
+            "lat": 54.031798,
+            "long": -2.920253,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E73439-anglian-level-tidal_level-Mean-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 459928,
+            "notation": "E73439-anglian",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E73439-anglian/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E73439-anglian/stageScale/maxOnRecord",
+                    "dateTime": "2018-01-02T23:30:00",
+                    "value": 6.325
+                },
+                "scaleMax": 7
+            },
+            "stationReference": "E73439",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Heysham"
+        },
+        {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3203",
             "RLOIid": "8103",
             "catchmentName": "Hull and East Riding",
@@ -134,6 +1046,22 @@
             "lat": 53.739883,
             "long": -0.330677,
             "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3203-level-downstage-i-15_min----",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Downstream Stage",
+                    "unitName": "---"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3203-level-downstage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Downstream Stage",
+                    "unitName": "mAOD"
+                },
                 {
                     "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3203-level-stage-i-15_min----",
                     "parameter": "level",
@@ -148,6 +1076,14 @@
                     "parameterName": "Water Level",
                     "period": 900,
                     "qualifier": "Stage",
+                    "unitName": "mAOD"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3203-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
                     "unitName": "mAOD"
                 }
             ],
@@ -168,6 +1104,189 @@
             "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
             "town": "Kingston Upon Hull",
             "wiskiID": "L3203"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E4804",
+            "RLOIid": "6072",
+            "catchmentName": "Witham",
+            "dateOpened": "1999-05-09",
+            "easting": 536500,
+            "label": "Hobhole Sluice",
+            "lat": 52.939133,
+            "long": 0.029724,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E4804-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 339900,
+            "notation": "E4804",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E4804/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E4804/stageScale/maxOnRecord",
+                    "dateTime": "2001-09-19T07:15:00",
+                    "value": 5.409
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "E4804",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Fishtoft",
+            "wiskiID": "T30002"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3491",
+            "RLOIid": "8036",
+            "catchmentName": "Hull and East Riding",
+            "dateOpened": "1996-03-31",
+            "easting": 493400,
+            "label": "Brough",
+            "lat": 53.727084,
+            "long": -0.585836,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3491-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 426561,
+            "notation": "L3491",
+            "riverName": "Brough Clough",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3491/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3491/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-05T19:15:00",
+                    "value": 6.07
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "L3491",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Brough",
+            "wiskiID": "L3491"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E23327",
+            "RLOIid": "6013",
+            "catchmentName": "North Norfolk",
+            "dateOpened": "1992-12-01",
+            "datumOffset": 0.5,
+            "easting": 591501,
+            "gridReference": "TF 91503 43899",
+            "label": "Wells",
+            "lat": 52.958281,
+            "long": 0.849573,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E23327-level-tidal_level-i-15_min-mASD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mASD"
+                }
+            ],
+            "northing": 343902,
+            "notation": "E23327",
+            "riverName": "North Norfolk Coast",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E23327/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E23327/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-05T19:15:00",
+                    "value": 5.215
+                },
+                "scaleMax": 6
+            },
+            "stationReference": "E23327",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Wells-Next-The-Sea",
+            "wiskiID": "T340301"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/48184",
+            "RLOIid": "3386",
+            "catchmentName": "Seaton, Looe and Fowey",
+            "dateOpened": "2006-04-20",
+            "easting": 212681,
+            "gridReference": "SX1268051783",
+            "label": "Fowey",
+            "lat": 50.336116,
+            "long": -4.633573,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/48184-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 51783,
+            "notation": "48184",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/48184/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/48184/stageScale/maxOnRecord",
+                    "dateTime": "2016-04-10T07:15:00",
+                    "value": 3.146
+                },
+                "scaleMax": 4
+            },
+            "stationReference": "48184",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Fowey",
+            "wiskiID": "T15153_FW"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E14521",
+            "RLOIid": "1024",
+            "catchmentName": "New Forest",
+            "dateOpened": "1992-03-01",
+            "easting": 432771,
+            "label": "Lymington Tide",
+            "lat": 50.763011,
+            "long": -1.536709,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E14521-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 96038,
+            "notation": "E14521",
+            "riverName": "Lymington",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E14521/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E14521/stageScale/maxOnRecord",
+                    "dateTime": "2014-04-14T22:30:00",
+                    "value": 2.203
+                },
+                "scaleMax": 3
+            },
+            "stationReference": "E14521",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Lymington",
+            "wiskiID": "155010001"
         },
         {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L1800",
@@ -214,6 +1333,150 @@
             "wiskiID": "L1800"
         },
         {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/49122",
+            "RLOIid": "3140",
+            "catchmentName": "North Cornwall",
+            "dateOpened": "1993-10-12",
+            "easting": 199116,
+            "label": "Wadebridge",
+            "lat": 50.516694,
+            "long": -4.834988,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/49122-level-tidal_level-i-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "m"
+                }
+            ],
+            "northing": 72385,
+            "notation": "49122",
+            "riverName": "North Cornwall Coast",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/49122/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/49122/stageScale/maxOnRecord",
+                    "dateTime": "2014-03-02T05:45:00",
+                    "value": 4.744
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "49122",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Wadebridge",
+            "wiskiID": "T25778_FW"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0009",
+            "RLOIid": "7393",
+            "catchmentName": "London",
+            "dateOpened": "1988-01-01",
+            "easting": 517070,
+            "label": "Richmond",
+            "lat": 51.462258,
+            "long": -0.316193,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/0009-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 175043,
+            "notation": "0009",
+            "riverName": "Thames Tideway",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0009/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0009/stageScale/maxOnRecord",
+                    "dateTime": "2018-12-11T14:00:00",
+                    "value": 5.39
+                },
+                "scaleMax": 6
+            },
+            "stationReference": "0009",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Richmond",
+            "wiskiID": "3550TH"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44232",
+            "RLOIid": "3279",
+            "catchmentName": "Frome, Piddle, Poole Harbour and Purbeck",
+            "dateOpened": "2009-11-02",
+            "easting": 400600,
+            "label": "Poole Harbour",
+            "lat": 50.710531,
+            "long": -1.992859,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/44232-level-1-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "1",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 90100,
+            "notation": "44232",
+            "riverName": "Dorset Coast",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44232/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44232/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-14T21:15:00",
+                    "value": 1.643
+                },
+                "scaleMax": 2
+            },
+            "stationReference": "44232",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Poole",
+            "wiskiID": "449010"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/49150",
+            "RLOIid": "3130",
+            "catchmentName": "North Cornwall",
+            "dateOpened": "1998-05-01",
+            "easting": 219905,
+            "label": "Bude",
+            "lat": 50.832964,
+            "long": -4.558854,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/49150-level-tidal_level-i-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "m"
+                }
+            ],
+            "northing": 106836,
+            "notation": "49150",
+            "riverName": "North Cornwall Coast",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/49150/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/49150/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-03T06:30:00",
+                    "value": 5.137
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "49150",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Bude",
+            "wiskiID": "S27571_FW"
+        },
+        {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/48129",
             "RLOIid": "3162",
             "catchmentName": "Fal and St Austell Streams",
@@ -248,6 +1511,158 @@
             "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
             "town": "Truro",
             "wiskiID": "T19547_FW"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E72439",
+            "RLOIid": "3095",
+            "catchmentName": "England - South Coast",
+            "dateOpened": "2011-10-11",
+            "easting": 252549,
+            "gridReference": "SS 5255 4789",
+            "label": "Ilfracombe",
+            "lat": 51.211131,
+            "long": -4.112362,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E72439-level-tidal_level-Mean-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 147891,
+            "notation": "E72439",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E72439/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E72439/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-03T07:00:00",
+                    "value": 5.698
+                },
+                "scaleMax": 7
+            },
+            "stationReference": "E72439",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Ilfracombe"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E2085",
+            "RLOIid": "6014",
+            "catchmentName": "Nene",
+            "dateOpened": "1992-01-01",
+            "easting": 549100,
+            "label": "West Lighthouse",
+            "lat": 52.808232,
+            "long": 0.210573,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E2085-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 325700,
+            "notation": "E2085",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E2085/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E2085/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-05T19:00:00",
+                    "value": 6.032
+                },
+                "scaleMax": 7
+            },
+            "stationReference": "E2085",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Guy's Head",
+            "wiskiID": "T32006"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0019",
+            "RLOIid": "7386",
+            "catchmentName": "London",
+            "dateOpened": "1988-01-01",
+            "easting": 589060,
+            "label": "Southend",
+            "lat": 51.514457,
+            "long": 0.723335,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/0019-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/0019-level-tidal_level-i-1_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 60,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 183020,
+            "notation": "0019",
+            "riverName": "Thames Tideway",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0019/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0019/stageScale/maxOnRecord",
+                    "dateTime": "2013-03-13T04:00:00",
+                    "value": 4.221
+                },
+                "scaleMax": 4
+            },
+            "stationReference": "0019",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Southend",
+            "wiskiID": "5670TH"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E8980",
+            "RLOIid": "1032",
+            "catchmentName": "Adur",
+            "dateOpened": "1996-01-01",
+            "easting": 523426,
+            "label": "Shoreham Harbour",
+            "lat": 50.828848,
+            "long": -0.24883,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E8980-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 104718,
+            "notation": "E8980",
+            "riverName": "River Adur",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E8980/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E8980/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-06T01:15:00",
+                    "value": 4.033
+                },
+                "scaleMax": 6
+            },
+            "stationReference": "E8980",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Shoreham Beach",
+            "wiskiID": "253100001"
         },
         {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3311",
@@ -296,6 +1711,115 @@
             "wiskiID": "L3311"
         },
         {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E70939",
+            "RLOIid": "8150",
+            "catchmentName": "England - East Coast",
+            "dateOpened": "2012-01-13",
+            "easting": 435929,
+            "gridReference": "NZ 3593 6824",
+            "label": "North Shields",
+            "lat": 55.007415,
+            "long": -1.439769,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E70939-level-tidal_level-Mean-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 568240,
+            "notation": "E70939",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E70939/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E70939/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-05T16:30:00",
+                    "value": 4.036
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "E70939",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Cullercoats"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E12660",
+            "RLOIid": "1034",
+            "catchmentName": "Test and Itchen",
+            "dateOpened": "1993-06-22",
+            "easting": 443140,
+            "gridReference": "SU4315110254",
+            "label": "Woolston",
+            "lat": 50.890128,
+            "long": -1.38803,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E12660-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 110250,
+            "notation": "E12660",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E12660/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E12660/stageScale/maxOnRecord",
+                    "dateTime": "2008-03-10T12:15:00",
+                    "value": 2.875
+                },
+                "scaleMax": 7
+            },
+            "stationReference": "E12660",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Woolston",
+            "wiskiID": "152300002"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E73639-anglian",
+            "RLOIid": "5155",
+            "catchmentName": "England - West Coast",
+            "dateOpened": "2011-12-12",
+            "easting": 298980,
+            "gridReference": "NX 9898 2953",
+            "label": "Workington",
+            "lat": 54.650691,
+            "long": -3.56717,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E73639-anglian-level-tidal_level-Mean-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 529529,
+            "notation": "E73639-anglian",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E73639-anglian/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E73639-anglian/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-03T12:30:00",
+                    "value": 5.7
+                },
+                "scaleMax": 7
+            },
+            "stationReference": "E73639",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Workington"
+        },
+        {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/720763",
             "RLOIid": "5051",
             "catchmentName": "Lune and Wyre",
@@ -311,6 +1835,30 @@
                     "parameterName": "Water Level",
                     "period": 900,
                     "qualifier": "Stage",
+                    "unitName": "mASD"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/720763-level-tidal_level-Mean-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "m"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/720763-level-tidal_level-Mean-15_min-mASD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mASD"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/720763-level-tidal_level-i-15_min-mASD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
                     "unitName": "mASD"
                 }
             ],
@@ -330,6 +1878,42 @@
             "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
             "town": "Fleetwood",
             "wiskiID": "720763"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/52124",
+            "RLOIid": "3067",
+            "catchmentName": "Parrett, Brue and West Somerset Streams",
+            "dateOpened": "1997-01-01",
+            "easting": 330008,
+            "label": "West Quay",
+            "lat": 51.129895,
+            "long": -3.001618,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/52124-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 137213,
+            "notation": "52124",
+            "riverName": "River Parrett",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/52124/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/52124/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-03T08:00:00",
+                    "value": 8.085
+                },
+                "scaleMax": 9
+            },
+            "stationReference": "52124",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Bridgwater",
+            "wiskiID": "520721_FW"
         },
         {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/3892TH",
@@ -367,6 +1951,405 @@
             "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
             "town": "Brentford",
             "wiskiID": "3892TH"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3001",
+            "RLOIid": "8031",
+            "catchmentName": "Hull and East Riding",
+            "dateOpened": "1997-04-14",
+            "easting": 518650,
+            "label": "Bridlington",
+            "lat": 54.079845,
+            "long": -0.187892,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3001-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 466400,
+            "notation": "L3001",
+            "riverName": "North Sea",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3001/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3001/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-05T17:45:00",
+                    "value": 4.563
+                },
+                "scaleMax": 5.5
+            },
+            "stationReference": "L3001",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Bridlington",
+            "wiskiID": "L3001"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E72139",
+            "RLOIid": "3344",
+            "catchmentName": "England - South Coast",
+            "dateOpened": "2011-10-11",
+            "easting": 244690,
+            "gridReference": "SX 4469 5434",
+            "label": "Plymouth",
+            "lat": 50.368401,
+            "long": -4.185217,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E72139-level-tidal_level-Mean-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 54339,
+            "notation": "E72139",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E72139/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E72139/stageScale/maxOnRecord",
+                    "dateTime": "2012-01-12T07:30:00",
+                    "value": 3.577
+                },
+                "scaleMax": 4
+            },
+            "stationReference": "E72139",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Devonport",
+            "wiskiID": "T12483_FW"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/022999",
+            "RLOIid": "8026",
+            "catchmentName": "Northumberland Rivers",
+            "dateOpened": "2002-01-23",
+            "easting": 432300,
+            "label": "Blyth",
+            "lat": 55.12861,
+            "long": -1.494986,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/022999-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 581700,
+            "notation": "022999",
+            "riverName": "North Sea",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/022999/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/022999/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-05T16:15:00",
+                    "value": 3.876
+                },
+                "scaleMax": 4.5
+            },
+            "stationReference": "022999",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Blyth",
+            "wiskiID": "022999"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0001",
+            "RLOIid": "7388",
+            "catchmentName": "London",
+            "dateOpened": "1988-01-01",
+            "easting": 542579,
+            "label": "Silvertown",
+            "lat": 51.497504,
+            "long": 0.052616,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/0001-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 179616,
+            "notation": "0001",
+            "riverName": "Thames Tideway",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0001/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0001/stageScale/maxOnRecord",
+                    "dateTime": "1993-01-11T14:30:00",
+                    "value": 5.28
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "0001",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Silvertown",
+            "wiskiID": "4460TH"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71739",
+            "RLOIid": "1026",
+            "catchmentName": "England - South Coast",
+            "dateOpened": "2012-02-09",
+            "easting": 545109,
+            "gridReference": "TQ 4511 0004",
+            "label": "Newhaven",
+            "lat": 50.781775,
+            "long": 0.057004,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E71739-level-tidal_level-Mean-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 100039,
+            "notation": "E71739",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71739/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71739/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-06T01:15:00",
+                    "value": 4.27
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "E71739",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Newhaven",
+            "wiskiID": "372610002"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E24323",
+            "RLOIid": "6003",
+            "catchmentName": "Essex",
+            "dateOpened": "1992-12-01",
+            "easting": 604179,
+            "gridReference": "TM 04187 21251",
+            "label": "Colne Barrier",
+            "lat": 51.852475,
+            "long": 0.963271,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E24323-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 221250,
+            "notation": "E24323",
+            "riverName": "Essex Coast",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E24323/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E24323/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-06T01:45:00",
+                    "value": 3.997
+                },
+                "scaleMax": 4
+            },
+            "stationReference": "E24323",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Wivenhoe",
+            "wiskiID": "TM372302"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/51103",
+            "RLOIid": "3093",
+            "catchmentName": "Parrett, Brue and West Somerset Streams",
+            "dateOpened": "1999-01-01",
+            "easting": 297115,
+            "label": "Minehead",
+            "lat": 51.213871,
+            "long": -3.474382,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/51103-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 147108,
+            "notation": "51103",
+            "riverName": "North Somerset Coast",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/51103/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/51103/stageScale/maxOnRecord",
+                    "dateTime": "2006-03-30T07:00:00",
+                    "value": 6.919
+                },
+                "scaleMax": 7
+            },
+            "stationReference": "51103",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Minehead",
+            "wiskiID": "510501_FW"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43106",
+            "RLOIid": "3332",
+            "catchmentName": "Dorset Stour",
+            "dateOpened": "1992-01-01",
+            "easting": 416089,
+            "label": "Christchurch",
+            "lat": 50.730338,
+            "long": -1.773396,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/43106-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 92327,
+            "notation": "43106",
+            "riverName": "Christchurch Coast",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43106/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43106/stageScale/maxOnRecord",
+                    "dateTime": "2000-06-26T20:30:00",
+                    "value": 1.993
+                },
+                "scaleMax": 3
+            },
+            "stationReference": "43106",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Christchurch",
+            "wiskiID": "F440200_FW"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71039",
+            "RLOIid": "8216",
+            "catchmentName": "England - East Coast",
+            "dateOpened": "2012-05-02",
+            "easting": 489840,
+            "gridReference": "NZ 8984 1140",
+            "label": "Whitby",
+            "lat": 54.489967,
+            "long": -0.614597,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E71039-level-tidal_level-Mean-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 511399,
+            "notation": "E71039",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71039/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71039/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-28T15:00:00",
+                    "value": 4.696
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "E71039",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Whitby"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0020",
+            "RLOIid": "7394",
+            "catchmentName": "London",
+            "dateOpened": "1988-01-01",
+            "easting": 562320,
+            "label": "Tilbury",
+            "lat": 51.456735,
+            "long": 0.334956,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/0020-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 175670,
+            "notation": "0020",
+            "riverName": "Thames Tideway",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0020/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0020/stageScale/maxOnRecord",
+                    "dateTime": "2006-03-04T03:15:00",
+                    "value": 4.78
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "0020",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Tilbury",
+            "wiskiID": "5620TH"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E15040",
+            "RLOIid": "1020",
+            "catchmentName": "Isle of Wight",
+            "dateOpened": "1998-01-01",
+            "easting": 449700,
+            "label": "Cowes",
+            "lat": 50.763267,
+            "long": -1.296672,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E15040-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 96200,
+            "notation": "E15040",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E15040/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E15040/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-14T23:00:00",
+                    "value": 2.734
+                },
+                "scaleMax": 2
+            },
+            "stationReference": "E15040",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "East Cowes",
+            "wiskiID": "50301015"
         },
         {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3313",
@@ -460,6 +2443,231 @@
             "wiskiID": "L3401"
         },
         {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E70139-anglian",
+            "RLOIid": "5084",
+            "catchmentName": "England - West Coast",
+            "dateOpened": "2012-01-05",
+            "easting": 332489,
+            "gridReference": "SJ 3249 9525",
+            "label": "Liverpool",
+            "lat": 53.449655,
+            "long": -3.018007,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E70139-anglian-level-tidal_level-Mean-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 395250,
+            "notation": "E70139-anglian",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E70139-anglian/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E70139-anglian/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-06T12:30:00",
+                    "value": 6.06
+                },
+                "scaleMax": 7
+            },
+            "stationReference": "E70139",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Bootle",
+            "wiskiID": "694670"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/49116",
+            "RLOIid": "3146",
+            "catchmentName": "North Cornwall",
+            "dateOpened": "1998-02-01",
+            "easting": 192000,
+            "label": "Padstow",
+            "lat": 50.541735,
+            "long": -4.936938,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/49116-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 75450,
+            "notation": "49116",
+            "riverName": "North Cornwall Coast",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/49116/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/49116/stageScale/maxOnRecord",
+                    "dateTime": "2014-08-12T18:30:00",
+                    "value": 4.777
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "49116",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Padstow",
+            "wiskiID": "T25579_FW"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E6415",
+            "RLOIid": "1030",
+            "catchmentName": "Rother",
+            "dateOpened": "1992-01-01",
+            "easting": 592200,
+            "label": "Rye Harbour",
+            "lat": 50.947386,
+            "long": 0.734753,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E6415-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 120000,
+            "notation": "E6415",
+            "riverName": "River Rother",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E6415/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E6415/stageScale/maxOnRecord",
+                    "dateTime": "2018-06-01T09:30:00",
+                    "value": 5.234
+                },
+                "scaleMax": 9
+            },
+            "stationReference": "E6415",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Rye",
+            "wiskiID": "556300001"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E15110",
+            "RLOIid": "1047",
+            "catchmentName": "Isle of Wight",
+            "dateOpened": "2004-01-01",
+            "easting": 450110,
+            "label": "Newport",
+            "lat": 50.701997,
+            "long": -1.291783,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E15110-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E15110-level-tidal_level-i-15_min-mASD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mASD"
+                }
+            ],
+            "northing": 89390,
+            "notation": "E15110",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E15110/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E15110/stageScale/maxOnRecord",
+                    "dateTime": "2008-03-10T12:00:00",
+                    "value": 2.693
+                },
+                "scaleMax": 6
+            },
+            "stationReference": "E15110",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Newport",
+            "wiskiID": "50301017"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/48113",
+            "RLOIid": "3172",
+            "catchmentName": "West Cornwall",
+            "dateOpened": "2001-09-01",
+            "easting": 154727,
+            "label": "Hayle Tideflap",
+            "lat": 50.175819,
+            "long": -5.436545,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/48113-level-tidal_level-i-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "m"
+                }
+            ],
+            "northing": 36297,
+            "notation": "48113",
+            "riverName": "River Hayle",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/48113/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/48113/stageScale/maxOnRecord",
+                    "dateTime": "2012-04-10T07:30:00",
+                    "value": 4.525
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "48113",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Hayle",
+            "wiskiID": "T22796_FW"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71439",
+            "RLOIid": "6283",
+            "catchmentName": "England - South Coast",
+            "dateOpened": "2012-02-13",
+            "easting": 626340,
+            "gridReference": "TM 2634 3284",
+            "label": "Harwich",
+            "lat": 51.947978,
+            "long": 1.292108,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E71439-level-tidal_level-Mean-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 232841,
+            "notation": "E71439",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71439/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71439/stageScale/maxOnRecord",
+                    "dateTime": "1953-01-31T23:00:00",
+                    "value": 4.02
+                },
+                "scaleMax": 4
+            },
+            "stationReference": "E71439",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Harwich"
+        },
+        {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3314",
             "RLOIid": "8337",
             "catchmentName": "Hull and East Riding",
@@ -470,6 +2678,14 @@
             "lat": 53.735923,
             "long": -0.210149,
             "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3314-level-1-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "1",
+                    "unitName": "mAOD"
+                },
                 {
                     "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3314-level-stage-i-15_min-mAOD",
                     "parameter": "level",
@@ -496,6 +2712,42 @@
             "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
             "town": "Hedon",
             "wiskiID": "L3314"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0003",
+            "RLOIid": "7390",
+            "catchmentName": "London",
+            "dateOpened": "1988-01-01",
+            "easting": 540347,
+            "label": "Charlton",
+            "lat": 51.496948,
+            "long": 0.020435,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/0003-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 179492,
+            "notation": "0003",
+            "riverName": "Thames Tideway",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0003/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0003/stageScale/maxOnRecord",
+                    "dateTime": "2005-12-16T13:45:00",
+                    "value": 4.74
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "0003",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Charlton",
+            "wiskiID": "4410TH"
         },
         {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L24012",
@@ -532,6 +2784,223 @@
             "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
             "town": "Blacktoft",
             "wiskiID": "L24012"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46154",
+            "RLOIid": "3363",
+            "catchmentName": "Teign Torbay and South Hams",
+            "dateOpened": "2007-12-13",
+            "easting": 287886,
+            "label": "Dartmouth",
+            "lat": 50.35115,
+            "long": -3.577216,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/46154-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 51327,
+            "notation": "46154",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46154/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46154/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-03T07:15:00",
+                    "value": 2.904
+                },
+                "scaleMax": 6
+            },
+            "stationReference": "46154",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Dartmouth",
+            "wiskiID": "SX85F010"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/48160",
+            "RLOIid": "3154",
+            "catchmentName": "West Cornwall",
+            "dateOpened": "2007-01-25",
+            "easting": 152085,
+            "label": "St Ives",
+            "lat": 50.215231,
+            "long": -5.476421,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/48160-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 40810,
+            "notation": "48160",
+            "riverName": "North Cornwall Coast",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/48160/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/48160/stageScale/maxOnRecord",
+                    "dateTime": "2011-03-21T06:00:00",
+                    "value": 4.537
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "48160",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "St Ives",
+            "wiskiID": "T2211"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3370",
+            "RLOIid": "8194",
+            "catchmentName": "Hull and East Riding",
+            "dateOpened": "1998-06-30",
+            "easting": 539600,
+            "label": "Spurn Point",
+            "lat": 53.577909,
+            "long": 0.107029,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3370-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 411100,
+            "notation": "L3370",
+            "riverName": "North Sea",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3370/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3370/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-05T18:30:00",
+                    "value": 5.239
+                },
+                "scaleMax": 6
+            },
+            "stationReference": "L3370",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Spurn Point",
+            "wiskiID": "L3370"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E72239",
+            "RLOIid": "3156",
+            "catchmentName": "England - South Coast",
+            "dateOpened": "2012-05-31",
+            "easting": 146759,
+            "gridReference": "SW 4676 2856",
+            "label": "Newlyn",
+            "lat": 50.103007,
+            "long": -5.542779,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E72239-level-tidal_level-Mean-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 28559,
+            "notation": "E72239",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E72239/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E72239/stageScale/maxOnRecord",
+                    "dateTime": "2015-03-24T07:30:00",
+                    "value": 4.784
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "E72239",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Newlyn",
+            "wiskiID": "T21599_FW"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71839",
+            "RLOIid": "1028",
+            "catchmentName": "England - South Coast",
+            "dateOpened": "2012-03-23",
+            "easting": 462730,
+            "gridReference": "SU 6273 0068",
+            "label": "Portsmouth",
+            "lat": 50.80228,
+            "long": -1.11118,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E71839-level-tidal_level-Mean-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 100679,
+            "notation": "E71839",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71839/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71839/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-06T01:00:00",
+                    "value": 2.82
+                },
+                "scaleMax": 4
+            },
+            "stationReference": "E71839",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Gosport"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44111",
+            "RLOIid": "3289",
+            "catchmentName": "West Dorset Streams",
+            "dateOpened": "1988-01-01",
+            "easting": 367000,
+            "label": "Chiswell",
+            "lat": 50.56481,
+            "long": -2.467283,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/44111-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 74000,
+            "notation": "44111",
+            "riverName": "Dorset Coast",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44111/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44111/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-05T11:15:00",
+                    "value": 6.444
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "44111",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Portland",
+            "wiskiID": "FWCH06_FW"
         },
         {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L24013",
@@ -578,6 +3047,42 @@
             "wiskiID": "L24013"
         },
         {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/TORQ",
+            "RLOIid": "3362",
+            "catchmentName": "Teign Torbay and South Hams",
+            "dateOpened": "2006-01-26",
+            "easting": 291840,
+            "label": "Torquay Outer",
+            "lat": 50.458178,
+            "long": -3.525069,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/TORQ-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 63150,
+            "notation": "TORQ",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/TORQ/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/TORQ/stageScale/maxOnRecord",
+                    "dateTime": "2008-03-10T08:45:00",
+                    "value": 3.257
+                },
+                "scaleMax": 7
+            },
+            "stationReference": "TORQ",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Torquay",
+            "wiskiID": "SX96F010"
+        },
+        {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46155",
             "RLOIid": "3406",
             "catchmentName": "Teign Torbay and South Hams",
@@ -612,6 +3117,340 @@
             "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
             "town": "Totnes",
             "wiskiID": "SX86F010"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71139",
+            "RLOIid": "6008",
+            "catchmentName": "England - East Coast",
+            "dateOpened": "2012-02-03",
+            "easting": 519959,
+            "gridReference": "TA 1996 1638",
+            "label": "Immingham",
+            "lat": 53.63018,
+            "long": -0.18742,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E71139-level-tidal_level-Mean-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 416378,
+            "notation": "E71139",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71139/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71139/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-05T19:00:00",
+                    "value": 5.305
+                },
+                "scaleMax": 6
+            },
+            "stationReference": "E71139",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Grimsby",
+            "wiskiID": "E5697"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/021999",
+            "RLOIid": "8020",
+            "catchmentName": "Till",
+            "dateOpened": "2005-10-19",
+            "easting": 399779,
+            "label": "Berwick",
+            "lat": 55.767093,
+            "long": -2.005082,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/021999-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 652641,
+            "notation": "021999",
+            "riverName": "River Tweed",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/021999/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/021999/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-05T16:15:00",
+                    "value": 3.667
+                },
+                "scaleMax": 4
+            },
+            "stationReference": "021999",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Berwick",
+            "wiskiID": "021999"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E7290",
+            "RLOIid": "1027",
+            "catchmentName": "Cuckmere and Pevensey Levels",
+            "dateOpened": "1991-01-01",
+            "easting": 566147,
+            "label": "Pevensey",
+            "lat": 50.814742,
+            "long": 0.357116,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E7290-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 104336,
+            "notation": "E7290",
+            "riverName": "Salt Haven",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E7290/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E7290/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-06T01:00:00",
+                    "value": 4.795
+                },
+                "scaleMax": 5
+            },
+            "stationReference": "E7290",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Pevensey Bay",
+            "wiskiID": "371300001"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E14980",
+            "RLOIid": "9226",
+            "catchmentName": "Isle of Wight",
+            "dateOpened": "1992-03-10",
+            "easting": 435190,
+            "gridReference": "SZ3519089632",
+            "label": "Yarmouth",
+            "lat": 50.705265,
+            "long": -1.503022,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E14980-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 89632,
+            "notation": "E14980",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E14980/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E14980/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-14T22:45:00",
+                    "value": 2.146
+                }
+            },
+            "stationReference": "E14980",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Yarmouth",
+            "wiskiID": "50501002"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0018",
+            "RLOIid": "9154",
+            "catchmentName": "London",
+            "dateOpened": "2000-01-01",
+            "easting": 551938,
+            "gridReference": "TQ5193878139",
+            "label": "Erith Deep Wharf",
+            "lat": 51.481798,
+            "long": 0.186705,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/0018-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 178139,
+            "notation": "0018",
+            "riverName": "Thames Tideway",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0018/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0018/stageScale/maxOnRecord",
+                    "dateTime": "2009-02-10T13:15:00",
+                    "value": 4.794
+                }
+            },
+            "stationReference": "0018",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Erith",
+            "wiskiID": "4480TH"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E14330",
+            "RLOIid": "9238",
+            "catchmentName": "New Forest",
+            "dateOpened": "2002-04-12",
+            "easting": 438782,
+            "gridReference": "SU3874002324",
+            "label": "Beaulieu",
+            "lat": 50.819049,
+            "long": -1.450824,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E14330-level-downstage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Downstream Stage",
+                    "unitName": "mAOD"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E14330-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 102311,
+            "notation": "E14330",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E14330/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E14330/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-14T22:45:00",
+                    "value": 2.55
+                }
+            },
+            "stationReference": "E14330",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Beaulieu",
+            "wiskiID": "151003004"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E1152",
+            "RLOIid": "9051",
+            "catchmentName": "Grimsby and Ancholme",
+            "dateOpened": "1998-01-19",
+            "easting": 511990,
+            "gridReference": "TA11992543",
+            "label": "Goxhill",
+            "lat": 53.713268,
+            "long": -0.304607,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E1152-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 425430,
+            "notation": "E1152",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E1152/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E1152/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-05T18:45:00",
+                    "value": 4.832
+                }
+            },
+            "stationReference": "E1152",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Goxhill",
+            "wiskiID": "T29009"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E14111",
+            "RLOIid": "9263",
+            "catchmentName": "New Forest",
+            "dateOpened": "1999-08-25",
+            "easting": 436513,
+            "gridReference": "SU 36513 12526",
+            "label": "Eling",
+            "lat": 50.911049,
+            "long": -1.482017,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E14111-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 112526,
+            "notation": "E14111",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E14111/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E14111/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-02T23:45:00",
+                    "value": 2.664
+                }
+            },
+            "stationReference": "E14111",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Totton",
+            "wiskiID": "151600001"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E24861",
+            "RLOIid": "6004",
+            "catchmentName": "Essex",
+            "dateOpened": "2001-04-05",
+            "easting": 617844,
+            "gridReference": "TM 17845 14287",
+            "label": "Clacton Pier",
+            "lat": 51.784824,
+            "long": 1.156997,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E24861-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 214289,
+            "notation": "E24861",
+            "riverName": "Essex Coast",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E24861/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E24861/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-06T01:30:00",
+                    "value": 3.756
+                },
+                "scaleMax": 4
+            },
+            "stationReference": "E24861",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Clacton-On-Sea",
+            "wiskiID": "T372602"
         },
         {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3230",
@@ -748,6 +3587,57 @@
             "wiskiID": "L3207"
         },
         {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3250",
+            "RLOIid": "9383",
+            "catchmentName": "Hull and East Riding",
+            "dateOpened": "1996-03-30",
+            "easting": 510665,
+            "gridReference": "TA1066543388",
+            "label": "Riston Pumping Station",
+            "lat": 53.874886,
+            "long": -0.318231,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3250-level-downstage-i-15_min----",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Downstream Stage",
+                    "unitName": "---"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3250-level-downstage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Downstream Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 443388,
+            "notation": "L3250",
+            "riverName": "Monk Dyke",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3250/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3250/stageScale/maxOnRecord",
+                    "dateTime": "2003-12-30T00:00:00",
+                    "value": 3.05
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3250/stageScale/minOnRecord",
+                    "dateTime": "2001-09-13T00:00:00",
+                    "value": -0.4
+                },
+                "typicalRangeHigh": 2,
+                "typicalRangeLow": -0.312
+            },
+            "stationReference": "L3250",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Riston Pumping Station",
+            "wiskiID": "L3250"
+        },
+        {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3246",
             "RLOIid": "8383",
             "catchmentName": "Hull and East Riding",
@@ -758,6 +3648,14 @@
             "lat": 53.86754,
             "long": -0.367529,
             "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3246-level-downstage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Downstream Stage",
+                    "unitName": "mAOD"
+                },
                 {
                     "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3246-level-stage-i-15_min-mAOD",
                     "parameter": "level",
@@ -797,6 +3695,14 @@
             "long": -0.309166,
             "measures": [
                 {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3243-level-downstage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Downstream Stage",
+                    "unitName": "mAOD"
+                },
+                {
                     "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3243-level-stage-i-15_min-mAOD",
                     "parameter": "level",
                     "parameterName": "Water Level",
@@ -827,6 +3733,43 @@
             "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
             "town": "Bransholme Great Culvert Pumping Station",
             "wiskiID": "L3243"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E24826",
+            "RLOIid": "6296",
+            "catchmentName": "East Suffolk",
+            "dateOpened": "2000-02-01",
+            "easting": 642651,
+            "gridReference": "TM 42651 49382",
+            "label": "Orford Ness",
+            "lat": 52.08954,
+            "long": 1.540693,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E24826-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 249382,
+            "notation": "E24826",
+            "riverName": "Suffolk Coast",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E24826/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E24826/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-06T02:00:00",
+                    "value": 3.036
+                },
+                "scaleMax": 4
+            },
+            "stationReference": "E24826",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Orford",
+            "wiskiID": "T350502"
         },
         {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46152",
@@ -863,6 +3806,42 @@
             "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
             "town": "Newton Abbot",
             "wiskiID": "SX87F021"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/50198",
+            "RLOIid": "9013",
+            "catchmentName": "Taw and North Devon Streams",
+            "dateOpened": "2009-03-31",
+            "easting": 255480,
+            "gridReference": "SS5548033220",
+            "label": "Barnstaple",
+            "lat": 51.080046,
+            "long": -4.064537,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/50198-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 133220,
+            "notation": "50198",
+            "riverName": "River Taw",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/50198/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/50198/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-01T19:15:00",
+                    "value": 5.742
+                }
+            },
+            "stationReference": "50198",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Barnstaple",
+            "wiskiID": "SS53F010"
         },
         {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/L3320",
@@ -920,6 +3899,14 @@
             "lat": 53.652632,
             "long": -0.131044,
             "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3331-level-downstage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Downstream Stage",
+                    "unitName": "mAOD"
+                },
                 {
                     "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3331-level-stage-i-15_min-mAOD",
                     "parameter": "level",
@@ -1032,6 +4019,125 @@
             "wiskiID": "L3112"
         },
         {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E47901",
+            "RLOIid": "6009",
+            "catchmentName": "North West Norfolk",
+            "dateOpened": "2015-09-11",
+            "easting": 561626,
+            "gridReference": "TF6162619770",
+            "label": "King's Lynn",
+            "lat": 52.751366,
+            "long": 0.393311,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E47901-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E47901-level-tidal_level-i-5_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 300,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 319770,
+            "notation": "E47901",
+            "riverName": "River Great Ouse",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E47901/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E47901/stageScale/maxOnRecord",
+                    "dateTime": "2017-01-13T19:00:00",
+                    "value": 4.954
+                },
+                "scaleMax": 7
+            },
+            "stationReference": "E47901",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "King's Lynn",
+            "wiskiID": "T33853"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E41694",
+            "RLOIid": "6298",
+            "catchmentName": "East Suffolk",
+            "dateOpened": "2015-02-05",
+            "easting": 639090,
+            "gridReference": "TM3909157635",
+            "label": "Snape",
+            "lat": 52.165149,
+            "long": 1.494612,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E41694-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 257635,
+            "notation": "E41694",
+            "riverName": "Suffolk Coast",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E41694/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E41694/stageScale/maxOnRecord",
+                    "dateTime": "2017-01-14T01:45:00",
+                    "value": 2.51
+                },
+                "scaleMax": 2
+            },
+            "stationReference": "E41694",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Snape",
+            "wiskiID": "T350203"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E23343",
+            "RLOIid": "6297",
+            "catchmentName": "East Suffolk",
+            "dateOpened": "1996-08-06",
+            "easting": 627315,
+            "gridReference": "TM 27315 48381",
+            "label": "Woodbridge",
+            "lat": 52.087062,
+            "long": 1.316578,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E23343-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 248381,
+            "notation": "E23343",
+            "riverName": "Suffolk Coast",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E23343/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E23343/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-06T01:30:00",
+                    "value": 3.349
+                },
+                "scaleMax": 4
+            },
+            "stationReference": "E23343",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Woodbridge",
+            "wiskiID": "T351001"
+        },
+        {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/45180",
             "RLOIid": "9010",
             "catchmentName": "Exe",
@@ -1066,6 +4172,112 @@
             "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
             "town": "Topsham",
             "wiskiID": "SX98F010"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46164",
+            "RLOIid": "9012",
+            "catchmentName": "Teign Torbay and South Hams",
+            "dateOpened": "2013-05-15",
+            "easting": 273811,
+            "gridReference": "SX7381143390",
+            "label": "Kingsbridge",
+            "lat": 50.276953,
+            "long": -3.772303,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/46164-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 43390,
+            "notation": "46164",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46164/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46164/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-14T18:00:00",
+                    "value": 3.098
+                }
+            },
+            "stationReference": "46164",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Kingsbridge",
+            "wiskiID": "SX74F005"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46163",
+            "RLOIid": "9011",
+            "catchmentName": "Teign Torbay and South Hams",
+            "dateOpened": "2008-04-08",
+            "easting": 274040,
+            "gridReference": "SX7404038770",
+            "label": "Salcombe",
+            "lat": 50.235473,
+            "long": -3.767553,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/46163-level-tidal_level-i-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "m"
+                }
+            ],
+            "northing": 38770,
+            "notation": "46163",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46163/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/46163/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-05T09:45:00",
+                    "value": 3.467
+                }
+            },
+            "stationReference": "46163",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Salcombe",
+            "wiskiID": "SX73F010"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E1555",
+            "RLOIid": "9052",
+            "catchmentName": "Grimsby and Ancholme",
+            "dateOpened": "2002-02-01",
+            "easting": 508025,
+            "label": "New Holland",
+            "lat": 53.704256,
+            "long": -0.365039,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E1555-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 424334,
+            "notation": "E1555",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E1555/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E1555/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-05T19:00:00",
+                    "value": 5.81
+                }
+            },
+            "stationReference": "E1555",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "wiskiID": "T29050"
         },
         {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E3810",
@@ -1104,6 +4316,165 @@
             "wiskiID": "654800002"
         },
         {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/52163",
+            "RLOIid": "9129",
+            "catchmentName": "Parrett, Brue and West Somerset Streams",
+            "dateOpened": "1998-09-04",
+            "easting": 330900,
+            "label": "Dunball Tidal",
+            "lat": 51.162253,
+            "long": -2.989562,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/52163-level-downstage-i-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Downstream Stage",
+                    "unitName": "m"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/52163-level-tidal_level-i-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "m"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/52163-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 140800,
+            "notation": "52163",
+            "riverName": "River Parrett",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/52163/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/52163/stageScale/maxOnRecord",
+                    "dateTime": "2019-02-21T00:00:00",
+                    "value": 7.094
+                }
+            },
+            "stationReference": "52163",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Dunball",
+            "wiskiID": "520899"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E12672",
+            "RLOIid": "9200",
+            "catchmentName": "East Hampshire",
+            "dateOpened": "2004-01-01",
+            "easting": 448859,
+            "gridReference": "SU4885905694",
+            "label": "Hamble",
+            "lat": 50.848707,
+            "long": -1.307335,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E12672-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 105694,
+            "notation": "E12672",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E12672/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E12672/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-06T02:45:00",
+                    "value": 2.797
+                }
+            },
+            "stationReference": "E12672",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Hamble",
+            "wiskiID": "152509001"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E11360",
+            "RLOIid": "9206",
+            "catchmentName": "East Hampshire",
+            "dateOpened": "2005-09-01",
+            "easting": 468791,
+            "gridReference": "SU6879100087",
+            "label": "Langstone",
+            "lat": 50.796271,
+            "long": -1.025294,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E11360-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 100087,
+            "notation": "E11360",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E11360/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E11360/stageScale/maxOnRecord",
+                    "dateTime": "2018-01-04T12:45:00",
+                    "value": 2.92
+                }
+            },
+            "stationReference": "E11360",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "LANGSTONE",
+            "wiskiID": "153900004"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E15100",
+            "RLOIid": "9214",
+            "catchmentName": "Isle of Wight",
+            "dateOpened": "2004-03-10",
+            "easting": 459360,
+            "gridReference": "SZ5936093597",
+            "label": "Ryde",
+            "lat": 50.738956,
+            "long": -1.160138,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E15100-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 93597,
+            "notation": "E15100",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E15100/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E15100/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-14T23:00:00",
+                    "value": 3.06
+                }
+            },
+            "stationReference": "E15100",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Ryde",
+            "wiskiID": "50201003"
+        },
+        {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/2708SO",
             "RLOIid": "1025",
             "catchmentName": "Arun and Western Streams",
@@ -1138,6 +4509,43 @@
             "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
             "town": "Selsey",
             "wiskiID": "255311001"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/755900B",
+            "RLOIid": "5205",
+            "catchmentName": "Eden and Esk",
+            "dateOpened": "2010-01-17",
+            "easting": 310610,
+            "gridReference": "NY1061053474",
+            "label": "Silloth Docks",
+            "lat": 54.868007,
+            "long": -3.394362,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/755900B-level-tidal_level-Mean-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "m"
+                }
+            ],
+            "northing": 553474,
+            "notation": "755900B",
+            "riverName": "Irish Sea",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/755900B/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/755900B/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-03T12:45:00",
+                    "value": 6.4
+                },
+                "scaleMax": 7
+            },
+            "stationReference": "755900B",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Silloth Docks",
+            "wiskiID": "755900"
         },
         {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/371301002",
@@ -1175,6 +4583,71 @@
             "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
             "town": "Eastbourne Harbour",
             "wiskiID": "371301002"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/531191",
+            "RLOIid": "9290",
+            "catchmentName": "Severn Estuary Coastal Zone",
+            "dateOpened": "2019-12-17",
+            "easting": 360278,
+            "gridReference": "ST6029192671",
+            "label": "Oldbury",
+            "lat": 51.631442,
+            "long": -2.575285,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/531191-level-tidal_level-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 192672,
+            "notation": "531191",
+            "riverName": "Oldbury Tidal Naite Rhyne",
+            "stageScale": "http://environment.data.gov.uk/flood-monitoring/id/stations/531191/stageScale",
+            "stationReference": "531191",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Oldbury",
+            "wiskiID": "542002"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E22184",
+            "RLOIid": "9380",
+            "catchmentName": "Ouse",
+            "dateOpened": "1995-02-13",
+            "easting": 561250,
+            "gridReference": "TF61251865",
+            "label": "Freebridge",
+            "lat": 52.741419,
+            "long": 0.387195,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E22184-level-tidal_level-i-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "m"
+                }
+            ],
+            "northing": 318650,
+            "notation": "E22184",
+            "riverName": "River Great Ouse",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E22184/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E22184/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-05T19:15:00",
+                    "value": 6.186
+                }
+            },
+            "stationReference": "E22184",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Kings Lynn",
+            "wiskiID": "T33851"
         }
     ]
 }

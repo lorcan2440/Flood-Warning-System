@@ -14,13 +14,11 @@ from floodsystem.map import display_stations_on_map
 
 def run():
 
-    stations = build_station_list()
+    stations, nums = build_station_list(return_numbers=True)
     update_water_levels(stations)
-    display_stations_on_map(stations, map_design='satellite', filedir='applications/output')
-    print(f'Displaying {len(stations)} monitoring stations on the map. \n \n'
-    '>>> \t Use the toolbar on the right to interact with the map e.g. zoom, pan, save. \n'
-    '>>> \t Hover over a dot to view basic info about the station. \n'
-    '>>> \t Click on a dot to view the graph of the level data on the official gov.uk site.')
+
+    display_stations_on_map(stations,
+        map_design='STAMEN_TERRAIN_RETINA', filedir='applications/output', filter_station_type=None)
 
 
 if __name__ == "__main__":

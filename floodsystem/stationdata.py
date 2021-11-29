@@ -5,12 +5,14 @@ JSON objects fetched from the Internet and
 
 # pylint: disable=relative-beyond-top-level
 
+from itertools import groupby
+
 from .datafetcher import fetch_stationdata, fetch_latest_water_level_data, \
     fetch_gauge_data, fetch_latest_rainfall_data
 from .station import MonitoringStation, RainfallGauge
 
 
-def build_station_list(use_cache: bool = True) -> list[MonitoringStation]:
+def build_station_list(use_cache: bool = True, return_numbers: bool = False) -> list[MonitoringStation]:
     '''
     Build and return a list of all river level monitoring stations
     based on data fetched from the Environment agency. Each station is
@@ -22,18 +24,23 @@ def build_station_list(use_cache: bool = True) -> list[MonitoringStation]:
     #### Arguments
 
     `use_cache` (bool, default = True): whether to try fetching station data from a local cache
+    `return_numbers` (bool, default = False): whether to additionally return a second value,
+        the numbers of river-level, tidal and groundwater stations found respectively
 
     #### Returns
 
     list[MonitoringStation]: station objects built from obtained data
+    dict[str, int] (optional): a mapping of the number of types of station found, in the form
+        {'River Level': #, 'Tidal': #, 'Groundwater': #}
     '''
 
-    data, coastal_data = fetch_stationdata(use_cache=use_cache)
+    river_data, coastal_data, groundwater_data = fetch_stationdata(use_cache=use_cache)
 
     coastal_ids = {s['@id'] for s in coastal_data['items']}
+    groundwater_ids = {s['@id'] for s in groundwater_data['items']}
 
     stations = []
-    for e in data["items"]:
+    for e in river_data["items"] + coastal_data["items"] + groundwater_data["items"]:
 
         station_id = e.get('@id', None)
 
@@ -54,10 +61,11 @@ def build_station_list(use_cache: bool = True) -> list[MonitoringStation]:
         town = e.get('town', None)
         river = e.get('riverName', None)
         url_id = e.get('RLOIid', '')
-        is_tidal = e.get('@id', None) in coastal_ids
+        is_tidal = station_id in coastal_ids
+        is_groundwater = station_id in groundwater_ids
 
         stage_scale = e.get('stageScale')
-        if stage_scale is not None:
+        if stage_scale is not None and not isinstance(stage_scale, str):
             typical_range_low = stage_scale.get('typicalRangeLow', None)
             typical_range_high = stage_scale.get('typicalRangeHigh', None)
 
@@ -80,12 +88,17 @@ def build_station_list(use_cache: bool = True) -> list[MonitoringStation]:
             typical_range = record_range = None
 
         extra = {'station_id': station_id, 'river': river, 'town': town,
-            'url_id': url_id, 'is_tidal': is_tidal, 'record_range': record_range}
+            'url_id': url_id, 'is_tidal': is_tidal, 'is_groundwater': is_groundwater,
+            'record_range': record_range}
 
         s = MonitoringStation(measure_id, label, coord, typical_range, **extra)
         stations.append(s)
 
-    return stations
+    if return_numbers:
+        nums = {k: len(list(v)) for k, v in groupby(stations, key=lambda s: s.station_type)}
+        return stations, nums
+    else:
+        return stations
 
 
 def build_rainfall_gauge_list(use_cache: bool = True) -> list[MonitoringStation]:

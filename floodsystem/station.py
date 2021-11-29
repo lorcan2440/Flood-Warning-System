@@ -1,6 +1,14 @@
 '''
 This module provides a model for a monitoring station, and tools
-for manipulating/modifying station data
+for manipulating/modifying station data.
+
+-------- Currently supported station types ---------------------- Classifying attributes ------------
+|                                                     |                                             |
+|   River-level stations: `MonitoringStation`,        | station_type = 'River Level'                |
+|   Tidal (sea-level) stations: `MonitoringStation`,  | station_type = 'Tidal'                      |
+|   Groundwater stations: `MonitoringStation`,        | station_type = 'Groundwater'                |
+|   Rainfall gauges: `RainfallGauge`                  | (None)                                      |
+-----------------------------------------------------------------------------------------------------
 '''
 
 
@@ -8,7 +16,15 @@ class MonitoringStation:
 
     '''
     This class represents a water-level monitoring station. There are over 2000 such stations across
-    England, which record the water level at fixed locations on various rivers and coastal sites.
+    England, which record the water level at fixed locations on various rivers, coastal sites and aquifers.
+
+    Tidal stations are found around the England coastline, as well as in major estuaries.
+    Groundwater stations are currently deployed in the South of England only.
+    Both of these variant stations measure water levels relative to the average sea level,
+    the ordinance datum (mOAD) as opposed to an absolute depth measurement.
+
+    Two of the stations, Canonbie and Sprouston, are in Scotland, close to the border.
+    One other station, Norham, is on the border (River Tweed).
 
     Information on the data collected is available at
     https://environment.data.gov.uk/flood-monitoring/doc/reference#stations.
@@ -45,6 +61,8 @@ class MonitoringStation:
     `is_tidal` (bool, default = False): whether or not this station measures coastal water levels. If true,
     the water level tends to fluctuate periodically by day and night due to the natural effect of tides.
 
+    `is_groundwater` (bool, default = False): whether or not this station measures groundwater levels.
+
     `station_id` (str, default = None): a unique URL string giving access to its data.
 
     `url_id` (str, default = None): the RLOI (River Levels On the Internet) ID, used to access the webpage
@@ -73,6 +91,7 @@ class MonitoringStation:
         self.town = None
         self.river = None
         self.is_tidal = False
+        self.is_groundwater = False
         self.latest_level = None
         self.latest_recorded_datetime = None
         self.station_id = None
@@ -86,6 +105,16 @@ class MonitoringStation:
         if self.url_id is not None:
             self.url = "https://check-for-flooding.service.gov.uk/station/" + self.url_id
             delattr(self, 'url_id')
+
+        # station type attribute: based on which (if any) of is_tidal or is_groundwater are set
+        if not (self.is_tidal or self.is_groundwater):
+            self.station_type = 'River Level'
+        elif self.is_tidal and not self.is_groundwater:
+            self.station_type = 'Tidal'
+        elif self.is_groundwater and not self.is_tidal:
+            self.station_type = 'Groundwater'
+        else:
+            self.station_type = None
 
     def __repr__(self):
 

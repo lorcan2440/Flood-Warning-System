@@ -19,11 +19,11 @@ def run():
     names = ['Bourton Dickler', 'Surfleet Sluice', 'Gaw Bridge', 'Hemingford', 'Swindon']
 
     for station in [s for s in stations if s.name in names]:
-        print(f'Station name and current level: {station.name}, ' + \
+        print(f'Station name and current level: {station.name}, ' +             # noqa
             f'{station.latest_level} at {station.latest_recorded_datetime}')
 
     for gauge in [g for g in gauges if g.gauge_number == '50110']:
-        print(f'Gauge number and current level: {gauge.gauge_number}, ' + \
+        print(f'Gauge number and current level: {gauge.gauge_number}, ' +       # noqa
             f'{gauge.latest_level} and {gauge.latest_recorded_datetime}')
 
 

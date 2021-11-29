@@ -89,15 +89,16 @@ def fetch_stationdata(use_cache: bool = True) -> tuple[dict, dict]:
 
     #### Returns
 
-    tuple[dict, dict]: full JSON-formatted datasets for all river-level and tidal stations, respectively
+    tuple[dict, dict, dict]: full JSON-formatted datasets for all river-level,
+    tidal and groundwater stations, respectively
     '''
 
     # URL for retrieving data for active stations with river level monitoring
     ROOT_URL = "http://environment.data.gov.uk/flood-monitoring/id/stations"
-
-    API_STR = "?status=Active&parameter=level&qualifier=Stage&_view=full"
+    API_STR = "?status=Active&parameter=level&_view=full"
+    RIVER_ONLY = "&type=SingleLevel"
     COASTAL_ONLY = "&type=Coastal"
-
+    GROUNDWATER_ONLY = "&type=Groundwater"
     url = ROOT_URL + API_STR
     CACHE_DIR = 'cache/data'
 
@@ -108,27 +109,39 @@ def fetch_stationdata(use_cache: bool = True) -> tuple[dict, dict]:
 
     river_cache_file = os.path.join(CACHE_DIR, 'station_data.json')
     coastal_cache_file = os.path.join(CACHE_DIR, 'coastal_station_data.json')
+    groundwater_cache_file = os.path.join(CACHE_DIR, 'groundwater_station_data.json')
 
     # Attempt to load all river data from file, otherwise fetch over internet
     if use_cache:
+
         try:
-            # Attempt to load from file
             river_data = load(river_cache_file)
+        except FileNotFoundError:
+            river_data = fetch(url + RIVER_ONLY)
+            dump(river_data, river_cache_file)
+
+        try:
             coastal_data = load(coastal_cache_file)
         except FileNotFoundError:
-            # If load from file fails, fetch and dump to file
-            river_data = fetch(url)
-            dump(river_data, river_cache_file)
             coastal_data = fetch(url + COASTAL_ONLY)
             dump(coastal_data, coastal_cache_file)
+
+        try:
+            groundwater_data = load(groundwater_cache_file)
+        except FileNotFoundError:
+            groundwater_data = fetch(url + GROUNDWATER_ONLY)
+            dump(groundwater_data, groundwater_cache_file)
+
     else:
         # Fetch and dump to file
-        river_data = fetch(url)
+        river_data = fetch(url + RIVER_ONLY)
         dump(river_data, river_cache_file)
         coastal_data = fetch(url + COASTAL_ONLY)
         dump(coastal_data, coastal_cache_file)
+        groundwater_data = fetch(url + GROUNDWATER_ONLY)
+        dump(groundwater_data, groundwater_cache_file)
 
-    return river_data, coastal_data
+    return river_data, coastal_data, groundwater_data
 
 
 def fetch_gauge_data(use_cache: bool = False) -> dict:
@@ -140,14 +153,14 @@ def fetch_gauge_data(use_cache: bool = False) -> dict:
     optionally be retrieved from the cache file. This is faster than
     retrieval over the internet and avoids excessive calls to the
     Environment Agency service.
-    
+
     #### Arguments
 
     `use_cache` (bool, default = False): whether to use the most recently stored data
     instead of fetching new data
 
     #### Returns
-    
+
     dict: full JSON-formatted datasets for all gauges
     '''
 
@@ -193,7 +206,7 @@ def fetch_latest_water_level_data(use_cache: bool = False) -> dict:
 
     # URL for retrieving data
     ROOT_URL = "http://environment.data.gov.uk/flood-monitoring/id/measures"
-    API_STR = "?parameter=level&qualifier=Stage&qualifier=level"
+    API_STR = "?parameter=level"
     url = ROOT_URL + API_STR
     CACHE_DIR = 'cache/data'
 
