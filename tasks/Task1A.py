@@ -8,21 +8,16 @@ from floodsystem.stationdata import build_station_list, build_rainfall_gauge_lis
 def run():
 
     # Build list of stations
-    stations = build_station_list()
+    stations, nums = build_station_list(return_numbers=True)
     gauges = build_rainfall_gauge_list()
 
     # Print number of stations
-    print(f'Number of stations: {len(stations)}')
+    print(f'Number of stations: \t \t {len(stations)}')
+    print(f'\t of which river-level: \t {nums["River Level"]}')
+    print(f'\t of which tidal: \t \t {nums["Tidal"]}')
+    print(f'\t of which groundwater: \t {nums["Groundwater"]} \n')
 
-    station_types = {k: list(v) for k, v in groupby(stations, key=lambda s: (s.is_tidal, s.is_groundwater))}
-    river_stations = station_types[(False, False)]
-    tidal_stations = station_types[(True, False)]
-    groundwater_stations = station_types[(False, True)]
-    print(f'\t of which river-level: {len(river_stations)}')
-    print(f'\t of which tidal: {len(tidal_stations)}')
-    print(f'\t of which groundwater: {len(groundwater_stations)} \n')
-
-    print(f'Number of rainfall gauges: {len(gauges)} \n')
+    print(f'Number of rainfall gauges: \t {len(gauges)} \n')
 
     # Display data from stations/gauges:
     for station in stations:

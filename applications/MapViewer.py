@@ -14,7 +14,7 @@ from floodsystem.map import display_stations_on_map
 
 def run():
 
-    stations, nums = build_station_list(return_numbers=True)
+    stations = build_station_list()
     update_water_levels(stations)
 
     display_stations_on_map(stations,
