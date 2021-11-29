@@ -35,6 +35,9 @@ class MonitoringStation:
     `latest_level` (str, default = None): the most recent water level recorded at this station.
     Recorded in metres and available to 3 decimal places, or a resolution of 1 mm.
 
+    `latest_recorded_datetime` (datetime.datetime, default = None): the date and time when the most
+    recent water level was recorded at this station. Usually rounds to the nearest 15 minutes.
+
     `town` (str, default = None): the name of the nearest town (or named place) to the station.
 
     `river` (str, default = None): the name of river associated with this monitoring station.
@@ -71,6 +74,7 @@ class MonitoringStation:
         self.river = None
         self.is_tidal = False
         self.latest_level = None
+        self.latest_recorded_datetime = None
         self.station_id = None
         self.url = ''
         self.url_id = None
@@ -133,6 +137,73 @@ class MonitoringStation:
             return (self.latest_level - self.typical_range[0]) / level_diff
         else:
             return None
+
+
+class RainfallGauge:
+
+    '''
+    This class represents a rainfall gauge. There are over 1000 such Tipping Bucket Raingauges
+    (TPRs) across England, which record the amount of precipitation in mm.
+
+    Information on the data collected is available at
+    https://environment.data.gov.uk/flood-monitoring/doc/rainfall.
+
+    ### Inputs
+
+    #### Required arguments
+
+    `measure_id` (str): a unique URL string giving access to the gauge's latest measurement.
+
+    `coord` (tuple): a coordinate pair giving the (latitude, longitude) position in degrees of the
+    station. Accurate only to the nearest 100 m despite being available to 6 decimal places.
+
+    #### Optional arguments
+
+    `latest_level` (str, default = None): the most recent rainfall reading recorded at this gauge.
+    Recorded in millimeters and available to 1 decimal places, or a resolution of 0.1 mm.
+
+    `latest_recorded_datetime` (datetime.datetime, default = None): the date and time when the most
+    recent rainfall level was recorded at this station. Usually rounds to the nearest 15 minutes.
+
+    `period` (float, default = None): the time between successive readings, in seconds.
+
+    `gauge_number` (str, default = None): a unique identifier (numeric string) for the gauge, used to access
+    URLs relating to its readings
+
+    `gauge_id` (str, default = None): a URL giving access to gauge data
+
+    ### Returns
+
+    A `RainfallGauge` instance.
+    '''
+
+    def __init__(self, measure_id: str, coord: tuple[float], **kwargs):
+
+        # required args
+        self.measure_id = measure_id
+        self.coord = coord
+
+        # default values (if not set in kwargs)
+        self.latest_level = None
+        self.latest_recorded_datetime = None
+        self.period = None
+        self.gauge_number = ''
+        self.gauge_id = None
+
+        for attr in kwargs:
+            setattr(self, attr, kwargs[attr])
+
+    def __repr__(self):
+
+        attrs = set(self.__dict__.keys()) - {'gauge_number', 'measure_id', 'coord', 'latest_level'}
+        additional_info = dict([(k, getattr(self, k, None)) for k in sorted(attrs)])
+
+        d = f" Gauge number: \t \t {self.gauge_number} \n"
+        d += f" \t measure id: \t \t {self.measure_id} \n"
+        d += f" \t coordinate: \t \t {self.coord} \n"
+        d += f" \t latest level: \t \t {self.latest_level} \n"
+        d += f" \t additional info: \t {additional_info} \n"
+        return d
 
 
 def inconsistent_typical_range_stations(stations: list[MonitoringStation]) -> list[MonitoringStation]:

@@ -17,7 +17,7 @@ import dateutil.parser
 from typing import Union
 
 from .analysis import identify_potentially_bad_data
-from .station import MonitoringStation
+from .station import MonitoringStation, RainfallGauge
 
 
 def fetch(url: str) -> dict:
@@ -93,58 +93,93 @@ def fetch_stationdata(use_cache: bool = True) -> tuple[dict, dict]:
     '''
 
     # URL for retrieving data for active stations with river level monitoring
-    root = "http://environment.data.gov.uk/flood-monitoring/id/stations"
+    ROOT_URL = "http://environment.data.gov.uk/flood-monitoring/id/stations"
 
-    rest_api_str = "?status=Active&parameter=level&qualifier=Stage&_view=full"
-    coastal_only = "&type=Coastal"
+    API_STR = "?status=Active&parameter=level&qualifier=Stage&_view=full"
+    COASTAL_ONLY = "&type=Coastal"
 
-    url = root + rest_api_str
-    sub_dir = 'cache/data'
+    url = ROOT_URL + API_STR
+    CACHE_DIR = 'cache/data'
 
     try:
-        os.makedirs(sub_dir)
+        os.makedirs(CACHE_DIR)
     except FileExistsError:
         pass
 
-    cache_file = os.path.join(sub_dir, 'station_data.json')
+    river_cache_file = os.path.join(CACHE_DIR, 'station_data.json')
+    coastal_cache_file = os.path.join(CACHE_DIR, 'coastal_station_data.json')
 
-    # Attempt to load all station data from file, otherwise fetch over internet
+    # Attempt to load all river data from file, otherwise fetch over internet
     if use_cache:
         try:
             # Attempt to load from file
-            data = load(cache_file)
-        except FileNotFoundError:
-            # If load from file fails, fetch and dump to file
-            data = fetch(url)
-            dump(data, cache_file)
-    else:
-        # Fetch and dump to file
-        data = fetch(url)
-        dump(data, cache_file)
-
-    url += coastal_only
-    coastal_cache_file = os.path.join(sub_dir, 'coastal_station_data.json')
-
-    # Attempt to load coastal station data from file, otherwise fetch over internet
-    if use_cache:
-        try:
-            # Attempt to load from file
+            river_data = load(river_cache_file)
             coastal_data = load(coastal_cache_file)
         except FileNotFoundError:
             # If load from file fails, fetch and dump to file
-            coastal_data = fetch(url)
+            river_data = fetch(url)
+            dump(river_data, river_cache_file)
+            coastal_data = fetch(url + COASTAL_ONLY)
             dump(coastal_data, coastal_cache_file)
     else:
         # Fetch and dump to file
-        coastal_data = fetch(url)
+        river_data = fetch(url)
+        dump(river_data, river_cache_file)
+        coastal_data = fetch(url + COASTAL_ONLY)
         dump(coastal_data, coastal_cache_file)
 
-    return data, coastal_data
+    return river_data, coastal_data
+
+
+def fetch_gauge_data(use_cache: bool = False) -> dict:
+    '''
+    Fetch data from Environment Agency for all active rainfall gauges
+    at once via a REST API and return retrieved data as a JSON object.
+
+    Fetched data is dumped to a cache file so on subsequent call it can
+    optionally be retrieved from the cache file. This is faster than
+    retrieval over the internet and avoids excessive calls to the
+    Environment Agency service.
+    
+    #### Arguments
+
+    `use_cache` (bool, default = False): whether to use the most recently stored data
+    instead of fetching new data
+
+    #### Returns
+    
+    dict: full JSON-formatted datasets for all gauges
+    '''
+
+    ROOT_URL = 'https://environment.data.gov.uk/flood-monitoring/id/'
+    API_STR = 'stations?parameter=rainfall'
+    url = ROOT_URL + API_STR
+    CACHE_DIR = 'cache/data'
+
+    try:
+        os.makedirs(CACHE_DIR)
+    except FileExistsError:
+        pass
+    cache_file = os.path.join(CACHE_DIR, 'gauge_data.json')
+
+    # Attempt to load level data from file, otherwise fetch over internet (slower)
+    if use_cache:
+        try:
+            # Attempt to load from file
+            rainfall_data = load(cache_file)
+        except FileNotFoundError:
+            rainfall_data = fetch(url)
+            dump(rainfall_data, cache_file)
+    else:
+        rainfall_data = fetch(url)
+        dump(rainfall_data, cache_file)
+
+    return rainfall_data
 
 
 def fetch_latest_water_level_data(use_cache: bool = False) -> dict:
     '''
-    Fetch latest levels from all measures.
+    Fetch latest water levels from all measures (stations).
 
     #### Arguments
 
@@ -157,36 +192,77 @@ def fetch_latest_water_level_data(use_cache: bool = False) -> dict:
     '''
 
     # URL for retrieving data
-    root = "http://environment.data.gov.uk/flood-monitoring/id/measures"
-    rest_api_str = "?parameter=level&qualifier=Stage&qualifier=level"
-    url = root + rest_api_str
-    sub_dir = 'cache/data'
+    ROOT_URL = "http://environment.data.gov.uk/flood-monitoring/id/measures"
+    API_STR = "?parameter=level&qualifier=Stage&qualifier=level"
+    url = ROOT_URL + API_STR
+    CACHE_DIR = 'cache/data'
 
     try:
-        os.makedirs(sub_dir)
+        os.makedirs(CACHE_DIR)
     except FileExistsError:
         pass
-    cache_file = os.path.join(sub_dir, 'level_data.json')
+    cache_file = os.path.join(CACHE_DIR, 'level_data.json')
 
     # Attempt to load level data from file, otherwise fetch over internet (slower)
     if use_cache:
         try:
             # Attempt to load from file
-            data = load(cache_file)
+            level_data = load(cache_file)
         except FileNotFoundError:
-            data = fetch(url)
-            dump(data, cache_file)
+            level_data = fetch(url)
+            dump(level_data, cache_file)
     else:
-        data = fetch(url)
-        dump(data, cache_file)
+        level_data = fetch(url)
+        dump(level_data, cache_file)
 
-    return data
+    return level_data
+
+
+def fetch_latest_rainfall_data(use_cache: bool = False) -> dict:
+    '''
+    Fetch latest rainfall levels from all measures (gauges).
+
+    #### Arguments
+
+    `use_cache` (bool, default = False): whether to use the most recently stored data
+    instead of fetching new data
+
+    #### Returns
+
+    dict: JSON-formatted datasets of latest data at each gauge
+    '''
+
+    # URL for retrieving data
+    ROOT_URL = "https://environment.data.gov.uk/flood-monitoring/id/measures?parameter=rainfall"
+    API_STR = "?parameter=rainfall"
+    url = ROOT_URL + API_STR
+    CACHE_DIR = 'cache/data'
+
+    try:
+        os.makedirs(CACHE_DIR)
+    except FileExistsError:
+        pass
+    cache_file = os.path.join(CACHE_DIR, 'rainfall_data.json')
+
+    # Attempt to load level data from file, otherwise fetch over internet (slower)
+    if use_cache:
+        try:
+            # Attempt to load from file
+            level_data = load(cache_file)
+        except FileNotFoundError:
+            level_data = fetch(url)
+            dump(level_data, cache_file)
+    else:
+        level_data = fetch(url)
+        dump(level_data, cache_file)
+
+    return level_data
 
 
 def fetch_measure_levels(station: Union[MonitoringStation, str], dt: datetime.timedelta,
         **warnings_kwargs: dict) -> tuple[list[datetime.datetime], list[float]]:
     '''
-    Fetch measure levels from latest reading and going back a period dt.
+    Fetch measure levels for one station from latest reading and going back a period dt.
     If there are no measurements available within the specified period, returns ([None], [None]).
 
     #### Arguments
@@ -251,3 +327,72 @@ def fetch_measure_levels(station: Union[MonitoringStation, str], dt: datetime.ti
         warnings.warn('\n' + flag + '\n', RuntimeWarning)
 
     return dates, levels
+
+
+def fetch_rainfall_levels(gauge: Union[RainfallGauge, str], dt: datetime.timedelta,
+        **warnings_kwargs: dict) -> tuple[list[datetime.datetime], list[float]]:
+    '''
+    Fetch rainfall for one gauge from latest reading and going back a period dt.
+    If there are no measurements available within the specified period, returns ([None], [None]).
+
+    #### Arguments
+
+    `gauge` (Union[RainfallGauge, str]): either an input station instance or its measure_id string
+    `dt` (datetime.timedelta): time period for which to look back in history for data
+
+    #### Additional Kwargs and Flags
+
+    `warnings_kwargs`: passed to `floodsystem.analysis.identify_potentially_bad_data()`
+
+    #### Returns
+
+    tuple[list[datetime.datetime], list[float]]: list of dates and their recorded levels, respectively
+
+    #### Raises
+
+    `TypeError`: if the input gauge was not a RainfallGauge or a str
+    `RuntimeWarning`: if potentially bad data is detected from the gauge
+    `RuntimeWarning`: if the gauge has not recorded any data within the given period dt
+    '''
+
+    if not isinstance(gauge, (MonitoringStation, str)):
+        raise TypeError('The first argument must be either a `RainfallGauge` or a '
+        f'measure_id string.\nGot value {gauge} of type {type(gauge)}')
+
+    # Current time (UTC)
+    now = datetime.datetime.utcnow()
+
+    # Start time for data
+    start = now - dt
+
+    # Construct URL for fetching data
+    url_base = gauge.measure_id if isinstance(gauge, MonitoringStation) else gauge
+    url_options = "-rainfall-tipping_bucket_raingauge-t-15_min-mm" + \
+        "/readings?_sorted&since=" + start.isoformat() + 'Z'
+    url = url_base.replace('measures', 'stations') + url_options
+    gauge_number = url_base.split('/')[-1]
+
+    # Fetch data
+    data = fetch(url)
+    if data['items'] == []:
+        warnings.warn(f'The API call to {url} returned an empty list of items (level data).'
+            'The gauge may have been down during this time period; try a larger dt. ', RuntimeWarning)
+        return [None], [None]
+    flags = {}
+
+    # Extract dates and rainfall readings
+    dates, rainfalls = [], []
+    for measure in reversed(data['items']):
+        # Convert date-time string to a datetime object
+        d = dateutil.parser.parse(measure['dateTime'])
+
+        # Append data
+        dates.append(d)
+        rainfalls.append(measure['value'])
+
+    flags = identify_potentially_bad_data(f'Rainfall Gauge #{gauge_number}', rainfalls,
+        station_obj=gauge if isinstance(gauge, RainfallGauge) else None, **warnings_kwargs)
+    for flag in flags:
+        warnings.warn('\n' + flag + '\n', RuntimeWarning)
+
+    return dates, rainfalls
