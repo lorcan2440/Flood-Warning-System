@@ -32,7 +32,7 @@ def run():
         dates.update({s.name: data[0]})
         levels.update({s.name: data[1]})
 
-        if dates[s.name][0] is None:
+        if dates[s.name][0] is None or 1 <= len(data[1]) <= p:
             continue
 
         # Plot the graphs with polynomial fits and moving average
