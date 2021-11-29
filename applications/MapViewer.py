@@ -8,8 +8,7 @@ to display the map as a transparent layer on the map
 
 import import_helper  # noqa
 
-from floodsystem.stationdata import build_station_list, update_water_levels, \
-    build_rainfall_gauge_list, update_rainfall_levels
+from floodsystem.stationdata import build_station_list, update_water_levels
 from floodsystem.map import display_stations_on_map
 
 

@@ -1,8 +1,7 @@
 # pylint: disable=import-error
 import import_helper  # noqa
-from itertools import groupby
 
-from floodsystem.stationdata import build_station_list, build_rainfall_gauge_list
+from floodsystem.stationdata import build_station_list,      build_rainfall_gauge_list
 
 
 def run():
