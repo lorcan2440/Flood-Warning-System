@@ -1,6 +1,6 @@
 '''
-This module provides a model for a monitoring station, and tools
-for manipulating/modifying station data.
+This module provides a model for a monitoring station and a rainfall gauge,
+and tools for manipulating/modifying data.
 
 -------- Currently supported station types ---------------------- Classifying attributes ------------
 |                                                     |                                             |

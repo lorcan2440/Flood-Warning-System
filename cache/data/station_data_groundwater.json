@@ -1,0 +1,1780 @@
+{
+    "@context": "http://environment.data.gov.uk/flood-monitoring/meta/context.jsonld",
+    "meta": {
+        "publisher": "Environment Agency",
+        "licence": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+        "documentation": "http://environment.data.gov.uk/flood-monitoring/doc/reference",
+        "version": "0.9",
+        "comment": "Status: Beta service",
+        "hasFormat": [
+            "http://environment.data.gov.uk/flood-monitoring/id/stations.csv?status=Active&parameter=level&_view=full&type=Groundwater",
+            "http://environment.data.gov.uk/flood-monitoring/id/stations.rdf?status=Active&parameter=level&_view=full&type=Groundwater",
+            "http://environment.data.gov.uk/flood-monitoring/id/stations.ttl?status=Active&parameter=level&_view=full&type=Groundwater",
+            "http://environment.data.gov.uk/flood-monitoring/id/stations.html?status=Active&parameter=level&_view=full&type=Groundwater"
+        ]
+    },
+    "items": [
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44239",
+            "RLOIid": "3365",
+            "catchmentName": "Frome, Piddle, Poole Harbour and Purbeck",
+            "dateOpened": "2006-07-24",
+            "easting": 358760,
+            "gridReference": "SY 5876090850",
+            "label": "Kingston Russell",
+            "lat": 50.715805,
+            "long": -2.5855,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/44239-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 90850,
+            "notation": "44239",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44239/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44239/stageScale/maxOnRecord",
+                    "dateTime": "2012-07-13T19:30:00",
+                    "value": 121.128
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44239/stageScale/minOnRecord",
+                    "dateTime": "2011-10-07T08:30:00",
+                    "value": 101.873
+                },
+                "scaleMax": 125,
+                "typicalRangeHigh": 113,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "44239",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Kingston Russell",
+            "wiskiID": "90159401"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43121",
+            "RLOIid": "3317",
+            "catchmentName": "Dorset Stour",
+            "dateOpened": "1991-01-01",
+            "easting": 401600,
+            "label": "Woodyates",
+            "lat": 50.974908,
+            "long": -1.978577,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/43121-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/43121-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 119500,
+            "notation": "43121",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43121/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43121/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-09T04:30:00",
+                    "value": 109.23
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43121/stageScale/minOnRecord",
+                    "dateTime": "2003-11-04T19:15:00",
+                    "value": 68.86
+                },
+                "scaleMax": 110,
+                "typicalRangeHigh": 102,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "43121",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Woodyates",
+            "wiskiID": "G433505"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43122",
+            "RLOIid": "3316",
+            "catchmentName": "Hampshire Avon",
+            "dateOpened": "1991-01-01",
+            "easting": 403003,
+            "label": "Tilshead",
+            "lat": 51.202428,
+            "long": -1.958392,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/43122-level-1-i-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "1",
+                    "unitName": "m"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/43122-level-1-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "1",
+                    "unitName": "mAOD"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/43122-level-2-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "2",
+                    "unitName": "mAOD"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/43122-level-groundwater-i-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "m"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/43122-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 144803,
+            "notation": "43122",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43122/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43122/stageScale/maxOnRecord",
+                    "dateTime": "2000-12-14T10:45:00",
+                    "value": 99.88
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43122/stageScale/minOnRecord",
+                    "dateTime": "2011-12-14T13:30:00",
+                    "value": 78.163
+                },
+                "scaleMax": 100,
+                "typicalRangeHigh": 99,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "43122",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Orcheston",
+            "wiskiID": "G432305"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44208",
+            "RLOIid": "3274",
+            "catchmentName": "Frome, Piddle, Poole Harbour and Purbeck",
+            "dateOpened": "1974-02-23",
+            "easting": 366200,
+            "label": "Ashton Farm",
+            "lat": 50.690658,
+            "long": -2.479859,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/44208-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/44208-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 88000,
+            "notation": "44208",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44208/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44208/stageScale/maxOnRecord",
+                    "dateTime": "2012-07-08T20:30:00",
+                    "value": 71.761
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44208/stageScale/minOnRecord",
+                    "dateTime": "2011-10-27T00:30:00",
+                    "value": 63.848
+                },
+                "scaleMax": 72,
+                "typicalRangeHigh": 71,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "44208",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Martinstown Or Winterborne St Martin",
+            "wiskiID": "G445605"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/431100",
+            "RLOIid": "9272",
+            "catchmentName": "Hampshire Avon",
+            "dateOpened": "2003-02-11",
+            "easting": 408260,
+            "gridReference": "SU0826028130",
+            "label": "Windwhistle",
+            "lat": 51.052454,
+            "long": -1.883525,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/431100-level-groundwater-i-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "m"
+                }
+            ],
+            "northing": 128130,
+            "notation": "431100",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/431100/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/431100/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-10T00:00:00",
+                    "value": 88.23
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/431100/stageScale/minOnRecord",
+                    "dateTime": "2011-12-10T00:00:00",
+                    "value": 60.96
+                },
+                "typicalRangeHigh": 72,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "431100",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Bishopstone",
+            "wiskiID": "90102300"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E16181",
+            "RLOIid": "9137",
+            "catchmentName": "Darent",
+            "dateOpened": "2004-10-01",
+            "easting": 547814,
+            "gridReference": "TQ4780967934",
+            "label": "Sweeps Lane",
+            "lat": 51.391114,
+            "long": 0.123099,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E16181-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 167925,
+            "notation": "E16181",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E16181/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E16181/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-20T09:00:00",
+                    "value": 46.422
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E16181/stageScale/minOnRecord",
+                    "dateTime": "2012-04-15T09:00:00",
+                    "value": 43.23
+                },
+                "typicalRangeHigh": 44.522,
+                "typicalRangeLow": 43.456
+            },
+            "stationReference": "E16181",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "wiskiID": "441231002"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E16201",
+            "RLOIid": "9136",
+            "catchmentName": "Darent",
+            "dateOpened": "2005-05-01",
+            "easting": 550675,
+            "gridReference": "TQ5064956385",
+            "label": "Riverhead",
+            "lat": 51.286708,
+            "long": 0.159311,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E16201-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 156389,
+            "notation": "E16201",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E16201/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E16201/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-31T09:00:00",
+                    "value": 79.348
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E16201/stageScale/minOnRecord",
+                    "dateTime": "2006-09-22T09:00:00",
+                    "value": 74.542
+                },
+                "typicalRangeHigh": 78.371,
+                "typicalRangeLow": 75.525
+            },
+            "stationReference": "E16201",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "wiskiID": "441340001"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E4752",
+            "RLOIid": "9286",
+            "catchmentName": "Stour",
+            "dateOpened": "2001-12-28",
+            "easting": 618169,
+            "gridReference": "TR1816944728",
+            "label": "North Elham",
+            "lat": 51.160181,
+            "long": 1.118785,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E4752-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E4752-level-groundwater-i-1_h-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 3600,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 144728,
+            "notation": "E4752",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E4752/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E4752/stageScale/maxOnRecord",
+                    "dateTime": "2000-11-30T12:00:00",
+                    "value": 79.496
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E4752/stageScale/minOnRecord",
+                    "dateTime": "2017-12-26T09:00:00",
+                    "value": 49.53
+                },
+                "typicalRangeHigh": 78.128,
+                "typicalRangeLow": 51.614
+            },
+            "stationReference": "E4752",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "wiskiID": "644604002"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43171",
+            "RLOIid": "9161",
+            "catchmentName": "Hampshire Avon",
+            "dateOpened": "2002-11-28",
+            "easting": 402070,
+            "label": "Chitterne Down",
+            "lat": 51.189817,
+            "long": -1.971754,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/43171-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 143400,
+            "notation": "43171",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43171/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43171/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-10T00:00:00",
+                    "value": 108.84
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43171/stageScale/minOnRecord",
+                    "dateTime": "1900-01-01T00:00:00",
+                    "value": 76.77
+                },
+                "typicalRangeHigh": 98,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "43171",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "wiskiID": "90104105"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43168",
+            "RLOIid": "9162",
+            "catchmentName": "Hampshire Avon",
+            "dateOpened": "2003-10-09",
+            "easting": 419130,
+            "label": "Clarendon",
+            "lat": 51.079353,
+            "long": -1.728286,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/43168-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 131150,
+            "notation": "43168",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43168/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43168/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-20T00:00:00",
+                    "value": 77.14
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43168/stageScale/minOnRecord",
+                    "dateTime": "2005-10-23T00:00:00",
+                    "value": 51.31
+                },
+                "typicalRangeHigh": 67,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "43168",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "wiskiID": "90113407"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43166",
+            "RLOIid": "9166",
+            "catchmentName": "Hampshire Avon",
+            "dateOpened": "1999-12-16",
+            "easting": 423290,
+            "label": "Hazelberry Plantation",
+            "lat": 51.278098,
+            "long": -1.667476,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/43166-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 153270,
+            "notation": "43166",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43166/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43166/stageScale/maxOnRecord",
+                    "dateTime": "2003-01-05T00:00:00",
+                    "value": 129.568
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43166/stageScale/minOnRecord",
+                    "dateTime": "2005-11-30T00:00:00",
+                    "value": 103.523
+                },
+                "typicalRangeHigh": 125,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "43166",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "wiskiID": "G432410"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43167",
+            "RLOIid": "9269",
+            "catchmentName": "Hampshire Avon",
+            "dateOpened": "1992-01-20",
+            "easting": 418320,
+            "gridReference": "SU1832038780",
+            "label": "Queen Manor Farm",
+            "lat": 51.147988,
+            "long": -1.739464,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/43167-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 138780,
+            "notation": "43167",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43167/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43167/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-19T00:00:00",
+                    "value": 74.81
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43167/stageScale/minOnRecord",
+                    "dateTime": "1900-01-01T00:00:00",
+                    "value": 65.56
+                },
+                "typicalRangeHigh": 69,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "43167",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Boscombe Down",
+            "wiskiID": "90113306"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43172",
+            "RLOIid": "9266",
+            "catchmentName": "Hampshire Avon",
+            "dateOpened": "2002-02-20",
+            "easting": 400360,
+            "gridReference": "SU0036034540",
+            "label": "Oakley Industrial Estate",
+            "lat": 51.110151,
+            "long": -1.996228,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/43172-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 134540,
+            "notation": "43172",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43172/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43172/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-06T00:00:00",
+                    "value": 104.43
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43172/stageScale/minOnRecord",
+                    "dateTime": "2011-12-07T00:00:00",
+                    "value": 84.35
+                },
+                "typicalRangeHigh": 93,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "43172",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Dinton",
+            "wiskiID": "90103100"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44243",
+            "RLOIid": "9157",
+            "catchmentName": "Frome, Piddle, Poole Harbour and Purbeck",
+            "dateOpened": "2007-04-01",
+            "easting": 370234,
+            "label": "Bank Barrow",
+            "lat": 50.665692,
+            "long": -2.422525,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/44243-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 85199,
+            "notation": "44243",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44243/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44243/stageScale/maxOnRecord",
+                    "dateTime": "2012-12-24T00:00:00",
+                    "value": 60.56
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44243/stageScale/minOnRecord",
+                    "dateTime": "1900-01-01T00:00:00",
+                    "value": 31.44
+                },
+                "typicalRangeHigh": 56,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "44243",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Bank Barrow",
+            "wiskiID": "90178231"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43173",
+            "RLOIid": "9183",
+            "catchmentName": "Hampshire Avon",
+            "dateOpened": "2001-10-03",
+            "easting": 390610,
+            "gridReference": "ST9061036320",
+            "label": "Musseldean Copse",
+            "lat": 51.126078,
+            "long": -2.13555,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/43173-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 136320,
+            "notation": "43173",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43173/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43173/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-19T00:00:00",
+                    "value": 140.29
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43173/stageScale/minOnRecord",
+                    "dateTime": "2010-11-05T00:00:00",
+                    "value": 132.86
+                },
+                "typicalRangeHigh": 138,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "43173",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "wiskiID": "90193106"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44240",
+            "RLOIid": "9049",
+            "catchmentName": "Frome, Piddle, Poole Harbour and Purbeck",
+            "dateOpened": "2005-02-16",
+            "easting": 379900,
+            "label": "Delcombe Wood",
+            "lat": 50.838682,
+            "long": -2.286813,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/44240-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 104390,
+            "notation": "44240",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44240/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44240/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-09T12:45:00",
+                    "value": 143.871
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44240/stageScale/minOnRecord",
+                    "dateTime": "2011-10-28T01:45:00",
+                    "value": 124.518
+                },
+                "typicalRangeHigh": 130,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "44240",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Delcombe Wood",
+            "wiskiID": "90170430"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43174",
+            "RLOIid": "9163",
+            "catchmentName": "Hampshire Avon",
+            "dateOpened": "2007-02-26",
+            "easting": 414340,
+            "label": "Odstock",
+            "lat": 51.016457,
+            "long": -1.796939,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/43174-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 124140,
+            "notation": "43174",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43174/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43174/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-07T00:00:00",
+                    "value": 68.21
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43174/stageScale/minOnRecord",
+                    "dateTime": "2011-11-13T00:00:00",
+                    "value": 48.64
+                },
+                "typicalRangeHigh": 57,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "43174",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "wiskiID": "90112105"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43169",
+            "RLOIid": "9271",
+            "catchmentName": "Hampshire Avon",
+            "dateOpened": "2001-10-03",
+            "easting": 391770,
+            "gridReference": "ST9177032250",
+            "label": "The Terraces Fonthill",
+            "lat": 51.089499,
+            "long": -2.11888,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/43169-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 132250,
+            "notation": "43169",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43169/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43169/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-09T00:00:00",
+                    "value": 119.88
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43169/stageScale/minOnRecord",
+                    "dateTime": "2011-11-26T00:00:00",
+                    "value": 103.946
+                },
+                "typicalRangeHigh": 115,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "43169",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Fonthill Gifford",
+            "wiskiID": "90193109"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43185",
+            "RLOIid": "9164",
+            "catchmentName": "Hampshire Avon",
+            "dateOpened": "2008-05-20",
+            "easting": 412270,
+            "label": "Homington",
+            "lat": 51.018213,
+            "long": -1.826442,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/43185-level-groundwater-i-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "m"
+                }
+            ],
+            "northing": 124330,
+            "notation": "43185",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43185/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43185/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-09T00:00:00",
+                    "value": 76.97
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43185/stageScale/minOnRecord",
+                    "dateTime": "2011-12-10T00:00:00",
+                    "value": 54.92
+                },
+                "typicalRangeHigh": 70,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "43185",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "wiskiID": "90112112"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43192",
+            "RLOIid": "9150",
+            "catchmentName": "Dorset Stour",
+            "dateOpened": "2008-06-25",
+            "easting": 388580,
+            "label": "Iwerne Hill Farm",
+            "lat": 50.929113,
+            "long": -2.163861,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/43192-level-groundwater-i-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "m"
+                }
+            ],
+            "northing": 114420,
+            "notation": "43192",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43192/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43192/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-05T22:15:00",
+                    "value": 117.68
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43192/stageScale/minOnRecord",
+                    "dateTime": "2011-12-11T01:00:00",
+                    "value": 99.43
+                },
+                "typicalRangeHigh": 107.5,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "43192",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "wiskiID": "90181307"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44237",
+            "RLOIid": "9158",
+            "catchmentName": "Frome, Piddle, Poole Harbour and Purbeck",
+            "dateOpened": "2005-02-16",
+            "easting": 364668,
+            "label": "Dickley Down",
+            "lat": 50.800191,
+            "long": -2.502719,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/44237-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 100191,
+            "notation": "44237",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44237/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44237/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-06T00:00:00",
+                    "value": 172.19
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44237/stageScale/minOnRecord",
+                    "dateTime": "1900-01-01T00:00:00",
+                    "value": 151.77
+                },
+                "typicalRangeHigh": 162,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "44237",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "wiskiID": "90160101"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/1480SO",
+            "RLOIid": "9139",
+            "catchmentName": "Stour",
+            "dateOpened": "1995-01-01",
+            "easting": 626493,
+            "gridReference": "TR2649342766",
+            "label": "Alkham Valley",
+            "lat": 51.139335,
+            "long": 1.236398,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/1480SO-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/1480SO-level-groundwater-i-1_h-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 3600,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 142766,
+            "notation": "1480SO",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/1480SO/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/1480SO/stageScale/maxOnRecord",
+                    "dateTime": "2000-12-14T09:00:00",
+                    "value": 45.634
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/1480SO/stageScale/minOnRecord",
+                    "dateTime": "1996-11-07T09:00:00",
+                    "value": 28.802
+                },
+                "typicalRangeHigh": 44.912,
+                "typicalRangeLow": 31.322
+            },
+            "stationReference": "1480SO",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "wiskiID": "644014054"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E4230",
+            "RLOIid": "9134",
+            "catchmentName": "Stour",
+            "dateOpened": "1993-10-01",
+            "easting": 612276,
+            "gridReference": "TR1227647086",
+            "label": "Upper Petham Bourne",
+            "lat": 51.182671,
+            "long": 1.035967,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E4230-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E4230-level-groundwater-i-1_h-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 3600,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 146986,
+            "notation": "E4230",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E4230/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E4230/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-11T09:00:00",
+                    "value": 87.181
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E4230/stageScale/minOnRecord",
+                    "dateTime": "2017-10-29T09:00:00",
+                    "value": 57.17
+                },
+                "typicalRangeHigh": 84.647,
+                "typicalRangeLow": 58.329
+            },
+            "stationReference": "E4230",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "wiskiID": "644422003"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/TQ25_86",
+            "RLOIid": "9133",
+            "catchmentName": "Loddon",
+            "dateOpened": "2002-01-01",
+            "easting": 525842,
+            "gridReference": "TQ2584055280",
+            "label": "Chipstead",
+            "lat": 51.282737,
+            "long": -0.196979,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/TQ25_86-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 155277,
+            "notation": "TQ25_86",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/TQ25_86/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/TQ25_86/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-15T09:00:00",
+                    "value": 106.775
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/TQ25_86/stageScale/minOnRecord",
+                    "dateTime": "2012-04-22T09:00:00",
+                    "value": 83.955
+                },
+                "typicalRangeHigh": 100.172,
+                "typicalRangeLow": 84.391
+            },
+            "stationReference": "TQ25_86",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "wiskiID": "TQ25_86"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43190",
+            "RLOIid": "9156",
+            "catchmentName": "Dorset Stour",
+            "dateOpened": "2004-08-23",
+            "easting": 401810,
+            "label": "Horton Inn",
+            "lat": 50.876171,
+            "long": -1.975637,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/43190-level-groundwater-i-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "m"
+                }
+            ],
+            "northing": 108520,
+            "notation": "43190",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43190/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43190/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-08T00:00:00",
+                    "value": 44.96
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43190/stageScale/minOnRecord",
+                    "dateTime": "1900-01-01T00:00:00",
+                    "value": 36.66
+                },
+                "typicalRangeHigh": 43,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "43190",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "wiskiID": "90100310"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/SU73_8",
+            "RLOIid": "9293",
+            "catchmentName": "Wey",
+            "dateOpened": "2002-04-08",
+            "easting": 470459,
+            "gridReference": "SU7045934899",
+            "label": "Lower Farringdon",
+            "lat": 51.109062,
+            "long": -0.994904,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/SU73_8-level-groundwater-i-15_min----",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "---"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/SU73_8-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 134899,
+            "notation": "SU73_8",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/SU73_8/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/SU73_8/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-20T05:45:00",
+                    "value": 118.23
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/SU73_8/stageScale/minOnRecord",
+                    "dateTime": "2005-10-11T18:00:00",
+                    "value": 92.795
+                },
+                "typicalRangeHigh": 118.05,
+                "typicalRangeLow": 93.719
+            },
+            "stationReference": "SU73/8",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Farringdon",
+            "wiskiID": "SU73_8"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/1381SO",
+            "RLOIid": "9130",
+            "catchmentName": "Stour",
+            "dateOpened": "1992-03-10",
+            "easting": 632069,
+            "gridReference": "TR3206166329",
+            "label": "Alland Grange Thanet Chalk",
+            "lat": 51.348577,
+            "long": 1.331223,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/1381SO-level-groundwater-i-1_h-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 3600,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 166324,
+            "notation": "1381SO",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/1381SO/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/1381SO/stageScale/maxOnRecord",
+                    "dateTime": "2014-03-03T09:00:00",
+                    "value": 9.149
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/1381SO/stageScale/minOnRecord",
+                    "dateTime": "1992-07-17T09:00:00",
+                    "value": 2.144
+                },
+                "typicalRangeHigh": 7.072,
+                "typicalRangeLow": 2.718
+            },
+            "stationReference": "1381SO",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Kent and South London",
+            "wiskiID": "644733001"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/TQ35_42",
+            "RLOIid": "9306",
+            "catchmentName": "London",
+            "dateOpened": "1999-02-01",
+            "easting": 535222,
+            "gridReference": "TQ3522256951",
+            "label": "Woldingham Road",
+            "lat": 51.295633,
+            "long": -0.06193,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/TQ35_42-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/TQ35_42-level-groundwater-i-1_h----",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 3600,
+                    "qualifier": "Groundwater",
+                    "unitName": "---"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/TQ35_42-level-groundwater-i-1_h-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 3600,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 156951,
+            "notation": "TQ35_42",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/TQ35_42/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/TQ35_42/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-10T12:00:00",
+                    "value": 111
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/TQ35_42/stageScale/minOnRecord",
+                    "dateTime": "2011-12-15T12:00:00",
+                    "value": 68.48
+                },
+                "typicalRangeHigh": 104.628,
+                "typicalRangeLow": 70.609
+            },
+            "stationReference": "TQ35_42",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Woldingham",
+            "wiskiID": "TQ35_42"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43196",
+            "RLOIid": "9270",
+            "catchmentName": "Hampshire Avon",
+            "dateOpened": "2002-03-23",
+            "easting": 410260,
+            "gridReference": "SU1026036580",
+            "label": "Stoford Cross",
+            "lat": 51.128405,
+            "long": -1.854754,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/43196-level-groundwater-i-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "m"
+                }
+            ],
+            "northing": 136580,
+            "notation": "43196",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43196/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43196/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-09T00:00:00",
+                    "value": 79.56
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43196/stageScale/minOnRecord",
+                    "dateTime": "2010-11-05T00:00:00",
+                    "value": 61.247
+                },
+                "typicalRangeHigh": 68,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "43196",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Stoford",
+            "wiskiID": "90113206"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0782SO",
+            "RLOIid": "9135",
+            "catchmentName": "Swale",
+            "dateOpened": "2001-10-01",
+            "easting": 589224,
+            "gridReference": "TQ8925062638",
+            "label": "Riddles Lane",
+            "lat": 51.331532,
+            "long": 0.714832,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/0782SO-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/0782SO-level-groundwater-i-1_h-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 3600,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 162659,
+            "notation": "0782SO",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0782SO/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0782SO/stageScale/maxOnRecord",
+                    "dateTime": "2014-03-27T09:00:00",
+                    "value": 25.918
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/0782SO/stageScale/minOnRecord",
+                    "dateTime": "2006-10-08T09:00:00",
+                    "value": 11.494
+                },
+                "typicalRangeHigh": 23.165,
+                "typicalRangeLow": 13.042
+            },
+            "stationReference": "0782SO",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "wiskiID": "642224003"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/TQ36_38",
+            "RLOIid": "9299",
+            "catchmentName": "London",
+            "dateOpened": "2014-02-16",
+            "easting": 532170,
+            "gridReference": "TQ3217062150",
+            "label": "Purleybury",
+            "lat": 51.343072,
+            "long": -0.103752,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/TQ36_38-level-groundwater-i-15_min----",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "---"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/TQ36_38-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/TQ36_38-level-groundwater-i-1_h-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 3600,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 162150,
+            "notation": "TQ36_38",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/TQ36_38/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/TQ36_38/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-15T02:00:00",
+                    "value": 58.44
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/TQ36_38/stageScale/minOnRecord",
+                    "dateTime": "2008-12-23T03:00:00",
+                    "value": 49.035
+                },
+                "typicalRangeHigh": 55,
+                "typicalRangeLow": 49.137
+            },
+            "stationReference": "TQ36_38",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Purley",
+            "wiskiID": "TQ36_38"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/SU74_40",
+            "RLOIid": "9281",
+            "catchmentName": "Loddon",
+            "dateOpened": "2002-08-13",
+            "easting": 470972,
+            "gridReference": "SU7097247801",
+            "label": "South Warnborough",
+            "lat": 51.224995,
+            "long": -0.985035,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/SU74_40-level-groundwater-i-1_h-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 3600,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 147801,
+            "notation": "SU74_40",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/SU74_40/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/SU74_40/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-18T22:00:00",
+                    "value": 97.13
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/SU74_40/stageScale/minOnRecord",
+                    "dateTime": "2005-10-27T14:00:00",
+                    "value": 84.97
+                },
+                "typicalRangeHigh": 96.06,
+                "typicalRangeLow": 85.77
+            },
+            "stationReference": "SU74_40",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "wiskiID": "SU74_40"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43170",
+            "RLOIid": "9021",
+            "catchmentName": "Dorset Stour",
+            "dateOpened": "2007-02-26",
+            "easting": 390900,
+            "label": "Ashmore",
+            "lat": 50.95784,
+            "long": -2.13093,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/43170-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 117610,
+            "notation": "43170",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43170/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43170/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-24T11:45:00",
+                    "value": 139.65
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43170/stageScale/minOnRecord",
+                    "dateTime": "2010-10-21T15:45:00",
+                    "value": 132.72
+                },
+                "typicalRangeHigh": 136,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "43170",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Ashmore",
+            "wiskiID": "90191301"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43176",
+            "RLOIid": "9155",
+            "catchmentName": "Dorset Stour",
+            "dateOpened": "2006-04-01",
+            "easting": 396629,
+            "label": "Badbury Rings",
+            "lat": 50.819754,
+            "long": -2.049215,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/43176-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 102247,
+            "notation": "43176",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43176/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43176/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-08T00:00:00",
+                    "value": 42.6
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43176/stageScale/minOnRecord",
+                    "dateTime": "1900-01-01T00:00:00",
+                    "value": 22
+                },
+                "typicalRangeHigh": 32,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "43176",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "wiskiID": "90190438"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44236",
+            "RLOIid": "9159",
+            "catchmentName": "Frome, Piddle, Poole Harbour and Purbeck",
+            "dateOpened": "2008-02-07",
+            "easting": 371874,
+            "label": "Doles Ash",
+            "lat": 50.806765,
+            "long": -2.400522,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/44236-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 100878,
+            "notation": "44236",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44236/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44236/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-07T00:00:00",
+                    "value": 123.59
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44236/stageScale/minOnRecord",
+                    "dateTime": "1900-01-01T00:00:00",
+                    "value": 113.42
+                },
+                "typicalRangeHigh": 118.5,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "44236",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "wiskiID": "90170131"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43188",
+            "RLOIid": "9165",
+            "catchmentName": "Hampshire Avon",
+            "dateOpened": "2003-10-14",
+            "easting": 419540,
+            "label": "Everleigh",
+            "lat": 51.288489,
+            "long": -1.721176,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/43188-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 154410,
+            "notation": "43188",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43188/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43188/stageScale/maxOnRecord",
+                    "dateTime": "2014-01-22T00:00:00",
+                    "value": 135.48
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/43188/stageScale/minOnRecord",
+                    "dateTime": "2016-11-13T00:00:00",
+                    "value": 120.745
+                },
+                "typicalRangeHigh": 135,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "43188",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "wiskiID": "90115400"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44241",
+            "RLOIid": "9160",
+            "catchmentName": "Frome, Piddle, Poole Harbour and Purbeck",
+            "dateOpened": "2008-05-22",
+            "easting": 371010,
+            "label": "Ridge Way",
+            "lat": 50.74892,
+            "long": -2.412275,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/44241-level-groundwater-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 94450,
+            "notation": "44241",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44241/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44241/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-17T00:00:00",
+                    "value": 85.41
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44241/stageScale/minOnRecord",
+                    "dateTime": "1900-01-01T00:00:00",
+                    "value": 56.5
+                },
+                "typicalRangeHigh": 68,
+                "typicalRangeLow": 0
+            },
+            "stationReference": "44241",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "wiskiID": "90179120"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/SU85_47",
+            "RLOIid": "9284",
+            "catchmentName": "Loddon",
+            "dateOpened": "2004-05-01",
+            "easting": 483020,
+            "gridReference": "SU8302050779",
+            "label": "Aldershot",
+            "lat": 51.250135,
+            "long": -0.811852,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/SU85_47-level-groundwater-i-1_h-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 3600,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 150778,
+            "notation": "SU85_47",
+            "riverName": "Groundwater Level",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/SU85_47/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/SU85_47/stageScale/maxOnRecord",
+                    "dateTime": "2015-01-30T06:00:00",
+                    "value": 68.05
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/SU85_47/stageScale/minOnRecord",
+                    "dateTime": "2005-11-23T01:00:00",
+                    "value": 58.809
+                },
+                "typicalRangeHigh": 58.519,
+                "typicalRangeLow": 50.396
+            },
+            "stationReference": "SU85_47",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Bourley Lane",
+            "wiskiID": "SU85_47"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/9681SO",
+            "RLOIid": "9394",
+            "catchmentName": "Stour",
+            "dateOpened": "2000-01-01",
+            "easting": 623067,
+            "gridReference": "TR2306757493",
+            "label": "Wingham Road",
+            "lat": 51.272897,
+            "long": 1.196653,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/9681SO-level-groundwater-i-1_h-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 3600,
+                    "qualifier": "Groundwater",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 157493,
+            "notation": "9681SO",
+            "riverName": "Little Stour",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/9681SO/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/9681SO/stageScale/maxOnRecord",
+                    "dateTime": "2014-02-08T10:30:00",
+                    "value": 7.39
+                },
+                "minOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/9681SO/stageScale/minOnRecord",
+                    "dateTime": "2017-11-21T21:00:00",
+                    "value": 3.83
+                },
+                "typicalRangeHigh": 6.058,
+                "typicalRangeLow": 4.103
+            },
+            "stationReference": "9681SO",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Wingham",
+            "wiskiID": "644613004"
+        }
+    ]
+}

@@ -107,9 +107,9 @@ def fetch_stationdata(use_cache: bool = True) -> tuple[dict, dict]:
     except FileExistsError:
         pass
 
-    river_cache_file = os.path.join(CACHE_DIR, 'station_data.json')
-    coastal_cache_file = os.path.join(CACHE_DIR, 'coastal_station_data.json')
-    groundwater_cache_file = os.path.join(CACHE_DIR, 'groundwater_station_data.json')
+    river_cache_file = os.path.join(CACHE_DIR, 'station_data_river.json')
+    coastal_cache_file = os.path.join(CACHE_DIR, 'station_data_coastal.json')
+    groundwater_cache_file = os.path.join(CACHE_DIR, 'station_data_groundwater.json')
 
     # Attempt to load all river data from file, otherwise fetch over internet
     if use_cache:
@@ -173,7 +173,7 @@ def fetch_gauge_data(use_cache: bool = False) -> dict:
         os.makedirs(CACHE_DIR)
     except FileExistsError:
         pass
-    cache_file = os.path.join(CACHE_DIR, 'gauge_data.json')
+    cache_file = os.path.join(CACHE_DIR, 'rainfall_gauge_data.json')
 
     # Attempt to load level data from file, otherwise fetch over internet (slower)
     if use_cache:
@@ -214,7 +214,7 @@ def fetch_latest_water_level_data(use_cache: bool = False) -> dict:
         os.makedirs(CACHE_DIR)
     except FileExistsError:
         pass
-    cache_file = os.path.join(CACHE_DIR, 'level_data.json')
+    cache_file = os.path.join(CACHE_DIR, 'station_water_level_data.json')
 
     # Attempt to load level data from file, otherwise fetch over internet (slower)
     if use_cache:
@@ -255,7 +255,7 @@ def fetch_latest_rainfall_data(use_cache: bool = False) -> dict:
         os.makedirs(CACHE_DIR)
     except FileExistsError:
         pass
-    cache_file = os.path.join(CACHE_DIR, 'rainfall_data.json')
+    cache_file = os.path.join(CACHE_DIR, 'rainfall_water_level_data.json')
 
     # Attempt to load level data from file, otherwise fetch over internet (slower)
     if use_cache:

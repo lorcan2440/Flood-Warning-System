@@ -1,3 +1,8 @@
+'''
+TODO: try predicting by taking into account nearby rainfall on the station's river
+https://machinelearningmastery.com/multivariate-time-series-forecasting-lstms-keras/
+'''
+
 import datetime
 import os
 

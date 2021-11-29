@@ -122,7 +122,8 @@ def identify_potentially_bad_data(station_name: str, levels: list[float],
 
     `station_name` (str): string name of a station to be displayed. Does not have to be the official name.
     `levels` (list[float]): list of level data to be checked
-    `data_origin_type` (str, default = None): either 'RIVER_STATION', 'RAINFALL_GAUGE' or unspecified (None)
+    `data_origin_type` (str, default = None): either 'River Level', 'Tidal', 'Groundwater',
+        'Rainfall', representing what this data input is from, or unspecified (None)
 
     #### Returns
 
@@ -176,8 +177,8 @@ def identify_potentially_bad_data(station_name: str, levels: list[float],
 
             flags.add(warn_str)
 
-    # Check for potentially invalid values: many sudden changes
-    if data_origin_type == 'RIVER_STATION':
+    # Check for potentially invalid values: many sudden changes (allow for rainfall etc)
+    if data_origin_type == 'River Level':
         if has_rapid_fluctuations(levels):
 
             warn_str = f"Data for {station_name} station may be unreliable. "

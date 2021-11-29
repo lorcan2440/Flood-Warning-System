@@ -115,8 +115,8 @@ def display_stations_on_map(stations: list[MonitoringStation], **kwargs) -> Figu
              fill_color="color", line_color="linecolor",
              fill_alpha=0.75, hover_alpha=1.0, source=source)
 
-    # clicking on a circle will open the official page for that station
-    # NOTE: requires bokeh version >= 2.3.3: https://github.com/bokeh/bokeh/issues/11182
+    # open webpage by clicking. NOTE: requires bokeh version >= 2.3.3
+    # https://github.com/bokeh/bokeh/issues/11182
     taptool = p.select(type=TapTool)
     taptool.callback = OpenURL(url='@url')
 

@@ -55,7 +55,7 @@ def wgs84_to_web_mercator(coord: tuple[float]) -> tuple[float]:
     Bokeh plotting module given a tuple of (lat, long) coords.
     https://en.wikipedia.org/wiki/Web_Mercator_projection
 
-    Actual support for google maps is latitude between -85.06 and 85.06.
+    Actual support for Google Maps is latitude between -85.06 and 85.06.
     '''
     if coord is None:
         return (None, None)
