@@ -322,7 +322,8 @@ def fetch_measure_levels(station: Union[MonitoringStation, str], dt: datetime.ti
         levels.append(measure['value'])
 
     flags = identify_potentially_bad_data(station_name, levels,
-        station_obj=station if isinstance(station, MonitoringStation) else None, **warnings_kwargs)
+        station_obj=station if isinstance(station, MonitoringStation) else None,
+        data_origin_type='RIVER_STATION', **warnings_kwargs)
     for flag in flags:
         warnings.warn('\n' + flag + '\n', RuntimeWarning)
 
@@ -355,7 +356,7 @@ def fetch_rainfall_levels(gauge: Union[RainfallGauge, str], dt: datetime.timedel
     `RuntimeWarning`: if the gauge has not recorded any data within the given period dt
     '''
 
-    if not isinstance(gauge, (MonitoringStation, str)):
+    if not isinstance(gauge, (RainfallGauge, str)):
         raise TypeError('The first argument must be either a `RainfallGauge` or a '
         f'measure_id string.\nGot value {gauge} of type {type(gauge)}')
 
@@ -366,10 +367,9 @@ def fetch_rainfall_levels(gauge: Union[RainfallGauge, str], dt: datetime.timedel
     start = now - dt
 
     # Construct URL for fetching data
-    url_base = gauge.measure_id if isinstance(gauge, MonitoringStation) else gauge
-    url_options = "-rainfall-tipping_bucket_raingauge-t-15_min-mm" + \
-        "/readings?_sorted&since=" + start.isoformat() + 'Z'
-    url = url_base.replace('measures', 'stations') + url_options
+    url_base = gauge.measure_id if isinstance(gauge, RainfallGauge) else gauge
+    url_options = "/readings?_sorted&since=" + start.isoformat() + 'Z'
+    url = url_base + url_options
     gauge_number = url_base.split('/')[-1]
 
     # Fetch data
@@ -391,7 +391,8 @@ def fetch_rainfall_levels(gauge: Union[RainfallGauge, str], dt: datetime.timedel
         rainfalls.append(measure['value'])
 
     flags = identify_potentially_bad_data(f'Rainfall Gauge #{gauge_number}', rainfalls,
-        station_obj=gauge if isinstance(gauge, RainfallGauge) else None, **warnings_kwargs)
+        station_obj=gauge if isinstance(gauge, RainfallGauge) else None,
+        data_origin_type='RAINFALL_GAUGE', **warnings_kwargs)
     for flag in flags:
         warnings.warn('\n' + flag + '\n', RuntimeWarning)
 

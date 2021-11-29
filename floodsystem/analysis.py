@@ -107,7 +107,8 @@ def moving_average(dates: list[datetime.datetime], levels: list[float],
         return date_nums, averages
 
 
-def identify_potentially_bad_data(station_name: str, levels: list[float], **kwargs: dict) -> set[str]:
+def identify_potentially_bad_data(station_name: str, levels: list[float],
+        data_origin_type: str = None, **kwargs: dict) -> set[str]:
     '''
     Check for suspicious values within a station's water level records. Tests for:
 
@@ -121,6 +122,7 @@ def identify_potentially_bad_data(station_name: str, levels: list[float], **kwar
 
     `station_name` (str): string name of a station to be displayed. Does not have to be the official name.
     `levels` (list[float]): list of level data to be checked
+    `data_origin_type` (str, default = None): either 'RIVER_STATION', 'RAINFALL_GAUGE' or unspecified (None)
 
     #### Returns
 
@@ -175,13 +177,14 @@ def identify_potentially_bad_data(station_name: str, levels: list[float], **kwar
             flags.add(warn_str)
 
     # Check for potentially invalid values: many sudden changes
-    if has_rapid_fluctuations(levels):
+    if data_origin_type == 'RIVER_STATION':
+        if has_rapid_fluctuations(levels):
 
-        warn_str = f"Data for {station_name} station may be unreliable. "
-        warn_str += "There are many sudden spikes between consecutive measurements. \n"
-        warn_str += "These values have not been altered."
+            warn_str = f"Data for {station_name} station may be unreliable. "
+            warn_str += "There are many sudden spikes between consecutive measurements. \n"
+            warn_str += "These values have not been altered."
 
-        flags.add(warn_str)
+            flags.add(warn_str)
 
     return flags
 
