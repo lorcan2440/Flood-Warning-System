@@ -7,11 +7,11 @@ import datetime
 import os
 
 import numpy as np
-import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
 
 from .datafetcher import fetch_measure_levels
 from .station import MonitoringStation
+from .plot import plot_model_loss
 
 RESOURCES = os.path.join(os.path.dirname(__file__), 'resources')
 PROPLOT_STYLE_SHEET = os.path.join(RESOURCES, 'proplot_style.mplstyle')
@@ -108,48 +108,8 @@ def build_model(lookback: int, **kwargs) -> Sequential:
     return model
 
 
-def plot_model_loss(model: Sequential, model_name: str, history: History, use_logscale: bool = True,
-        use_proplot_style: bool = True, batch_size: int = 'unspecified'):
-    '''
-    Shows a graph of the convergence of the loss for each epoch for a trained model.
-
-    #### Arguments
-
-    `model` (Sequential): model to test
-    `model_name` (str): name of model
-    `history` (History): loss values
-    `use_logscale` (bool, default = True): whether to show loss on a log axis
-    `use_proplot_style` (bool, default = True): use ProPlot stylesheet
-    `batch_size` (int, default = 'unspecified'): batch size for displaying on graph
-    '''
-
-    epoch = len(history.history['loss'])
-    end_loss = history.history['loss'][-1]
-    loss_color = '#1ec888' if end_loss < 0.001 else \
-                 '#e19124' if end_loss < 0.005 else \
-                 '#e8401c'
-    loss_name = model.loss.replace('_', ' ').title()
-
-    if use_proplot_style:
-        plt.style.use(PROPLOT_STYLE_SHEET)
-    else:
-        plt.style.use('default')
-
-    plt.title(f'Loss convergence of training for {model_name}')
-    plt.plot(np.arange(1, epoch + 1), history.history['loss'], label='loss', color='#58308f')
-    plt.plot((1, epoch), (end_loss, end_loss),
-        label=f'converged on {round(end_loss, 6)}', color=loss_color, linestyle='dashed')
-
-    plt.legend()
-    plt.xlabel(f'Epoch number (batch size {batch_size}), out of {epoch}')
-    plt.ylabel(f'Loss ({loss_name})')
-    if use_logscale:
-        plt.yscale('log')
-
-    plt.show()
-
-
-def train_model(model: Sequential, x: list, y: list, batch_size: int, epoch: int, **kwargs) -> Sequential:
+def train_model(model: Sequential, x: list, y: list, batch_size: int = 256, epoch: int = 20,
+        **kwargs) -> Sequential:
     '''
     Trains and saves the Keras model.
 
@@ -183,10 +143,12 @@ def train_model(model: Sequential, x: list, y: list, batch_size: int, epoch: int
     verbose = kwargs.get('verbose', 0)
     use_proplot_style = kwargs.get('use_proplot_style', True)
 
-    history = model.fit(x, y, batch_size=batch_size, epochs=epoch, verbose=verbose)
+    history = model.fit(x, y, batch_size=batch_size, epochs=epoch, verbose=verbose).history['loss']
+    loss_name = model.loss.replace('_', ' ').title().strip()
 
     if show_loss:
-        plot_model_loss(model, model_name, history, use_proplot_style=use_proplot_style)
+        plot_model_loss(history, loss_name, model_name,
+            use_proplot_style=use_proplot_style, batch_size=batch_size)
 
     try:
         model.save(save_file)
@@ -234,7 +196,7 @@ def train_all(stations: list[MonitoringStation], dataset_size: int = 1000, lookb
         scaler.fit(levels.reshape(-1, 1))
         x_train, y_train = data_prep(levels, lookback, scaler)
         model = build_model(lookback, **kwargs)
-        train_model(model, x_train, y_train, batch_size, epoch,
+        train_model(model, x_train, y_train, batch_size=batch_size, epoch=epoch,
                     save_file=f'./cache/models/{station.name}.hdf5', **kwargs)
         trained_models.append(model)
 

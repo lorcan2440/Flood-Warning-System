@@ -16,6 +16,7 @@ from .utils import flatten
 from .analysis import polyfit, moving_average
 from .station import MonitoringStation
 
+
 RESOURCES = os.path.join(os.path.dirname(__file__), 'resources')
 PROPLOT_STYLE_SHEET = os.path.join(RESOURCES, 'proplot_style.mplstyle')
 
@@ -220,7 +221,7 @@ def plot_predicted_water_levels(station: MonitoringStation, dates: tuple[list], 
     #### Arguments
 
     `station` (MonitoringStation): list of input stations
-    `dates` (tuple[list]): dates upto present and into future, respectively
+    `dates` (tuple[list]): dates up to present and into future, respectively
     `levels` (tuple[list]): past levels, past predicted levels and future predicted levels, respectively
     `format_dates` (bool, default = True): format dates neater
     `y_axis_from_zero` (bool, default = None): whether to start the y-axis from the zero level
@@ -236,7 +237,7 @@ def plot_predicted_water_levels(station: MonitoringStation, dates: tuple[list], 
         y_axis_from_zero = not station.is_tidal
 
     plt.plot(dates[0], levels[0], label='Past levels', color='#000000')
-    plt.plot(dates[0], levels[1], label='Demo levels', color='#29a762', linestyle='dashed')
+    plt.plot(dates[0], levels[1], label='Past forecast', color='#29a762', linestyle='dashed')
     plt.plot(dates[1], levels[2], label='Forecast', color='#c12091', linestyle='dashed')
 
     if station.typical_range_consistent():
@@ -260,5 +261,66 @@ def plot_predicted_water_levels(station: MonitoringStation, dates: tuple[list], 
     ax = plt.gca()
     if format_dates:  # string date formats: https://strftime.org/
         ax.xaxis.set_major_formatter(DateFormatter('%d %b, %I:%M %p'))
+
+    plt.show()
+
+
+def plot_model_loss(history: list, loss_name: str, model_name: str, use_logscale: bool = True,
+        use_proplot_style: bool = True, batch_size: int = None, show_colors: bool = True):
+    '''
+    Shows a graph of the convergence of the loss for each epoch for a trained model.
+    Called by `floodsystem.forecasts.train_model`.
+
+    #### Arguments
+
+    `history` (list): values of losses to be plotted
+    `loss_name` (str): name of loss function used when training model
+    `model_name` (str): name of the station which this model is based on
+
+    #### Optional
+
+    `use_logscale` (bool, default = True): whether to show loss on a vertical log axis
+    `use_proplot_style` (bool, default = True): use ProPlot stylesheet
+    `batch_size` (int, default = None): batch size used when training model. Shows 'unspecified' if None.
+    `show_colors` (bool, default = True): indicate quality based on loss with colours.
+        Only shows when using mse loss (`loss_name == 'Mean Squared Error'`)
+    '''
+
+    if batch_size is None:
+        batch_size = 'unspecified'
+
+    epoch = len(history)
+    end_loss = history[-1]
+
+    if use_proplot_style:
+        plt.style.use(PROPLOT_STYLE_SHEET)
+    else:
+        plt.style.use('default')
+
+    if show_colors and loss_name == 'Mean Squared Error':
+        GREEN = '#18b83d'
+        YELLOW = '#e3b51e'
+        RED = '#b81818'
+        plt.fill_between([1, epoch], 1e-6, 5e-4, facecolor=GREEN, alpha=0.4)
+        plt.fill_between([1, epoch], 5e-4, 5e-3, facecolor=YELLOW, alpha=0.4)
+        plt.fill_between([1, epoch], 5e-3, 1e-0, facecolor=RED, alpha=0.4)
+        loss_color = GREEN if end_loss < 5e-4 else YELLOW if end_loss < 5e-3 else RED
+    else:
+        loss_color = None
+
+    plt.title(f'Loss convergence of training for {model_name}')
+    plt.plot(np.arange(1, epoch + 1), history, label='loss',
+        color='#999999', linestyle='dotted', marker='x', markeredgecolor='#000000')
+    plt.plot((1, epoch), (end_loss, end_loss),
+        label=f'converged on {round(end_loss, 6)}', color=loss_color, linestyle='dashed', zorder=-1)
+
+    plt.xticks(range(epoch + 1))
+    plt.xlim(left=1, right=epoch)
+    plt.ylim(bottom=7e-6, top=1.5e-1)
+    plt.legend()
+    plt.xlabel(f'Epoch number (batch size {batch_size}), out of {epoch}')
+    plt.ylabel(f'Loss ({loss_name})')
+    if use_logscale:
+        plt.yscale('log')
 
     plt.show()

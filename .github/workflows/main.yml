@@ -29,7 +29,7 @@ jobs:
           pip install flake8 pytest pytest-cov
 
       - name: Lint with flake8
-        run: flake8
+        run: flake8 --statistics
 
       - name: Run unit tests with pytest
         run: pytest -v --cov
