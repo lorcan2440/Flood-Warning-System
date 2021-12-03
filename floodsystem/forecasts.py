@@ -16,8 +16,8 @@ from .utils import read_only_properties, hide_tensorflow_debug_logs
 
 RESOURCES = os.path.join(os.path.dirname(__file__), 'resources')
 PROPLOT_STYLE_SHEET = os.path.join(RESOURCES, 'proplot_style.mplstyle')
-_FORECAST_PROTECTED_ATTRS = frozenset({'station', 'dates_to_now', 'levels_to_now',
-    'levels_past_predicted', 'dates_future', 'levels_future_predicted'})
+_FORECAST_PROTECTED_ATTRS = ('station', 'dates_to_now', 'levels_to_now',
+    'levels_past_predicted', 'dates_future', 'levels_future_predicted')
 
 hide_tensorflow_debug_logs()
 
@@ -87,7 +87,7 @@ class Forecast:
         `use_proplot_style` (bool, default = True): use ProPlot stylesheet
         '''
 
-        _required_attrs = frozenset({'station', 'dates_future', 'levels_future_predicted'})
+        _required_attrs = ('station', 'dates_future', 'levels_future_predicted')
         required_vals = [getattr(self, attr) for attr in _required_attrs]
         plot_kwargs = {**kwargs, **{k: v for k, v in self.__dict__.items() if k not in _required_attrs}}
 
@@ -263,7 +263,7 @@ def predict(station: MonitoringStation, dataset_size: int = 1000, lookback: int 
     Predicts a specified number of future water levels of a specific station.
     If the model for that station is not cached, it will be trained according to the parameters specified.
 
-    The returned data includes actual data over the specified interval, demonstration data the model
+    The returned data includes actual data over the specified interval, past data the model
     produced based on actual data points prior to the displayed actual data, and the predicted data
     using some of the available actual data.
 
@@ -337,22 +337,22 @@ def predict(station: MonitoringStation, dataset_size: int = 1000, lookback: int 
     # prediction of the last `display` data points, which is based on the `lookback` values
     # before the final `iteration` points
     if get_past_forecast:
-        demo = None
-        demo_levels = scaler.transform(
+        past = None
+        past_levels = scaler.transform(
             levels[-display - lookback:-display].reshape(-1, 1)).reshape(1, 1, lookback)
         for _ in range(display):
-            prediction = model.predict(demo_levels)
-            demo_levels = np.append(demo_levels[:, :, -lookback + 1:], prediction.reshape(1, 1, 1), axis=2)
-            demo = np.append(demo, prediction, axis=0) if demo is not None else prediction
+            prediction = model.predict(past_levels)
+            past_levels = np.append(past_levels[:, :, -lookback + 1:], prediction.reshape(1, 1, 1), axis=2)
+            past = np.append(past, prediction, axis=0) if past is not None else prediction
 
     # option to delete model to save disk/drive space
     if del_model_after:
         os.remove(f'./cache/models/{station_name}.hdf5')
 
-    # return on last `display` data points, the demo values, and future predictions
+    # return on last `display` data points, the past values, and future predictions
     dates_to_now = dates[-display:] if get_past_forecast else None
     levels_to_now = levels[-display:] if get_past_forecast else None
-    levels_past_predicted = scaler.inverse_transform(demo).ravel() if get_past_forecast else None
+    levels_past_predicted = scaler.inverse_transform(past).ravel() if get_past_forecast else None
     dates_future = [dates[-1] + datetime.timedelta(minutes=15) * i for i in range(iteration)]
     levels_future_predicted = scaler.inverse_transform(predictions).ravel()
 

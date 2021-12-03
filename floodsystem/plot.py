@@ -237,13 +237,12 @@ def plot_predicted_water_levels(station: MonitoringStation, dates_future: list[d
     levels_to_now = kwargs.get('levels_to_now', None)
     levels_past_predicted = kwargs.get('levels_past_predicted', None)
     _metadata = kwargs.get('metadata', None)
+    station_name = station.name
 
     if _metadata is not None:
         has_past_forecast = _metadata['has_past_forecast']
-        station_name = _metadata['station'].name
     else:
         has_past_forecast = all([i is not None for i in [dates_to_now, levels_to_now, levels_past_predicted]])
-        station_name = station.name
 
     if use_proplot_style:
         plt.style.use(PROPLOT_STYLE_SHEET)
@@ -265,7 +264,7 @@ def plot_predicted_water_levels(station: MonitoringStation, dates_future: list[d
         plt.fill_between(
             [dates_to_now[0], dates_future[-1]] if has_past_forecast else [dates_future[0], dates_future[-1]],
             station.typical_range[0], station.typical_range[1], facecolor='green', alpha=0.2,
-            label=f'Typical range: \n{station.typical_range[0]}-{station.typical_range[1]}')
+            label=f'Typical range: \n{station.typical_range[0]} - {station.typical_range[1]}')
     else:
         plt.plot(dates_to_now[-1] if has_past_forecast else dates_future[-1],
             levels_to_now[-1] if has_past_forecast else levels_future_predicted[-1],
@@ -326,10 +325,10 @@ def plot_model_loss(history: list, loss_name: str, model_name: str, use_logscale
         GREEN = '#18b83d'
         YELLOW = '#e3b51e'
         RED = '#b81818'
-        plt.fill_between([1, epoch], 1e-6, 5e-4, facecolor=GREEN, alpha=0.4)
-        plt.fill_between([1, epoch], 5e-4, 5e-3, facecolor=YELLOW, alpha=0.4)
-        plt.fill_between([1, epoch], 5e-3, 1e-0, facecolor=RED, alpha=0.4)
-        loss_color = GREEN if end_loss < 5e-4 else YELLOW if end_loss < 5e-3 else RED
+        plt.fill_between([1, epoch], 1e-5, 1e-3, facecolor=GREEN, alpha=0.4)
+        plt.fill_between([1, epoch], 1e-3, 1e-2, facecolor=YELLOW, alpha=0.4)
+        plt.fill_between([1, epoch], 1e-2, 2e-0, facecolor=RED, alpha=0.4)
+        loss_color = GREEN if end_loss < 1e-3 else YELLOW if end_loss < 1e-2 else RED
     else:
         loss_color = None
 
@@ -341,7 +340,7 @@ def plot_model_loss(history: list, loss_name: str, model_name: str, use_logscale
 
     plt.xticks(range(epoch + 1))
     plt.xlim(left=1, right=epoch)
-    plt.ylim(bottom=7e-6, top=1.5e-1)
+    plt.ylim(bottom=7e-5, top=1.5e-0)
     plt.legend()
     plt.xlabel(f'Epoch number (batch size {batch_size}), out of {epoch}')
     plt.ylabel(f'Loss ({loss_name})')
