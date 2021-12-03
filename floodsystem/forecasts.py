@@ -11,10 +11,13 @@ from sklearn.preprocessing import MinMaxScaler
 
 from .datafetcher import fetch_measure_levels
 from .station import MonitoringStation
-from .plot import plot_model_loss
+from .plot import plot_model_loss, plot_predicted_water_levels
+from .utils import read_only_properties
 
 RESOURCES = os.path.join(os.path.dirname(__file__), 'resources')
 PROPLOT_STYLE_SHEET = os.path.join(RESOURCES, 'proplot_style.mplstyle')
+_FORECASTED_PROTECTED_ATTRS = frozenset({'station', 'dates_to_now', 'levels_to_now',
+    'levels_past_predicted', 'dates_future', 'levels_future_predicted'})
 
 try:
     # Disables initialisation warnings from tensorflow
@@ -39,7 +42,69 @@ except ImportError:
 
 from tensorflow.keras.models import Sequential, load_model  # noqa
 from tensorflow.keras.layers import Dense, LSTM             # noqa
-from tensorflow.python.keras.callbacks import History       # noqa
+
+
+@read_only_properties(*_FORECASTED_PROTECTED_ATTRS)
+class Forecast:
+
+    '''
+    Class containing information about an RNN-generated forecast for a station.
+    NOTE: the attributes ['station', 'dates_to_now', 'levels_to_now', 'levels_past_predicted',
+    'dates_future', 'levels_future_predicted'], are read-only.
+
+    #### Attributes
+
+    `Forecast.dates_future` (list[datetime.datetime]): the dates into the future for which a forecast exists
+    `Forecast.levels_future_predicted` (list[float]): the future forecasted water levels
+    `Forecast.station` (floodsystem.station.MonitoringStation): the station object which this forecast is for
+
+    #### Optional Attributes
+
+    These may or may not exist depending on the information which was passed into the `predict` function.
+
+    `Forecast.dates_to_now` (list[datetime.datetime]): the dates in the past for which a forecast exists
+    `Forecast.levels_to_now` (list[float]): the true recorded levels at each of Forecast.dates_to_now
+    `Forecast.levels_past_predicted` (list[float]): the past forecasted water levels
+    `Forecast.metadata` (dict): additional info about the forecast, including about the model used. Keys are:
+        {'has_past_forecast', 'station', 'dataset_size', 'lookback',
+        'iterations', 'batch_size', 'used_pretrained', 'epochs'}
+
+    #### Methods
+
+    `Forecast.plot_forecast()`
+    '''
+
+    def __init__(self, **kwargs):
+
+        _metadata = kwargs.get('metadata', None)
+        if _metadata is not None:
+            self.station = _metadata.get('station', None)
+        del _metadata
+        self.dates_future = kwargs.get('dates_future')
+        self.levels_future_predicted = kwargs.get('levels_future_predicted')
+
+        for attr, val in kwargs.items():
+            if val is not None and not hasattr(self, attr):
+                setattr(self, attr, val)
+
+    def plot_forecast(self, **kwargs):
+
+        '''
+        Plots a graph of the forecasted water levels. Wrapper for
+        `floodsystem.plot.plot_predicted_water_levels`, which all kwargs are passed to, as well as
+        any optional attributes set at initialisation (representing info from a past forecast).
+
+        #### Optional Keyword Arguments
+
+        `format_dates` (bool, default = True): format dates neater
+        `y_axis_from_zero` (bool, default = None): whether to start the y-axis from the zero level
+        `use_proplot_style` (bool, default = True): use ProPlot stylesheet
+        '''
+
+        _required_attrs = ('station', 'dates_future', 'levels_future_predicted')
+
+        plot_predicted_water_levels(*[getattr(self, attr) for attr in _required_attrs],
+            **{**kwargs, **{attr: val for attr, val in self.__dict__.items() if attr not in _required_attrs}})
 
 
 def data_prep(data: np.ndarray, lookback: int, scaler: MinMaxScaler,
@@ -204,41 +269,57 @@ def train_all(stations: list[MonitoringStation], dataset_size: int = 1000, lookb
 
 
 def predict(station: MonitoringStation, dataset_size: int = 1000, lookback: int = 2000,
-        iteration: int = 100, display: int = 300, use_pretrained: bool = True, batch_size: int = 256,
-        epoch: int = 20, del_model_after: bool = True) -> tuple[tuple[list, list], tuple[list, list, list]]:
+        iteration: int = 100, use_pretrained: bool = True, batch_size: int = 256, epoch: int = 20,
+        get_past_forecast: bool = False, display: int = 300,
+        del_model_after: bool = True) -> Forecast:
     '''
     Predicts a specified number of future water levels of a specific station.
     If the model for that station is not cached, it will be trained according to the parameters specified.
 
     The returned data includes actual data over the specified interval, demonstration data the model
-    produced based on actual data points prior to the displayed actual data, and the predicted date
-    using all the available actual data.
+    produced based on actual data points prior to the displayed actual data, and the predicted data
+    using some of the available actual data.
 
-    The prediction can be graphed using `plot_predicted_water_levels(s, *predict(s))`, where `s` is
-    a `MonitoringStation` after importing the plot function from `floodsystem.plot`.
+    The prediction can be graphed using (where `station` is a MonitoringStation):
+    ```
+    forecast = floodsystem.forecasts.predict(station)
+    forecast.plot_forecast(y_axis_from_zero=not station.is_tidal)
+    ```
 
     #### Arguments
 
     `station` (MonitoringStation): the station to predict the future levels for
-    `dataset_size` (int, default = 1000): the number of days in the dataset
-    `lookback` (int, default = 2000): look back value
-    `iteration` (int, default = 100): number of future 15-minute-interval water levels to predict
-    `display` (int, default = 300): number of real data points to be returned
+
+    #### Optional Keyword Arguments
+
+    `dataset_size` (int, default = 1000): the number of days to fetch past water levels from
+        (1 day provides 96 readings, if the station is functioning correctly)
+    `lookback` (int, default = 2000): number of past readings to base the next predicted value on
+    `iteration` (int, default = 100): number of future water levels to predict
+        (1 per 15 minutes into the future)
     `use_pretrained` (bool, default = True): whether to used pretrained model if possible
     `batch_size` (int, default = 256): number of samples processed before the model parameters are updated
     `epoch` (int, default = 20): number of times to work through the full dataset
-    `del_model_after` (bool, default = True): whether to delete the ~30 MB model file after predicting
+    `get_past_forecast` (bool, default = False): whether to additionally get a forecast based on the levels
+        from a given `display` points before the present. Helpful for estimating the accuracy of the forecast
+        by comparing to the known levels over this time.
+    `display` (int, default = 300): number of real data points to show if using `get_past_forecast`.
+    `del_model_after` (bool, default = True): whether to delete the model .hdf5 file after predicting.
+        Frees up disk space (29 MB per model with default parameters) if multiple models are being trained.
 
     #### Returns
 
-    tuple[tuple[list, list], tuple[list, list, list]]: first tuple contains all dates up to the present,
-    all dates in the future, respectively; second tuple contains the actual, past predicted and future
-    predicted levels, respectively
+    `Forecast`: an object with attributes containing the forecast and information relating to it.
+    The forecasted levels are stored in `Forecast.levels_future_predicted` at dates given in
+    `Forecast.dates_future`. See `help(floodsystem.forecasts.Forecast)` for more info.
     '''
 
+    # Reference:
+    # https://machinelearningmastery.com/time-series-prediction-lstm-recurrent-neural-networks-python-keras/
+
     station_name = station.name
-    date, levels = fetch_measure_levels(station, datetime.timedelta(dataset_size))
-    date, levels = np.array(date), np.array(levels)
+    dates, levels = fetch_measure_levels(station, datetime.timedelta(dataset_size))
+    dates, levels = np.array(dates), np.array(levels)
 
     scaler = MinMaxScaler(feature_range=(0, 1))
     scaler.fit(levels.reshape(-1, 1))
@@ -266,24 +347,35 @@ def predict(station: MonitoringStation, dataset_size: int = 1000, lookback: int 
         pred_levels = np.append(pred_levels[:, :, -lookback + 1:], prediction.reshape(1, 1, 1), axis=2)
         predictions = np.append(predictions, prediction, axis=0) if predictions is not None else prediction
 
-    # demo of prediction of the last `display` data points,
-    # which is based on the `lookback` values before the final `iteration` points
-    demo = None
-    demo_levels = scaler.transform(
-        levels[-display - lookback:-display].reshape(-1, 1)).reshape(1, 1, lookback)
-    for _ in range(display):
-        prediction = model.predict(demo_levels)
-        demo_levels = np.append(demo_levels[:, :, -lookback + 1:], prediction.reshape(1, 1, 1), axis=2)
-        demo = np.append(demo, prediction, axis=0) if demo is not None else prediction
+    # prediction of the last `display` data points, which is based on the `lookback` values
+    # before the final `iteration` points
+    if get_past_forecast:
+        demo = None
+        demo_levels = scaler.transform(
+            levels[-display - lookback:-display].reshape(-1, 1)).reshape(1, 1, lookback)
+        for _ in range(display):
+            prediction = model.predict(demo_levels)
+            demo_levels = np.append(demo_levels[:, :, -lookback + 1:], prediction.reshape(1, 1, 1), axis=2)
+            demo = np.append(demo, prediction, axis=0) if demo is not None else prediction
 
     # option to delete model to save disk/drive space
     if del_model_after:
         os.remove(f'./cache/models/{station_name}.hdf5')
 
     # return on last `display` data points, the demo values, and future predictions
-    dates_to_now = date[-display:]
-    dates_future = [date[-1] + datetime.timedelta(minutes=15) * i for i in range(iteration)]
-    levels_to_now = levels[-display:]
-    levels_past_predicted = scaler.inverse_transform(demo).ravel()
+    dates_to_now = dates[-display:] if get_past_forecast else None
+    levels_to_now = levels[-display:] if get_past_forecast else None
+    levels_past_predicted = scaler.inverse_transform(demo).ravel() if get_past_forecast else None
+    dates_future = [dates[-1] + datetime.timedelta(minutes=15) * i for i in range(iteration)]
     levels_future_predicted = scaler.inverse_transform(predictions).ravel()
-    return (dates_to_now, dates_future), (levels_to_now, levels_past_predicted, levels_future_predicted)
+
+    return Forecast(**{
+        'dates_to_now': dates_to_now,
+        'dates_future': dates_future,
+        'levels_to_now': levels_to_now,
+        'levels_past_predicted': levels_past_predicted,
+        'levels_future_predicted': levels_future_predicted,
+        'metadata': {'has_past_forecast': get_past_forecast, 'station': station,
+                     'dataset_size': dataset_size, 'lookback': lookback, 'iterations': iteration,
+                     'batch_size': batch_size, 'used_pretrained': use_pretrained, 'epochs': epoch}
+    })

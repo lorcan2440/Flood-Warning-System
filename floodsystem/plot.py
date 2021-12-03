@@ -7,6 +7,7 @@ for visualising level data over time.
 
 import math
 import os
+import datetime
 
 import numpy as np
 from matplotlib import pyplot as plt
@@ -213,20 +214,36 @@ def plot_water_level_with_moving_average(station: object, dates: list, levels: l
     plt.show()
 
 
-def plot_predicted_water_levels(station: MonitoringStation, dates: tuple[list], levels: tuple[list],
-        format_dates: bool = True, y_axis_from_zero: bool = None, use_proplot_style: bool = True):
+def plot_predicted_water_levels(station: MonitoringStation, dates_future: list[datetime.datetime],
+        levels_future_predicted: list[float], format_dates: bool = True, y_axis_from_zero: bool = None,
+        use_proplot_style: bool = True, **kwargs):
     '''
     Plots the forecast of a station, including past predictions.
 
     #### Arguments
 
-    `station` (MonitoringStation): list of input stations
-    `dates` (tuple[list]): dates up to present and into future, respectively
-    `levels` (tuple[list]): past levels, past predicted levels and future predicted levels, respectively
+    `station` (MonitoringStation): the station which has the forecast to be plotted
+    `dates_future` (list[datetime.datetime]): the dates into the future where a forecast is given
+    `levels_future_predicted` (list[float]): the forecasted levels
+
+    #### Optional Keywords Arguments
+
     `format_dates` (bool, default = True): format dates neater
     `y_axis_from_zero` (bool, default = None): whether to start the y-axis from the zero level
     `use_proplot_style` (bool, default = True): use ProPlot stylesheet
     '''
+
+    dates_to_now = kwargs.get('dates_to_now', None)
+    levels_to_now = kwargs.get('levels_to_now', None)
+    levels_past_predicted = kwargs.get('levels_past_predicted', None)
+    _metadata = kwargs.get('metadata', None)
+
+    if _metadata is not None:
+        has_past_forecast = _metadata['has_past_forecast']
+        station_name = _metadata['station'].name
+    else:
+        has_past_forecast = all([i is not None for i in [dates_to_now, levels_to_now, levels_past_predicted]])
+        station_name = station.name
 
     if use_proplot_style:
         plt.style.use(PROPLOT_STYLE_SHEET)
@@ -236,22 +253,30 @@ def plot_predicted_water_levels(station: MonitoringStation, dates: tuple[list], 
     if y_axis_from_zero is None:
         y_axis_from_zero = not station.is_tidal
 
-    plt.plot(dates[0], levels[0], label='Past levels', color='#000000')
-    plt.plot(dates[0], levels[1], label='Past forecast', color='#29a762', linestyle='dashed')
-    plt.plot(dates[1], levels[2], label='Forecast', color='#c12091', linestyle='dashed')
+    if has_past_forecast:
+        plt.plot(dates_to_now, levels_to_now,
+            label='Past levels', color='#000000')
+        plt.plot(dates_to_now, levels_past_predicted,
+            label='Past forecast', color='#29a762', linestyle='dashed')
+
+    plt.plot(dates_future, levels_future_predicted, label='Forecast', color='#c12091', linestyle='dashed')
 
     if station.typical_range_consistent():
-        plt.fill_between([dates[0][0], dates[1][-1]], station.typical_range[0], station.typical_range[1],
-            facecolor='green', alpha=0.2,
+        plt.fill_between(
+            [dates_to_now[0], dates_future[-1]] if has_past_forecast else [dates_future[0], dates_future[-1]],
+            station.typical_range[0], station.typical_range[1], facecolor='green', alpha=0.2,
             label=f'Typical range: \n{station.typical_range[0]}-{station.typical_range[1]}')
     else:
-        plt.plot(dates[0][-1], levels[0][-1], label='(typical range' + '\n' + 'unavailable)')
+        plt.plot(dates_to_now[-1] if has_past_forecast else dates_future[-1],
+            levels_to_now[-1] if has_past_forecast else levels_future_predicted[-1],
+            label='(typical range' + '\n' + 'unavailable)')
 
     # graphical - main figure
     plt.xlabel('date')
     plt.ylabel('water level / $ m $')
     plt.legend(loc='upper left')
-    plt.title(f'Water levels and forecast for {station.name}')
+    plt.title('Water levels and forecast ' +    # noqa
+        f'{"for " + station_name if station_name is not None else "(station unspecified)"}')
     plt.xticks(rotation=45)
     plt.tight_layout()
     if y_axis_from_zero:

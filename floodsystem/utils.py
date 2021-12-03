@@ -107,6 +107,36 @@ def get_avg_earth_radius(unit: Enum) -> float:
     return _AVG_EARTH_RADIUS_KM * _CONVERSIONS[unit]
 
 
+def read_only_properties(*attrs):
+    '''
+    Decorator for making attributes of a class read-only (values cannot be set after initialisation).
+
+    Source:
+    https://stackoverflow.com/a/39716001/8747480
+
+    #### Arguments
+
+    *attrs (str): string names of the attributes of the class to make read-only.
+    '''
+
+    def class_rebuilder(cls):
+        "The class decorator"
+
+        class NewClass(cls):
+            "This is the overwritten class"
+            def __setattr__(self, name, value):
+                if name not in attrs:
+                    pass
+                elif name not in self.__dict__:
+                    pass
+                else:
+                    raise AttributeError(f"The attribute {name} is read-only.")
+
+                super().__setattr__(name, value)
+        return NewClass
+    return class_rebuilder
+
+
 def haversine(point1: tuple, point2: tuple, unit: Enum = Unit.KILOMETERS) -> float:
 
     """
