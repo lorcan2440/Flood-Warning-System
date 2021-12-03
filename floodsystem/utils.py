@@ -6,6 +6,7 @@ https://pypi.org/project/haversine/; version 2.3.0, accessed Sep 4, 2020
 '''
 
 import warnings
+import os
 from math import radians, degrees, sin, cos, tan, asin, sqrt, log, pi
 from enum import Enum
 
@@ -109,32 +110,57 @@ def get_avg_earth_radius(unit: Enum) -> float:
 
 def read_only_properties(*attrs):
     '''
-    Decorator for making attributes of a class read-only (values cannot be set after initialisation).
-
-    Source:
-    https://stackoverflow.com/a/39716001/8747480
+    Decorator for making attributes of a class read-only (values should not be set after initialisation).
 
     #### Arguments
 
-    *attrs (str): string names of the attributes of the class to make read-only.
+    `attrs` (list[str]): string names of the attributes of the class to make read-only.
     '''
 
-    def class_rebuilder(cls):
+    def class_setattr_editor(cls):
         "The class decorator"
 
-        class NewClass(cls):
-            "This is the overwritten class"
-            def __setattr__(self, name, value):
-                if name not in attrs:
-                    pass
-                elif name not in self.__dict__:
-                    pass
-                else:
-                    raise AttributeError(f"The attribute {name} is read-only.")
+        def read_only_setattr(self, name, value):
 
-                super().__setattr__(name, value)
-        return NewClass
-    return class_rebuilder
+            if name in attrs and name in self.__dict__:
+                raise AttributeError(f'The attribute {name} is read-only.' +    # noqa
+                    'It should not be set after initialisation.')
+
+            super(cls, self).__setattr__(name, value)
+
+        setattr(cls, '__setattr__', read_only_setattr)
+        return cls
+
+    return class_setattr_editor
+
+
+def hide_tensorflow_debug_logs():
+
+    '''
+    Disables initialisation warnings from tensorflow
+
+    Source:
+    https://stackoverflow.com/questions/35911252/disable-tensorflow-debugging-information
+    '''
+
+    try:
+        os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+        os.environ['KERAS_BACKEND'] = 'plaidml.keras.backend'
+
+        from tensorflow.python.platform.tf_logging import set_verbosity, ERROR
+        from tensorflow.python.util import deprecation
+
+        set_verbosity(ERROR)
+
+        def deprecated(date, instructions, warn_once=True):
+            def deprecated_wrapper(func):
+                return func
+            return deprecated_wrapper
+
+        deprecation.deprecated = deprecated
+
+    except ImportError:
+        pass
 
 
 def haversine(point1: tuple, point2: tuple, unit: Enum = Unit.KILOMETERS) -> float:

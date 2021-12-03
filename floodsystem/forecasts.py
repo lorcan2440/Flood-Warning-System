@@ -12,62 +12,45 @@ from sklearn.preprocessing import MinMaxScaler
 from .datafetcher import fetch_measure_levels
 from .station import MonitoringStation
 from .plot import plot_model_loss, plot_predicted_water_levels
-from .utils import read_only_properties
+from .utils import read_only_properties, hide_tensorflow_debug_logs
 
 RESOURCES = os.path.join(os.path.dirname(__file__), 'resources')
 PROPLOT_STYLE_SHEET = os.path.join(RESOURCES, 'proplot_style.mplstyle')
-_FORECASTED_PROTECTED_ATTRS = frozenset({'station', 'dates_to_now', 'levels_to_now',
+_FORECAST_PROTECTED_ATTRS = frozenset({'station', 'dates_to_now', 'levels_to_now',
     'levels_past_predicted', 'dates_future', 'levels_future_predicted'})
 
-try:
-    # Disables initialisation warnings from tensorflow
-    # https://stackoverflow.com/questions/35911252/disable-tensorflow-debugging-information
-    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-    os.environ['KERAS_BACKEND'] = 'plaidml.keras.backend'
-
-    from tensorflow.python.platform.tf_logging import set_verbosity, ERROR
-    from tensorflow.python.util import deprecation
-
-    set_verbosity(ERROR)
-
-    def deprecated(date, instructions, warn_once=True):
-        def deprecated_wrapper(func):
-            return func
-        return deprecated_wrapper
-
-    deprecation.deprecated = deprecated
-
-except ImportError:
-    pass
+hide_tensorflow_debug_logs()
 
 from tensorflow.keras.models import Sequential, load_model  # noqa
 from tensorflow.keras.layers import Dense, LSTM             # noqa
 
 
-@read_only_properties(*_FORECASTED_PROTECTED_ATTRS)
+@read_only_properties(*_FORECAST_PROTECTED_ATTRS)
 class Forecast:
 
     '''
     Class containing information about an RNN-generated forecast for a station.
+
     NOTE: the attributes ['station', 'dates_to_now', 'levels_to_now', 'levels_past_predicted',
-    'dates_future', 'levels_future_predicted'], are read-only.
+    'dates_future', 'levels_future_predicted'], are read-only, as set by
+    floodsystem.utils.read_only_properties and defined in floodsystem.forecasts._FORECAST_PROTECTED_ATTRS.
 
     #### Attributes
 
     `Forecast.dates_future` (list[datetime.datetime]): the dates into the future for which a forecast exists
     `Forecast.levels_future_predicted` (list[float]): the future forecasted water levels
-    `Forecast.station` (floodsystem.station.MonitoringStation): the station object which this forecast is for
+    `Forecast.station` (floodsystem.station.MonitoringStation): the station which this forecast is for
 
     #### Optional Attributes
 
-    These may or may not exist depending on the information which was passed into the `predict` function.
+    These may or may not exist depending on the information passed into the `predict` function.
 
     `Forecast.dates_to_now` (list[datetime.datetime]): the dates in the past for which a forecast exists
     `Forecast.levels_to_now` (list[float]): the true recorded levels at each of Forecast.dates_to_now
     `Forecast.levels_past_predicted` (list[float]): the past forecasted water levels
-    `Forecast.metadata` (dict): additional info about the forecast, including about the model used. Keys are:
-        {'has_past_forecast', 'station', 'dataset_size', 'lookback',
-        'iterations', 'batch_size', 'used_pretrained', 'epochs'}
+    `Forecast.metadata` (dict): additional info about the forecast, including about the model used. Keys:
+        {'has_past_forecast', 'dataset_size', 'lookback', 'iterations',
+        'batch_size', 'used_pretrained', 'epochs'}
 
     #### Methods
 
@@ -85,7 +68,10 @@ class Forecast:
 
         for attr, val in kwargs.items():
             if val is not None and not hasattr(self, attr):
-                setattr(self, attr, val)
+                if attr != 'metadata':
+                    setattr(self, attr, val)
+                else:
+                    setattr(self, attr, {k: v for k, v in val.items() if k != 'station'})
 
     def plot_forecast(self, **kwargs):
 
@@ -101,10 +87,11 @@ class Forecast:
         `use_proplot_style` (bool, default = True): use ProPlot stylesheet
         '''
 
-        _required_attrs = ('station', 'dates_future', 'levels_future_predicted')
+        _required_attrs = frozenset({'station', 'dates_future', 'levels_future_predicted'})
+        required_vals = [getattr(self, attr) for attr in _required_attrs]
+        plot_kwargs = {**kwargs, **{k: v for k, v in self.__dict__.items() if k not in _required_attrs}}
 
-        plot_predicted_water_levels(*[getattr(self, attr) for attr in _required_attrs],
-            **{**kwargs, **{attr: val for attr, val in self.__dict__.items() if attr not in _required_attrs}})
+        plot_predicted_water_levels(*required_vals, **plot_kwargs)
 
 
 def data_prep(data: np.ndarray, lookback: int, scaler: MinMaxScaler,
