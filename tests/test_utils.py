@@ -3,8 +3,7 @@ Unit tests for the utils module
 '''
 
 # pylint: disable=import-error
-
-import import_helper  # noqa
+# import __init__  # noqa # uncomment if not installing package
 
 import pytest
 import os

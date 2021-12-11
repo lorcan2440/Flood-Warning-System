@@ -13,12 +13,17 @@ import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.dates import DateFormatter
 
-from .utils import flatten
-from .analysis import polyfit, moving_average
-from .station import MonitoringStation
+try:
+    from .utils import flatten
+    from .analysis import polyfit, moving_average
+    from .station import MonitoringStation
+except ImportError:
+    from utils import flatten
+    from analysis import polyfit, moving_average
+    from station import MonitoringStation
 
 
-RESOURCES = os.path.join(os.path.dirname(__file__), 'resources')
+RESOURCES = os.path.join(os.path.dirname(__file__), 'assets')
 PROPLOT_STYLE_SHEET = os.path.join(RESOURCES, 'proplot_style.mplstyle')
 
 
@@ -231,7 +236,11 @@ def plot_predicted_water_levels(station: MonitoringStation, dates_future: list[d
     `format_dates` (bool, default = True): format dates neater
     `y_axis_from_zero` (bool, default = None): whether to start the y-axis from the zero level
     `use_proplot_style` (bool, default = True): use ProPlot stylesheet
-    '''
+    `dates_to_now` (list, default = None): the dates where a past forecast exist
+    `levels_to_now` (list, default = None): the true levels over the dates_to_now
+    `levels_past_predicted` (list, default = None): the levels predicted by a past forecast
+    `metadata` (dict, default = None): additional info about the forecast, including about the model used.
+        {'has_past_forecast', 'dataset_size', 'lookback', 'iterations', 'batch_size', 'used_pretrained', 'epochs'}'''   # noqa
 
     dates_to_now = kwargs.get('dates_to_now', None)
     levels_to_now = kwargs.get('levels_to_now', None)
@@ -265,10 +274,6 @@ def plot_predicted_water_levels(station: MonitoringStation, dates_future: list[d
             [dates_to_now[0], dates_future[-1]] if has_past_forecast else [dates_future[0], dates_future[-1]],
             station.typical_range[0], station.typical_range[1], facecolor='green', alpha=0.2,
             label=f'Typical range: \n{station.typical_range[0]} - {station.typical_range[1]}')
-    else:
-        plt.plot(dates_to_now[-1] if has_past_forecast else dates_future[-1],
-            levels_to_now[-1] if has_past_forecast else levels_future_predicted[-1],
-            label='(typical range' + '\n' + 'unavailable)')
 
     # graphical - main figure
     plt.xlabel('date')

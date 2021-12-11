@@ -3,8 +3,8 @@ Unit tests for the plot module.
 '''
 
 # pylint: disable=import-error
+# import __init__  # noqa # uncomment if not installing package
 
-import import_helper  # noqa
 import pytest
 
 from floodsystem.plot import plot_water_level_with_moving_average, plot_water_levels, \

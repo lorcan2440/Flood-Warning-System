@@ -3,8 +3,7 @@ Unit tests for the stationdata module.
 '''
 
 # pylint: disable=import-error
-
-import import_helper  # noqa
+# import __init__  # noqa # uncomment if not installing package
 
 from floodsystem.stationdata import build_station_list, update_water_levels
 

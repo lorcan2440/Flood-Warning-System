@@ -3,12 +3,12 @@ Unit tests for the stationdata module.
 '''
 
 # pylint: disable=import-error
+# import __init__  # noqa # uncomment if not installing package
 
 import datetime
 import time
 import os
 import shutil
-import import_helper  # noqa
 
 from floodsystem.datafetcher import fetch, dump, load, \
     fetch_measure_levels, fetch_latest_water_level_data, fetch_stationdata

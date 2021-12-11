@@ -1,4 +1,5 @@
 # pylint: disable=import-error
+import __init__  # noqa
 
 '''
 NOTE: if switching to Dash/Plotly, consider using
@@ -6,10 +7,8 @@ https://plotly.com/python/mapbox-density-heatmaps/
 to display the map as a transparent layer on the map
 '''
 
-import import_helper  # noqa
-
 from floodsystem.stationdata import build_station_list, update_water_levels
-from floodsystem.map import display_stations_on_map
+from floodsystem.map import stations_map
 
 
 def run():
@@ -17,8 +16,8 @@ def run():
     stations = build_station_list()
     update_water_levels(stations)
 
-    display_stations_on_map(stations,
-        map_design='STAMEN_TERRAIN_RETINA', filedir='applications/output', filter_station_type=None)
+    stations_map(stations, backend='bokeh', show_map=True, map_design='STAMEN_TERRAIN_RETINA',
+        filedir='applications/output')
 
 
 if __name__ == "__main__":

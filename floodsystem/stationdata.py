@@ -7,9 +7,14 @@ JSON objects fetched from the Internet and
 
 from itertools import groupby
 
-from .datafetcher import fetch_stationdata, fetch_latest_water_level_data, \
-    fetch_gauge_data, fetch_latest_rainfall_data
-from .station import MonitoringStation, RainfallGauge
+try:
+    from .datafetcher import \
+        fetch_stationdata, fetch_latest_water_level_data, fetch_gauge_data, fetch_latest_rainfall_data
+    from .station import MonitoringStation, RainfallGauge
+except ImportError:
+    from datafetcher import \
+        fetch_stationdata, fetch_latest_water_level_data, fetch_gauge_data, fetch_latest_rainfall_data
+    from station import MonitoringStation, RainfallGauge
 
 
 def build_station_list(use_cache: bool = True, return_numbers: bool = False) -> list[MonitoringStation]:
@@ -172,7 +177,7 @@ def update_water_levels(stations: list[MonitoringStation]):
         if s.measure_id in m_id_to_value:
             s.latest_level, s.latest_recorded_datetime = m_id_to_value[s.measure_id]
         else:
-            s.latest_level = None
+            s.latest_level, s.latest_recorded_datetime = None, None
 
 
 def update_rainfall_levels(gauges: list[RainfallGauge]):
@@ -186,7 +191,6 @@ def update_rainfall_levels(gauges: list[RainfallGauge]):
 
     # Fetch level data
     measure_data = fetch_latest_rainfall_data()
-    print(measure_data)
 
     # Build map from measure id to latest reading (value)
     m_id_to_value = dict()
@@ -201,4 +205,4 @@ def update_rainfall_levels(gauges: list[RainfallGauge]):
         if g.measure_id in m_id_to_value:
             g.latest_level, g.latest_recorded_datetime = m_id_to_value[g.measure_id]
         else:
-            g.latest_level = None
+            g.latest_level, g.latest_recorded_datetime = None, None

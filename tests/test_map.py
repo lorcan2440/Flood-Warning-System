@@ -3,10 +3,9 @@ Unit tests for the map module.
 '''
 
 # pylint: disable=import-error
+# import __init__  # noqa # uncomment if not installing package
 
-import import_helper  # noqa
-
-from floodsystem.map import display_stations_on_map
+from floodsystem.map import stations_map_bokeh
 from floodsystem.station import MonitoringStation
 
 
@@ -31,11 +30,11 @@ def test_display_stations_on_map():
     setattr(stations[6], "latest_level", 36)
 
     # test returning
-    test_image = display_stations_on_map(stations, return_image=True)
+    test_image = stations_map_bokeh(stations)
     assert hash(test_image) > 1
 
     # test default design
-    display_stations_on_map(stations)
+    stations_map_bokeh(stations)
 
     # test custom design
-    display_stations_on_map(stations, map_design="CARTODBPOSITRON_RETINA")
+    stations_map_bokeh(stations, map_design="CARTODBPOSITRON_RETINA")

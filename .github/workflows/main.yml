@@ -41,3 +41,4 @@ jobs:
         run: |
           python applications/MapViewer.py
           python applications/LevelPredictions.py
+          python applications/Dashboard.py

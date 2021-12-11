@@ -123,7 +123,7 @@ def read_only_properties(*attrs):
         def read_only_setattr(self, name, value):
 
             if name in attrs and name in self.__dict__:
-                raise AttributeError(f'The attribute {name} is read-only.' +    # noqa
+                raise AttributeError(f'The attribute {name} is read-only. ' +    # noqa
                     'It should not be set after initialisation.')
 
             super(cls, self).__setattr__(name, value)

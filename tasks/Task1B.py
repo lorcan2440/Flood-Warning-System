@@ -1,5 +1,5 @@
 # pylint: disable=import-error
-import import_helper  # noqa
+import __init__  # noqa # uncomment if not installing package
 
 from floodsystem.geo import stations_by_distance
 from floodsystem.stationdata import build_station_list

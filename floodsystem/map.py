@@ -7,16 +7,146 @@ This module contains functions to produce maps.
 import os
 from itertools import groupby
 
+
 from bokeh.plotting import Figure, figure, output_file, show
 from bokeh.models import ColumnDataSource, OpenURL, TapTool, HoverTool
 from bokeh.tile_providers import Vendors, get_provider
 
-from floodsystem.station import MonitoringStation
+import plotly.graph_objects as go
 
-from .utils import wgs84_to_web_mercator, coord_letters
+try:
+    from .station import MonitoringStation
+    from .utils import wgs84_to_web_mercator, coord_letters
+except ImportError:
+    from station import MonitoringStation
+    from utils import wgs84_to_web_mercator, coord_letters
 
 
-def display_stations_on_map(stations: list[MonitoringStation], **kwargs) -> Figure:
+def stations_map(stations: list[MonitoringStation], backend: str, **kwargs):
+
+    '''
+    Shows a map of the stations across England. Choose a backend, either Bokeh or Plotly:
+
+    Bokeh: https://docs.bokeh.org/en/latest/docs/user_guide/geo.html
+
+    Plotly: https://plotly.com/python/#maps
+
+    #### Arguments
+
+    `stations` (list[MonitoringStation]): a list of all input stations
+
+    #### Optional Kwargs - for both backends
+
+    `filter_station_type` (str | list[str], default = None): whether to show only stations of a specified type.
+    Use "River Level", "Tidal", "Groundwater" or a list of these for multiple filters.
+    If None, no filter is applied. If an empty list is passed, no stations will be shown.
+
+    #### Optional Kwargs - for Bokeh only
+
+    `map_design` (str, default = 'SATELLITE'): tile provider for Bokeh map. 'SATELLITE' is equivalent
+    to superposing 'ESRI_IMAGERY' and 'STAMEN_TONER_LABELS'. See
+    https://docs.bokeh.org/en/latest/docs/reference/tile_providers.html for the options.
+    Passed to bokeh.tile_providers.Vendors enum.
+
+    `show_map` (bool, default = False): show the map in addition to returning the Figure
+    `output_file` (str, default = 'England Stations Map.html'): filename of HTML output file
+    `filedir` (str, default = ''): directory to put HTML file in, relative or absolute
+    `map_title` (str, default = 'Flood Monitoring Stations Across England'): title of tab opened
+    `verbose` (bool, default = True): whether to provide a text output description of what the map is showing.
+
+    #### Optional Kwargs - for Plotly only
+
+    [None]
+
+    #### Returns
+
+    bokeh.plotting.Figure: the figure used in the map
+    '''
+
+    if backend.lower() == 'bokeh':
+        return stations_map_bokeh(stations, **kwargs)
+    elif backend.lower() == 'plotly':
+        return stations_map_plotly(stations, **kwargs)
+
+
+def stations_map_plotly(stations: list[MonitoringStation], **kwargs):
+    '''
+    Shows a map of the stations across England by running a HTML file in a browser.
+
+    Uses Plotly:
+    https://plotly.com/python/scattermapbox/
+
+    #### Arguments
+
+    `stations` (list[MonitoringStation]): a list of all input stations
+
+    #### Optional Kwargs
+
+    `filter_station_type` (str | list[str], default = None): whether to show only stations of a specified type.
+    Use "River Level", "Tidal", "Groundwater" or a list of these for multiple filters.
+    If None, no filter is applied. If an empty list is passed, no stations will be shown.
+    '''
+
+    # kwargs
+    filter_station_type = kwargs.get('filter_station_type', None)
+    map_design = kwargs.get('map_design', 'open-street-map')
+
+    # filter input if needed
+    if filter_station_type is not None:
+        if isinstance(filter_station_type, str):
+            stations = list(filter(lambda s: s.station_type == filter_station_type, stations))
+        elif isinstance(filter_station_type, (list, tuple, set, dict)):
+            stations = list(filter(lambda s: s.station_type in filter_station_type, stations))
+
+    colors = {
+        'red': '#fa0101', 'orange': '#ff891e', 'yellow': '#fff037',
+        'light green': '#8ec529', 'green': '#32a058', 'grey': '#a2a2a2',
+        'light blue': '#319fca', 'blue': '#2636f4', 'white': '#ffffff'
+    }
+    linecolors = {
+        'red': '#9c3838', 'orange': '#9e7d47', 'yellow': '#acac51',
+        'light green': '#32a058', 'green': '#297231', 'grey': '#6a6a6a',
+        'light blue': '#4e709e', 'blue': '#1e0acf', 'white': '#c3c3c3'
+    }
+    info_by_station = [(
+        *(s.coord if s.coord is not None else (None, None)),
+        s.name,
+        (level if level > 0 or s.is_tidal else "≤ 0") if (level := s.latest_level) is not None else None,
+        *(s.typical_range if s.typical_range is not None else (None, None)),
+        round(lv * 100, 1) if (lv := s.relative_water_level()) is not None else None,
+        s.river,
+        s.town,
+        s.station_type,
+        s.url,
+        colors[(dot_col := ((
+            'green' if lv < 0.5 else
+            'light green' if lv < 1 else
+            'yellow' if lv < 1.75 else
+            'orange' if lv < 2.5 else
+            'red') if lv is not None else
+            ((('blue' if level > 5.0 else
+            'light blue') if s.station_type == 'Tidal' else
+            'white') if level is not None else
+            'grey')))],
+        linecolors[dot_col]
+    ) for s in stations]
+
+    source = dict(zip(['lat', 'lon', 'text', 'current_level', 'typical_range_min', 'typical_range_max',
+            'relative_level_percent', 'river', 'town', 'station_type', 'url',
+            'fill', 'linecolor'], zip(*info_by_station)))
+
+    mapbox_kwargs = {k: v for k, v in source.items() if k in {'lat', 'lon'}}
+
+    fig = go.Figure(go.Scattermapbox(**mapbox_kwargs, mode='markers'))
+
+    fig.update_layout(autosize=True, hovermode='closest', width=450, height=375,
+        mapbox=dict(bearing=0, center=dict(lat=54.5, lon=-3), pitch=0, zoom=4),
+        mapbox_style=map_design, margin=dict(l=0, r=0, t=0, b=0))
+
+    return fig
+
+
+def stations_map_bokeh(stations: list[MonitoringStation], **kwargs) -> Figure:
     '''
     Shows a map of the stations across England by running a HTML file in a browser.
 
@@ -38,7 +168,7 @@ def display_stations_on_map(stations: list[MonitoringStation], **kwargs) -> Figu
     https://docs.bokeh.org/en/latest/docs/reference/tile_providers.html for the options.
     Passed to bokeh.tile_providers.Vendors enum.
 
-    `return_image` (bool, default = False): return the Figure as the output from this function
+    `show_map` (bool, default = False): show the map in addition to returning the Figure
     `output_file` (str, default = 'England Stations Map.html'): filename of HTML output file
     `filedir` (str, default = ''): directory to put HTML file in, relative or absolute
     `map_title` (str, default = 'Flood Monitoring Stations Across England'): title of tab opened
@@ -46,13 +176,13 @@ def display_stations_on_map(stations: list[MonitoringStation], **kwargs) -> Figu
 
     #### Returns
 
-    bokeh.plotting.Figure (optional): the figure used in the map, returned if `return_image`, else None
+    bokeh.plotting.Figure: the figure used in the map
     '''
 
     # kwargs
     filter_station_type = kwargs.get('filter_station_type', None)
     map_design = kwargs.get('map_design', 'SATELLITE')
-    return_image = kwargs.get('return_image', False)
+    show_map = kwargs.get('show_map', False)
     filename = kwargs.get('output_file', 'England Stations Map.html')
     filedir = kwargs.get('filedir', '')
     title = kwargs.get('map_title', 'Flood Monitoring Stations Across England')
@@ -61,8 +191,16 @@ def display_stations_on_map(stations: list[MonitoringStation], **kwargs) -> Figu
     # inputs and outputs
     MAP_RANGE = ((59, -12), (49, 4))
     output_file(os.path.join(filedir, filename), title=title)
-    colors = ["#fa0101", "#ff891e", "#fff037", "#8ec529", "#32a058", "#a2a2a2"]
-    linecolors = ["#9c3838", "#9e7d47", "#acac51", "#32a058", "#297231", "#6a6a6a"]
+    colors = {
+        'red': '#fa0101', 'orange': '#ff891e', 'yellow': '#fff037',
+        'light green': '#8ec529', 'green': '#32a058', 'grey': '#a2a2a2',
+        'light blue': '#319fca', 'blue': '#2636f4', 'white': '#ffffff'
+    }
+    linecolors = {
+        'red': '#9c3838', 'orange': '#9e7d47', 'yellow': '#acac51',
+        'light green': '#32a058', 'green': '#297231', 'grey': '#6a6a6a',
+        'light blue': '#4e709e', 'blue': '#1e0acf', 'white': '#c3c3c3'
+    }
     trans_range = [wgs84_to_web_mercator(coord) for coord in MAP_RANGE]
     x_range, y_range = zip(*trans_range)
 
@@ -88,20 +226,24 @@ def display_stations_on_map(stations: list[MonitoringStation], **kwargs) -> Figu
         *(map(lambda c: abs(c), s.coord) if s.coord is not None else (None, None)),
         *(coord_letters(*s.coord) if s.coord is not None else (None, None)),
         s.name,
-        (ll if ll > 0 or s.is_tidal else "≤ 0")
-            if (ll := s.latest_level) is not None else None,       # noqa
+        (level if level > 0 or s.is_tidal else "≤ 0") if (level := s.latest_level) is not None else None,
         *(s.typical_range if s.typical_range is not None else (None, None)),
         round(lv * 100, 1) if (lv := s.relative_water_level()) is not None else None,
         s.river,
         s.town,
         s.station_type,
         s.url,
-        colors[(rating := ((4 if lv < 0.5 else
-                            3 if lv < 1 else
-                            2 if lv < 1.75 else
-                            1 if lv < 2.5 else
-                            0) if lv is not None else -1))],
-        linecolors[rating],
+        colors[(dot_col := ((
+            'green' if lv < 0.5 else
+            'light green' if lv < 1 else
+            'yellow' if lv < 1.75 else
+            'orange' if lv < 2.5 else
+            'red') if lv is not None else
+            ((('blue' if level > 5.0 else
+            'light blue') if s.station_type == 'Tidal' else
+            'white') if level is not None else
+            'grey')))],
+        linecolors[dot_col],
         *wgs84_to_web_mercator(s.coord)) for s in stations]
 
     source = ColumnDataSource(
@@ -138,7 +280,7 @@ def display_stations_on_map(stations: list[MonitoringStation], **kwargs) -> Figu
         '>>> \t If a dot is grey, this means either the station is tidal (no typical range), or the latest level is unavailable. \n'        # noqa
         '>>> \t Click on a dot to view the graph of the level data on the official gov.uk site.')
 
-    if return_image:
-        return p
-    else:
+    if show_map:
         show(p)
+
+    return p

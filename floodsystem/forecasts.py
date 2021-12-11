@@ -9,14 +9,20 @@ import os
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 
-from .datafetcher import fetch_measure_levels
-from .station import MonitoringStation
-from .plot import plot_model_loss, plot_predicted_water_levels
-from .utils import read_only_properties, hide_tensorflow_debug_logs
+try:
+    from .datafetcher import fetch_measure_levels
+    from .station import MonitoringStation
+    from .plot import plot_model_loss, plot_predicted_water_levels
+    from .utils import read_only_properties, hide_tensorflow_debug_logs
+except ImportError:
+    from datafetcher import fetch_measure_levels
+    from station import MonitoringStation
+    from plot import plot_model_loss, plot_predicted_water_levels
+    from utils import read_only_properties, hide_tensorflow_debug_logs
 
-RESOURCES = os.path.join(os.path.dirname(__file__), 'resources')
+RESOURCES = os.path.join(os.path.dirname(__file__), 'assets')
 PROPLOT_STYLE_SHEET = os.path.join(RESOURCES, 'proplot_style.mplstyle')
-_FORECAST_PROTECTED_ATTRS = ('station', 'dates_to_now', 'levels_to_now',
+__FORECAST_PROTECTED_ATTRS = ('station', 'dates_to_now', 'levels_to_now',
     'levels_past_predicted', 'dates_future', 'levels_future_predicted')
 
 hide_tensorflow_debug_logs()
@@ -25,7 +31,7 @@ from tensorflow.keras.models import Sequential, load_model  # noqa
 from tensorflow.keras.layers import Dense, LSTM             # noqa
 
 
-@read_only_properties(*_FORECAST_PROTECTED_ATTRS)
+@read_only_properties(*__FORECAST_PROTECTED_ATTRS)
 class Forecast:
 
     '''
@@ -163,7 +169,8 @@ def build_model(lookback: int, **kwargs) -> Sequential:
 def train_model(model: Sequential, x: list, y: list, batch_size: int = 256, epoch: int = 20,
         **kwargs) -> Sequential:
     '''
-    Trains and saves the Keras model.
+    Trains and saves the Keras model. Training a single model takes approximately
+    15-20 seconds per station with the default arguments.
 
     #### Arguments
 
@@ -214,7 +221,8 @@ def train_model(model: Sequential, x: list, y: list, batch_size: int = 256, epoc
 def train_all(stations: list[MonitoringStation], dataset_size: int = 1000, lookback: int = 2000,
         batch_size: int = 256, epoch: int = 20, **kwargs) -> dict[MonitoringStation, Sequential]:
     '''
-    Trains and saves models for all stations supplied.
+    Trains and saves models for all stations supplied. Training a single model takes approximately
+    15-20 seconds per station with the default arguments.
 
     #### Arguments
 
@@ -231,7 +239,7 @@ def train_all(stations: list[MonitoringStation], dataset_size: int = 1000, lookb
     `layer_activations` (tuple[str], default = ('relu', 'relu', 'tanh')): activation functions for each layer
     `recurrent_dropout` (float, default = 0.1): fraction of the units to drop for the linear
     transformation of the recurrent state. First layer only.
-    `optimizer` (str, default = 'Adam): apply an optimiser when compiling the model.
+    `optimizer` (str, default = 'Adam'): apply an optimiser when compiling the model.
     `loss` (str, default = 'mean_squared_error'): choose a loss function for the model.
 
     #### Returns
@@ -315,12 +323,12 @@ def predict(station: MonitoringStation, dataset_size: int = 1000, lookback: int 
         try:
             model = load_model(f'./cache/models/{station_name}.hdf5')
         except (ImportError, OSError):
-            print(f'No pre-trained model for {station_name} found, training a model for it now.')
+            print(f'No existing model for {station_name} found, training a new model for it now...')
             x_train, y_train = data_prep(levels, lookback)
             model = train_model(build_model(lookback), x_train, y_train, batch_size, epoch,
                                 save_file=f'./cache/models/{station_name}.hdf5')
     else:
-        print(f'Training a model for {station_name} now.')
+        print(f'Training a model for {station_name} now...')
         x_train, y_train = data_prep(levels, lookback)
         model = train_model(build_model(lookback), x_train, y_train, batch_size, epoch,
                             save_file=f'./cache/models/{station_name}.hdf5')

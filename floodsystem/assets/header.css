@@ -1,0 +1,34 @@
+.header {
+    position: sticky;
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+    text-align: center;
+    top: 0;
+    z-index: 1000;
+}
+
+.sidebar {
+    position: fixed;
+    vertical-align: middle;
+    text-align: center;
+    top: 130;
+    left: 0;
+    width: 14rem;
+    padding: 0rem 1rem;
+    float: left;
+    z-index: 0;
+}
+
+.page-content {
+    margin-left: 11.5rem;
+    margin-right: 3rem;
+    padding: 1rem 1rem;
+    z-index: 0;
+}
+
+.graph-object {
+    display: inline-block;
+    padding: 1rem 1rem;
+    vertical-align: middle;
+  }

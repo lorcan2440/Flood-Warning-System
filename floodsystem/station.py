@@ -11,7 +11,19 @@ and tools for manipulating/modifying data.
 -----------------------------------------------------------------------------------------------------
 '''
 
+from functools import total_ordering
 
+try:
+    from .utils import read_only_properties
+except ImportError:
+    from utils import read_only_properties
+
+__MONITORING_STATION_PROTECTED_ATTRS = ('measure_id', 'label', 'coord', 'typical_range')
+__RAINFALL_GAUGE_PROTECTED_ATTRS = ('measure_id', 'coord')
+
+
+@total_ordering
+@read_only_properties(*__MONITORING_STATION_PROTECTED_ATTRS)
 class MonitoringStation:
 
     '''
@@ -52,7 +64,8 @@ class MonitoringStation:
     Recorded in metres and available to 3 decimal places, or a resolution of 1 mm.
 
     `latest_recorded_datetime` (datetime.datetime, default = None): the date and time when the most
-    recent water level was recorded at this station. Usually rounds to the nearest 15 minutes.
+    recent water level was recorded at this station. Stations are scheduled to record at 15-minute
+    intervals every quarter-hour, i.e. at hh:00:00, hh:15:00, hh:30:00, hh:45:00...
 
     `town` (str, default = None): the name of the nearest town (or named place) to the station.
 
@@ -81,28 +94,25 @@ class MonitoringStation:
     def __init__(self, measure_id: str, label: str, coord: tuple[float], typical_range: tuple[float],
             **kwargs):
 
-        # required args
+        # required args - frozen
         self.measure_id = measure_id
         self.name = label if not isinstance(label, list) else label[0]
         self.coord = coord
         self.typical_range = typical_range
 
-        # default values (if not set in kwargs)
-        self.town = None
-        self.river = None
-        self.is_tidal = False
-        self.is_groundwater = False
-        self.latest_level = None
-        self.latest_recorded_datetime = None
-        self.station_id = None
-        self.url = ''
-        self.url_id = None
-        self.record_range = None
+        # default values
+        _default_kwargs = {
+            'latest_level': None, 'latest_recorded_datetime': None, 'url': '',
+            'town': None, 'river': None, 'is_tidal': False, 'is_groundwater': False,
+            'station_id': None, 'url_id': None, 'record_range': None}
 
-        for attr in kwargs:
-            setattr(self, attr, kwargs[attr])
+        for attr in _default_kwargs:
+            if attr in kwargs:
+                setattr(self, attr, kwargs[attr])
+            else:
+                setattr(self, attr, _default_kwargs[attr])
 
-        if self.url_id is not None:
+        if getattr(self, 'url_id', None) is not None:
             self.url = "https://check-for-flooding.service.gov.uk/station/" + self.url_id
             delattr(self, 'url_id')
 
@@ -129,7 +139,25 @@ class MonitoringStation:
         d += f" \t additional info: \t {additional_info} \n"
         return d
 
-    # Bound methods
+    def __eq__(self, other):
+
+        if (self.relative_water_level(), other.relative_water_level()) != (None, None):
+            return False
+        else:
+            return self.name == other.name
+
+    def __lt__(self, other):
+
+        if (lvls := (self.relative_water_level(), other.relative_water_level())) != (None, None):
+            return lvls[0] < lvls[1]
+        else:
+            return self.name < other.name
+
+    def __hash__(self):
+
+        return hash(str(self))
+
+    # Methods
 
     def typical_range_consistent(self) -> bool:
 
@@ -168,6 +196,8 @@ class MonitoringStation:
             return None
 
 
+@total_ordering
+@read_only_properties(*__RAINFALL_GAUGE_PROTECTED_ATTRS)
 class RainfallGauge:
 
     '''
@@ -196,6 +226,7 @@ class RainfallGauge:
     the nearest 15 minutes.
 
     `period` (float, default = None): the time between successive readings, in seconds.
+    Usually 900, representing 15 minutes.
 
     `gauge_number` (str, default = None): a unique identifier (numeric string) for the gauge, used to access
     URLs relating to its readings
@@ -213,15 +244,16 @@ class RainfallGauge:
         self.measure_id = measure_id
         self.coord = coord
 
-        # default values (if not set in kwargs)
-        self.latest_level = None
-        self.latest_recorded_datetime = None
-        self.period = None
-        self.gauge_number = ''
-        self.gauge_id = None
+        # default values
+        _default_kwargs = {
+            'latest_level': None, 'latest_recorded_datetime': None, 'period': None,
+            'gauge_number': None, 'gauge_id': None}
 
-        for attr in kwargs:
-            setattr(self, attr, kwargs[attr])
+        for attr in _default_kwargs:
+            if attr in kwargs:
+                setattr(self, attr, kwargs[attr])
+            else:
+                setattr(self, attr, _default_kwargs[attr])
 
     def __repr__(self):
 
@@ -234,6 +266,20 @@ class RainfallGauge:
         d += f" \t latest level: \t \t {self.latest_level} \n"
         d += f" \t additional info: \t {additional_info} \n"
         return d
+
+    def __eq__(self, other):
+
+        if (self.latest_level, other.latest_level) != (None, None):
+            return False
+        else:
+            return self.name == other.name
+
+    def __lt__(self, other):
+
+        if (lvls := (self.latest_level, other.latest_level)) != (None, None):
+            return lvls[0] < lvls[1]
+        else:
+            return self.name < other.name
 
 
 def inconsistent_typical_range_stations(stations: list[MonitoringStation]) -> list[MonitoringStation]:

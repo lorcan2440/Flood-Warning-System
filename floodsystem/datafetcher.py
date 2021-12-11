@@ -16,8 +16,12 @@ import requests
 import dateutil.parser
 from typing import Union
 
-from .analysis import identify_potentially_bad_data
-from .station import MonitoringStation, RainfallGauge
+try:
+    from .analysis import identify_potentially_bad_data
+    from .station import MonitoringStation, RainfallGauge
+except ImportError:
+    from analysis import identify_potentially_bad_data
+    from station import MonitoringStation, RainfallGauge
 
 
 def fetch(url: str) -> dict:

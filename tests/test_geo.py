@@ -3,8 +3,8 @@ Unit tests for the geo module.
 '''
 
 # pylint: disable=import-error
+# import __init__  # noqa # uncomment if not installing package
 
-import import_helper  # noqa
 import pytest
 
 from floodsystem.geo import stations_by_distance, stations_within_radius, rivers_with_station
@@ -140,36 +140,16 @@ def test_rivers_by_station_number():
 def test_stations_by_town():
 
     stations = [
-        MonitoringStation(None, 'station-1', None, None, town='town-A'),
-        MonitoringStation(None, 'station-2', None, None, town='town-A'),
-        MonitoringStation(None, 'bad-station-1', None, None, town='town-A'),
-        MonitoringStation(None, 'station-3', None, None, town='town-B'),
-        MonitoringStation(None, 'bad-station-2', None, None, town='town-B'),
-        MonitoringStation(None, 'station-4', None, None),
-        MonitoringStation(None, None, None, None, town='empty-town'),
-        MonitoringStation(None, None, None, None),
-        MonitoringStation(None, None, None, None, town=())
+        MonitoringStation(None, 'station-1', None, (5, 15), town='town-A', latest_level=10),
+        MonitoringStation(None, 'station-2', None, (5, 15), town='town-A', latest_level=10, ),
+        MonitoringStation(None, 'bad-station-1', None, (5, 15), town='town-A', ),
+        MonitoringStation(None, 'station-3', None, (5, 15), town='town-B', latest_level=10),
+        MonitoringStation(None, 'bad-station-2', None, None, town='town-B', latest_level=10),
+        MonitoringStation(None, 'station-4', None, (5, 15), latest_level=10),
+        MonitoringStation(None, None, None, (5, 15), town='empty-town', latest_level=10),
+        MonitoringStation(None, None, None, (5, 15), latest_level=10),
+        MonitoringStation(None, None, None, (5, 15), town=(), latest_level=10)
     ]
-
-    setattr(stations[0], 'latest_level', 10)
-    setattr(stations[1], 'latest_level', 10)
-    setattr(stations[2], 'latest_level', None)
-    setattr(stations[3], 'latest_level', 10)
-    setattr(stations[4], 'latest_level', 10)
-    setattr(stations[5], 'latest_level', 10)
-    setattr(stations[6], 'latest_level', 10)
-    setattr(stations[7], 'latest_level', 10)
-    setattr(stations[8], 'latest_level', 10)
-
-    setattr(stations[0], 'typical_range', (5, 15))
-    setattr(stations[1], 'typical_range', (5, 15))
-    setattr(stations[2], 'typical_range', (5, 15))
-    setattr(stations[3], 'typical_range', (5, 15))
-    setattr(stations[4], 'typical_range', None)
-    setattr(stations[5], 'typical_range', (5, 15))
-    setattr(stations[6], 'typical_range', (5, 15))
-    setattr(stations[7], 'typical_range', (5, 15))
-    setattr(stations[8], 'typical_range', (5, 15))
 
     town_dict = stations_by_town(stations)
 

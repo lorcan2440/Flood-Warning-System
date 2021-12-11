@@ -1,6 +1,5 @@
 # pylint: disable=import-error
-
-import import_helper  # noqa
+# import __init__  # noqa # uncomment if not installing package
 
 from datetime import datetime
 import pytest

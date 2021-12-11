@@ -1,6 +1,5 @@
 # pylint: disable=import-error
-
-import import_helper  # noqa
+import __init__  # noqa
 
 from floodsystem.stationdata import build_station_list
 from floodsystem.forecasts import train_all, predict
@@ -11,11 +10,11 @@ def run():
     # get list of stations to predict
     print('Building station list...')
     stations = build_station_list()
-    station_names_to_predict = ['Cam', 'Market Weighton']
+    station_names_to_predict = ['Cam']
     stations_to_predict = [s for s in stations if s.name in station_names_to_predict]
 
-    print(f'Training forecasting model for {station_names_to_predict}...')
-    train_all(stations_to_predict, show_loss=True)
+    print(f'Training forecasting model(s) for {station_names_to_predict}...')
+    train_all(stations_to_predict, show_loss=False)
     print('Training finished.')
 
     predictions = dict()

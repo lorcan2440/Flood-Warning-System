@@ -5,8 +5,12 @@ geographical data.
 
 # pylint: disable=relative-beyond-top-level, no-name-in-module
 
-from .utils import sorted_by_key, haversine_vector, Unit
-from .station import MonitoringStation
+try:
+    from .utils import sorted_by_key, haversine_vector, Unit
+    from .station import MonitoringStation
+except ImportError:
+    from utils import sorted_by_key, haversine_vector, Unit
+    from station import MonitoringStation
 
 
 def stations_by_distance(stations: list[MonitoringStation],
