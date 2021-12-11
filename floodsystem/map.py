@@ -190,7 +190,7 @@ def stations_map_bokeh(stations: list[MonitoringStation], **kwargs) -> Figure:
 
     # inputs and outputs
     MAP_RANGE = ((59, -12), (49, 4))
-    output_file(os.path.join(filedir, filename), title=title)
+    output_file(os.path.join(filedir, filename), title=title, mode='cdn')
     colors = {
         'red': '#fa0101', 'orange': '#ff891e', 'yellow': '#fff037',
         'light green': '#8ec529', 'green': '#32a058', 'grey': '#a2a2a2',

@@ -9,6 +9,9 @@ import warnings
 import os
 from math import radians, degrees, sin, cos, tan, asin, sqrt, log, pi
 from enum import Enum
+import multiprocessing as mp
+
+import dill
 
 
 class Unit(Enum):
@@ -39,8 +42,21 @@ _CONVERSIONS = {Unit.KILOMETERS:        1.0,                # noqa
 _AVG_EARTH_RADIUS_KM = 6371.0088
 
 
-def sorted_by_key(nested_list: list[tuple], index: int, reverse: bool = False) -> list[tuple]:
+def patch_multiprocessing_pickler():
+    '''
+    Replace the multiprocessing pickler with that of dill:
+    https://dill.readthedocs.io/en/latest/dill.html
 
+    Allows serialisation of a wider variety of objects, including closures with inner functions.
+    Required to allow multiprocessing on the Flask server.
+    '''
+
+    dill.Pickler.dumps, dill.Pickler.loads = dill.dumps, dill.loads
+    mp.reduction.ForkingPickler = dill.Pickler
+    mp.reduction.dump = dill.dump
+
+
+def sorted_by_key(nested_list: list[tuple], index: int, reverse: bool = False) -> list[tuple]:
     '''
     For a list of lists/tuples, return list sorted by the ith
     component of the list/tuple.
@@ -50,7 +66,6 @@ def sorted_by_key(nested_list: list[tuple], index: int, reverse: bool = False) -
 
 
 def wgs84_to_web_mercator(coord: tuple[float]) -> tuple[float]:
-
     '''
     Returns a tuple of web mercator (x, y) coordinates compatible with the
     Bokeh plotting module given a tuple of (lat, long) coords.
@@ -76,7 +91,6 @@ def wgs84_to_web_mercator(coord: tuple[float]) -> tuple[float]:
 
 
 def flatten(t: list[list]) -> list:
-
     '''
     Given a list of lists, returns a single list containing all
     the elements of each list in the original list. Also works
@@ -87,7 +101,6 @@ def flatten(t: list[list]) -> list:
 
 
 def coord_letters(lat: float, long: float) -> tuple[str, str]:
-
     '''
     Determines whether a coordinate is in the North/South and East/West hemispheres
     and assigns them a corresponding letter.
@@ -99,10 +112,9 @@ def coord_letters(lat: float, long: float) -> tuple[str, str]:
 
 
 def get_avg_earth_radius(unit: Enum) -> float:
-
-    """
+    '''
     Returns the average radius of the Earth in the chosen units.
-    """
+    '''
 
     unit = Unit(unit)
     return _AVG_EARTH_RADIUS_KM * _CONVERSIONS[unit]

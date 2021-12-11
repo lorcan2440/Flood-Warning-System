@@ -1,26 +1,67 @@
+'''
+This module provides the functions for creating the Dash
+dashboard web application.
+
+Reference:
+https://dash.plotly.com/
+'''
+
+import requests
+import time
+import multiprocessing as mp
+
 import plotly.express as px
 from dash import Dash, Input, Output, dcc, html
 import dash_bootstrap_components as dbc
+from flask import request
 
 try:
     from .stationdata import build_station_list, update_water_levels
     from .stationdata import build_rainfall_gauge_list, update_rainfall_levels
     from .map import stations_map_plotly
+    from .utils import patch_multiprocessing_pickler
 except ImportError:
     from stationdata import build_station_list, update_water_levels
     from stationdata import build_rainfall_gauge_list, update_rainfall_levels
     from map import stations_map_plotly
+    from utils import patch_multiprocessing_pickler
 
 
-# get initial data
-stations = build_station_list()
-gauges = build_rainfall_gauge_list()
-update_water_levels(stations)
-update_rainfall_levels(gauges)
-
-# init app
+# extend multiprocessing pickler, and init app and static data
+patch_multiprocessing_pickler()
 app = Dash(__name__, external_stylesheets=[dbc.themes.SLATE])
-app.title = 'Flood Warning System'
+if 'stations' not in globals():
+    stations = build_station_list()
+    gauges = build_rainfall_gauge_list()
+    update_water_levels(stations)
+    update_rainfall_levels(gauges)
+
+
+# handle requests to shut down server
+@app.server.route('/shutdown', methods=['POST'])
+def shutdown():
+    def shutdown_server():
+        # NOTE: this may be depreciated: https://github.com/pallets/werkzeug/issues/1752
+        func = request.environ.get('werkzeug.server.shutdown')
+        if func is None:
+            raise RuntimeError('Not running with the Werkzeug Server')
+        func()
+
+    shutdown_server()
+    return 'Server shutting down...'
+
+
+def run_with_timeout(app: Dash, timeout: float, host='127.0.0.1', port=8050, debug=False):
+
+    SHUTDOWN_URL = 'http://' + host + ':' + str(port) + '/shutdown'
+
+    p1 = mp.Process(target=app.run_server, kwargs={'host': host, 'port': port, 'debug': debug})
+    p2 = mp.Process(target=requests.post, args=(SHUTDOWN_URL,))
+
+    p1.start()
+    time.sleep(timeout)
+    print(f'Terminating process because script called with argument {timeout} seconds.')
+    p2.start()
 
 
 # draw bar chart sample
@@ -126,6 +167,8 @@ warnings_page_content = html.Div([
     html.P("Beware of floods here!"),
     draw_sample_graph_figure()]
 )
+
+app.title = 'Flood Warning System'
 
 # define app layout
 app.layout = html.Div([dbc.Card(dbc.CardBody(
