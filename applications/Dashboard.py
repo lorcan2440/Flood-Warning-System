@@ -21,6 +21,7 @@ if __name__ == '__main__':
         t1 = multiprocessing.Process(target=run)
         t1.start()
         time.sleep(TERMINATE_APP_TIME)
+        print(f'Terminating process because script called with argument {TERMINATE_APP_TIME} seconds...')
         t1.terminate()
 
     else:
