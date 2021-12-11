@@ -1,7 +1,9 @@
 # pylint: disable=import-error
 import __init__  # noqa
 
-from floodsystem.dash_app import app
+print('Loading datasets...')
+
+from floodsystem.dash_app import app  # noqa
 
 
 def run():
