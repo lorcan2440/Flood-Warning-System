@@ -1,8 +1,11 @@
 # pylint: disable=import-error
 import __init__  # noqa
 
-print('Loading datasets...')
+import sys
+import time
+import multiprocessing
 
+print('Loading datasets...')  # noqa
 from floodsystem.dash_app import app  # noqa
 
 
@@ -11,4 +14,14 @@ def run():
 
 
 if __name__ == '__main__':
-    run()
+
+    if len(sys.argv) > 1:
+
+        TERMINATE_APP_TIME = float(sys.argv[1].strip())
+        t1 = multiprocessing.Process(target=run)
+        t1.start()
+        time.sleep(TERMINATE_APP_TIME)
+        t1.terminate()
+
+    else:
+        run()
