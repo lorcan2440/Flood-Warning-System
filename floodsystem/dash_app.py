@@ -11,7 +11,8 @@ import time
 import multiprocessing as mp
 
 import plotly.express as px
-from dash import Dash, Input, Output, dcc, html
+from plotly.graph_objects import FigureWidget, Scatter
+from dash import Dash, Input, Output, dcc, html, callback_context
 import dash_bootstrap_components as dbc
 from flask import request
 
@@ -27,15 +28,13 @@ except ImportError:
     from utils import patch_multiprocessing_pickler
 
 
-# extend multiprocessing pickler, and init app and static data
 patch_multiprocessing_pickler()
-app = Dash(__name__, external_stylesheets=[dbc.themes.SLATE])
+app = Dash(__name__, external_stylesheets=[dbc.themes.SLATE], prevent_initial_callbacks=True)
 if 'stations' not in globals():
     stations = build_station_list()
     gauges = build_rainfall_gauge_list()
     update_water_levels(stations)
     update_rainfall_levels(gauges)
-
 
 # handle requests to shut down server
 @app.server.route('/shutdown', methods=['POST'])
@@ -152,7 +151,7 @@ home_page_content = html.Div([
 
 stations_page_content = dbc.Col([
     dcc.Graph(figure=stations_map_plotly(stations), className='graph-object'),
-    draw_sample_graph_figure(html_only=True)])
+    draw_sample_graph_figure(width=300, html_only=True)])
 
 rainfall_page_content = html.Div([
     html.P("View rainfall data here."),

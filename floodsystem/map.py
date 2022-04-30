@@ -7,12 +7,11 @@ This module contains functions to produce maps.
 import os
 from itertools import groupby
 
-
 from bokeh.plotting import Figure, figure, output_file, show
 from bokeh.models import ColumnDataSource, OpenURL, TapTool, HoverTool
 from bokeh.tile_providers import Vendors, get_provider
 
-import plotly.graph_objects as go
+from plotly.graph_objects import Figure, Scattermapbox, scattermapbox
 
 try:
     from .station import MonitoringStation
@@ -109,11 +108,11 @@ def stations_map_plotly(stations: list[MonitoringStation], **kwargs):
         'light blue': '#4e709e', 'blue': '#1e0acf', 'white': '#c3c3c3'
     }
     info_by_station = [(
-        *(s.coord if s.coord is not None else (None, None)),
+        *(s.coord if s.coord is not None else ('???', '???')),
         s.name,
-        (level if level > 0 or s.is_tidal else "≤ 0") if (level := s.latest_level) is not None else None,
-        *(s.typical_range if s.typical_range is not None else (None, None)),
-        round(lv * 100, 1) if (lv := s.relative_water_level()) is not None else None,
+        (level if level > 0 or s.is_tidal else "≤ 0") if (level := s.latest_level) is not None else '???',
+        *(s.typical_range if s.typical_range is not None else ('???', '???')),
+        round(lv * 100, 1) if (lv := s.relative_water_level()) is not None else '???',
         s.river,
         s.town,
         s.station_type,
@@ -137,11 +136,26 @@ def stations_map_plotly(stations: list[MonitoringStation], **kwargs):
 
     mapbox_kwargs = {k: v for k, v in source.items() if k in {'lat', 'lon'}}
 
-    fig = go.Figure(go.Scattermapbox(**mapbox_kwargs, mode='markers'))
+    fig = Figure(Scattermapbox(**mapbox_kwargs,
+        marker=scattermapbox.Marker(size=7, color=source['fill']),
+        hovertemplate=[
+        f"<b>Station:</b>                {s[2]} <br>" +
+        f"<b>Current level:</b>      {s[3]} m <br>" +
+        f"<b>Typical range:</b>     <i>min</i>: {s[4]} m, <i>max</i>: {s[5]} m <br>" +
+        f"<b>Relative level:</b>     {s[6]} % <br>" +
+        f"<b>Type of station:</b>   {s[9]} <br>" +
+        f"<b>River:</b>                   {s[7]} <b> <br>" +
+        f"Town:</b>                   {s[8]} <br>" +
+        f"<b>Coords:</b>                ({round(s[0], 3) if s[0] != '???' else s[0]} °N, " +
+        f"{round(s[1], 3) if s[1] != '???' else s[1]} °E)" +
+        f"<extra></extra>" for s in info_by_station],
+        mode='markers'))
 
-    fig.update_layout(autosize=True, hovermode='closest', width=450, height=375,
+    fig.update_layout(autosize=True, hovermode='closest', width=600, height=400,
         mapbox=dict(bearing=0, center=dict(lat=54.5, lon=-3), pitch=0, zoom=4),
         mapbox_style=map_design, margin=dict(l=0, r=0, t=0, b=0))
+
+    fig.update_traces()
 
     return fig
 

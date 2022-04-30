@@ -14,7 +14,7 @@ def run():
     stations_to_predict = [s for s in stations if s.name in station_names_to_predict]
 
     print(f'Training forecasting model(s) for {station_names_to_predict}...')
-    train_all(stations_to_predict, show_loss=False)
+    train_all(stations_to_predict, show_loss=True)
     print('Training finished.')
 
     predictions = dict()

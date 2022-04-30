@@ -340,8 +340,8 @@ def plot_model_loss(history: list, loss_name: str, model_name: str, use_logscale
     plt.title(f'Loss convergence of training for {model_name}')
     plt.plot(np.arange(1, epoch + 1), history, label='loss',
         color='#999999', linestyle='dotted', marker='x', markeredgecolor='#000000')
-    plt.plot((1, epoch), (end_loss, end_loss),
-        label=f'converged on {round(end_loss, 6)}', color=loss_color, linestyle='dashed', zorder=-1)
+    plt.hlines(end_loss, 1, epoch, colors=loss_color, linestyles='dashed',
+        label=f'converged on {round(end_loss, 6)}', zorder=-1)
 
     plt.xticks(range(epoch + 1))
     plt.xlim(left=1, right=epoch)
