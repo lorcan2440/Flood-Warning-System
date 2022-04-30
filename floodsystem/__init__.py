@@ -1,3 +1,5 @@
+# flake8: noqa
+
 from .dash_app import app
 from .flood import *
 from .forecasts import *

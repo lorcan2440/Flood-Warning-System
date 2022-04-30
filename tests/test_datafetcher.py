@@ -99,4 +99,3 @@ def test_build_station_list():
         station_cam.measure_id, dt=datetime.timedelta(days=dt))
     assert len(dates10) == len(levels10)
     assert len(dates10) > len(levels2)
-
