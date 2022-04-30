@@ -1,19 +1,22 @@
 '''
 This module provides interface for extracting station data from
-JSON objects fetched from the Internet and
+JSON objects fetched from the Internet.
 '''
 
-# pylint: disable=relative-beyond-top-level
-
+# built-in libraries
 from itertools import groupby
+import warnings
 
+# local imports
 try:
     from .datafetcher import \
-        fetch_stationdata, fetch_latest_water_level_data, fetch_gauge_data, fetch_latest_rainfall_data
+        fetch_stationdata, fetch_latest_water_level_data, fetch_gauge_data, \
+        fetch_latest_rainfall_data, fetch_upstream_downstream_stations
     from .station import MonitoringStation, RainfallGauge
 except ImportError:
     from datafetcher import \
-        fetch_stationdata, fetch_latest_water_level_data, fetch_gauge_data, fetch_latest_rainfall_data
+        fetch_stationdata, fetch_latest_water_level_data, fetch_gauge_data, \
+        fetch_latest_rainfall_data, fetch_upstream_downstream_stations
     from station import MonitoringStation, RainfallGauge
 
 
@@ -23,8 +26,7 @@ def build_station_list(use_cache: bool = True, return_numbers: bool = False) -> 
     based on data fetched from the Environment agency. Each station is
     represented as a MonitoringStation object.
 
-    The available data for some station is incomplete or not
-    available.
+    The available data for some stations is incomplete or not available.
 
     #### Arguments
 
@@ -35,7 +37,7 @@ def build_station_list(use_cache: bool = True, return_numbers: bool = False) -> 
     #### Returns
 
     list[MonitoringStation]: station objects built from obtained data
-    dict[str, int] (optional): a mapping of the number of types of station found, in the form
+    dict[str, int] (if `return_numbers`): a mapping of the number of types of station found, in the form
         {'River Level': #, 'Tidal': #, 'Groundwater': #}
     '''
 
@@ -66,6 +68,7 @@ def build_station_list(use_cache: bool = True, return_numbers: bool = False) -> 
         town = e.get('town', None)
         river = e.get('riverName', None)
         url_id = e.get('RLOIid', '')
+        url = 'https://check-for-flooding.service.gov.uk/station/' + url_id
         is_tidal = station_id in coastal_ids
         is_groundwater = station_id in groundwater_ids
 
@@ -92,12 +95,34 @@ def build_station_list(use_cache: bool = True, return_numbers: bool = False) -> 
         else:
             typical_range = record_range = None
 
+        if not (is_tidal or is_groundwater):
+            station_type = 'River Level'
+        elif is_tidal and not is_groundwater:
+            station_type = 'Tidal'
+        elif is_groundwater and not is_tidal:
+            station_type = 'Groundwater'
+        else:
+            station_type = None
+
         extra = {'station_id': station_id, 'river': river, 'town': town,
-            'url_id': url_id, 'is_tidal': is_tidal, 'is_groundwater': is_groundwater,
-            'record_range': record_range}
+            'url': url, 'url_id': url_id, 'is_tidal': is_tidal, 'is_groundwater': is_groundwater,
+            'record_range': record_range, 'station_type': station_type,
+            'upstream_url_id': None, 'downstream_url_id': None}
 
         s = MonitoringStation(measure_id, label, coord, typical_range, **extra)
         stations.append(s)
+
+    # add upstream/downstream attrs separately
+    urls = [s.url for s in stations]
+    stream_mappings = fetch_upstream_downstream_stations(urls, use_cache=use_cache)
+    station_mappings = {s.url_id: s for s in stations}
+    for url_id, s in station_mappings.items():
+        if url_id in stream_mappings:
+            s.upstream_url_id = stream_mappings[url_id]['upstream']
+            s.downstream_url_id = stream_mappings[url_id]['downstream']
+        else:
+            warnings.warn(f'Station ID {url_id} not found in current upstream/downstream cache - '
+                          'to record this information, run this function with `use_cache=False`.')
 
     if return_numbers:
         nums = {k: len(list(v)) for k, v in groupby(stations, key=lambda s: s.station_type)}
@@ -206,3 +231,104 @@ def update_rainfall_levels(gauges: list[RainfallGauge]):
             g.latest_level, g.latest_recorded_datetime = m_id_to_value[g.measure_id]
         else:
             g.latest_level, g.latest_recorded_datetime = None, None
+
+
+def get_station_by_name(stations: list[MonitoringStation], name: str) -> MonitoringStation:
+    '''
+    Gets the station with a particular name. Assumed unique, so returns one station.
+
+    #### Arguments
+
+    `stations` (list[MonitoringStation]): list of stations to search
+    `name` (str): name attribute to match
+
+    #### Returns
+
+    MonitoringStation: the station with the corresponding name
+
+    #### Raises
+
+    `ValueError`: if the name is not found within the given list
+    '''
+    try:
+        station = next(s for s in stations if s.name == name)
+        return station
+    except (UnboundLocalError, StopIteration):
+        raise ValueError(f'A station with name {name} could not be found in the given list.')
+
+
+def get_station_by_url_id(stations: list[MonitoringStation], url_id: str) -> MonitoringStation:
+    '''
+    Gets the station with a particular url_id. Assumed unique, so returns one station.
+
+    #### Arguments
+
+    `stations` (list[MonitoringStation]): list of stations to search
+    `url_id` (str): url_id attribute to match
+
+    #### Returns
+
+    MonitoringStation: the station with the corresponding url_id
+
+    #### Raises
+
+    `ValueError`: if the url_id is not found within the given list
+    '''
+    try:
+        station = next(s for s in stations if s.url_id == url_id)
+        return station
+    except (UnboundLocalError, StopIteration):
+        raise ValueError(f'A station with url_id = {url_id} could not be found in the given list.')
+
+
+def get_station_by_attrs(stations: list[MonitoringStation], attr_name_vals: dict[str, str],
+        return_one: bool = True) -> MonitoringStation:
+    '''
+    Gets the station with particular attribute(s).
+
+    #### Example
+
+    ```
+    from floodsystem.stationdata import build_station_list, get_station_by_attrs
+    stations = build_station_list()
+    station_cam = get_station_by_attrs(stations, {'name': 'Cam'})
+    print(station_cam)
+    ```
+
+    #### Arguments
+
+    `stations` (list[MonitoringStation]): list of stations to search
+    `attr_name_vals` (dict): a mapping of attributes to filter on and the values to match.
+
+    #### Keyword Arguments
+
+    `return_one` (bool, default = True): if True, assumes only one
+    station will match the given filter and returns it.
+    If False, instead returns a list of all matching stations.
+
+    #### Returns
+
+    MonitoringStation: the station with the matching attribute values
+
+    #### Raises
+
+    `ValueError`: if no matches are found within the given list
+    '''
+
+    if return_one:
+        try:
+            station = next(s for s in stations if all(
+                [getattr(s, attr, None) == val for attr, val in attr_name_vals.items()]))
+            return station
+        except (UnboundLocalError, StopIteration):
+            raise ValueError(f'A station matching {attr_name_vals} could '
+            'not be found in the given list.')
+    else:
+        matches = list(filter(
+            lambda s: all([getattr(s, attr, None) == val for attr, val in attr_name_vals.items()]),
+            stations))
+        if matches != []:
+            return matches
+        else:
+            raise ValueError(f'A station matching {attr_name_vals} could '
+            'not be found in the given list.')

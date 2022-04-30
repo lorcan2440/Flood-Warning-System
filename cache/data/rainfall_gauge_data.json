@@ -2602,7 +2602,11 @@
         },
         {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/3782",
+            "easting": 400550,
+            "gridReference": "SK005154",
             "label": "Rainfall station",
+            "lat": 52.736673,
+            "long": -1.993285,
             "measures": [
                 {
                     "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/3782-rainfall-tipping_bucket_raingauge-t-15_min-mm",
@@ -2613,6 +2617,7 @@
                     "unitName": "mm"
                 }
             ],
+            "northing": 315450,
             "notation": "3782",
             "stationReference": "3782"
         },
@@ -5039,6 +5044,14 @@
             "lat": 53.45937,
             "long": -1.93444,
             "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/559100R-rainfall-tipping_bucket_raingauge-t-15_min----",
+                    "parameter": "rainfall",
+                    "parameterName": "Rainfall",
+                    "period": 900,
+                    "qualifier": "Tipping Bucket Raingauge",
+                    "unitName": "---"
+                },
                 {
                     "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/559100R-rainfall-tipping_bucket_raingauge-t-15_min-mm",
                     "parameter": "rainfall",
@@ -14377,27 +14390,6 @@
             "stationReference": "52150"
         },
         {
-            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E7040",
-            "easting": 487650,
-            "gridReference": "SK876868",
-            "label": "Rainfall station",
-            "lat": 53.371241,
-            "long": -0.684077,
-            "measures": [
-                {
-                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E7040-rainfall-tipping_bucket_raingauge-t-15_min-mm",
-                    "parameter": "rainfall",
-                    "parameterName": "Rainfall",
-                    "period": 900,
-                    "qualifier": "Tipping Bucket Raingauge",
-                    "unitName": "mm"
-                }
-            ],
-            "northing": 386850,
-            "notation": "E7040",
-            "stationReference": "E7040"
-        },
-        {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/061431",
             "easting": 390150,
             "gridReference": "SD901742",
@@ -20340,6 +20332,27 @@
             "northing": 436350,
             "notation": "574786______________________________________",
             "stationReference": "574786______________________________________"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/015313",
+            "easting": 394650,
+            "gridReference": "NY946684",
+            "label": "Rainfall station",
+            "lat": 55.010561,
+            "long": -2.08518,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/015313-rainfall-tipping_bucket_raingauge-t-15_min-mm",
+                    "parameter": "rainfall",
+                    "parameterName": "Rainfall",
+                    "period": 900,
+                    "qualifier": "Tipping Bucket Raingauge",
+                    "unitName": "mm"
+                }
+            ],
+            "northing": 568450,
+            "notation": "015313",
+            "stationReference": "015313"
         }
     ]
 }

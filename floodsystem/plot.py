@@ -3,16 +3,17 @@ This module provides graphing functionality
 for visualising level data over time.
 """
 
-# pylint: disable=relative-beyond-top-level
-
+# built-in libraries
 import math
 import os
 import datetime
 
+# third-party libraries
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.dates import DateFormatter
 
+# local imports
 try:
     from .utils import flatten
     from .analysis import polyfit, moving_average

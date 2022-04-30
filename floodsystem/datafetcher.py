@@ -6,22 +6,28 @@ Reference:
 https://environment.data.gov.uk/flood-monitoring/doc/reference
 '''
 
-# pylint: disable=assignment-from-no-return
-
+# built-in libraries
 import datetime
 import json
 import os
 import warnings
 import requests
-import dateutil.parser
 from typing import Union
 
+# third party libraries
+import dateutil
+from bs4 import BeautifulSoup
+
+# local imports
 try:
     from .analysis import identify_potentially_bad_data
     from .station import MonitoringStation, RainfallGauge
 except ImportError:
     from analysis import identify_potentially_bad_data
     from station import MonitoringStation, RainfallGauge
+
+
+CACHE_DIR = 'cache/data'
 
 
 def fetch(url: str) -> dict:
@@ -52,9 +58,8 @@ def dump(data: dict, filename: str) -> None:
     `filename` (str): save file location
     '''
 
-    f = open(filename, 'w')
-    data = json.dump(data, f, indent=4)
-    f.close()
+    with open(filename, 'w') as f:
+        data = json.dump(data, f, indent=4)
 
 
 def load(filename: str) -> dict:
@@ -70,9 +75,9 @@ def load(filename: str) -> dict:
     dict: JSON dict
     '''
 
-    f = open(filename, 'r')
-    data = json.load(f)
-    f.close()
+    with open(filename, 'r') as f:
+        data = json.load(f)
+
     return data
 
 
@@ -104,38 +109,23 @@ def fetch_stationdata(use_cache: bool = True) -> tuple[dict, dict]:
     COASTAL_ONLY = "&type=Coastal"
     GROUNDWATER_ONLY = "&type=Groundwater"
     url = ROOT_URL + API_STR
-    CACHE_DIR = 'cache/data'
 
-    try:
+    if not os.path.isdir(CACHE_DIR):
         os.makedirs(CACHE_DIR)
-    except FileExistsError:
-        pass
 
     river_cache_file = os.path.join(CACHE_DIR, 'station_data_river.json')
     coastal_cache_file = os.path.join(CACHE_DIR, 'station_data_coastal.json')
     groundwater_cache_file = os.path.join(CACHE_DIR, 'station_data_groundwater.json')
 
     # Attempt to load all river data from file, otherwise fetch over internet
-    if use_cache:
-
+    if use_cache and all([os.path.isfile(f) for f in
+            {river_cache_file, coastal_cache_file, groundwater_cache_file}]):
         try:
             river_data = load(river_cache_file)
-        except FileNotFoundError:
-            river_data = fetch(url + RIVER_ONLY)
-            dump(river_data, river_cache_file)
-
-        try:
             coastal_data = load(coastal_cache_file)
-        except FileNotFoundError:
-            coastal_data = fetch(url + COASTAL_ONLY)
-            dump(coastal_data, coastal_cache_file)
-
-        try:
             groundwater_data = load(groundwater_cache_file)
-        except FileNotFoundError:
-            groundwater_data = fetch(url + GROUNDWATER_ONLY)
-            dump(groundwater_data, groundwater_cache_file)
-
+        except Exception:
+            return fetch_stationdata(use_cache=False)
     else:
         # Fetch and dump to file
         river_data = fetch(url + RIVER_ONLY)
@@ -146,6 +136,68 @@ def fetch_stationdata(use_cache: bool = True) -> tuple[dict, dict]:
         dump(groundwater_data, groundwater_cache_file)
 
     return river_data, coastal_data, groundwater_data
+
+
+def fetch_upstream_downstream_stations(urls: list[str], use_cache: bool = True,
+        save_to_cache: bool = True) -> tuple[str, str]:
+
+    '''
+    Fetches the station id which is upstream and downstream of the station with given url.
+    Returns None if no station is found upstream/downstream.
+
+    NOTE: *without* cache, takes ~0.3 seconds per url, or ~10 mins to rebuild
+    the full station dataset.
+
+    #### Arguments
+
+    `urls` (list[str]): a list of all station urls to find, as given by MonitoringStation.url
+
+    #### Returns
+
+    dict[str, dict]: a mapping of each url_id given to its upstream and downstream url_id
+    ```
+    {this_url_id: {'upstream': upstream_url_id, 'downstream': downstream_url_id}}
+    ```
+    '''
+
+    if not os.path.isdir(CACHE_DIR):
+        os.makedirs(CACHE_DIR)
+
+    stream_cache = os.path.join(CACHE_DIR, 'station_data_upstream_downstream.json')
+
+    if use_cache and os.path.isfile(stream_cache):
+        mappings = load(stream_cache)
+        if len(urls) != len(mappings):
+            # if there have been stations added since the cache was last made, get them now
+            urls_not_found = filter(lambda u: u.split('/')[-1] not in mappings, urls)
+            new_mappings = fetch_upstream_downstream_stations(list(urls_not_found),
+                use_cache=False, save_to_cache=False)
+            mappings.update(new_mappings)
+    else:
+        # find upstream/downstream by scraping from web pages (slow).
+        # NOTE: Accessed by webscraping with `beautifulsoup4` as this information is
+        # not currently provided by the API - it has been marked as a potential future
+        # improvement in correspondence with enquiries@environment-agency.gov.uk.
+        mappings = {}
+        for i, url in enumerate(urls):
+            print(f'({i} / {len(urls)}) Fetching from {url}')
+            webpage_html = requests.get(url).text
+            downstream_id, upstream_id = None, None
+            soup = BeautifulSoup(webpage_html, features='lxml')
+            for link in soup.find_all('a', class_='defra-flood-nav__link'):
+                link_class = link['class']
+                if len(link_class) > 1:
+                    if link_class[-1] == 'defra-flood-nav__link--downstream':
+                        downstream_id = link['href'].split('/')[-1]
+                    if link_class[-1] == 'defra-flood-nav__link--upstream':
+                        upstream_id = link['href'].split('/')[-1]
+            mappings[url.split('/')[-1]] = {'upstream': upstream_id, 'downstream': downstream_id}
+
+    # cache data in mappings dict if needed
+    if save_to_cache:
+        dump(mappings, stream_cache)
+
+    return mappings
 
 
 def fetch_gauge_data(use_cache: bool = False) -> dict:
@@ -171,22 +223,19 @@ def fetch_gauge_data(use_cache: bool = False) -> dict:
     ROOT_URL = 'https://environment.data.gov.uk/flood-monitoring/id/'
     API_STR = 'stations?parameter=rainfall'
     url = ROOT_URL + API_STR
-    CACHE_DIR = 'cache/data'
 
-    try:
+    if not os.path.isdir(CACHE_DIR):
         os.makedirs(CACHE_DIR)
-    except FileExistsError:
-        pass
+
     cache_file = os.path.join(CACHE_DIR, 'rainfall_gauge_data.json')
 
     # Attempt to load level data from file, otherwise fetch over internet (slower)
-    if use_cache:
+    if use_cache and os.path.isfile(cache_file):
         try:
             # Attempt to load from file
             rainfall_data = load(cache_file)
         except FileNotFoundError:
-            rainfall_data = fetch(url)
-            dump(rainfall_data, cache_file)
+            return fetch_gauge_data(use_cache=False)
     else:
         rainfall_data = fetch(url)
         dump(rainfall_data, cache_file)
@@ -212,22 +261,19 @@ def fetch_latest_water_level_data(use_cache: bool = False) -> dict:
     ROOT_URL = "http://environment.data.gov.uk/flood-monitoring/id/measures"
     API_STR = "?parameter=level"
     url = ROOT_URL + API_STR
-    CACHE_DIR = 'cache/data'
 
-    try:
+    if not os.path.isdir(CACHE_DIR):
         os.makedirs(CACHE_DIR)
-    except FileExistsError:
-        pass
+
     cache_file = os.path.join(CACHE_DIR, 'station_water_level_data.json')
 
     # Attempt to load level data from file, otherwise fetch over internet (slower)
-    if use_cache:
+    if use_cache and os.path.isfile(cache_file):
         try:
             # Attempt to load from file
             level_data = load(cache_file)
         except FileNotFoundError:
-            level_data = fetch(url)
-            dump(level_data, cache_file)
+            return fetch_latest_water_level_data(use_cache=False)
     else:
         level_data = fetch(url)
         dump(level_data, cache_file)
@@ -253,7 +299,6 @@ def fetch_latest_rainfall_data(use_cache: bool = False) -> dict:
     ROOT_URL = "https://environment.data.gov.uk/flood-monitoring/id/measures"
     API_STR = "?parameter=rainfall"
     url = ROOT_URL + API_STR
-    CACHE_DIR = 'cache/data'
 
     try:
         os.makedirs(CACHE_DIR)
@@ -267,8 +312,7 @@ def fetch_latest_rainfall_data(use_cache: bool = False) -> dict:
             # Attempt to load from file
             level_data = load(cache_file)
         except FileNotFoundError:
-            level_data = fetch(url)
-            dump(level_data, cache_file)
+            return fetch_latest_rainfall_data(use_cache=False)
     else:
         level_data = fetch(url)
         dump(level_data, cache_file)
@@ -335,8 +379,9 @@ def fetch_measure_levels(station: Union[MonitoringStation, str], dt: datetime.ti
         d = dateutil.parser.parse(measure['dateTime'])
 
         # Append data
-        dates.append(d)
-        levels.append(measure['value'])
+        if (value := measure.get('value', None)) is not None:
+            dates.append(d)
+            levels.append(value)
 
     flags = identify_potentially_bad_data(station_name, levels,
         station_obj=station if isinstance(station, MonitoringStation) else None,

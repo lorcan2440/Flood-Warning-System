@@ -3,8 +3,7 @@ This module provides functions for getting
 stations by their water levels.
 '''
 
-# pylint: disable=import-error, relative-beyond-top-level
-
+# local imports
 try:
     from .station import MonitoringStation, inconsistent_typical_range_stations
 except ImportError:

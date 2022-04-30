@@ -20,7 +20,7 @@ def run():
 
     # Display data from stations/gauges:
     for station in stations:
-        if station.name in ['Aldershot']:
+        if station.name in ['Cam']:
             print(station)
 
     for gauge in gauges:

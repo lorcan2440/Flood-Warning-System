@@ -8,7 +8,6 @@ Unit tests for the stationdata module.
 import datetime
 import time
 import os
-import shutil
 
 from floodsystem.datafetcher import fetch, dump, load, \
     fetch_measure_levels, fetch_latest_water_level_data, fetch_stationdata
@@ -52,17 +51,16 @@ def test_load():
 
 def test_fetch_stationdata():
 
-    # try using cache when it doesn't exist
-    shutil.rmtree('cache/data')
-    test_fetch = fetch_stationdata(use_cache=True)
+    # don't use cache first
+    test_fetch = fetch_stationdata(use_cache=False)
     assert test_fetch is not None
+    assert os.path.isfile(os.path.join('cache', 'data', 'station_data_upstream_downstream.json'))
+    time.sleep(0.1)
 
-    # cache exists, use and don't use
+    # use cache
     test_fetch = fetch_stationdata(use_cache=True)
     assert test_fetch is not None
     time.sleep(0.1)
-    test_fetch = fetch_stationdata(use_cache=False)
-    assert test_fetch is not None
 
 
 def test_fetch_latest_water_level_data():
@@ -75,10 +73,6 @@ def test_fetch_latest_water_level_data():
     assert os.path.isfile(os.path.join('cache', 'data', 'station_water_level_data.json'))
 
     # use cache
-    test_data = fetch_latest_water_level_data(use_cache=True)
-    assert test_data is not None
-
-    # try again, with the cache already existing
     test_data = fetch_latest_water_level_data(use_cache=True)
     assert test_data is not None
 
@@ -105,3 +99,4 @@ def test_build_station_list():
         station_cam.measure_id, dt=datetime.timedelta(days=dt))
     assert len(dates10) == len(levels10)
     assert len(dates10) > len(levels2)
+

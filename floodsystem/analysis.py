@@ -4,8 +4,10 @@ least-squares regression curves to water
 level data.
 '''
 
+# built-in libraries
 import datetime
 
+# third-party libraries
 import numpy as np
 from matplotlib.dates import date2num
 

@@ -21,10 +21,12 @@ def test_create_monitoring_station():
     river = "River X"
     town = "My Town"
     url_id = "hello"
+    url = "some/longer/link/station/hello"
     is_tidal = False
     record_range = (-5, 5)
     s = MonitoringStation(m_id, label, coord, trange,
-        river=river, town=town, station_id=s_id, url_id=url_id, record_range=record_range, is_tidal=is_tidal)
+        river=river, town=town, station_id=s_id, url_id=url_id, url=url,
+        record_range=record_range, is_tidal=is_tidal)
 
     assert s.station_id == s_id
     assert s.measure_id == m_id

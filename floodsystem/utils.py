@@ -5,12 +5,14 @@ Source code for Haversine functions adapted from
 https://pypi.org/project/haversine/; version 2.3.0, accessed Sep 4, 2020
 '''
 
+# built-in libraries
 import warnings
 import os
 from math import radians, degrees, sin, cos, tan, asin, sqrt, log, pi
 from enum import Enum
 import multiprocessing as mp
 
+# third-party libraries
 import dill
 
 

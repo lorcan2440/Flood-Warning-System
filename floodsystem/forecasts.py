@@ -1,14 +1,12 @@
-'''
-TODO: try predicting by taking into account nearby rainfall on the station's river
-https://machinelearningmastery.com/multivariate-time-series-forecasting-lstms-keras/
-'''
-
+# built-in libraries
 import datetime
 import os
 
+# third-party libraries
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 
+# local imports
 try:
     from .datafetcher import fetch_measure_levels
     from .station import MonitoringStation
@@ -25,10 +23,12 @@ PROPLOT_STYLE_SHEET = os.path.join(RESOURCES, 'proplot_style.mplstyle')
 __FORECAST_PROTECTED_ATTRS = ('station', 'dates_to_now', 'levels_to_now',
     'levels_past_predicted', 'dates_future', 'levels_future_predicted')
 
+# stop tensorflow printing debug messages when imported
 hide_tensorflow_debug_logs()
 
+# third-party libraries
 from tensorflow.keras.models import Sequential, load_model  # noqa
-from tensorflow.keras.layers import Dense, LSTM             # noqa
+from tensorflow.keras.layers import Dense, LSTM  # noqa
 
 
 @read_only_properties(*__FORECAST_PROTECTED_ATTRS)
@@ -37,9 +37,8 @@ class Forecast:
     '''
     Class containing information about an RNN-generated forecast for a station.
 
-    NOTE: the attributes ['station', 'dates_to_now', 'levels_to_now', 'levels_past_predicted',
-    'dates_future', 'levels_future_predicted'], are read-only, as set by
-    floodsystem.utils.read_only_properties and defined in floodsystem.forecasts._FORECAST_PROTECTED_ATTRS.
+    NOTE: the attributes `station`, `dates_to_now`, `levels_to_now`, `levels_past_predicted`,
+    `dates_future` and `levels_future_predicted` are read-only.
 
     #### Attributes
 
@@ -65,10 +64,9 @@ class Forecast:
 
     def __init__(self, **kwargs):
 
-        _metadata = kwargs.get('metadata', None)
-        if _metadata is not None:
-            self.station = _metadata.get('station', None)
-        del _metadata
+        metadata = kwargs.get('metadata', None)
+        if metadata is not None:
+            self.station = metadata.get('station', None)
         self.dates_future = kwargs.get('dates_future')
         self.levels_future_predicted = kwargs.get('levels_future_predicted')
 
@@ -77,7 +75,8 @@ class Forecast:
                 if attr != 'metadata':
                     setattr(self, attr, val)
                 else:
-                    setattr(self, attr, {k: v for k, v in val.items() if k != 'station'})
+                    # do not include station as already included in self.station
+                    self.metadata = {k: v for k, v in val.items() if k != 'station'}
 
     def plot_forecast(self, **kwargs):
 
@@ -96,8 +95,27 @@ class Forecast:
         _required_attrs = ('station', 'dates_future', 'levels_future_predicted')
         required_vals = [getattr(self, attr) for attr in _required_attrs]
         plot_kwargs = {**kwargs, **{k: v for k, v in self.__dict__.items() if k not in _required_attrs}}
-
         plot_predicted_water_levels(*required_vals, **plot_kwargs)
+
+    def get_forecast(self, chosen_date: datetime.datetime = None) -> dict[datetime.datetime, float]:
+
+        '''
+        Returns the forecast in simple {date: level} form.
+
+        #### Optional Keyword Arguments
+
+        `chosen_date` (datetime.datetime, default = None): if specified,
+        return only the forecast at this date, as a single float.
+
+        #### Returns
+
+        dict[datetime.datetime, float]: a dict of each datetime where a forecast has been made
+        and the predicted water level in metres (a prediction of `MonitoringStation.latest_level`)
+        at that time. If `chosen_date` is given, return only the water level instead.
+        '''
+
+        future_data = dict(zip(self.dates_future, self.levels_future_predicted))
+        return future_data if chosen_date is None else future_data[chosen_date]
 
 
 def data_prep(data: np.ndarray, lookback: int, scaler: MinMaxScaler,

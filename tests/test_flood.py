@@ -3,7 +3,7 @@ Unit tests for the flood module.
 '''
 
 # pylint: disable=import-error
-# import __init__  # noqa # uncomment if not installing package
+#import __init__  # noqa # uncomment if not installing package
 
 from floodsystem.flood import stations_level_over_threshold, stations_highest_rel_level
 from floodsystem.station import MonitoringStation
@@ -21,6 +21,7 @@ def test_stations_level_over_threshold():
     ]
 
     TEST_TOL = 0.5
+    print(stations_level_over_threshold(stations, TEST_TOL))
     assert stations_level_over_threshold(stations, TEST_TOL) == [(stations[0], 0.6)]
 
     TEST_TOL = None

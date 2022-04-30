@@ -2931,42 +2931,6 @@
             "wiskiID": "T21599_FW"
         },
         {
-            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71839",
-            "RLOIid": "1028",
-            "catchmentName": "England - South Coast",
-            "dateOpened": "2012-03-23",
-            "easting": 462730,
-            "gridReference": "SU 6273 0068",
-            "label": "Portsmouth",
-            "lat": 50.80228,
-            "long": -1.11118,
-            "measures": [
-                {
-                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E71839-level-tidal_level-Mean-15_min-mAOD",
-                    "parameter": "level",
-                    "parameterName": "Water Level",
-                    "period": 900,
-                    "qualifier": "Tidal Level",
-                    "unitName": "mAOD"
-                }
-            ],
-            "northing": 100679,
-            "notation": "E71839",
-            "riverName": "Tide",
-            "stageScale": {
-                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71839/stageScale",
-                "maxOnRecord": {
-                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E71839/stageScale/maxOnRecord",
-                    "dateTime": "2013-12-06T01:00:00",
-                    "value": 2.82
-                },
-                "scaleMax": 4
-            },
-            "stationReference": "E71839",
-            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
-            "town": "Gosport"
-        },
-        {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/44111",
             "RLOIid": "3289",
             "catchmentName": "West Dorset Streams",
@@ -3166,6 +3130,14 @@
             "long": -2.005082,
             "measures": [
                 {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/021999-level-tidal_level-i-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Tidal Level",
+                    "unitName": "m"
+                },
+                {
                     "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/021999-level-tidal_level-i-15_min-mAOD",
                     "parameter": "level",
                     "parameterName": "Water Level",
@@ -3342,42 +3314,6 @@
             "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
             "town": "Beaulieu",
             "wiskiID": "151003004"
-        },
-        {
-            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E1152",
-            "RLOIid": "9051",
-            "catchmentName": "Grimsby and Ancholme",
-            "dateOpened": "1998-01-19",
-            "easting": 511990,
-            "gridReference": "TA11992543",
-            "label": "Goxhill",
-            "lat": 53.713268,
-            "long": -0.304607,
-            "measures": [
-                {
-                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E1152-level-tidal_level-i-15_min-mAOD",
-                    "parameter": "level",
-                    "parameterName": "Water Level",
-                    "period": 900,
-                    "qualifier": "Tidal Level",
-                    "unitName": "mAOD"
-                }
-            ],
-            "northing": 425430,
-            "notation": "E1152",
-            "riverName": "Tide",
-            "stageScale": {
-                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E1152/stageScale",
-                "maxOnRecord": {
-                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E1152/stageScale/maxOnRecord",
-                    "dateTime": "2013-12-05T18:45:00",
-                    "value": 4.832
-                }
-            },
-            "stationReference": "E1152",
-            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
-            "town": "Goxhill",
-            "wiskiID": "T29009"
         },
         {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E14111",
@@ -3611,6 +3547,14 @@
                     "parameterName": "Water Level",
                     "period": 900,
                     "qualifier": "Downstream Stage",
+                    "unitName": "mAOD"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/L3250-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
                     "unitName": "mAOD"
                 }
             ],
@@ -4614,6 +4558,50 @@
             "wiskiID": "542002"
         },
         {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/2832SO",
+            "RLOIid": "1028",
+            "catchmentName": "England - South Coast",
+            "dateOpened": "2012-03-23",
+            "easting": 462975,
+            "gridReference": "SZ6297599519",
+            "label": "Portsmouth",
+            "lat": 50.791824,
+            "long": -1.107903,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/2832SO-level-stage-i-15_min-V",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "V"
+                },
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/2832SO-level-stage-i-15_min-mAOD",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "mAOD"
+                }
+            ],
+            "northing": 99519,
+            "notation": "2832SO",
+            "riverName": "Tide",
+            "stageScale": {
+                "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/2832SO/stageScale",
+                "maxOnRecord": {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/2832SO/stageScale/maxOnRecord",
+                    "dateTime": "2013-12-06T01:00:00",
+                    "value": 2.82
+                },
+                "scaleMax": 4
+            },
+            "stationReference": "2832SO",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "town": "Gosport"
+        },
+        {
             "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E22184",
             "RLOIid": "9380",
             "catchmentName": "Ouse",
@@ -4648,6 +4636,33 @@
             "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
             "town": "Kings Lynn",
             "wiskiID": "T33851"
+        },
+        {
+            "@id": "http://environment.data.gov.uk/flood-monitoring/id/stations/E84429",
+            "RLOIid": "9456",
+            "catchmentName": "Otter, Sid, Axe and Lim",
+            "dateOpened": "2021-11-29",
+            "easting": 307512,
+            "label": "Budleigh South Farm Road White Bridge",
+            "lat": 50.639603,
+            "long": -3.309296,
+            "measures": [
+                {
+                    "@id": "http://environment.data.gov.uk/flood-monitoring/id/measures/E84429-level-stage-i-15_min-m",
+                    "parameter": "level",
+                    "parameterName": "Water Level",
+                    "period": 900,
+                    "qualifier": "Stage",
+                    "unitName": "m"
+                }
+            ],
+            "northing": 83031,
+            "notation": "E84429",
+            "riverName": "River Otter",
+            "stageScale": "http://environment.data.gov.uk/flood-monitoring/id/stations/E84429/stageScale",
+            "stationReference": "E84429",
+            "status": "http://environment.data.gov.uk/flood-monitoring/def/core/statusActive",
+            "wiskiID": "SY08F500"
         }
     ]
 }

@@ -1,3 +1,9 @@
+# flake8: noqa
+
+'''
+Quick informal testing of new module functions.
+'''
+
 import dash
 from dash import html
 import dash_leaflet as dl

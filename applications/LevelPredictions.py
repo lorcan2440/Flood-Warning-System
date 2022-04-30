@@ -10,7 +10,7 @@ def run():
     # get list of stations to predict
     print('Building station list...')
     stations = build_station_list()
-    station_names_to_predict = ['Cam']
+    station_names_to_predict = ['Girton']
     stations_to_predict = [s for s in stations if s.name in station_names_to_predict]
 
     print(f'Training forecasting model(s) for {station_names_to_predict}...')

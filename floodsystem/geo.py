@@ -3,8 +3,7 @@ This module contains a collection of functions related to
 geographical data.
 '''
 
-# pylint: disable=relative-beyond-top-level, no-name-in-module
-
+# local imports
 try:
     from .utils import sorted_by_key, haversine_vector, Unit
     from .station import MonitoringStation

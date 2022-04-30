@@ -6,16 +6,18 @@ Reference:
 https://dash.plotly.com/
 '''
 
+# built-in libraries
 import requests
 import time
 import multiprocessing as mp
 
+# third-party libraries
 import plotly.express as px
-from plotly.graph_objects import FigureWidget, Scatter
-from dash import Dash, Input, Output, dcc, html, callback_context
+from dash import Dash, Input, Output, dcc, html
 import dash_bootstrap_components as dbc
 from flask import request
 
+# local imports
 try:
     from .stationdata import build_station_list, update_water_levels
     from .stationdata import build_rainfall_gauge_list, update_rainfall_levels
@@ -35,6 +37,7 @@ if 'stations' not in globals():
     gauges = build_rainfall_gauge_list()
     update_water_levels(stations)
     update_rainfall_levels(gauges)
+
 
 # handle requests to shut down server
 @app.server.route('/shutdown', methods=['POST'])

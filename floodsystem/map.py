@@ -2,17 +2,17 @@
 This module contains functions to produce maps.
 '''
 
-# pylint: disable=relative-beyond-top-level, no-name-in-module
-
+# built-in libraries
 import os
 from itertools import groupby
 
-from bokeh.plotting import Figure, figure, output_file, show
+# third-party libraries
+from bokeh.plotting import figure, output_file, show
 from bokeh.models import ColumnDataSource, OpenURL, TapTool, HoverTool
 from bokeh.tile_providers import Vendors, get_provider
-
 from plotly.graph_objects import Figure, Scattermapbox, scattermapbox
 
+# local imports
 try:
     from .station import MonitoringStation
     from .utils import wgs84_to_web_mercator, coord_letters
@@ -139,16 +139,16 @@ def stations_map_plotly(stations: list[MonitoringStation], **kwargs):
     fig = Figure(Scattermapbox(**mapbox_kwargs,
         marker=scattermapbox.Marker(size=7, color=source['fill']),
         hovertemplate=[
-        f"<b>Station:</b>                {s[2]} <br>" +
-        f"<b>Current level:</b>      {s[3]} m <br>" +
-        f"<b>Typical range:</b>     <i>min</i>: {s[4]} m, <i>max</i>: {s[5]} m <br>" +
-        f"<b>Relative level:</b>     {s[6]} % <br>" +
-        f"<b>Type of station:</b>   {s[9]} <br>" +
-        f"<b>River:</b>                   {s[7]} <b> <br>" +
-        f"Town:</b>                   {s[8]} <br>" +
-        f"<b>Coords:</b>                ({round(s[0], 3) if s[0] != '???' else s[0]} °N, " +
-        f"{round(s[1], 3) if s[1] != '???' else s[1]} °E)" +
-        f"<extra></extra>" for s in info_by_station],
+        f"<b>Station:</b>                {s[2]} <br>" +                                         # noqa
+        f"<b>Current level:</b>      {s[3]} m <br>" +                                           # noqa
+        f"<b>Typical range:</b>     <i>min</i>: {s[4]} m, <i>max</i>: {s[5]} m <br>" +          # noqa
+        f"<b>Relative level:</b>     {s[6]} % <br>" +                                           # noqa
+        f"<b>Type of station:</b>   {s[9]} <br>" +                                              # noqa
+        f"<b>River:</b>                   {s[7]} <b> <br>" +                                    # noqa
+        f"Town:</b>                   {s[8]} <br>" +                                            # noqa
+        f"<b>Coords:</b>                ({round(s[0], 3) if s[0] != '???' else s[0]} °N, " +    # noqa
+        f"{round(s[1], 3) if s[1] != '???' else s[1]} °E)" +                                    # noqa
+         "<extra></extra>" for s in info_by_station],                                           # noqa
         mode='markers'))
 
     fig.update_layout(autosize=True, hovermode='closest', width=600, height=400,
