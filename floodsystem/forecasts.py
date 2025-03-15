@@ -11,30 +11,44 @@ try:
     from .datafetcher import fetch_measure_levels
     from .station import MonitoringStation
     from .plot import plot_model_loss, plot_predicted_water_levels
-    from .utils import read_only_properties, hide_tensorflow_debug_logs
+    from .utils import read_only_properties
 except ImportError:
     from datafetcher import fetch_measure_levels
     from station import MonitoringStation
     from plot import plot_model_loss, plot_predicted_water_levels
-    from utils import read_only_properties, hide_tensorflow_debug_logs
-
-RESOURCES = os.path.join(os.path.dirname(__file__), 'assets')
-PROPLOT_STYLE_SHEET = os.path.join(RESOURCES, 'proplot_style.mplstyle')
-__FORECAST_PROTECTED_ATTRS = ('station', 'dates_to_now', 'levels_to_now',
-    'levels_past_predicted', 'dates_future', 'levels_future_predicted')
-
-# stop tensorflow printing debug messages when imported
-#hide_tensorflow_debug_logs()
+    from utils import read_only_properties
 
 # third-party libraries
 from tensorflow.keras.models import Sequential, load_model  # noqa
-from tensorflow.keras.layers import Input, MaxPooling1D, TimeDistributed, Reshape, Flatten, Dense, Dropout, LSTM, Conv1D
+from tensorflow.keras.layers import (
+    Input,
+    MaxPooling1D,
+    TimeDistributed,
+    Reshape,
+    Flatten,
+    Dense,
+    LSTM,
+    Conv1D,
+)
+
+RESOURCES = os.path.join(os.path.dirname(__file__), "assets")
+PROPLOT_STYLE_SHEET = os.path.join(RESOURCES, "proplot_style.mplstyle")
+__FORECAST_PROTECTED_ATTRS = (
+    "station",
+    "dates_to_now",
+    "levels_to_now",
+    "levels_past_predicted",
+    "dates_future",
+    "levels_future_predicted",
+)
+
+# stop tensorflow printing debug messages when imported
+# hide_tensorflow_debug_logs()
 
 
 @read_only_properties(*__FORECAST_PROTECTED_ATTRS)
 class Forecast:
-
-    '''
+    """
     Class containing information about an RNN-generated forecast for a station.
 
     NOTE: the attributes `station`, `dates_to_now`, `levels_to_now`, `levels_past_predicted`,
@@ -60,27 +74,26 @@ class Forecast:
     #### Methods
 
     `Forecast.plot_forecast()`
-    '''
+    """
 
     def __init__(self, **kwargs):
 
-        metadata = kwargs.get('metadata', None)
+        metadata = kwargs.get("metadata", None)
         if metadata is not None:
-            self.station = metadata.get('station', None)
-        self.dates_future = kwargs.get('dates_future')
-        self.levels_future_predicted = kwargs.get('levels_future_predicted')
+            self.station = metadata.get("station", None)
+        self.dates_future = kwargs.get("dates_future")
+        self.levels_future_predicted = kwargs.get("levels_future_predicted")
 
         for attr, val in kwargs.items():
             if val is not None and not hasattr(self, attr):
-                if attr != 'metadata':
+                if attr != "metadata":
                     setattr(self, attr, val)
                 else:
                     # do not include station as already included in self.station
-                    self.metadata = {k: v for k, v in val.items() if k != 'station'}
+                    self.metadata = {k: v for k, v in val.items() if k != "station"}
 
     def plot_forecast(self, **kwargs):
-
-        '''
+        """
         Plots a graph of the forecasted water levels. Wrapper for
         `floodsystem.plot.plot_predicted_water_levels`, which all kwargs are passed to, as well as
         any optional attributes set at initialisation (representing info from a past forecast).
@@ -90,16 +103,20 @@ class Forecast:
         `format_dates` (bool, default = True): format dates neater
         `y_axis_from_zero` (bool, default = None): whether to start the y-axis from the zero level
         `use_proplot_style` (bool, default = True): use ProPlot stylesheet
-        '''
+        """
 
-        _required_attrs = ('station', 'dates_future', 'levels_future_predicted')
+        _required_attrs = ("station", "dates_future", "levels_future_predicted")
         required_vals = [getattr(self, attr) for attr in _required_attrs]
-        plot_kwargs = {**kwargs, **{k: v for k, v in self.__dict__.items() if k not in _required_attrs}}
+        plot_kwargs = {
+            **kwargs,
+            **{k: v for k, v in self.__dict__.items() if k not in _required_attrs},
+        }
         plot_predicted_water_levels(*required_vals, **plot_kwargs)
 
-    def get_forecast(self, chosen_date: datetime.datetime = None) -> dict[datetime.datetime, float]:
-
-        '''
+    def get_forecast(
+        self, chosen_date: datetime.datetime = None
+    ) -> dict[datetime.datetime, float]:
+        """
         Returns the forecast in simple {date: level} form.
 
         #### Optional Keyword Arguments
@@ -112,15 +129,16 @@ class Forecast:
         dict[datetime.datetime, float]: a dict of each datetime where a forecast has been made
         and the predicted water level in metres (a prediction of `MonitoringStation.latest_level`)
         at that time. If `chosen_date` is given, return only the water level instead.
-        '''
+        """
 
         future_data = dict(zip(self.dates_future, self.levels_future_predicted))
         return future_data if chosen_date is None else future_data[chosen_date]
 
 
-def data_prep(data: np.ndarray, lookback: int, scaler: MinMaxScaler,
-        exclude_latest: int = 0) -> tuple[np.ndarray, np.ndarray]:
-    '''
+def data_prep(
+    data: np.ndarray, lookback: int, scaler: MinMaxScaler, exclude_latest: int = 0
+) -> tuple[np.ndarray, np.ndarray]:
+    """
     Prepares dataset by constructing x, y pairs. Each y is determined on the previous data points (x).
 
     #### Arguments
@@ -132,13 +150,18 @@ def data_prep(data: np.ndarray, lookback: int, scaler: MinMaxScaler,
     #### Returns
 
     tuple[np.ndarray, np.ndarray]: arrays x and y, respectively
-    '''
+    """
 
     if exclude_latest != 0:
-        data = data[:-1 * exclude_latest]
+        data = data[: -1 * exclude_latest]
 
     scaled_levels = scaler.transform(data.reshape(-1, 1))
-    x = np.array([scaled_levels[i - lookback:i, 0] for i in range(lookback, len(scaled_levels))])
+    x = np.array(
+        [
+            scaled_levels[i - lookback:i, 0]
+            for i in range(lookback, len(scaled_levels))
+        ]
+    )
     x = np.reshape(x, (x.shape[0], 1, x.shape[1]))  # samples, time steps, features
     y = np.array([scaled_levels[i, 0] for i in range(lookback, len(scaled_levels))])
 
@@ -146,7 +169,7 @@ def data_prep(data: np.ndarray, lookback: int, scaler: MinMaxScaler,
 
 
 def build_model(lookback: int, **kwargs) -> Sequential:
-    '''
+    """
     Builds the RNN, which has 1 LSTM layer and 2 dense layers.
 
     #### Arguments
@@ -165,46 +188,51 @@ def build_model(lookback: int, **kwargs) -> Sequential:
     #### Returns
 
     Sequential: untrained Keras model
-    '''
-
-
+    """
 
     model = Sequential()
     model.add(Input(shape=(lookback,)))  # input: sequence of floats
     model.add(Reshape((-1, lookback, 1)))
-    model.add(TimeDistributed(Conv1D(filters=256, kernel_size=5, activation='relu')))
-    model.add(TimeDistributed(Conv1D(filters=128, kernel_size=3, activation='relu')))
+    model.add(TimeDistributed(Conv1D(filters=256, kernel_size=5, activation="relu")))
+    model.add(TimeDistributed(Conv1D(filters=128, kernel_size=3, activation="relu")))
     model.add(TimeDistributed(MaxPooling1D(pool_size=2)))
     model.add(TimeDistributed(Flatten()))
-    model.add(LSTM(units=256, activation='relu', recurrent_dropout=0.2, return_sequences=True))
-    model.add(LSTM(units=128, activation='relu', recurrent_dropout=0.2))
-    model.add(Dense(units=512, activation='relu'))
-    model.add(Dense(units=1, activation='tanh'))
+    model.add(
+        LSTM(units=256, activation="relu", recurrent_dropout=0.2, return_sequences=True)
+    )
+    model.add(LSTM(units=128, activation="relu", recurrent_dropout=0.2))
+    model.add(Dense(units=512, activation="relu"))
+    model.add(Dense(units=1, activation="tanh"))
 
-
-    layer_units = kwargs.get('layer_units', (256, 512, 1))
-    layer_activations = kwargs.get('layer_activations', ('relu', 'relu', 'tanh'))
-    recurrent_dropout = kwargs.get('recurrent_dropout', 0.1)
-    optimizer = kwargs.get('optimizer', 'Adam')
-    loss = kwargs.get('loss', 'mean_squared_error')
+    layer_activations = kwargs.get("layer_activations", ("relu", "relu", "tanh"))
+    optimizer = kwargs.get("optimizer", "Adam")
+    loss = kwargs.get("loss", "mean_squared_error")
 
     model = Sequential()
 
-    model.add(LSTM(256, activation='relu', input_shape=(1, lookback), recurrent_dropout=0.1))
+    model.add(
+        LSTM(256, activation="relu", input_shape=(1, lookback), recurrent_dropout=0.1)
+    )
 
     # Allow refining of predictions
     model.add(Dense(512, activation=layer_activations[1]))
 
-    # 
+    #
     model.add(Dense(1, activation=layer_activations[2]))
     model.compile(optimizer=optimizer, loss=loss)
 
     return model
 
 
-def train_model(model: Sequential, x: list, y: list, batch_size: int = 256, epoch: int = 20,
-        **kwargs) -> Sequential:
-    '''
+def train_model(
+    model: Sequential,
+    x: list,
+    y: list,
+    batch_size: int = 256,
+    epoch: int = 20,
+    **kwargs,
+) -> Sequential:
+    """
     Trains and saves the Keras model. Training a single model takes approximately
     15-20 seconds per station with the default arguments.
 
@@ -226,37 +254,50 @@ def train_model(model: Sequential, x: list, y: list, batch_size: int = 256, epoc
     #### Returns
 
     Sequential: the trained model
-    '''
+    """
 
-    if kwargs.get('save_file', None) is not None:
-        model_name = kwargs['save_file'].split("/")[-1].split('.')[0]
+    if kwargs.get("save_file", None) is not None:
+        model_name = kwargs["save_file"].split("/")[-1].split(".")[0]
     else:
-        model_name = 'predictor_model'
+        model_name = "predictor_model"
 
-    save_file = kwargs.get('save_file', './cache/models/predictor_model.hdf5')
-    show_loss = kwargs.get('show_loss', False)
-    verbose = kwargs.get('verbose', 0)
-    use_proplot_style = kwargs.get('use_proplot_style', True)
+    save_file = kwargs.get("save_file", "./cache/models/predictor_model.hdf5")
+    show_loss = kwargs.get("show_loss", False)
+    verbose = kwargs.get("verbose", 0)
+    use_proplot_style = kwargs.get("use_proplot_style", True)
 
-    history = model.fit(x, y, batch_size=batch_size, epochs=epoch, verbose=verbose).history['loss']
-    loss_name = model.loss.replace('_', ' ').title().strip()
+    history = model.fit(
+        x, y, batch_size=batch_size, epochs=epoch, verbose=verbose
+    ).history["loss"]
+    loss_name = model.loss.replace("_", " ").title().strip()
 
     if show_loss:
-        plot_model_loss(history, loss_name, model_name,
-            use_proplot_style=use_proplot_style, batch_size=batch_size)
+        plot_model_loss(
+            history,
+            loss_name,
+            model_name,
+            use_proplot_style=use_proplot_style,
+            batch_size=batch_size,
+        )
 
     try:
         model.save(save_file)
     except OSError:
-        os.mkdir('./cache/models')
+        os.mkdir("./cache/models")
         model.save(save_file)
 
     return model
 
 
-def train_all(stations: list[MonitoringStation], dataset_size: int = 1000, lookback: int = 2000,
-        batch_size: int = 256, epoch: int = 20, **kwargs) -> dict[MonitoringStation, Sequential]:
-    '''
+def train_all(
+    stations: list[MonitoringStation],
+    dataset_size: int = 1000,
+    lookback: int = 2000,
+    batch_size: int = 256,
+    epoch: int = 20,
+    **kwargs,
+) -> dict[MonitoringStation, Sequential]:
+    """
     Trains and saves models for all stations supplied. Training a single model takes approximately
     15-20 seconds per station with the default arguments.
 
@@ -281,29 +322,46 @@ def train_all(stations: list[MonitoringStation], dataset_size: int = 1000, lookb
     #### Returns
 
     dict[MonitoringStation, Sequential]: a mapping from each given station to its trained model
-    '''
+    """
 
     trained_models = []
     scaler = MinMaxScaler(feature_range=(0, 1))
 
     for i, station in enumerate(stations):
-        print(f'Training for {station.name} ({i}/{len(stations)})')
-        levels = np.array(fetch_measure_levels(station, datetime.timedelta(dataset_size))[1])
+        print(f"Training for {station.name} ({i}/{len(stations)})")
+        levels = np.array(
+            fetch_measure_levels(station, datetime.timedelta(dataset_size))[1]
+        )
         scaler.fit(levels.reshape(-1, 1))
         x_train, y_train = data_prep(levels, lookback, scaler)
         model = build_model(lookback, **kwargs)
-        train_model(model, x_train, y_train, batch_size=batch_size, epoch=epoch,
-                    save_file=f'./cache/models/{station.name}.hdf5', **kwargs)
+        train_model(
+            model,
+            x_train,
+            y_train,
+            batch_size=batch_size,
+            epoch=epoch,
+            save_file=f"./cache/models/{station.name}.hdf5",
+            **kwargs,
+        )
         trained_models.append(model)
 
     return dict(zip(stations, trained_models))
 
 
-def predict(station: MonitoringStation, dataset_size: int = 1000, lookback: int = 2000,
-        iteration: int = 100, use_pretrained: bool = True, batch_size: int = 256, epoch: int = 20,
-        get_past_forecast: bool = False, display: int = 300,
-        del_model_after: bool = True) -> Forecast:
-    '''
+def predict(
+    station: MonitoringStation,
+    dataset_size: int = 1000,
+    lookback: int = 2000,
+    iteration: int = 100,
+    use_pretrained: bool = True,
+    batch_size: int = 256,
+    epoch: int = 20,
+    get_past_forecast: bool = False,
+    display: int = 300,
+    del_model_after: bool = True,
+) -> Forecast:
+    """
     Predicts a specified number of future water levels of a specific station.
     If the model for that station is not cached, it will be trained according to the parameters specified.
 
@@ -343,7 +401,7 @@ def predict(station: MonitoringStation, dataset_size: int = 1000, lookback: int 
     `Forecast`: an object with attributes containing the forecast and information relating to it.
     The forecasted levels are stored in `Forecast.levels_future_predicted` at dates given in
     `Forecast.dates_future`. See `help(floodsystem.forecasts.Forecast)` for more info.
-    '''
+    """
 
     # Reference:
     # https://machinelearningmastery.com/time-series-prediction-lstm-recurrent-neural-networks-python-keras/
@@ -357,17 +415,31 @@ def predict(station: MonitoringStation, dataset_size: int = 1000, lookback: int 
 
     if use_pretrained:
         try:
-            model = load_model(f'./cache/models/{station_name}.hdf5')
+            model = load_model(f"./cache/models/{station_name}.hdf5")
         except (ImportError, OSError):
-            print(f'No existing model for {station_name} found, training a new model for it now...')
+            print(
+                f"No existing model for {station_name} found, training a new model for it now..."
+            )
             x_train, y_train = data_prep(levels, lookback)
-            model = train_model(build_model(lookback), x_train, y_train, batch_size, epoch,
-                                save_file=f'./cache/models/{station_name}.hdf5')
+            model = train_model(
+                build_model(lookback),
+                x_train,
+                y_train,
+                batch_size,
+                epoch,
+                save_file=f"./cache/models/{station_name}.hdf5",
+            )
     else:
-        print(f'Training a model for {station_name} now...')
+        print(f"Training a model for {station_name} now...")
         x_train, y_train = data_prep(levels, lookback)
-        model = train_model(build_model(lookback), x_train, y_train, batch_size, epoch,
-                            save_file=f'./cache/models/{station_name}.hdf5')
+        model = train_model(
+            build_model(lookback),
+            x_train,
+            y_train,
+            batch_size,
+            epoch,
+            save_file=f"./cache/models/{station_name}.hdf5",
+        )
 
     # prediction of future `iteration` readings, based on the last `lookback` values
     predictions = None
@@ -375,38 +447,62 @@ def predict(station: MonitoringStation, dataset_size: int = 1000, lookback: int 
     pred_levels = pred_levels.reshape(1, 1, lookback)
     for _ in range(iteration):
         prediction = model.predict(pred_levels)
-        pred_levels = np.append(pred_levels[:, :, -lookback + 1:], prediction.reshape(1, 1, 1), axis=2)
-        predictions = np.append(predictions, prediction, axis=0) if predictions is not None else prediction
+        pred_levels = np.append(
+            pred_levels[:, :, -lookback + 1:], prediction.reshape(1, 1, 1), axis=2
+        )
+        predictions = (
+            np.append(predictions, prediction, axis=0)
+            if predictions is not None
+            else prediction
+        )
 
     # prediction of the last `display` data points, which is based on the `lookback` values
     # before the final `iteration` points
     if get_past_forecast:
         past = None
         past_levels = scaler.transform(
-            levels[-display - lookback:-display].reshape(-1, 1)).reshape(1, 1, lookback)
+            levels[-display - lookback:-display].reshape(-1, 1)
+        ).reshape(1, 1, lookback)
         for _ in range(display):
             prediction = model.predict(past_levels)
-            past_levels = np.append(past_levels[:, :, -lookback + 1:], prediction.reshape(1, 1, 1), axis=2)
-            past = np.append(past, prediction, axis=0) if past is not None else prediction
+            past_levels = np.append(
+                past_levels[:, :, -lookback + 1:], prediction.reshape(1, 1, 1), axis=2
+            )
+            past = (
+                np.append(past, prediction, axis=0) if past is not None else prediction
+            )
 
     # option to delete model to save disk/drive space
     if del_model_after:
-        os.remove(f'./cache/models/{station_name}.hdf5')
+        os.remove(f"./cache/models/{station_name}.hdf5")
 
     # return on last `display` data points, the past values, and future predictions
     dates_to_now = dates[-display:] if get_past_forecast else None
     levels_to_now = levels[-display:] if get_past_forecast else None
-    levels_past_predicted = scaler.inverse_transform(past).ravel() if get_past_forecast else None
-    dates_future = [dates[-1] + datetime.timedelta(minutes=15) * i for i in range(iteration)]
+    levels_past_predicted = (
+        scaler.inverse_transform(past).ravel() if get_past_forecast else None
+    )
+    dates_future = [
+        dates[-1] + datetime.timedelta(minutes=15) * i for i in range(iteration)
+    ]
     levels_future_predicted = scaler.inverse_transform(predictions).ravel()
 
-    return Forecast(**{
-        'dates_to_now': dates_to_now,
-        'dates_future': dates_future,
-        'levels_to_now': levels_to_now,
-        'levels_past_predicted': levels_past_predicted,
-        'levels_future_predicted': levels_future_predicted,
-        'metadata': {'has_past_forecast': get_past_forecast, 'station': station,
-                     'dataset_size': dataset_size, 'lookback': lookback, 'iterations': iteration,
-                     'batch_size': batch_size, 'used_pretrained': use_pretrained, 'epochs': epoch}
-    })
+    return Forecast(
+        **{
+            "dates_to_now": dates_to_now,
+            "dates_future": dates_future,
+            "levels_to_now": levels_to_now,
+            "levels_past_predicted": levels_past_predicted,
+            "levels_future_predicted": levels_future_predicted,
+            "metadata": {
+                "has_past_forecast": get_past_forecast,
+                "station": station,
+                "dataset_size": dataset_size,
+                "lookback": lookback,
+                "iterations": iteration,
+                "batch_size": batch_size,
+                "used_pretrained": use_pretrained,
+                "epochs": epoch,
+            },
+        }
+    )

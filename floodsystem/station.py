@@ -1,4 +1,4 @@
-'''
+"""
 This module provides a model for a monitoring station and a rainfall gauge,
 and tools for manipulating/modifying data.
 
@@ -9,7 +9,7 @@ and tools for manipulating/modifying data.
 |   Groundwater stations: `MonitoringStation`,        | station_type = 'Groundwater'                |
 |   Rainfall gauges: `RainfallGauge`                  | (None)                                      |
 -----------------------------------------------------------------------------------------------------
-'''
+"""
 
 # built-in libraries
 from functools import total_ordering
@@ -20,15 +20,14 @@ try:
 except ImportError:
     from utils import read_only_properties
 
-__MONITORING_STATION_PROTECTED_ATTRS = ('measure_id', 'label', 'coord', 'typical_range')
-__RAINFALL_GAUGE_PROTECTED_ATTRS = ('measure_id', 'coord')
+__MONITORING_STATION_PROTECTED_ATTRS = ("measure_id", "label", "coord", "typical_range")
+__RAINFALL_GAUGE_PROTECTED_ATTRS = ("measure_id", "coord")
 
 
 @total_ordering
 @read_only_properties(*__MONITORING_STATION_PROTECTED_ATTRS)
 class MonitoringStation:
-
-    '''
+    """
     This class represents a water-level monitoring station. There are over 2000 such stations
     across England, which record the water level at fixed locations on various rivers,
     coastal sites and aquifers.
@@ -118,10 +117,16 @@ class MonitoringStation:
 
     A `MonitoringStation` instance, which can be passed (either individually or a list
     of such objects) into a variety of API functions available in the separate modules.
-    '''
+    """
 
-    def __init__(self, measure_id: str, label: str, coord: tuple[float],
-            typical_range: tuple[float], **kwargs):
+    def __init__(
+        self,
+        measure_id: str,
+        label: str,
+        coord: tuple[float],
+        typical_range: tuple[float],
+        **kwargs,
+    ):
 
         # required args - frozen
         self.measure_id = measure_id
@@ -131,10 +136,21 @@ class MonitoringStation:
 
         # default values
         _default_kwargs = {
-            'latest_level': None, 'latest_recorded_datetime': None, 'url': None,
-            'town': None, 'river': None, 'is_tidal': False, 'is_groundwater': False,
-            'station_id': None, 'url_id': None, 'catchment_name': None, 'record_range': None,
-            'upstream_url_id': None, 'downstream_url_id': None, 'station_type': None}
+            "latest_level": None,
+            "latest_recorded_datetime": None,
+            "url": None,
+            "town": None,
+            "river": None,
+            "is_tidal": False,
+            "is_groundwater": False,
+            "station_id": None,
+            "url_id": None,
+            "catchment_name": None,
+            "record_range": None,
+            "upstream_url_id": None,
+            "downstream_url_id": None,
+            "station_type": None,
+        }
 
         for attr in _default_kwargs:
             if attr in kwargs:
@@ -144,7 +160,13 @@ class MonitoringStation:
 
     def __repr__(self):
 
-        attrs = set(self.__dict__.keys()) - {'name', 'measure_id', 'coord', 'typical_range', 'latest_level'}
+        attrs = set(self.__dict__.keys()) - {
+            "name",
+            "measure_id",
+            "coord",
+            "typical_range",
+            "latest_level",
+        }
         additional_info = dict([(k, getattr(self, k, None)) for k in sorted(attrs)])
 
         d = f" Station name: \t \t {self.name} \n"
@@ -157,14 +179,20 @@ class MonitoringStation:
 
     def __eq__(self, other):
 
-        if (lvls := (self.relative_water_level(), other.relative_water_level())) != (None, None):
+        if (lvls := (self.relative_water_level(), other.relative_water_level())) != (
+            None,
+            None,
+        ):
             return lvls[0] == lvls[1]
         else:
             return self.name == other.name
 
     def __lt__(self, other):
 
-        if (lvls := (self.relative_water_level(), other.relative_water_level())) != (None, None):
+        if (lvls := (self.relative_water_level(), other.relative_water_level())) != (
+            None,
+            None,
+        ):
             return lvls[0] < lvls[1]
         else:
             return self.name < other.name
@@ -176,20 +204,23 @@ class MonitoringStation:
     # Methods
 
     def typical_range_consistent(self) -> bool:
-
-        '''
+        """
         Returns a bool, whether or not the instance's typical_range
         attribute is well-defined and consistent (correctly ordered),
         returning True if it is and False otherwise.
-        '''
+        """
 
         try:
             low_val = self.typical_range[0]
             high_val = self.typical_range[1]
-            if low_val is None or high_val is None or low_val > high_val \
-                    or not isinstance(low_val, (float, int)) \
-                    or not isinstance(high_val, (float, int)) \
-                    or low_val == high_val:
+            if (
+                low_val is None
+                or high_val is None
+                or low_val > high_val
+                or not isinstance(low_val, (float, int))
+                or not isinstance(high_val, (float, int))
+                or low_val == high_val
+            ):
                 # One of the entries was a NoneType, or it was in the wrong order, non-number or equal
                 return False
             # Nothing triggered --> consistent
@@ -200,13 +231,14 @@ class MonitoringStation:
             return False
 
     def relative_water_level(self) -> float:
-
-        '''
+        """
         Returns the current water level as a fraction of
         the typical range, such that low = 0 and high = 1.
-        '''
+        """
 
-        if self.typical_range_consistent() and isinstance(self.latest_level, (float, int)):
+        if self.typical_range_consistent() and isinstance(
+            self.latest_level, (float, int)
+        ):
             diff = self.typical_range[1] - self.typical_range[0]
             return (self.latest_level - self.typical_range[0]) / diff
         else:
@@ -216,8 +248,7 @@ class MonitoringStation:
 @total_ordering
 @read_only_properties(*__RAINFALL_GAUGE_PROTECTED_ATTRS)
 class RainfallGauge:
-
-    '''
+    """
     This class represents a rainfall gauge. There are over 1000 such Tipping Bucket Raingauges
     (TPRs) across England, which record the amount of precipitation in mm.
 
@@ -255,7 +286,7 @@ class RainfallGauge:
     ### Returns
 
     A `RainfallGauge` instance.
-    '''
+    """
 
     def __init__(self, measure_id: str, coord: tuple[float], **kwargs):
 
@@ -265,8 +296,13 @@ class RainfallGauge:
 
         # default values
         _default_kwargs = {
-            'latest_level': None, 'latest_recorded_datetime': None, 'period': None,
-            'gauge_number': None, 'gauge_id': None, 'catchment_name': None}
+            "latest_level": None,
+            "latest_recorded_datetime": None,
+            "period": None,
+            "gauge_number": None,
+            "gauge_id": None,
+            "catchment_name": None,
+        }
 
         for attr in _default_kwargs:
             if attr in kwargs:
@@ -276,7 +312,12 @@ class RainfallGauge:
 
     def __repr__(self):
 
-        attrs = set(self.__dict__.keys()) - {'gauge_number', 'measure_id', 'coord', 'latest_level'}
+        attrs = set(self.__dict__.keys()) - {
+            "gauge_number",
+            "measure_id",
+            "coord",
+            "latest_level",
+        }
         additional_info = dict([(k, getattr(self, k, None)) for k in sorted(attrs)])
 
         d = f" Gauge number: \t \t {self.gauge_number} \n"
@@ -301,12 +342,13 @@ class RainfallGauge:
             return self.name < other.name
 
 
-def inconsistent_typical_range_stations(stations: list[MonitoringStation]) -> list[MonitoringStation]:
-
-    '''
+def inconsistent_typical_range_stations(
+    stations: list[MonitoringStation],
+) -> list[MonitoringStation]:
+    """
     Returns the stations that have inconsistent data, based
     on the  MonitoringStation.typical_range_consistent() method.
-    '''
+    """
 
     # Standard data type input checks
     assert all([isinstance(i, MonitoringStation) for i in stations])
